@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCampus</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
+        defer></script>
+</head>
+
+<body>
+
+    <!-- <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark"><img src="./images/logoTechCampus.png" alt="" width="60px"></div>
+        </div>
+
+        <nav>
+            <button class="nav active" data-page="inicio">⌂ <span>Início</span></button>
+            <button class="nav" data-page="documentos">▣ <span>Documentação</span></button>
+            <button class="nav" data-page="materiais">♧ <span>Materiais / IoT</span></button>
+            <button class="nav" data-page="avisos">⚑ <span>Avisos gerais</span></button>
+            <button class="nav" data-page="frequencia">◷ <span>Frequência</span></button>
+            <button class="nav" data-page="calendario">▦ <span>Calendário</span></button>
+            <button class="nav" data-page="sobre">ⓘ <span>Sobre a AAPM</span></button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button id="loginBtn" class="outline">↔ Entrar</button>
+        </div>
+    </aside> -->
+
+
+    <div class="container">
+
+      <div style="background-image: url('./images/Imagem_tela_de_inicio.png'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+
+
+
+
+        <div class="login-box">
+            
+            <div class="login-erro" id="login-erro"></div>
+            <div class="fg">
+                <label>E-mail</label>
+                <input id="l-email" type="email" placeholder="admin@pizzaria.com"
+                    onkeydown="if(event.key==='Enter') fazerLogin()">
+            </div>
+            <div class="fg">
+                <label>Senha</label>
+                <input id="l-senha" type="password" placeholder="••••••"
+                    onkeydown="if(event.key==='Enter') fazerLogin()">
+            </div>
+            <button class="btn btn-red" id="btn-login" style="width:100%;padding:10px;margin-top:4px"
+                onclick="fazerLogin()">
+                Entrar
+            </button>
+            <p style="text-align:center;font-size:.69rem;color:var(--muted);margin-top:14px">
+                Rode <strong style="color:var(--text)">node seed.js</strong> para criar o admin inicial
+            </p>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
