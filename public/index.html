@@ -12,7 +12,43 @@
 
 <body>
 
+    <!-- TOPBAR SUPERIOR -->
+<header class="topbar d-flex align-items-center justify-content-between px-4 py-2">
+    <button class="btn text-white p-0 border-0" id="sidebarToggle">
+        <i class="bi bi-list fs-2"></i>
+    </button>
+    <div class="d-flex align-items-center gap-4">
+        <!-- Ícone de Notificação com Badge -->
+        <div class="position-relative cursor-pointer">
+            <i class="bi bi-bell text-white fs-4"></i>
+            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                <span class="visually-hidden">Novas notificações</span>
+            </span>
+        </div>
+        <!-- Perfil do Usuário / Dropdown -->
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle gap-2" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Avatar Circular (Placeholder ou Imagem) -->
+                <div class="user-avatar bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                    <i class="bi bi-person-fill text-white fs-5"></i>
+                </div>
+                <!-- Informações do Usuário -->
+                <div class="d-none d-sm-block text-start lh-1">
+                    <span class="fw-semibold d-block fs-6">Usuário</span>
+                    <small class="text-secondary" style="font-size: 0.75rem;">Aluno SENAI</small>
+                </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="#">Meu Perfil</a></li>
+                <li><a class="dropdown-item" href="#">Configurações</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="#">Sair</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
     <div class="layout-wrapper">
+        
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-top">
@@ -21,14 +57,14 @@
                 </div>
 
                 <nav class="nav-menu">
-                    <a href="#inicio" class="menu-item ativo"><img src="./images/icon-inicio.svg" alt="inicio" width="20" height="20">Início</a>
-                    <a href="documento" class="menu-item"><img src="./images/icon-documento.svg" alt="documento" width="20" height="20">Documentação</a>
-                    <a href="uniforme" class="menu-item"><img src="./images/icon_uniforme.svg" alt="uniformes" width="20" height="20">Pedidos de uniformes</a>
-                    <a href="pedidos" class="menu-item"><img src="./images/icon-pedido-disponivel.svg" alt="pedido disponivel" width="20" height="20">Pedidos disponíveis</a>
-                    <a href="avisos" class="menu-item"><img src="./images/icon_aviso.svg" alt="aviso" width="20" height="20">Avisos gerais</a>
-                    <a href="sobre" class="menu-item"><img src="./images/icon_sobre.svg" alt="sobre" width="20" height="20">Sobre a AAPM</a>
-                    <a href="formatura" class="menu-item"><img src="./images/icon_agenda.svg" alt="formatura" width="20" height="20">Tempora de Formatura</a>
-                    <a href="ajuda" class="menu-item"><img src="./images/icon_ajuda.svg" alt="ajuda" width="20" height="20">Ajuda</a>
+                    <a href="#inicio" class="menu-item ativo"><img src="./images/icon-inicio.svg" alt="inicio" width="25" height="25">Início</a>
+                    <a href="documento" class="menu-item"><img src="./images/icon-documento.svg" alt="documento" width="30" height="30">Documentação</a>
+                    <a href="uniforme" class="menu-item"><img src="./images/icon_uniforme.svg" alt="uniformes" width="30" height="30">Pedidos de uniformes</a>
+                    <a href="pedidos" class="menu-item"><img src="./images/icon-pedido-disponivel.svg" alt="pedido disponivel" width="30" height="30">Pedidos disponíveis</a>
+                    <a href="avisos" class="menu-item"><img src="./images/icon_aviso.svg" alt="aviso" width="40" height="40">Avisos gerais</a>
+                    <a href="sobre" class="menu-item"><img src="./images/icon_sobre.svg" alt="sobre" width="30" height="30">Sobre a AAPM</a>
+                    <a href="formatura" class="menu-item"><img src="./images/icon_agenda.svg" alt="formatura" width="30" height="30">Tempora de Formatura</a>
+                    <a href="ajuda" class="menu-item"><img src="./images/icon_ajuda.svg" alt="ajuda" width="40" height="40">Ajuda</a>
                 </nav>
             </div>
 
@@ -49,7 +85,7 @@
                     
                     <div class="col-lg-7 text-start">
                         <h1 class="display-4 fw-bold mb-3 text-white">
-                            A AAPM mais <br>perto de <span style="color: #e63946;">você</span>
+                            A AAPM mais <br>perto de <span style="color: #ce1727ef;">você</span>
                         </h1>
                         <h2 class="h5 fw-normal text-light mb-3">
                             informações, benefícios e oportunidades em um só lugar.
@@ -82,7 +118,7 @@
                                     <div class="mb-2">
                                         <label for="senha" class="form-label small fw-semibold text-dark mb-1">Senha</label>
                                         <div class="input-group">
-                                            <span class="input-group-text bg-white pe-1"><img src="./images/icon_cadeado.svg" alt="senha"></span>
+                                            <span class="input-group-text bg-white pe-1"><img src="./images/icon_cadeado.svg" alt="inicio" width="80" height="0"></span>
                                             <input type="password" class="form-control ps-2" id="senha" placeholder="Digite sua senha">
                                         </div>
                                     </div>
@@ -122,7 +158,7 @@
 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="./images/banner1.jpg" class="d-block w-100 carousel-img" alt="Banner 1">
+                            <img src="./images/banner_01.jpg" class="d-block w-100 carousel-img" alt="Banner 1">
                         </div>
                         <div class="carousel-item">
                             <img src="./images/banner2.jpg" class="d-block w-100 carousel-img" alt="Banner 2">
@@ -201,6 +237,75 @@
                             </div>
                             <i class="bi bi-arrow-right aviso-arrow"></i>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO SOBRE A AAPM -->
+            <section class="aapm-section">
+                <div class="aapm-card">
+                    <div class="row align-items-center g-4">
+                        
+                        <!-- Coluna da Esquerda: Imagem -->
+                        <div class="col-lg-5">
+                            <img src="./images/imagem_sem_fundo_preto.png" alt="Alunos AAPM" class="img-fluid aapm-img">
+                        </div>
+
+                        <!-- Coluna Central: Conteúdo e Botão -->
+                        <div class="col-lg-4 ps-lg-4">
+                            <span class="aapm-tag">SOBRE a AAPM</span>
+                            <h2 class="aapm-title mb-3">O que é a AAPM?</h2>
+                            <p class="aapm-text">
+                                A AAPM é uma associação que busca promover ações, atividades e benefícios para os alunos da escola.
+                            </p>
+                            <p class="aapm-text mb-4">
+                                Por meio dela, os estudantes podem participar de eventos, projetos e iniciativas desenvolvidas para a comunidade escolar.
+                            </p>
+                            <a href="#sobre" class="btn btn-aapm">
+                                Saiba mais sobre a AAPM <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+
+                        <!-- Coluna da Direita: Recursos com ícones svg -->
+                        <div class="col-lg-3 aapm-features-col">
+                            <div class="aapm-features">
+                                
+                                <!-- Item 1: Comunidade -->
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <img src="./images/icon_pessoas.svg" alt="Comunidade" width="28" height="28">
+                                    </div>
+                                    <div>
+                                        <h4 class="feature-title">Comunidade</h4>
+                                        <p class="feature-desc">Unimos alunos em prol de um ambiente escolar melhor.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Item 2: Benefícios -->
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <img src="./images/icon_estrela.svg" alt="Benefícios" width="28" height="28">
+                                    </div>
+                                    <div>
+                                        <h4 class="feature-title">Benefícios</h4>
+                                        <p class="feature-desc">Descontos e vantagens exclusivas para associados.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Item 3: Participação -->
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <img src="./images/icon_coração.svg" alt="Participação" width="28" height="28">
+                                    </div>
+                                    <div>
+                                        <h4 class="feature-title">Participação</h4>
+                                        <p class="feature-desc">Sua participação faz a diferença na nossa escola.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
