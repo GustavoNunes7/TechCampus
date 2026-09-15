@@ -602,3 +602,112 @@ body {
 .main-content.expandido {
     margin-left: 0;
 }
+/* ==========================================
+   FOOTER COMPACTO TECHCAMPUS
+========================================== */
+
+.techcampus-footer {
+    background: linear-gradient(
+        135deg,
+        #461719 0%,
+        #641b1d 50%,
+        #3b1214 100%
+    );
+
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    margin-left: 250px;
+}
+
+.techcampus-footer .container-fluid {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.footer-brand img {
+    width: 145px;
+    max-width: 100%;
+    height: auto;
+}
+
+.footer-description {
+    max-width: 220px;
+    margin-top: 2px;
+    color: #d8bfc0;
+    font-size: 0.65rem;
+    line-height: 1.2;
+}
+
+.footer-title {
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 600;
+    margin-bottom: 2px !important;
+}
+
+.footer-year {
+    color: #d8bfc0;
+    font-size: 0.6rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 5px !important;
+}
+
+.footer-links a {
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #ff5962;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.footer-social a {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.7rem;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background-color: #ffffff;
+    color: #641b1d;
+}
+
+/* Responsividade */
+@media (max-width: 991.98px) {
+    .techcampus-footer {
+        margin-left: 0;
+    }
+
+    .footer-links,
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
