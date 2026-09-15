@@ -8,6 +8,11 @@ if (sidebarToggle && sidebar && mainContent) {
 
         mainContent.classList.toggle("expandido", sidebarFechada);
 
+        document.body.classList.toggle(
+            "sidebar-fechada",
+            sidebarFechada
+        );
+
         sidebarToggle.setAttribute(
             "aria-expanded",
             String(!sidebarFechada)
