@@ -576,3 +576,29 @@ body {
     }
 }
 
+
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 250px;
+    min-width: 250px;
+    height: calc(100vh - 60px);
+    z-index: 1030;
+
+    transition: transform 0.3s ease;
+}
+
+.sidebar.fechado {
+    transform: translateX(-100%);
+}
+
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.expandido {
+    margin-left: 0;
+}
