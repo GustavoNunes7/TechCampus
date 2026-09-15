@@ -668,9 +668,15 @@ body.sidebar-fechada .techcampus-footer {
 
 .footer-title {
     color: #ffffff;
-    font-size: 0.62rem;
+    font-size: 0.65rem;
     font-weight: 600;
-    margin-bottom: 2px !important;
+    margin-bottom: 4px !important;
+    letter-spacing: 0.03em;
+    transition: color 0.2s ease;
+}
+
+.footer-title:hover {
+    color: #ce1727;
 }
 
 .footer-year {
@@ -1119,3 +1125,8 @@ body.sidebar-fechada .techcampus-footer {
     }
 
 }
+
+a{
+    text-decoration: none;
+}
+
