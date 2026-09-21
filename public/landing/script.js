@@ -123,3 +123,183 @@ filterButtons.forEach(button => {
         });
     });
 });
+
+const productsTrack = document.getElementById("productsTrack");
+
+const nextButton = document.querySelector(".products-next");
+const prevButton = document.querySelector(".products-prev");
+
+let currentProduct = 0;
+
+
+/* =========================================================
+   QUANTIDADE DE PRODUTOS VISÍVEIS
+   ========================================================= */
+
+function getVisibleProducts() {
+
+    if (window.innerWidth <= 767) {
+        return 1;
+    }
+
+    return 3;
+}
+
+
+/* =========================================================
+   ATUALIZA O CARROSSEL
+   ========================================================= */
+
+function updateProductsCarousel() {
+
+    const products = document.querySelectorAll(".product-slide");
+
+    const visibleProducts = getVisibleProducts();
+
+    const totalProducts = products.length;
+
+    const maxPosition = totalProducts - visibleProducts;
+
+
+    /* Não deixa passar do limite */
+
+    if (currentProduct > maxPosition) {
+        currentProduct = maxPosition;
+    }
+
+    if (currentProduct < 0) {
+        currentProduct = 0;
+    }
+
+
+    /* Calcula o tamanho de cada produto */
+
+    const productWidth = products[0].getBoundingClientRect().width;
+
+    const gap = 15;
+
+
+    /* Move os produtos */
+
+    productsTrack.style.transform =
+        `translateX(-${currentProduct * (productWidth + gap)}px)`;
+
+
+    /* Desativa botão anterior */
+
+    prevButton.disabled = currentProduct === 0;
+
+
+    /* Desativa botão próximo */
+
+    nextButton.disabled =
+        currentProduct >= maxPosition;
+}
+
+
+/* =========================================================
+   PRÓXIMO
+   ========================================================= */
+
+nextButton.addEventListener("click", () => {
+
+    const products = document.querySelectorAll(".product-slide");
+
+    const visibleProducts = getVisibleProducts();
+
+    const maxPosition =
+        products.length - visibleProducts;
+
+
+    if (currentProduct < maxPosition) {
+
+        currentProduct++;
+
+        updateProductsCarousel();
+    }
+
+});
+
+
+/* =========================================================
+   ANTERIOR
+   ========================================================= */
+
+prevButton.addEventListener("click", () => {
+
+    if (currentProduct > 0) {
+
+        currentProduct--;
+
+        updateProductsCarousel();
+    }
+
+});
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+window.addEventListener("resize", () => {
+
+    updateProductsCarousel();
+
+});
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+   ========================================================= */
+
+updateProductsCarousel();
+
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Busca ao vivo nas Perguntas Frequentes (FAQ)
+    const searchInput = document.getElementById("helpSearchInput");
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    if (searchInput) {
+        searchInput.addEventListener("input", function (e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+
+            faqItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.classList.remove("d-none");
+                } else {
+                    item.classList.add("d-none");
+                }
+            });
+        });
+    }
+
+    // 2. Filtro rápido ao clicar nos Cards de Categoria
+    const categoryCards = document.querySelectorAll(".help-cat-card");
+
+    categoryCards.forEach(card => {
+        card.addEventListener("click", function () {
+            const cat = this.getAttribute("data-cat");
+
+            faqItems.forEach(item => {
+                const itemCat = item.getAttribute("data-category");
+                if (cat === "contatos" || itemCat === cat) {
+                    item.classList.remove("d-none");
+                } else {
+                    item.classList.add("d-none");
+                }
+            });
+        });
+    });
+
+    // 3. Simulação de Envio do Formulário de Suporte
+    const contactForm = document.getElementById("helpContactForm");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert("Sua dúvida foi enviada com sucesso! A equipe da AAPM responderá no seu e-mail em breve.");
+            contactForm.reset();
+        });
+    }
+});
