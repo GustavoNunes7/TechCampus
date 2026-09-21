@@ -303,3 +303,844 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================================================
+       NAVEGAÇÃO ENTRE AS TELAS
+    ========================================================= */
+
+    const telas = [
+        "inicio",
+        "documento",
+        "pedidos",
+        "avisos",
+        "sobre",
+        "formatura",
+        "ajuda",
+        "perfil",
+        "configuracoes"
+    ];
+
+    function mostrarTela(id) {
+
+        // Verifica se a tela existe
+        const tela = document.getElementById(id);
+
+        if (!tela) {
+            console.warn("Tela não encontrada:", id);
+            return;
+        }
+
+        // Esconde todas as telas
+        telas.forEach(function (telaId) {
+
+            const elemento = document.getElementById(telaId);
+
+            if (elemento) {
+                elemento.classList.add("d-none");
+            }
+
+        });
+
+        // Mostra a tela selecionada
+        tela.classList.remove("d-none");
+
+        // Atualiza menu lateral
+        document.querySelectorAll(".menu-item").forEach(function (item) {
+            item.classList.remove("ativo");
+
+            const href = item.getAttribute("href");
+
+            if (href === "#" + id) {
+                item.classList.add("ativo");
+            }
+        });
+
+        // Volta o conteúdo para o topo
+        const mainContent = document.querySelector(".main-content");
+
+        if (mainContent) {
+            mainContent.scrollTop = 0;
+        }
+    }
+
+
+    /* =========================================================
+       NAVEGAÇÃO POR HASH
+    ========================================================= */
+
+    function navegarPeloHash() {
+
+        let id = window.location.hash.replace("#", "");
+
+        // Corrige caso não exista hash
+        if (!id || !telas.includes(id)) {
+            id = "inicio";
+        }
+
+        mostrarTela(id);
+    }
+
+
+    // Detecta mudança de # na URL
+    window.addEventListener("hashchange", navegarPeloHash);
+
+
+    // Links que possuem #
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+
+        link.addEventListener("click", function (event) {
+
+            const href = this.getAttribute("href");
+
+            if (!href || href === "#") {
+                return;
+            }
+
+            const id = href.substring(1);
+
+            if (telas.includes(id)) {
+
+                event.preventDefault();
+
+                window.location.hash = id;
+
+                mostrarTela(id);
+            }
+
+        });
+
+    });
+
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebar = document.getElementById("sidebar");
+
+    if (sidebarToggle && sidebar) {
+
+        sidebarToggle.addEventListener("click", function () {
+
+            sidebar.classList.toggle("collapsed");
+
+        });
+
+    }
+
+
+    /* =========================================================
+       MEU PERFIL
+    ========================================================= */
+
+    const perfilForm = document.getElementById("perfilForm");
+
+    const profilePhoto = document.getElementById("profilePhoto");
+    const profilePreview = document.getElementById("profilePreview");
+
+    const nomeInput = document.getElementById("nome");
+    const emailInput = document.getElementById("email");
+    const dataNascimentoInput = document.getElementById("dataNascimento");
+    const cpfInput = document.getElementById("cpf");
+    const telefoneInput = document.getElementById("telefone");
+    const generoInput = document.getElementById("genero");
+    const observacaoInput = document.getElementById("observacao");
+
+
+    /* =========================================================
+       CARREGAR PERFIL SALVO
+    ========================================================= */
+
+    function carregarPerfil() {
+
+        const perfilSalvo = localStorage.getItem("techcampusPerfil");
+
+        if (!perfilSalvo) {
+            return;
+        }
+
+        try {
+
+            const perfil = JSON.parse(perfilSalvo);
+
+            if (nomeInput) {
+                nomeInput.value = perfil.nome || "";
+            }
+
+            if (emailInput) {
+                emailInput.value = perfil.email || "";
+            }
+
+            if (dataNascimentoInput) {
+                dataNascimentoInput.value = perfil.dataNascimento || "";
+            }
+
+            if (cpfInput) {
+                cpfInput.value = perfil.cpf || "";
+            }
+
+            if (telefoneInput) {
+                telefoneInput.value = perfil.telefone || "";
+            }
+
+            if (generoInput) {
+                generoInput.value = perfil.genero || "";
+            }
+
+            if (observacaoInput) {
+                observacaoInput.value = perfil.observacao || "";
+            }
+
+            if (perfil.foto && profilePreview) {
+                profilePreview.src = perfil.foto;
+            }
+
+        } catch (erro) {
+
+            console.error("Erro ao carregar perfil:", erro);
+
+        }
+    }
+
+
+    /* =========================================================
+       SALVAR PERFIL
+    ========================================================= */
+
+    if (perfilForm) {
+
+        perfilForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            const perfil = {
+
+                nome: nomeInput ? nomeInput.value.trim() : "",
+
+                email: emailInput ? emailInput.value.trim() : "",
+
+                dataNascimento: dataNascimentoInput
+                    ? dataNascimentoInput.value
+                    : "",
+
+                cpf: cpfInput
+                    ? cpfInput.value.trim()
+                    : "",
+
+                telefone: telefoneInput
+                    ? telefoneInput.value.trim()
+                    : "",
+
+                genero: generoInput
+                    ? generoInput.value
+                    : "",
+
+                observacao: observacaoInput
+                    ? observacaoInput.value.trim()
+                    : "",
+
+                foto: profilePreview
+                    ? profilePreview.src
+                    : ""
+
+            };
+
+
+            localStorage.setItem(
+                "techcampusPerfil",
+                JSON.stringify(perfil)
+            );
+
+
+            // Atualiza nome no topo
+            atualizarNomeUsuario(perfil.nome);
+
+
+            mostrarMensagem(
+                "Perfil atualizado com sucesso!",
+                "success"
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       FOTO DE PERFIL
+    ========================================================= */
+
+    if (profilePhoto) {
+
+        profilePhoto.addEventListener("change", function () {
+
+            const arquivo = this.files[0];
+
+            if (!arquivo) {
+                return;
+            }
+
+
+            // Verifica o tamanho
+            if (arquivo.size > 5 * 1024 * 1024) {
+
+                mostrarMensagem(
+                    "A foto deve ter no máximo 5 MB.",
+                    "danger"
+                );
+
+                this.value = "";
+
+                return;
+            }
+
+
+            // Verifica o tipo
+            const tiposPermitidos = [
+                "image/jpeg",
+                "image/png"
+            ];
+
+            if (!tiposPermitidos.includes(arquivo.type)) {
+
+                mostrarMensagem(
+                    "Utilize uma imagem JPG ou PNG.",
+                    "danger"
+                );
+
+                this.value = "";
+
+                return;
+            }
+
+
+            const leitor = new FileReader();
+
+
+            leitor.onload = function (event) {
+
+                if (profilePreview) {
+
+                    profilePreview.src = event.target.result;
+
+                    salvarFotoTemporaria(event.target.result);
+
+                }
+
+            };
+
+
+            leitor.readAsDataURL(arquivo);
+
+        });
+
+    }
+
+
+    /* =========================================================
+       SALVAR FOTO NO LOCALSTORAGE
+    ========================================================= */
+
+    function salvarFotoTemporaria(foto) {
+
+        const perfilSalvo = localStorage.getItem("techcampusPerfil");
+
+        let perfil = {};
+
+        if (perfilSalvo) {
+
+            try {
+                perfil = JSON.parse(perfilSalvo);
+            } catch (erro) {
+                perfil = {};
+            }
+
+        }
+
+        perfil.foto = foto;
+
+        localStorage.setItem(
+            "techcampusPerfil",
+            JSON.stringify(perfil)
+        );
+
+    }
+
+
+    /* =========================================================
+       BOTÃO CANCELAR DO PERFIL
+    ========================================================= */
+
+    const botoesCancelar = document.querySelectorAll(
+        "#perfilForm .btn-secondary"
+    );
+
+    botoesCancelar.forEach(function (botao) {
+
+        botao.addEventListener("click", function () {
+
+            carregarPerfil();
+
+            mostrarMensagem(
+                "Alterações canceladas.",
+                "secondary"
+            );
+
+        });
+
+    });
+
+
+    /* =========================================================
+       MÁSCARA CPF
+    ========================================================= */
+
+    if (cpfInput) {
+
+        cpfInput.addEventListener("input", function () {
+
+            let valor = this.value.replace(/\D/g, "");
+
+            valor = valor.substring(0, 11);
+
+            valor = valor.replace(
+                /(\d{3})(\d)/,
+                "$1.$2"
+            );
+
+            valor = valor.replace(
+                /(\d{3})(\d)/,
+                "$1.$2"
+            );
+
+            valor = valor.replace(
+                /(\d{3})(\d{1,2})$/,
+                "$1-$2"
+            );
+
+            this.value = valor;
+
+        });
+
+    }
+
+
+    /* =========================================================
+       MÁSCARA TELEFONE
+    ========================================================= */
+
+    if (telefoneInput) {
+
+        telefoneInput.addEventListener("input", function () {
+
+            let valor = this.value.replace(/\D/g, "");
+
+            valor = valor.substring(0, 11);
+
+            if (valor.length <= 10) {
+
+                valor = valor.replace(
+                    /(\d{2})(\d)/,
+                    "($1) $2"
+                );
+
+                valor = valor.replace(
+                    /(\d{4})(\d)/,
+                    "$1-$2"
+                );
+
+            } else {
+
+                valor = valor.replace(
+                    /(\d{2})(\d)/,
+                    "($1) $2"
+                );
+
+                valor = valor.replace(
+                    /(\d{5})(\d)/,
+                    "$1-$2"
+                );
+
+            }
+
+            this.value = valor;
+
+        });
+
+    }
+
+
+    /* =========================================================
+       CONFIGURAÇÕES
+    ========================================================= */
+
+    const configuracoesForm =
+        document.getElementById("configuracoesForm");
+
+
+    function carregarConfiguracoes() {
+
+        const configuracoesSalvas =
+            localStorage.getItem("techcampusConfiguracoes");
+
+        if (!configuracoesSalvas) {
+            return;
+        }
+
+        try {
+
+            const config = JSON.parse(configuracoesSalvas);
+
+
+            const notificacoesSistema =
+                document.getElementById("notificacoesSistema");
+
+            const notificacoesEmail =
+                document.getElementById("notificacoesEmail");
+
+            const exibirTelefone =
+                document.getElementById("exibirTelefone");
+
+            const exibirEmail =
+                document.getElementById("exibirEmail");
+
+            const tema =
+                document.getElementById("tema");
+
+
+            if (notificacoesSistema) {
+                notificacoesSistema.checked =
+                    config.notificacoesSistema ?? true;
+            }
+
+            if (notificacoesEmail) {
+                notificacoesEmail.checked =
+                    config.notificacoesEmail ?? true;
+            }
+
+            if (exibirTelefone) {
+                exibirTelefone.checked =
+                    config.exibirTelefone ?? false;
+            }
+
+            if (exibirEmail) {
+                exibirEmail.checked =
+                    config.exibirEmail ?? false;
+            }
+
+            if (tema) {
+                tema.value =
+                    config.tema || "escuro";
+            }
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar configurações:",
+                erro
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SALVAR CONFIGURAÇÕES
+    ========================================================= */
+
+    if (configuracoesForm) {
+
+        configuracoesForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const configuracoes = {
+
+                    notificacoesSistema:
+                        document.getElementById(
+                            "notificacoesSistema"
+                        )?.checked ?? true,
+
+                    notificacoesEmail:
+                        document.getElementById(
+                            "notificacoesEmail"
+                        )?.checked ?? true,
+
+                    exibirTelefone:
+                        document.getElementById(
+                            "exibirTelefone"
+                        )?.checked ?? false,
+
+                    exibirEmail:
+                        document.getElementById(
+                            "exibirEmail"
+                        )?.checked ?? false,
+
+                    tema:
+                        document.getElementById(
+                            "tema"
+                        )?.value || "escuro"
+
+                };
+
+
+                localStorage.setItem(
+                    "techcampusConfiguracoes",
+                    JSON.stringify(configuracoes)
+                );
+
+
+                aplicarTema(configuracoes.tema);
+
+
+                mostrarMensagem(
+                    "Configurações salvas com sucesso!",
+                    "success"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       TEMA
+    ========================================================= */
+
+    function aplicarTema(tema) {
+
+        /*
+         * Por enquanto o TechCampus continua
+         * utilizando o tema escuro.
+         *
+         * O suporte ao tema claro pode ser
+         * implementado posteriormente no CSS.
+         */
+
+        if (tema === "escuro") {
+
+            document.body.classList.remove("tema-claro");
+
+        }
+
+        if (tema === "claro") {
+
+            document.body.classList.add("tema-claro");
+
+        }
+
+        if (tema === "sistema") {
+
+            const prefereClaro =
+                window.matchMedia(
+                    "(prefers-color-scheme: light)"
+                ).matches;
+
+            document.body.classList.toggle(
+                "tema-claro",
+                prefereClaro
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RESTAURAR CONFIGURAÇÕES
+    ========================================================= */
+
+    const restaurarBtn =
+        document.querySelector(
+            "#configuracoesForm .settings-actions .btn-secondary"
+        );
+
+
+    if (restaurarBtn) {
+
+        restaurarBtn.addEventListener(
+            "click",
+            function () {
+
+                const confirmar =
+                    confirm(
+                        "Deseja restaurar as configurações padrão?"
+                    );
+
+                if (!confirmar) {
+                    return;
+                }
+
+
+                localStorage.removeItem(
+                    "techcampusConfiguracoes"
+                );
+
+
+                const notificacoesSistema =
+                    document.getElementById(
+                        "notificacoesSistema"
+                    );
+
+                const notificacoesEmail =
+                    document.getElementById(
+                        "notificacoesEmail"
+                    );
+
+                const exibirTelefone =
+                    document.getElementById(
+                        "exibirTelefone"
+                    );
+
+                const exibirEmail =
+                    document.getElementById(
+                        "exibirEmail"
+                    );
+
+                const tema =
+                    document.getElementById("tema");
+
+
+                if (notificacoesSistema)
+                    notificacoesSistema.checked = true;
+
+                if (notificacoesEmail)
+                    notificacoesEmail.checked = true;
+
+                if (exibirTelefone)
+                    exibirTelefone.checked = false;
+
+                if (exibirEmail)
+                    exibirEmail.checked = false;
+
+                if (tema)
+                    tema.value = "escuro";
+
+
+                aplicarTema("escuro");
+
+
+                mostrarMensagem(
+                    "Configurações restauradas.",
+                    "success"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       ATUALIZAR NOME DO USUÁRIO
+    ========================================================= */
+
+    function atualizarNomeUsuario(nome) {
+
+        if (!nome) {
+            return;
+        }
+
+        const nomeTopo =
+            document.querySelector(
+                "#userDropdown .fw-semibold"
+            );
+
+        if (nomeTopo) {
+            nomeTopo.textContent = nome;
+        }
+
+    }
+
+
+    /* =========================================================
+       MENSAGEM TEMPORÁRIA
+    ========================================================= */
+
+    function mostrarMensagem(mensagem, tipo = "success") {
+
+        const antiga =
+            document.getElementById(
+                "techcampusMessage"
+            );
+
+        if (antiga) {
+            antiga.remove();
+        }
+
+
+        const alerta =
+            document.createElement("div");
+
+        alerta.id = "techcampusMessage";
+
+        alerta.className =
+            `alert alert-${tipo} position-fixed`;
+
+        alerta.style.top = "80px";
+        alerta.style.right = "25px";
+        alerta.style.zIndex = "9999";
+        alerta.style.minWidth = "280px";
+
+
+        alerta.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-check-circle"></i>
+                <span>${mensagem}</span>
+            </div>
+        `;
+
+
+        document.body.appendChild(alerta);
+
+
+        setTimeout(function () {
+
+            alerta.remove();
+
+        }, 3000);
+
+    }
+
+
+    /* =========================================================
+       INICIALIZAÇÃO
+    ========================================================= */
+
+    carregarPerfil();
+
+    carregarConfiguracoes();
+
+    const perfilSalvo =
+        localStorage.getItem("techcampusPerfil");
+
+    if (perfilSalvo) {
+
+        try {
+
+            const perfil =
+                JSON.parse(perfilSalvo);
+
+            atualizarNomeUsuario(perfil.nome);
+
+        } catch (erro) {
+
+            console.error(erro);
+
+        }
+
+    }
+
+
+    // Inicializa a tela correta
+    navegarPeloHash();
+
+});

@@ -25,15 +25,27 @@
           <i class="bi bi-list fs-2"></i>
         </button>
 
-        <div class="d-flex align-items-center gap-4">
-          <div class="position-relative cursor-pointer">
-            <i class="bi bi-bell text-white fs-4"></i>
-            <span
-              class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
-            >
-              <span class="visually-hidden">Novas notificações</span>
-            </span>
-          </div>
+         <div class="d-flex align-items-center gap-3 ms-auto">
+            <div class="dropdown">
+                <button class="notification-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notificações">
+                    <i class="bi bi-bell fs-5"></i>
+                    <span class="notification-badge"></span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end glass-panel p-3 text-white border-secondary" style="width: 300px; background-color: var(--bg-card);">
+                    <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
+                        <h6 class="mb-0 fw-bold">Notificações</h6>
+                        <span class="badge bg-danger">2 Novas</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2 small">
+                        <a href="#" class="text-decoration-none text-light p-2 rounded bg-dark border border-secondary d-block">
+                            <span class="fw-semibold text-danger">AAPM Avisos:</span> Rematrícula aberta para a temporada.
+                        </a>
+                        <a href="#" class="text-decoration-none text-light p-2 rounded bg-dark border border-secondary d-block">
+                            <span class="fw-semibold text-success">Documento:</span> Seu comprovante foi validado.
+                        </a>
+                    </div>
+                </div>
+            </div>
 
           <div class="dropdown">
             <a
@@ -59,9 +71,19 @@
             <ul
               class="dropdown-menu dropdown-menu-dark dropdown-menu-end text-small shadow"
               aria-labelledby="userDropdown"
-            >
-              <li><a class="dropdown-item" href="#">Meu Perfil</a></li>
-              <li><a class="dropdown-item" href="#">Configurações</a></li>
+            ><li>
+    <a class="dropdown-item" href="#perfil">
+        <i class="bi bi-person me-2"></i>
+        Meu Perfil
+    </a>
+</li>
+
+<li>
+    <a class="dropdown-item" href="#configuracoes">
+        <i class="bi bi-gear me-2"></i>
+        Configurações
+    </a>
+</li>
               <li><hr class="dropdown-divider" /></li>
               <li>
                 <a
@@ -74,6 +96,568 @@
           </div>
         </div>
       </header>
+
+
+
+
+
+      <!-- =========================================================
+     MEU PERFIL
+========================================================= -->
+<section id="perfil" class="d-none">
+    <div class="container-fluid py-4">
+
+        <div class="section-header mb-4">
+          
+            <h2 class="section-title">Meu Perfil</h2>
+            <p class="section-description">
+                Visualize e atualize suas informações pessoais.
+            </p>
+        </div>
+
+        <div class="card profile-card">
+
+            <form id="perfilForm">
+
+                <div class="row g-4">
+
+                    <!-- FOTO -->
+                    <div class="col-lg-3">
+                        <div class="profile-photo-section text-center">
+
+                            <div class="profile-photo">
+                                <img
+                                    src="../landing/images/default-profile.png"
+                                    alt="Foto de perfil"
+                                    id="profilePreview"
+                                >
+                            </div>
+
+                            <label for="profilePhoto" class="btn profile-photo-btn mt-3">
+                                <i class="bi bi-camera me-2"></i>
+                                Alterar foto
+                            </label>
+
+                            <input
+                                type="file"
+                                id="profilePhoto"
+                                class="d-none"
+                                accept="image/png, image/jpeg, image/jpg"
+                            >
+
+                            <p class="profile-photo-info mt-2">
+                                JPG ou PNG<br>
+                                Tamanho máximo: 5 MB
+                            </p>
+
+                        </div>
+                    </div>
+
+
+                    <!-- INFORMAÇÕES -->
+                    <div class="col-lg-9">
+
+                        <div class="row g-3">
+
+                            <!-- NOME -->
+                            <div class="col-md-6">
+                                <label for="nome" class="form-label">
+                                    Nome completo
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="nome"
+                                        name="nome"
+                                        class="form-control"
+                                        placeholder="Digite seu nome completo"
+                                    >
+                                </div>
+                            </div>
+
+
+                            <!-- EMAIL -->
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">
+                                    E-mail
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="Digite seu e-mail"
+                                    >
+                                </div>
+                            </div>
+
+
+                            <!-- DATA DE NASCIMENTO -->
+                            <div class="col-md-6">
+                                <label for="dataNascimento" class="form-label">
+                                    Data de nascimento
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </span>
+
+                                    <input
+                                        type="date"
+                                        id="dataNascimento"
+                                        name="dataNascimento"
+                                        class="form-control"
+                                    >
+                                </div>
+                            </div>
+
+
+                            <!-- CPF -->
+                            <div class="col-md-6">
+                                <label for="cpf" class="form-label">
+                                    CPF
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-card-text"></i>
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="cpf"
+                                        name="cpf"
+                                        class="form-control"
+                                        placeholder="000.000.000-00"
+                                        maxlength="14"
+                                    >
+                                </div>
+                            </div>
+
+
+                            <!-- TELEFONE -->
+                            <div class="col-md-6">
+                                <label for="telefone" class="form-label">
+                                    Telefone
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-telephone"></i>
+                                    </span>
+
+                                    <input
+                                        type="tel"
+                                        id="telefone"
+                                        name="telefone"
+                                        class="form-control"
+                                        placeholder="(00) 00000-0000"
+                                        maxlength="15"
+                                    >
+                                </div>
+                            </div>
+
+
+                            <!-- GÊNERO -->
+                            <div class="col-md-6">
+                                <label for="genero" class="form-label">
+                                    Gênero
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person-vcard"></i>
+                                    </span>
+
+                                    <select
+                                        id="genero"
+                                        name="genero"
+                                        class="form-select"
+                                    >
+                                        <option value="" selected>
+                                            Selecione
+                                        </option>
+
+                                        <option value="masculino">
+                                            Masculino
+                                        </option>
+
+                                        <option value="feminino">
+                                            Feminino
+                                        </option>
+
+                                        <option value="nao_informar">
+                                            Prefiro não informar
+                                        </option>
+
+                                        <option value="outro">
+                                            Outro
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <!-- OBSERVAÇÃO -->
+                            <div class="col-12">
+                                <label for="observacao" class="form-label">
+                                    Observação
+                                </label>
+
+                                <textarea
+                                    id="observacao"
+                                    name="observacao"
+                                    class="form-control"
+                                    rows="4"
+                                    placeholder="Digite uma observação..."
+                                ></textarea>
+                            </div>
+
+                        </div>
+
+
+                        <!-- BOTÕES -->
+                        <div class="profile-actions mt-4">
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                            >
+                                <i class="bi bi-x-lg me-2"></i>
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="btn btn-profile-save"
+                            >
+                                <i class="bi bi-check-lg me-2"></i>
+                                Salvar alterações
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================================================
+     CONFIGURAÇÕES
+========================================================= -->
+<section id="configuracoes" class="d-none">
+
+    <div class="container-fluid py-4">
+
+        <div class="section-header mb-4">
+            <span class="section-tag">CONFIGURAÇÕES</span>
+            <h2 class="section-title">Configurações</h2>
+            <p class="section-description">
+                Personalize sua experiência no TechCampus.
+            </p>
+        </div>
+
+
+        <form id="configuracoesForm">
+
+            <div class="row g-4">
+
+                <!-- NOTIFICAÇÕES -->
+                <div class="col-lg-6">
+
+                    <div class="card settings-card">
+
+                        <div class="settings-card-header">
+                            <div class="settings-icon">
+                                <i class="bi bi-bell"></i>
+                            </div>
+
+                            <div>
+                                <h3>Notificações</h3>
+                                <p>
+                                    Gerencie como deseja receber avisos.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="settings-option">
+
+                            <div>
+                                <strong>Notificações do sistema</strong>
+
+                                <span>
+                                    Receber avisos importantes do TechCampus.
+                                </span>
+                            </div>
+
+                            <div class="form-check form-switch">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    id="notificacoesSistema"
+                                    checked
+                                >
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-option">
+
+                            <div>
+                                <strong>Notificações por e-mail</strong>
+
+                                <span>
+                                    Receber comunicados no seu e-mail.
+                                </span>
+                            </div>
+
+                            <div class="form-check form-switch">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    id="notificacoesEmail"
+                                    checked
+                                >
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- APARÊNCIA -->
+                <div class="col-lg-6">
+
+                    <div class="card settings-card">
+
+                        <div class="settings-card-header">
+
+                            <div class="settings-icon">
+                                <i class="bi bi-palette"></i>
+                            </div>
+
+                            <div>
+                                <h3>Aparência</h3>
+                                <p>
+                                    Personalize a aparência da plataforma.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-field">
+
+                            <label for="tema" class="form-label">
+                                Tema da interface
+                            </label>
+
+                            <select
+                                id="tema"
+                                name="tema"
+                                class="form-select"
+                            >
+                                <option value="escuro" selected>
+                                    Escuro
+                                </option>
+
+                                <option value="claro">
+                                    Claro
+                                </option>
+
+                                <option value="sistema">
+                                    Seguir configuração do sistema
+                                </option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRIVACIDADE -->
+                <div class="col-lg-6">
+
+                    <div class="card settings-card">
+
+                        <div class="settings-card-header">
+
+                            <div class="settings-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+
+                            <div>
+                                <h3>Privacidade</h3>
+                                <p>
+                                    Controle a visibilidade das suas informações.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-option">
+
+                            <div>
+                                <strong>Exibir telefone</strong>
+
+                                <span>
+                                    Permitir que seu telefone seja exibido.
+                                </span>
+                            </div>
+
+                            <div class="form-check form-switch">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    id="exibirTelefone"
+                                >
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-option">
+
+                            <div>
+                                <strong>Exibir e-mail</strong>
+
+                                <span>
+                                    Permitir que seu e-mail seja exibido.
+                                </span>
+                            </div>
+
+                            <div class="form-check form-switch">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    id="exibirEmail"
+                                >
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SEGURANÇA -->
+                <div class="col-lg-6">
+
+                    <div class="card settings-card">
+
+                        <div class="settings-card-header">
+
+                            <div class="settings-icon">
+                                <i class="bi bi-lock"></i>
+                            </div>
+
+                            <div>
+                                <h3>Segurança</h3>
+                                <p>
+                                    Gerencie a segurança da sua conta.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="settings-action"
+                        >
+                            <span>
+                                <i class="bi bi-key me-2"></i>
+                                Alterar senha
+                            </span>
+
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="settings-action text-danger"
+                        >
+                            <span>
+                                <i class="bi bi-box-arrow-right me-2"></i>
+                                Encerrar sessão
+                            </span>
+
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SALVAR CONFIGURAÇÕES -->
+            <div class="settings-actions mt-4">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                >
+                    Restaurar padrão
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-profile-save"
+                >
+                    <i class="bi bi-check-lg me-2"></i>
+                    Salvar configurações
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div class="layout-wrapper">
         <!-- SIDEBAR -->
@@ -1683,3 +2267,4 @@
     <script src="../landing/script.js"></script>
   </body>
 </html>
+
