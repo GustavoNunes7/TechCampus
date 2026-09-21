@@ -100,3 +100,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+// Filtro da Tela de Produtos Disponíveis
+const filterButtons = document.querySelectorAll(".btn-filter");
+const productCards = document.querySelectorAll(".product-card-item");
+
+filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        // Altera visual dos botões
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const category = button.getAttribute("data-category");
+
+        // Exibe/Oculta os cards baseados na categoria
+        productCards.forEach(card => {
+            if (category === "todos" || card.getAttribute("data-category") === category) {
+                card.classList.remove("d-none");
+            } else {
+                card.classList.add("d-none");
+            }
+        });
+    });
+});
