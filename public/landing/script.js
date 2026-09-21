@@ -1144,3 +1144,400 @@ document.addEventListener("DOMContentLoaded", function () {
     navegarPeloHash();
 
 });
+
+
+/* =========================================================
+   PRODUTOS - FILTROS + CARROSSEL
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const carousel = document.getElementById("productsCarousel");
+    const track = document.getElementById("productsTrack");
+
+    if (!carousel || !track) {
+        return;
+    }
+
+
+    const prevButton = carousel.querySelector(".products-prev");
+    const nextButton = carousel.querySelector(".products-next");
+
+    const categoryButtons = document.querySelectorAll(
+        ".products-filters .btn-filter"
+    );
+
+    const products = Array.from(
+        track.querySelectorAll(".product-slide")
+    );
+
+
+    /*
+     * Índice atual do carrossel.
+     */
+    let currentIndex = 0;
+
+
+    /*
+     * Categoria atual.
+     */
+    let currentCategory = "todos";
+
+
+    /*
+     * Quantidade de produtos visíveis.
+     */
+    function getVisibleProducts() {
+
+        if (window.innerWidth <= 767) {
+            return 1;
+        }
+
+        if (window.innerWidth <= 1199) {
+            return 2;
+        }
+
+        return 3;
+    }
+
+
+    /*
+     * Produtos pertencentes à categoria selecionada.
+     */
+    function getFilteredProducts() {
+
+        if (currentCategory === "todos") {
+            return products;
+        }
+
+        return products.filter(product => {
+
+            return product.dataset.category === currentCategory;
+
+        });
+
+    }
+
+
+    /*
+     * Atualiza o estado visual dos botões.
+     */
+    function updateButtons() {
+
+        categoryButtons.forEach(button => {
+
+            const category = button.dataset.category;
+
+            button.classList.toggle(
+                "active",
+                category === currentCategory
+            );
+
+        });
+
+    }
+
+
+    /*
+     * Atualiza os controles do carrossel.
+     */
+    function updateCarouselControls() {
+
+        if (currentCategory !== "todos") {
+
+            if (prevButton) {
+                prevButton.style.display = "none";
+            }
+
+            if (nextButton) {
+                nextButton.style.display = "none";
+            }
+
+            return;
+        }
+
+
+        if (prevButton) {
+            prevButton.style.display = "";
+        }
+
+        if (nextButton) {
+            nextButton.style.display = "";
+        }
+
+
+        const visibleProducts = getVisibleProducts();
+
+        const maxIndex = Math.max(
+            0,
+            products.length - visibleProducts
+        );
+
+
+        if (prevButton) {
+            prevButton.disabled = currentIndex <= 0;
+        }
+
+        if (nextButton) {
+            nextButton.disabled = currentIndex >= maxIndex;
+        }
+
+    }
+
+
+    /*
+     * Atualiza a posição do carrossel.
+     */
+    function updateCarouselPosition() {
+
+        if (currentCategory !== "todos") {
+
+            track.style.transform = "none";
+
+            return;
+        }
+
+
+        const visibleProducts = getVisibleProducts();
+
+        if (!products.length) {
+            return;
+        }
+
+
+        const firstProduct = products[0];
+
+        const productWidth = firstProduct.offsetWidth;
+
+
+        if (!productWidth) {
+            return;
+        }
+
+
+        const gap = parseFloat(
+            getComputedStyle(track).gap
+        ) || 0;
+
+
+        const move = currentIndex * (productWidth + gap);
+
+
+        track.style.transform =
+            `translateX(-${move}px)`;
+
+    }
+
+
+    /*
+     * Mostra/esconde os produtos de acordo com a categoria.
+     */
+    function filterProducts() {
+
+        const filteredProducts = getFilteredProducts();
+
+
+        /*
+         * MODO TODOS
+         *
+         * Todos os produtos aparecem e
+         * o carrossel fica ativo.
+         */
+        if (currentCategory === "todos") {
+
+            carousel.classList.remove("category-mode");
+
+
+            products.forEach(product => {
+
+                product.classList.remove("product-hidden");
+
+                product.style.display = "";
+
+            });
+
+
+            currentIndex = 0;
+
+            updateCarouselPosition();
+            updateCarouselControls();
+
+            return;
+        }
+
+
+        /*
+         * MODO CATEGORIA
+         *
+         * O carrossel é desativado.
+         */
+        carousel.classList.add("category-mode");
+
+
+        products.forEach(product => {
+
+            const productCategory =
+                product.dataset.category;
+
+
+            if (productCategory === currentCategory) {
+
+                product.classList.remove("product-hidden");
+
+                product.style.display = "";
+
+            } else {
+
+                product.classList.add("product-hidden");
+
+                product.style.display = "none";
+
+            }
+
+        });
+
+
+        /*
+         * Garante que o track não fique
+         * deslocado por causa do carrossel.
+         */
+        track.style.transform = "none";
+
+
+        updateCarouselControls();
+
+    }
+
+
+    /*
+     * Clique nas categorias.
+     */
+    categoryButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const category =
+                button.dataset.category;
+
+
+            if (!category) {
+                return;
+            }
+
+
+            currentCategory = category;
+
+
+            updateButtons();
+
+            filterProducts();
+
+        });
+
+    });
+
+
+    /*
+     * Botão ANTERIOR.
+     */
+    if (prevButton) {
+
+        prevButton.addEventListener("click", () => {
+
+            if (currentCategory !== "todos") {
+                return;
+            }
+
+
+            currentIndex--;
+
+            if (currentIndex < 0) {
+                currentIndex = 0;
+            }
+
+
+            updateCarouselPosition();
+            updateCarouselControls();
+
+        });
+
+    }
+
+
+    /*
+     * Botão PRÓXIMO.
+     */
+    if (nextButton) {
+
+        nextButton.addEventListener("click", () => {
+
+            if (currentCategory !== "todos") {
+                return;
+            }
+
+
+            const visibleProducts =
+                getVisibleProducts();
+
+
+            const maxIndex = Math.max(
+                0,
+                products.length - visibleProducts
+            );
+
+
+            currentIndex++;
+
+
+            if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+            }
+
+
+            updateCarouselPosition();
+            updateCarouselControls();
+
+        });
+
+    }
+
+
+    /*
+     * Ao redimensionar a tela,
+     * recalcula o carrossel.
+     */
+    window.addEventListener("resize", () => {
+
+        if (currentCategory === "todos") {
+
+            const visibleProducts =
+                getVisibleProducts();
+
+
+            const maxIndex = Math.max(
+                0,
+                products.length - visibleProducts
+            );
+
+
+            if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+            }
+
+
+            updateCarouselPosition();
+            updateCarouselControls();
+
+        }
+
+    });
+
+
+    /*
+     * Inicialização.
+     */
+    updateButtons();
+
+    filterProducts();
+
+});

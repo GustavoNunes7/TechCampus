@@ -2201,3 +2201,337 @@ a {
     }
 
 }
+
+/* =========================================================
+   PRODUTOS - FILTROS
+   ========================================================= */
+
+.products-filters {
+    width: 100%;
+}
+
+.btn-filter {
+    color: #aaa;
+    background: #151515;
+    border: 1px solid #333;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-filter:hover {
+    color: #fff;
+    background: #1f1f1f;
+    border-color: #ce1727;
+}
+
+.btn-filter.active {
+    color: #fff;
+    background: #ce1727;
+    border-color: #ce1727;
+    box-shadow: 0 5px 15px rgba(206, 23, 39, 0.2);
+}
+
+
+/* =========================================================
+   CARROSSEL
+   ========================================================= */
+
+.products-carousel {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.products-viewport {
+    width: 100%;
+    overflow: hidden;
+}
+
+.products-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.4s ease;
+    will-change: transform;
+}
+
+
+/* =========================================================
+   3 PRODUTOS VISÍVEIS
+   ========================================================= */
+
+.products-track .product-slide {
+    flex: 0 0 calc((100% - 40px) / 3);
+    min-width: 0;
+}
+
+
+/* =========================================================
+   CONTROLES
+   ========================================================= */
+
+.products-control {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    background: #181818;
+
+    border: 1px solid #333;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.products-control:hover {
+    background: #ce1727;
+    border-color: #ce1727;
+    transform: scale(1.05);
+}
+
+.products-control:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.product-card {
+    min-height: 430px;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    border-color: #ce1727 !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.product-img-box {
+    min-height: 160px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-img-box img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   PREÇOS
+   ========================================================= */
+
+.container-preco {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.preco-de {
+    color: #777;
+    font-size: 0.8rem;
+    text-decoration: line-through;
+}
+
+
+.badge-desconto {
+    display: inline-block;
+    width: fit-content;
+
+    padding: 4px 8px;
+
+    color: #fff;
+    background: rgba(206, 23, 39, 0.15);
+
+    border: 1px solid rgba(206, 23, 39, 0.4);
+    border-radius: 6px;
+
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   MODO CATEGORIA
+   Quando NÃO estamos em "Todos"
+   ========================================================= */
+
+.products-carousel.category-mode {
+    display: block;
+}
+
+.products-carousel.category-mode .products-viewport {
+    overflow: visible;
+}
+
+.products-carousel.category-mode .products-track {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+
+    transform: none !important;
+    transition: none;
+}
+
+.products-carousel.category-mode .product-slide {
+    display: block;
+    width: auto;
+    min-width: 0;
+    flex: none;
+}
+
+
+/* =========================================================
+   PRODUTOS ESCONDIDOS PELO FILTRO
+   ========================================================= */
+
+.products-carousel.category-mode
+.product-slide.product-hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   MENSAGEM DE CATEGORIA VAZIA
+   ========================================================= */
+
+.products-empty {
+    grid-column: 1 / -1;
+
+    padding: 60px 20px;
+
+    text-align: center;
+
+    color: #777;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+    border-radius: 14px;
+}
+
+.products-empty i {
+    display: block;
+
+    margin-bottom: 15px;
+
+    font-size: 2.5rem;
+    color: #ce1727;
+}
+
+.products-empty strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   BANNER
+   ========================================================= */
+
+.banner-associado {
+    margin-top: 30px;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 1199px) {
+
+    .products-track .product-slide {
+        flex: 0 0 calc((100% - 20px) / 2);
+    }
+
+    .products-carousel.category-mode .products-track {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 991px) {
+
+    .products-carousel {
+        gap: 8px;
+    }
+
+    .products-control {
+        flex: 0 0 38px;
+
+        width: 38px;
+        height: 38px;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .products-track {
+        gap: 15px;
+    }
+
+    .products-track .product-slide {
+        flex: 0 0 100%;
+    }
+
+    .products-carousel.category-mode .products-track {
+        grid-template-columns: 1fr;
+    }
+
+    .products-control {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .products-filters {
+        gap: 8px !important;
+    }
+
+    .btn-filter {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        font-size: 0.85rem;
+    }
+
+    .product-card {
+        min-height: 410px;
+    }
+
+}
