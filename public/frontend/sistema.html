@@ -1,2616 +1,2131 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="../landing/styles.css" />
-    <title>TechCampus</title>
-  </head>
 
-  <body>
-    <section id="sistemaInicio">
-      <!-- TOPBAR -->
-      <header
-        class="topbar d-flex align-items-center justify-content-between px-4 py-2"
-      >
-        <button class="btn text-white p-0 border-0" id="sidebarToggle">
-          <i class="bi bi-list fs-2"></i>
-        </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../landing/styles.css" />
+  <title>TechCampus</title>
+</head>
 
-         <div class="d-flex align-items-center gap-3 ms-auto">
-            <div class="dropdown">
-                <button class="notification-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notificações">
-                    <i class="bi bi-bell fs-5"></i>
-                    <span class="notification-badge"></span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end glass-panel p-3 text-white border-secondary" style="width: 300px; background-color: var(--bg-card);">
-                    <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
-                        <h6 class="mb-0 fw-bold">Notificações</h6>
-                        <span class="badge bg-danger">2 Novas</span>
-                    </div>
-                    <div class="d-flex flex-column gap-2 small">
-                        <a href="#" class="text-decoration-none text-light p-2 rounded bg-dark border border-secondary d-block">
-                            <span class="fw-semibold text-danger">AAPM Avisos:</span> Rematrícula aberta para a temporada.
-                        </a>
-                        <a href="#" class="text-decoration-none text-light p-2 rounded bg-dark border border-secondary d-block">
-                            <span class="fw-semibold text-success">Documento:</span> Seu comprovante foi validado.
-                        </a>
-                    </div>
-                </div>
+<body>
+  <section id="sistemaInicio">
+    <!-- TOPBAR -->
+    <header class="topbar d-flex align-items-center justify-content-between px-4 py-2">
+      <button class="btn text-white p-0 border-0" id="sidebarToggle">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+
+      <div class="d-flex align-items-center gap-3 ms-auto">
+        <div class="dropdown">
+          <button class="notification-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notificações">
+            <i class="bi bi-bell fs-5"></i>
+            <span class="notification-badge"></span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end glass-panel p-3 text-white border-secondary"
+            style="width: 300px; background-color: var(--bg-card);">
+            <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
+              <h6 class="mb-0 fw-bold">Notificações</h6>
+              <span class="badge bg-danger">2 Novas</span>
             </div>
-
-          <div class="dropdown">
-            <a
-              href="#"
-              class="d-flex align-items-center text-white text-decoration-none dropdown-toggle gap-2"
-              id="userDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <div
-                class="user-avatar bg-secondary rounded-circle d-flex align-items-center justify-content-center"
-                style="width: 38px; height: 38px"
-              >
-                <i class="bi bi-person-fill text-white fs-5"></i>
-              </div>
-              <div class="d-none d-sm-block text-start lh-1">
-                <span class="fw-semibold d-block fs-6">Usuário</span>
-                <small class="text-secondary" style="font-size: 0.75rem"
-                  >Aluno SENAI</small
-                >
-              </div>
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark dropdown-menu-end text-small shadow"
-              aria-labelledby="userDropdown"
-            ><li>
-    <a class="dropdown-item" href="#perfil">
-        <i class="bi bi-person me-2"></i>
-        Meu Perfil
-    </a>
-</li>
-
-<li>
-    <a class="dropdown-item" href="#configuracoes">
-        <i class="bi bi-gear me-2"></i>
-        Configurações
-    </a>
-</li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a
-                  class="dropdown-item text-danger"
-                  href="../landing/index.html"
-                  >Sair</a
-                >
-              </li>
-            </ul>
+            <div class="d-flex flex-column gap-2 small">
+              <a href="#" class="text-decoration-none text-light p-2 rounded bg-dark border border-secondary d-block">
+                <span class="fw-semibold text-danger">AAPM Avisos:</span> Rematrícula aberta para a temporada.
+              </a>
+              <a href="#" class="text-decoration-none text-light p-2 rounded bg-dark border border-secondary d-block">
+                <span class="fw-semibold text-success">Documento:</span> Seu comprovante foi validado.
+              </a>
+            </div>
           </div>
         </div>
-      </header>
+
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle gap-2"
+            id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-avatar bg-secondary rounded-circle d-flex align-items-center justify-content-center"
+              style="width: 38px; height: 38px">
+              <i class="bi bi-person-fill text-white fs-5"></i>
+            </div>
+            <div class="d-none d-sm-block text-start lh-1">
+              <span class="fw-semibold d-block fs-6">Usuário</span>
+              <small class="text-secondary" style="font-size: 0.75rem">Aluno SENAI</small>
+            </div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end text-small shadow"
+            aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item" href="#perfil">
+                <i class="bi bi-person me-2"></i>
+                Meu Perfil
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" href="#configuracoes">
+                <i class="bi bi-gear me-2"></i>
+                Configurações
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" href="../landing/index.html">Sair</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
 
 
 
 
 
-      <!-- =========================================================
+    <!-- =========================================================
      MEU PERFIL
 ========================================================= -->
-<section id="perfil" class="d-none">
-    <div class="container-fluid py-4">
+    <section id="perfil" class="d-none">
+      <div class="container-fluid py-4">
 
         <div class="section-header mb-4">
-          
-            <h2 class="section-title">Meu Perfil</h2>
-            <p class="section-description">
-                Visualize e atualize suas informações pessoais.
-            </p>
+
+          <h2 class="section-title">Meu Perfil</h2>
+          <p class="section-description">
+            Visualize e atualize suas informações pessoais.
+          </p>
         </div>
 
         <div class="card profile-card">
 
-            <form id="perfilForm">
+          <form id="perfilForm">
 
-                <div class="row g-4">
+            <div class="row g-4">
 
-                    <!-- FOTO -->
-                    <div class="col-lg-3">
-                        <div class="profile-photo-section text-center">
+              <!-- FOTO -->
+              <div class="col-lg-3">
+                <div class="profile-photo-section text-center">
 
-                            <div class="profile-photo">
-                                <img
-                                    src="../landing/images/default-profile.png"
-                                    alt="Foto de perfil"
-                                    id="profilePreview"
-                                >
-                            </div>
+                  <div class="profile-photo">
+                    <img src="../landing/images/default-profile.png" alt="Foto de perfil" id="profilePreview">
+                  </div>
 
-                            <label for="profilePhoto" class="btn profile-photo-btn mt-3">
-                                <i class="bi bi-camera me-2"></i>
-                                Alterar foto
-                            </label>
+                  <label for="profilePhoto" class="btn profile-photo-btn mt-3">
+                    <i class="bi bi-camera me-2"></i>
+                    Alterar foto
+                  </label>
 
-                            <input
-                                type="file"
-                                id="profilePhoto"
-                                class="d-none"
-                                accept="image/png, image/jpeg, image/jpg"
-                            >
+                  <input type="file" id="profilePhoto" class="d-none" accept="image/png, image/jpeg, image/jpg">
 
-                            <p class="profile-photo-info mt-2">
-                                JPG ou PNG<br>
-                                Tamanho máximo: 5 MB
-                            </p>
+                  <p class="profile-photo-info mt-2">
+                    JPG ou PNG<br>
+                    Tamanho máximo: 5 MB
+                  </p>
 
-                        </div>
+                </div>
+              </div>
+
+
+              <!-- INFORMAÇÕES -->
+              <div class="col-lg-9">
+
+                <div class="row g-3">
+
+                  <!-- NOME -->
+                  <div class="col-md-6">
+                    <label for="nome" class="form-label">
+                      Nome completo
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-person"></i>
+                      </span>
+
+                      <input type="text" id="nome" name="nome" class="form-control"
+                        placeholder="Digite seu nome completo">
                     </div>
+                  </div>
 
 
-                    <!-- INFORMAÇÕES -->
-                    <div class="col-lg-9">
+                  <!-- EMAIL -->
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">
+                      E-mail
+                    </label>
 
-                        <div class="row g-3">
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                      </span>
 
-                            <!-- NOME -->
-                            <div class="col-md-6">
-                                <label for="nome" class="form-label">
-                                    Nome completo
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-person"></i>
-                                    </span>
-
-                                    <input
-                                        type="text"
-                                        id="nome"
-                                        name="nome"
-                                        class="form-control"
-                                        placeholder="Digite seu nome completo"
-                                    >
-                                </div>
-                            </div>
-
-
-                            <!-- EMAIL -->
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">
-                                    E-mail
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        class="form-control"
-                                        placeholder="Digite seu e-mail"
-                                    >
-                                </div>
-                            </div>
-
-
-                            <!-- DATA DE NASCIMENTO -->
-                            <div class="col-md-6">
-                                <label for="dataNascimento" class="form-label">
-                                    Data de nascimento
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-calendar"></i>
-                                    </span>
-
-                                    <input
-                                        type="date"
-                                        id="dataNascimento"
-                                        name="dataNascimento"
-                                        class="form-control"
-                                    >
-                                </div>
-                            </div>
-
-
-                            <!-- CPF -->
-                            <div class="col-md-6">
-                                <label for="cpf" class="form-label">
-                                    CPF
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-card-text"></i>
-                                    </span>
-
-                                    <input
-                                        type="text"
-                                        id="cpf"
-                                        name="cpf"
-                                        class="form-control"
-                                        placeholder="000.000.000-00"
-                                        maxlength="14"
-                                    >
-                                </div>
-                            </div>
-
-
-                            <!-- TELEFONE -->
-                            <div class="col-md-6">
-                                <label for="telefone" class="form-label">
-                                    Telefone
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-telephone"></i>
-                                    </span>
-
-                                    <input
-                                        type="tel"
-                                        id="telefone"
-                                        name="telefone"
-                                        class="form-control"
-                                        placeholder="(00) 00000-0000"
-                                        maxlength="15"
-                                    >
-                                </div>
-                            </div>
-
-
-                            <!-- GÊNERO -->
-                            <div class="col-md-6">
-                                <label for="genero" class="form-label">
-                                    Gênero
-                                </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-person-vcard"></i>
-                                    </span>
-
-                                    <select
-                                        id="genero"
-                                        name="genero"
-                                        class="form-select"
-                                    >
-                                        <option value="" selected>
-                                            Selecione
-                                        </option>
-
-                                        <option value="masculino">
-                                            Masculino
-                                        </option>
-
-                                        <option value="feminino">
-                                            Feminino
-                                        </option>
-
-                                        <option value="nao_informar">
-                                            Prefiro não informar
-                                        </option>
-
-                                        <option value="outro">
-                                            Outro
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <!-- OBSERVAÇÃO -->
-                            <div class="col-12">
-                                <label for="observacao" class="form-label">
-                                    Observação
-                                </label>
-
-                                <textarea
-                                    id="observacao"
-                                    name="observacao"
-                                    class="form-control"
-                                    rows="4"
-                                    placeholder="Digite uma observação..."
-                                ></textarea>
-                            </div>
-
-                        </div>
-
-
-                        <!-- BOTÕES -->
-                        <div class="profile-actions mt-4">
-
-                            <button
-                                type="button"
-                                class="btn btn-secondary"
-                            >
-                                <i class="bi bi-x-lg me-2"></i>
-                                Cancelar
-                            </button>
-
-                            <button
-                                type="submit"
-                                class="btn btn-profile-save"
-                            >
-                                <i class="bi bi-check-lg me-2"></i>
-                                Salvar alterações
-                            </button>
-
-                        </div>
-
+                      <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail">
                     </div>
+                  </div>
+
+
+                  <!-- DATA DE NASCIMENTO -->
+                  <div class="col-md-6">
+                    <label for="dataNascimento" class="form-label">
+                      Data de nascimento
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-calendar"></i>
+                      </span>
+
+                      <input type="date" id="dataNascimento" name="dataNascimento" class="form-control">
+                    </div>
+                  </div>
+
+
+                  <!-- CPF -->
+                  <div class="col-md-6">
+                    <label for="cpf" class="form-label">
+                      CPF
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-card-text"></i>
+                      </span>
+
+                      <input type="text" id="cpf" name="cpf" class="form-control" placeholder="000.000.000-00"
+                        maxlength="14">
+                    </div>
+                  </div>
+
+
+                  <!-- TELEFONE -->
+                  <div class="col-md-6">
+                    <label for="telefone" class="form-label">
+                      Telefone
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-telephone"></i>
+                      </span>
+
+                      <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="(00) 00000-0000"
+                        maxlength="15">
+                    </div>
+                  </div>
+
+
+                  <!-- GÊNERO -->
+                  <div class="col-md-6">
+                    <label for="genero" class="form-label">
+                      Gênero
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-person-vcard"></i>
+                      </span>
+
+                      <select id="genero" name="genero" class="form-select">
+                        <option value="" selected>
+                          Selecione
+                        </option>
+
+                        <option value="masculino">
+                          Masculino
+                        </option>
+
+                        <option value="feminino">
+                          Feminino
+                        </option>
+
+                        <option value="nao_informar">
+                          Prefiro não informar
+                        </option>
+
+                        <option value="outro">
+                          Outro
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+
+                  <!-- OBSERVAÇÃO -->
+                  <div class="col-12">
+                    <label for="observacao" class="form-label">
+                      Observação
+                    </label>
+
+                    <textarea id="observacao" name="observacao" class="form-control" rows="4"
+                      placeholder="Digite uma observação..."></textarea>
+                  </div>
 
                 </div>
 
-            </form>
+
+                <!-- BOTÕES -->
+                <div class="profile-actions mt-4">
+
+                  <button type="button" class="btn btn-secondary">
+                    <i class="bi bi-x-lg me-2"></i>
+                    Cancelar
+                  </button>
+
+                  <button type="submit" class="btn btn-profile-save">
+                    <i class="bi bi-check-lg me-2"></i>
+                    Salvar alterações
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </form>
 
         </div>
 
-    </div>
-</section>
+      </div>
+    </section>
 
 
-<!-- =========================================================
+    <!-- =========================================================
      CONFIGURAÇÕES
 ========================================================= -->
-<section id="configuracoes" class="d-none">
+    <section id="configuracoes" class="d-none">
 
-    <div class="container-fluid py-4">
+      <div class="container-fluid py-4">
 
         <div class="section-header mb-4">
-            <span class="section-tag">CONFIGURAÇÕES</span>
-            <h2 class="section-title">Configurações</h2>
-            <p class="section-description">
-                Personalize sua experiência no TechCampus.
-            </p>
+          <span class="section-tag">CONFIGURAÇÕES</span>
+          <h2 class="section-title">Configurações</h2>
+          <p class="section-description">
+            Personalize sua experiência no TechCampus.
+          </p>
         </div>
 
 
         <form id="configuracoesForm">
 
-            <div class="row g-4">
+          <div class="row g-4">
 
-                <!-- NOTIFICAÇÕES -->
-                <div class="col-lg-6">
+            <!-- NOTIFICAÇÕES -->
+            <div class="col-lg-6">
 
-                    <div class="card settings-card">
+              <div class="card settings-card">
 
-                        <div class="settings-card-header">
-                            <div class="settings-icon">
-                                <i class="bi bi-bell"></i>
-                            </div>
+                <div class="settings-card-header">
+                  <div class="settings-icon">
+                    <i class="bi bi-bell"></i>
+                  </div>
 
-                            <div>
-                                <h3>Notificações</h3>
-                                <p>
-                                    Gerencie como deseja receber avisos.
-                                </p>
-                            </div>
-                        </div>
-
-
-                        <div class="settings-option">
-
-                            <div>
-                                <strong>Notificações do sistema</strong>
-
-                                <span>
-                                    Receber avisos importantes do TechCampus.
-                                </span>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    id="notificacoesSistema"
-                                    checked
-                                >
-                            </div>
-
-                        </div>
+                  <div>
+                    <h3>Notificações</h3>
+                    <p>
+                      Gerencie como deseja receber avisos.
+                    </p>
+                  </div>
+                </div>
 
 
-                        <div class="settings-option">
+                <div class="settings-option">
 
-                            <div>
-                                <strong>Notificações por e-mail</strong>
+                  <div>
+                    <strong>Notificações do sistema</strong>
 
-                                <span>
-                                    Receber comunicados no seu e-mail.
-                                </span>
-                            </div>
+                    <span>
+                      Receber avisos importantes do TechCampus.
+                    </span>
+                  </div>
 
-                            <div class="form-check form-switch">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    id="notificacoesEmail"
-                                    checked
-                                >
-                            </div>
-
-                        </div>
-
-                    </div>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="notificacoesSistema" checked>
+                  </div>
 
                 </div>
 
 
-                <!-- APARÊNCIA -->
-                <div class="col-lg-6">
+                <div class="settings-option">
 
-                    <div class="card settings-card">
+                  <div>
+                    <strong>Notificações por e-mail</strong>
 
-                        <div class="settings-card-header">
+                    <span>
+                      Receber comunicados no seu e-mail.
+                    </span>
+                  </div>
 
-                            <div class="settings-icon">
-                                <i class="bi bi-palette"></i>
-                            </div>
-
-                            <div>
-                                <h3>Aparência</h3>
-                                <p>
-                                    Personalize a aparência da plataforma.
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="settings-field">
-
-                            <label for="tema" class="form-label">
-                                Tema da interface
-                            </label>
-
-                            <select
-                                id="tema"
-                                name="tema"
-                                class="form-select"
-                            >
-                                <option value="escuro" selected>
-                                    Escuro
-                                </option>
-
-                                <option value="claro">
-                                    Claro
-                                </option>
-
-                                <option value="sistema">
-                                    Seguir configuração do sistema
-                                </option>
-                            </select>
-
-                        </div>
-
-                    </div>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="notificacoesEmail" checked>
+                  </div>
 
                 </div>
 
-
-                <!-- PRIVACIDADE -->
-                <div class="col-lg-6">
-
-                    <div class="card settings-card">
-
-                        <div class="settings-card-header">
-
-                            <div class="settings-icon">
-                                <i class="bi bi-shield-lock"></i>
-                            </div>
-
-                            <div>
-                                <h3>Privacidade</h3>
-                                <p>
-                                    Controle a visibilidade das suas informações.
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="settings-option">
-
-                            <div>
-                                <strong>Exibir telefone</strong>
-
-                                <span>
-                                    Permitir que seu telefone seja exibido.
-                                </span>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    id="exibirTelefone"
-                                >
-                            </div>
-
-                        </div>
-
-
-                        <div class="settings-option">
-
-                            <div>
-                                <strong>Exibir e-mail</strong>
-
-                                <span>
-                                    Permitir que seu e-mail seja exibido.
-                                </span>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    id="exibirEmail"
-                                >
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- SEGURANÇA -->
-                <div class="col-lg-6">
-
-                    <div class="card settings-card">
-
-                        <div class="settings-card-header">
-
-                            <div class="settings-icon">
-                                <i class="bi bi-lock"></i>
-                            </div>
-
-                            <div>
-                                <h3>Segurança</h3>
-                                <p>
-                                    Gerencie a segurança da sua conta.
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <button
-                            type="button"
-                            class="settings-action"
-                        >
-                            <span>
-                                <i class="bi bi-key me-2"></i>
-                                Alterar senha
-                            </span>
-
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="settings-action text-danger"
-                        >
-                            <span>
-                                <i class="bi bi-box-arrow-right me-2"></i>
-                                Encerrar sessão
-                            </span>
-
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-
-                    </div>
-
-                </div>
+              </div>
 
             </div>
 
 
-            <!-- SALVAR CONFIGURAÇÕES -->
-            <div class="settings-actions mt-4">
+            <!-- APARÊNCIA -->
+            <div class="col-lg-6">
 
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                >
-                    Restaurar padrão
-                </button>
+              <div class="card settings-card">
 
-                <button
-                    type="submit"
-                    class="btn btn-profile-save"
-                >
-                    <i class="bi bi-check-lg me-2"></i>
-                    Salvar configurações
-                </button>
+                <div class="settings-card-header">
+
+                  <div class="settings-icon">
+                    <i class="bi bi-palette"></i>
+                  </div>
+
+                  <div>
+                    <h3>Aparência</h3>
+                    <p>
+                      Personalize a aparência da plataforma.
+                    </p>
+                  </div>
+
+                </div>
+
+
+                <div class="settings-field">
+
+                  <label for="tema" class="form-label">
+                    Tema da interface
+                  </label>
+
+                  <select id="tema" name="tema" class="form-select">
+                    <option value="escuro" selected>
+                      Escuro
+                    </option>
+
+                    <option value="claro">
+                      Claro
+                    </option>
+
+                    <option value="sistema">
+                      Seguir configuração do sistema
+                    </option>
+                  </select>
+
+                </div>
+
+              </div>
 
             </div>
+
+
+            <!-- PRIVACIDADE -->
+            <div class="col-lg-6">
+
+              <div class="card settings-card">
+
+                <div class="settings-card-header">
+
+                  <div class="settings-icon">
+                    <i class="bi bi-shield-lock"></i>
+                  </div>
+
+                  <div>
+                    <h3>Privacidade</h3>
+                    <p>
+                      Controle a visibilidade das suas informações.
+                    </p>
+                  </div>
+
+                </div>
+
+
+                <div class="settings-option">
+
+                  <div>
+                    <strong>Exibir telefone</strong>
+
+                    <span>
+                      Permitir que seu telefone seja exibido.
+                    </span>
+                  </div>
+
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="exibirTelefone">
+                  </div>
+
+                </div>
+
+
+                <div class="settings-option">
+
+                  <div>
+                    <strong>Exibir e-mail</strong>
+
+                    <span>
+                      Permitir que seu e-mail seja exibido.
+                    </span>
+                  </div>
+
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="exibirEmail">
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- SEGURANÇA -->
+            <div class="col-lg-6">
+
+              <div class="card settings-card">
+
+                <div class="settings-card-header">
+
+                  <div class="settings-icon">
+                    <i class="bi bi-lock"></i>
+                  </div>
+
+                  <div>
+                    <h3>Segurança</h3>
+                    <p>
+                      Gerencie a segurança da sua conta.
+                    </p>
+                  </div>
+
+                </div>
+
+
+                <button type="button" class="settings-action">
+                  <span>
+                    <i class="bi bi-key me-2"></i>
+                    Alterar senha
+                  </span>
+
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+
+
+                <button type="button" class="settings-action text-danger">
+                  <span>
+                    <i class="bi bi-box-arrow-right me-2"></i>
+                    Encerrar sessão
+                  </span>
+
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- SALVAR CONFIGURAÇÕES -->
+          <div class="settings-actions mt-4">
+
+            <button type="button" class="btn btn-secondary">
+              Restaurar padrão
+            </button>
+
+            <button type="submit" class="btn btn-profile-save">
+              <i class="bi bi-check-lg me-2"></i>
+              Salvar configurações
+            </button>
+
+          </div>
 
         </form>
 
-    </div>
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <div class="layout-wrapper">
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
-          <div class="sidebar-top">
-            <div class="brand mb-4">
-              <img
-                src="../landing/images/Logo TechCampus Horizontal.png "
-                alt="TechCampus"
-                class="img-fluid"
-                style="max-width: 230px"
-              />
-            </div>
-
-            <nav class="nav-menu">
-              <a href="#inicio" class="menu-item ativo"
-                ><img
-                  src="../landing/images/icon-inicio.svg"
-                  alt="inicio"
-                  width="25"
-                  height="25"
-                />Início</a
-              >
-              <a href="#documento" class="menu-item"
-                ><img
-                  src="../landing/images/icon-documento.svg"
-                  alt="documento"
-                  width="30"
-                  height="30"
-                />Documentação</a
-              >
-
-              <a href="#pedidos" class="menu-item"
-                ><img
-                  src="../landing/images/icon-pedido-disponivel.svg"
-                  alt="pedido disponivel"
-                  width="30"
-                  height="30"
-                />Pedidos disponíveis</a
-              >
-              <a href="#avisos" class="menu-item"
-                ><img
-                  src="../landing/images/icon_aviso.svg"
-                  alt="aviso"
-                  width="40"
-                  height="40"
-                />Avisos gerais</a
-              >
-              <a href="#sobre" class="menu-item"
-                ><img
-                  src="../landing/images/icon_sobre.svg"
-                  alt="sobre"
-                  width="30"
-                  height="30"
-                />Sobre a AAPM</a
-              >
-              <a href="#formatura" class="menu-item"
-                ><img
-                  src="../landing/images/icon_agenda.svg"
-                  alt="formatura"
-                  width="30"
-                  height="30"
-                />Temporada de Formatura</a
-              >
-              <a href="#ajuda" class="menu-item"
-                ><img
-                  src="../landing/images/icon_ajuda.svg"
-                  alt="ajuda"
-                  width="40"
-                  height="40"
-                />Ajuda</a
-              >
-            </nav>
-          </div>
-
-          <div class="sidebar-bottom pt-3">
-            <a href="../landing/index.html">
-              <button
-                id="loginBtn"
-                class="btn w-100 d-flex align-items-center justify-content-center gap-2 text-white border-secondary"
-              >
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>Sair</span>
-              </button>
-            </a>
-          </div>
-        </aside>
-
-        <!-- CONTEÚDO PRINCIPAL (ÁREA DAS TELAS) -->
-        <main class="main-content">
-          <!-- 1. TELA: INÍCIO (ÚNICA TELA COM CONTEÚDO E VISÍVEL) -->
-          <section id="inicio">
-            <!-- HERO CARD -->
-            <div class="hero-card">
-              <div class="row align-items-center gy-4">
-                <div class="col-lg-7 text-start">
-                  <h1 class="display-4 fw-bold mb-3 text-white">
-                    Bem-vindo <br />
-                    Usuário <span style="color: #ce1727ef">a AAPM</span>
-                  </h1>
-                  <h2 class="h5 fw-normal text-light mb-3">
-                    informações, benefícios e oportunidades em um só lugar.
-                  </h2>
-                  <p class="text-secondary small lh-base max-w-500">
-                    O TechCampus conecta você à AAPM da escola reunindo avisos,
-                    benefícios, eventos e serviços em uma única plataforma.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- CARROSSEL -->
-            <div class="carousel-container mt-4">
-              <div
-                id="techCampusCarousel"
-                class="carousel slide custom-carousel shadow-lg"
-                data-bs-ride="carousel"
-              >
-                <div class="carousel-indicators mb-3">
-                  <button
-                    type="button"
-                    data-bs-target="#techCampusCarousel"
-                    data-bs-slide-to="0"
-                    class="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#techCampusCarousel"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#techCampusCarousel"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#techCampusCarousel"
-                    data-bs-slide-to="3"
-                    aria-label="Slide 4"
-                  ></button>
-                </div>
-
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img
-                      src="../landing/images/banner_01.jpg"
-                      class="d-block w-100 carousel-img"
-                      alt="Banner 1"
-                    />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      src="../landing/images/banner_02.jpg"
-                      class="d-block w-80 carousel-img"
-                      alt="Banner 2"
-                    />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      src="../landing/images/banner_03.jpg"
-                      class="d-block w-100 carousel-img"
-                      alt="Banner 3"
-                    />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      src="../landing/images/banner_04.jpg"
-                      class="d-block w-100 carousel-img"
-                      alt="Banner 4"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  class="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#techCampusCarousel"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    class="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span class="visually-hidden">Anterior</span>
-                </button>
-                <button
-                  class="carousel-control-next"
-                  type="button"
-                  data-bs-target="#techCampusCarousel"
-                  data-bs-slide-to="next"
-                >
-                  <span
-                    class="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span class="visually-hidden">Próximo</span>
-                </button>
-              </div>
-            </div>
-          </section>
-
-
-          <!-- SEÇÃO DE AVISOS -->
-            <section class="avisos-section">
-                <h3 class="avisos-title">Avisos Importantes</h3>
-
-                <div class="row g-3">
-                    <!-- Card 1 -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="aviso-card">
-                            <div class="aviso-header">
-                                <div class="icon-circle">
-                                    <i class="bi bi-broadcast"></i>
-                                </div>
-                                <div>
-                                    <div class="aviso-tag">Aviso Geral</div>
-                                    <h4 class="aviso-title-card">Novo aviso<br>da AAPM</h4>
-                                    <p class="aviso-description">Confira as novidades sobre benefícios e atividades.</p>
-                                </div>
-                            </div>
-                            <i class="bi bi-arrow-right aviso-arrow"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="aviso-card">
-                            <div class="aviso-header">
-                                <div class="icon-circle">
-                                    <i class="bi bi-calendar-event"></i>
-                                </div>
-                                <div>
-                                    <div class="aviso-tag">Evento</div>
-                                    <h4 class="aviso-title-card">Semana de<br>integração 2026</h4>
-                                    <p class="aviso-description">Participe da semana de integração e conheça novas oportunidades.</p>
-                                </div>
-                            </div>
-                            <i class="bi bi-arrow-right aviso-arrow"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="aviso-card">
-                            <div class="aviso-header">
-                                <div class="icon-circle">
-                                    <i class="bi bi-person-arms-up"></i>
-                                </div>
-                                <div>
-                                    <div class="aviso-tag">Uniformes</div>
-                                    <h4 class="aviso-title-card">Período de solicitação<br>de uniformes</h4>
-                                    <p class="aviso-description">Fique atento às datas para solicitar seu uniforme com desconto.</p>
-                                </div>
-                            </div>
-                            <i class="bi bi-arrow-right aviso-arrow"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SEÇÃO SOBRE A AAPM -->
-            <section class="aapm-section">
-                <div class="aapm-card">
-                    <div class="row align-items-center g-4">
-                        
-                        <!-- Coluna da Esquerda: Imagem -->
-                        <div class="col-lg-5">
-                            <img src="./images/imagem_sem_fundo_preto.png" alt="Alunos AAPM" class="img-fluid aapm-img">
-                        </div>
-
-                        <!-- Coluna Central: Conteúdo e Botão -->
-                        <div class="col-lg-4 ps-lg-4">
-                            <span class="aapm-tag">SOBRE a AAPM</span>
-                            <h2 class="aapm-title mb-3">O que é a AAPM?</h2>
-                            <p class="aapm-text">
-                                A AAPM é uma associação que busca promover ações, atividades e benefícios para os alunos da escola.
-                            </p>
-                            <p class="aapm-text mb-4">
-                                Por meio dela, os estudantes podem participar de eventos, projetos e iniciativas desenvolvidas para a comunidade escolar.
-                            </p>
-                            <a href="#sobre" class="btn btn-aapm">
-                                Saiba mais sobre a AAPM <i class="bi bi-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-
-                        <!-- Coluna da Direita: Recursos com ícones svg -->
-                        <div class="col-lg-3 aapm-features-col">
-                            <div class="aapm-features">
-                                
-                                <!-- Item 1: Comunidade -->
-                                <div class="feature-item">
-                                    <div class="feature-icon">
-                                        <img src="./images/icon_pessoas.svg" alt="Comunidade" width="28" height="28">
-                                    </div>
-                                    <div>
-                                        <h4 class="feature-title">Comunidade</h4>
-                                        <p class="feature-desc">Unimos alunos em prol de um ambiente escolar melhor.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Item 2: Benefícios -->
-                                <div class="feature-item">
-                                    <div class="feature-icon">
-                                        <img src="./images/icon_estrela.svg" alt="Benefícios" width="28" height="28">
-                                    </div>
-                                    <div>
-                                        <h4 class="feature-title">Benefícios</h4>
-                                        <p class="feature-desc">Descontos e vantagens exclusivas para associados.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Item 3: Participação -->
-                                <div class="feature-item">
-                                    <div class="feature-icon">
-                                        <img src="./images/icon_coração.svg" alt="Participação" width="28" height="28">
-                                    </div>
-                                    <div>
-                                        <h4 class="feature-title">Participação</h4>
-                                        <p class="feature-desc">Sua participação faz a diferença na nossa escola.</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-          <!-- 2. TELA: DOCUMENTAÇÃO (VAZIA) -->
-          <section id="documento" class="d-none">
-            <div class="section-header">
-              <span class="section-tag">DOCUMENTAÇÃO</span>
-
-              <h2 class="section-title">Envie seus documentos</h2>
-
-              <p class="section-description">
-                Anexe documentos para análise da AAPM. Formatos aceitos: PDF,
-                JPG e PNG. Limite de 10 MB por arquivo.
-              </p>
-            </div>
-
-            <!-- Área de envio -->
-            <form id="docForm" class="card documents-card">
-              <div class="drop">
-                <div class="upload-icon">☁</div>
-
-                <h3>Selecione seu arquivo</h3>
-
-                <input
-                  id="docFile"
-                  type="file"
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  required
-                />
-
-                <p class="muted">PDF, JPG ou PNG • até 10 MB</p>
-              </div>
-
-              <button type="submit" class="btn">Enviar documento</button>
-
-              <p id="docMsg"></p>
-            </form>
-
-            <!-- Documentos enviados -->
-            <div class="documents-list">
-              <h2 class="section-title">Documentos enviados</h2>
-
-              <div class="table-wrap">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Nome</th>
-                      <th>Tipo</th>
-                      <th>Data</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-
-                  <tbody id="documentsTable">
-                    <!-- Os documentos serão inseridos pelo JavaScript -->
-
-                    <tr>
-                      <td colspan="4" class="empty">
-                        Nenhum documento enviado.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Insira o conteúdo da tela Documentação aqui -->
-          </section>
-
-          <!-- 4. TELA: PEDIDOS DISPONÍVEIS (PRODUTOS DISPONÍVEIS) -->
-<section id="pedidos" class="d-none my-4">
-  <div class="container-fluid px-0 text-white">
-
-    <!-- TÍTULO -->
-    <div class="mb-4 text-start">
-      <h2 class="fw-bold fs-1 text-white mb-1">
-        Produtos disponíveis
-      </h2>
-
-      <p class="text-secondary small">
-        Confira os produtos e serviços oferecidos pela AAPM para os
-        alunos do SENAI
-      </p>
-    </div>
-
-    <!-- FILTROS DE CATEGORIAS -->
-    <div class="products-filters d-flex flex-wrap gap-2 mb-4 align-items-center">
-
-      <button
-        class="btn btn-filter active px-4 py-2"
-        type="button"
-        data-category="todos"
-      >
-        Todos
-      </button>
-
-      <button
-        class="btn btn-filter px-4 py-2"
-        type="button"
-        data-category="uniformes"
-      >
-        Uniformes
-      </button>
-
-      <button
-        class="btn btn-filter px-4 py-2"
-        type="button"
-        data-category="esportes"
-      >
-        Esportes
-      </button>
-
-      <button
-        class="btn btn-filter px-4 py-2"
-        type="button"
-        data-category="jogos"
-      >
-        Jogos
-      </button>
-
-      <button
-        class="btn btn-filter px-4 py-2"
-        type="button"
-        data-category="epi"
-      >
-        EPI
-      </button>
-
-      <button
-        class="btn btn-filter px-4 py-2"
-        type="button"
-        data-category="acessorios"
-      >
-        Acessórios
-      </button>
-
-    </div>
-
-
-    <!-- GRID PRINCIPAL -->
-    <div class="row g-4">
-
-      <!-- COLUNA DA ESQUERDA -->
-      <div class="col-lg-9">
-
-        <!-- ============================= -->
-        <!-- CARROSSEL / PRODUTOS -->
-        <!-- ============================= -->
-
-        <div class="products-carousel" id="productsCarousel">
-
-          <!-- BOTÃO ANTERIOR -->
-          <button
-            class="products-control products-prev"
-            type="button"
-            aria-label="Produtos anteriores"
-          >
-            <i class="bi bi-chevron-left"></i>
-          </button>
-
-
-          <!-- ÁREA DOS PRODUTOS -->
-          <div class="products-viewport">
-
-            <div class="products-track" id="productsTrack">
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 1 - UNIFORME -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="uniformes"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/camisa.png"
-                      alt="Uniforme Escolar Branco"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Uniforme Escolar (Branco)
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Camisa oficial da rede. Conforto e identidade
-                      para o dia a dia escolar.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <div class="container-preco">
-
-                        <span class="preco-de">
-                          De R$ 39,99
-                        </span>
-
-                        <strong class="preco-por">
-                          Por R$ 24,99
-                        </strong>
-
-                        <span class="badge-desconto">
-                          Economize 37.5%
-                        </span>
-
-                      </div>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 2 - JOGOS -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="jogos"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/pingpong.png"
-                      alt="Caixa de Bolinhas de Ping Pong"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Caixa de Bolinhas de Ping Pong
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Bolinhas para treinos e campeonatos internos.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <div class="container-preco">
-
-                        <span class="preco-de">
-                          De R$ 19,99
-                        </span>
-
-                        <strong class="preco-por">
-                          Por R$ 9,99
-                        </strong>
-
-                        <span class="badge-desconto">
-                          Economize 50%
-                        </span>
-
-                      </div>
-
-
-                      <button
-                        class="btn btn-outline-danger text-white w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 3 - ESPORTES -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="esportes"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/boladefutebol.png"
-                      alt="Bola de Futebol"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Bola de Futebol
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Bola oficial para jogos e treinamentos.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <div class="container-preco">
-
-                        <span class="preco-de">
-                          De R$ 66,99
-                        </span>
-
-                        <strong class="preco-por">
-                          Por R$ 29,99
-                        </strong>
-
-                        <span class="badge-desconto">
-                          Economize 55.23%
-                        </span>
-
-                      </div>
-
-
-                      <button
-                        class="btn btn-outline-danger text-white w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar / Reservar
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 4 - ESPORTES -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="esportes"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/boladevolei.png"
-                      alt="Bola de Vôlei"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Bola de Vôlei
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Bola para jogos e atividades esportivas.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                     <div class="container-preco">
-
-                        <span class="preco-de">
-                          De R$ 66,99
-                        </span>
-
-                        <strong class="preco-por">
-                          Por R$ 29,99
-                        </strong>
-
-                        <span class="badge-desconto">
-                          Economize 55.23%
-                        </span>
-
-                      </div>
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar / Reservar
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 5 - JOGOS -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="jogos"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/raquete.png"
-                      alt="Raquete de Ping Pong"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Raquete de Ping Pong
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Raquete para treinos e atividades recreativas.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <strong class="preco-por">
-                        Por R$ 30,00
-                      </strong>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 6 - ACESSÓRIOS -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="acessorios"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/bone.png"
-                      alt="Boné"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Boné
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Acessório oficial para os alunos.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <strong class="preco-por">
-                        Por R$ 30,00
-                      </strong>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 7 - ACESSÓRIOS -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="acessorios"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/Crachá.png"
-                      alt="Crachá"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Crachá com Cordão
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Identificação para utilização no ambiente escolar.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <strong class="preco-por">
-                        Por R$ 30,00
-                      </strong>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 8 - UNIFORME -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="uniformes"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/uniforme_preto.png"
-                      alt="Uniforme Escolar Preto"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Uniforme Escolar (Preto)
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Modelo de uniforme escolar.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <strong class="preco-por">
-                        Por R$ 30,00
-                      </strong>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 9 - EPI -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="epi"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/Oculos_de_proteção.png"
-                      alt="Óculos de Proteção"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Óculos de Proteção
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Equipamento de proteção individual.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <strong class="preco-por">
-                        Por R$ 30,00
-                      </strong>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 10 - EPI -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="epi"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/produto5.png"
-                      alt="Capacete de Proteção"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Capacete de Proteção
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Equipamento de proteção individual.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <strong class="preco-por">
-                        Por R$ 30,00
-                      </strong>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- PRODUTO 11 - EPI -->
-              <!-- ============================= -->
-
-              <div
-                class="product-slide"
-                data-category="epi"
-              >
-
-                <div
-                  class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card"
-                >
-
-                  <div class="text-center my-3 product-img-box">
-
-                    <img
-                      src="../landing/images/produto5.png"
-                      alt="Protetor de Ouvido"
-                      class="img-fluid"
-                      style="max-height: 160px"
-                    />
-
-                  </div>
-
-
-                  <div
-                    class="card-body d-flex flex-column p-0 text-start"
-                  >
-
-                    <h5 class="fw-bold mb-1">
-                      Protetor de Ouvido
-                    </h5>
-
-                    <p class="text-secondary small mb-3">
-                      Equipamento de proteção individual.
-                    </p>
-
-
-                    <div class="mt-auto">
-
-                      <strong class="preco-por">
-                        Por R$ 30,00
-                      </strong>
-
-
-                      <button
-                        class="btn btn-danger w-100 mt-3"
-                        type="button"
-                      >
-                        Comprar agora
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-            </div>
-          </div>
-
-
-          <!-- BOTÃO PRÓXIMO -->
-          <button
-            class="products-control products-next"
-            type="button"
-            aria-label="Próximos produtos"
-          >
-            <i class="bi bi-chevron-right"></i>
-          </button>
-
-        </div>
-
-
-
-        <!-- ============================= -->
-        <!-- BANNER ASSOCIADO -->
-        <!-- ============================= -->
-
-        <div
-          class="card border-secondary rounded-3 bg-dark text-white overflow-hidden p-0 banner-associado"
-        >
-
-          <div class="row g-0 align-items-center">
-
-            <div class="col-md-5">
-
-              <img
-                src="../landing/images/fundopedidosAlunos.png"
-                alt="Alunos AAPM"
-                class="img-fluid w-100 h-100 object-fit-cover"
-                style="min-height: 220px"
-              />
-
-            </div>
-
-
-            <div class="col-md-7 p-4 text-start">
-
-              <span
-                class="text-danger text-uppercase fw-bold small d-block mb-1"
-              >
-                FAÇA PARTE
-              </span>
-
-              <h3 class="fw-bold mb-2">
-                Seja um associado da AAPM
-              </h3>
-
-              <p class="text-secondary small mb-4">
-                Apoie as iniciativas estudantis e tenha acesso a
-                benefícios exclusivos em produtos e atividades!
-              </p>
-
-              <a
-                href="#sobre"
-                class="btn btn-danger px-4 py-2 fw-semibold"
-              >
-                Quero me associar
-                <i class="bi bi-arrow-right ms-1"></i>
-              </a>
-
-            </div>
-
-          </div>
-
-        </div>
-
       </div>
 
+    </section>
 
 
-      <!-- ============================= -->
-      <!-- SIDEBAR DIREITA -->
-      <!-- ============================= -->
-
-      <div class="col-lg-3">
-
-        <div
-          class="bg-dark p-4 rounded-3 border border-secondary text-start h-100 d-flex flex-column justify-content-between"
-        >
-
-          <div>
-
-            <!-- BENEFÍCIO 1 -->
-            <div class="d-flex align-items-start gap-3 mb-4">
-
-              <i
-                class="bi bi-shield-check text-danger fs-3 lh-1"
-              ></i>
-
-              <div>
-
-                <h6 class="fw-bold mb-1 text-white">
-                  Qualidade garantida
-                </h6>
-
-                <p
-                  class="text-secondary small mb-0"
-                  style="font-size: 0.8rem"
-                >
-                  Produtos oficiais e selecionados pela AAPM.
-                </p>
-
-              </div>
-
-            </div>
 
 
-            <!-- BENEFÍCIO 2 -->
-            <div class="d-flex align-items-start gap-3 mb-4">
-
-              <i
-                class="bi bi-star text-danger fs-3 lh-1"
-              ></i>
-
-              <div>
-
-                <h6 class="fw-bold mb-1 text-white">
-                  Descontos exclusivos
-                </h6>
-
-                <p
-                  class="text-secondary small mb-0"
-                  style="font-size: 0.8rem"
-                >
-                  Associados têm benefícios em diversos produtos.
-                </p>
-
-              </div>
-
-            </div>
 
 
-            <!-- BENEFÍCIO 3 -->
-            <div class="d-flex align-items-start gap-3 mb-4">
-
-              <i
-                class="bi bi-calendar-event text-danger fs-3 lh-1"
-              ></i>
-
-              <div>
-
-                <h6 class="fw-bold mb-1 text-white">
-                  Agendamento fácil
-                </h6>
-
-                <p
-                  class="text-secondary small mb-0"
-                  style="font-size: 0.8rem"
-                >
-                  Reserve espaços e itens de forma rápida e prática.
-                </p>
-
-              </div>
-
-            </div>
 
 
-            <!-- BENEFÍCIO 4 -->
-            <div class="d-flex align-items-start gap-3 mb-4">
 
-              <i
-                class="bi bi-headset text-danger fs-3 lh-1"
-              ></i>
 
-              <div>
 
-                <h6 class="fw-bold mb-1 text-white">
-                  Suporte AAPM
-                </h6>
 
-                <p
-                  class="text-secondary small mb-0"
-                  style="font-size: 0.8rem"
-                >
-                  Estamos aqui para apoiar sempre que precisar.
-                </p>
 
-              </div>
 
-            </div>
-
+    <div class="layout-wrapper">
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+          <div class="brand mb-4">
+            <img src="../landing/images/Logo TechCampus Horizontal.png " alt="TechCampus" class="img-fluid"
+              style="max-width: 230px" />
           </div>
 
+          <nav class="nav-menu">
+            <a href="#inicio" class="menu-item ativo"><img src="../landing/images/icon-inicio.svg" alt="inicio"
+                width="25" height="25" />Início</a>
+            <a href="#documento" class="menu-item"><img src="../landing/images/icon-documento.svg" alt="documento"
+                width="30" height="30" />Documentação</a>
 
-          <!-- ÍCONE DECORATIVO -->
+            <a href="#pedidos" class="menu-item"><img src="../landing/images/icon-pedido-disponivel.svg"
+                alt="pedido disponivel" width="30" height="30" />Pedidos disponíveis</a>
+            <a href="#avisos" class="menu-item"><img src="../landing/images/icon_aviso.svg" alt="aviso" width="40"
+                height="40" />Avisos gerais</a>
+            <a href="#sobre" class="menu-item"><img src="../landing/images/icon_sobre.svg" alt="sobre" width="30"
+                height="30" />Sobre a AAPM</a>
+            <a href="#formatura" class="menu-item"><img src="../landing/images/icon_agenda.svg" alt="formatura"
+                width="30" height="30" />Temporada de Formatura</a>
+            <a href="#ajuda" class="menu-item"><img src="../landing/images/icon_ajuda.svg" alt="ajuda" width="40"
+                height="40" />Ajuda</a>
+          </nav>
+        </div>
 
-          <div
-            class="text-center pt-4 border-top border-secondary mt-3"
-          >
+        <div class="sidebar-bottom pt-3">
+          <a href="../landing/index.html">
+            <button id="loginBtn"
+              class="btn w-100 d-flex align-items-center justify-content-center gap-2 text-white border-secondary">
+              <i class="bi bi-box-arrow-in-right"></i>
+              <span>Sair</span>
+            </button>
+          </a>
+        </div>
+      </aside>
 
-            <div
-              class="p-3 rounded-circle border border-danger d-inline-flex align-items-center justify-content-center"
-              style="
+      <!-- CONTEÚDO PRINCIPAL (ÁREA DAS TELAS) -->
+      <main class="main-content">
+        <!-- 1. TELA: INÍCIO (ÚNICA TELA COM CONTEÚDO E VISÍVEL) -->
+        <section id="inicio">
+          <!-- HERO CARD -->
+          <div class="hero-card">
+            <div class="row align-items-center gy-4">
+              <div class="col-lg-7 text-start">
+                <h1 class="display-4 fw-bold mb-3 text-white">
+                  Bem-vindo <br />
+                  Usuário <span style="color: #ce1727ef">a AAPM</span>
+                </h1>
+                <h2 class="h5 fw-normal text-light mb-3">
+                  informações, benefícios e oportunidades em um só lugar.
+                </h2>
+                <p class="text-secondary small lh-base max-w-500">
+                  O TechCampus conecta você à AAPM da escola reunindo avisos,
+                  benefícios, eventos e serviços em uma única plataforma.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARROSSEL -->
+          <div class="carousel-container mt-4">
+            <div id="techCampusCarousel" class="carousel slide custom-carousel shadow-lg" data-bs-ride="carousel">
+              <div class="carousel-indicators mb-3">
+                <button type="button" data-bs-target="#techCampusCarousel" data-bs-slide-to="0" class="active"
+                  aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#techCampusCarousel" data-bs-slide-to="1"
+                  aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#techCampusCarousel" data-bs-slide-to="2"
+                  aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#techCampusCarousel" data-bs-slide-to="3"
+                  aria-label="Slide 4"></button>
+              </div>
+
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="../landing/images/banner_01.jpg" class="d-block w-100 carousel-img" alt="Banner 1" />
+                </div>
+                <div class="carousel-item">
+                  <img src="../landing/images/banner_02.jpg" class="d-block w-80 carousel-img" alt="Banner 2" />
+                </div>
+                <div class="carousel-item">
+                  <img src="../landing/images/banner_03.jpg" class="d-block w-100 carousel-img" alt="Banner 3" />
+                </div>
+                <div class="carousel-item">
+                  <img src="../landing/images/banner_04.jpg" class="d-block w-100 carousel-img" alt="Banner 4" />
+                </div>
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#techCampusCarousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#techCampusCarousel"
+                data-bs-slide-to="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+              </button>
+            </div>
+          </div>
+          <!-- SEÇÃO DE AVISOS -->
+          <section class="avisos-section">
+            <h3 class="avisos-title">Avisos Importantes</h3>
+
+            <div class="row g-3">
+              <!-- Card 1 -->
+              <div class="col-lg-4 col-md-6">
+                <div class="aviso-card">
+                  <div class="aviso-header">
+                    <div class="icon-circle">
+                      <i class="bi bi-broadcast"></i>
+                    </div>
+                    <div>
+                      <div class="aviso-tag">Aviso Geral</div>
+                      <h4 class="aviso-title-card">Novo aviso<br>da AAPM</h4>
+                      <p class="aviso-description">Confira as novidades sobre benefícios e atividades.</p>
+                    </div>
+                  </div>
+                  <i class="bi bi-arrow-right aviso-arrow"></i>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="col-lg-4 col-md-6">
+                <div class="aviso-card">
+                  <div class="aviso-header">
+                    <div class="icon-circle">
+                      <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <div>
+                      <div class="aviso-tag">Evento</div>
+                      <h4 class="aviso-title-card">Semana de<br>integração 2026</h4>
+                      <p class="aviso-description">Participe da semana de integração e conheça novas oportunidades.</p>
+                    </div>
+                  </div>
+                  <i class="bi bi-arrow-right aviso-arrow"></i>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="col-lg-4 col-md-6">
+                <div class="aviso-card">
+                  <div class="aviso-header">
+                    <div class="icon-circle">
+                      <i class="bi bi-person-arms-up"></i>
+                    </div>
+                    <div>
+                      <div class="aviso-tag">Uniformes</div>
+                      <h4 class="aviso-title-card">Período de solicitação<br>de uniformes</h4>
+                      <p class="aviso-description">Fique atento às datas para solicitar seu uniforme com desconto.</p>
+                    </div>
+                  </div>
+                  <i class="bi bi-arrow-right aviso-arrow"></i>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SEÇÃO SOBRE A AAPM -->
+          <section class="aapm-section">
+            <div class="aapm-card">
+              <div class="row align-items-center g-4">
+
+                <!-- Coluna da Esquerda: Imagem -->
+                <div class="col-lg-5">
+                  <img src="./images/imagem_sem_fundo_preto.png" alt="Alunos AAPM" class="img-fluid aapm-img">
+                </div>
+
+                <!-- Coluna Central: Conteúdo e Botão -->
+                <div class="col-lg-4 ps-lg-4">
+                  <span class="aapm-tag">SOBRE a AAPM</span>
+                  <h2 class="aapm-title mb-3">O que é a AAPM?</h2>
+                  <p class="aapm-text">
+                    A AAPM é uma associação que busca promover ações, atividades e benefícios para os alunos da escola.
+                  </p>
+                  <p class="aapm-text mb-4">
+                    Por meio dela, os estudantes podem participar de eventos, projetos e iniciativas desenvolvidas para
+                    a comunidade escolar.
+                  </p>
+                  <a href="#sobre" class="btn btn-aapm">
+                    Saiba mais sobre a AAPM <i class="bi bi-arrow-right ms-2"></i>
+                  </a>
+                </div>
+
+                <!-- Coluna da Direita: Recursos com ícones svg -->
+                <div class="col-lg-3 aapm-features-col">
+                  <div class="aapm-features">
+
+                    <!-- Item 1: Comunidade -->
+                    <div class="feature-item">
+                      <div class="feature-icon">
+                        <img src="./images/icon_pessoas.svg" alt="Comunidade" width="28" height="28">
+                      </div>
+                      <div>
+                        <h4 class="feature-title">Comunidade</h4>
+                        <p class="feature-desc">Unimos alunos em prol de um ambiente escolar melhor.</p>
+                      </div>
+                    </div>
+
+                    <!-- Item 2: Benefícios -->
+                    <div class="feature-item">
+                      <div class="feature-icon">
+                        <img src="./images/icon_estrela.svg" alt="Benefícios" width="28" height="28">
+                      </div>
+                      <div>
+                        <h4 class="feature-title">Benefícios</h4>
+                        <p class="feature-desc">Descontos e vantagens exclusivas para associados.</p>
+                      </div>
+                    </div>
+
+                    <!-- Item 3: Participação -->
+                    <div class="feature-item">
+                      <div class="feature-icon">
+                        <img src="./images/icon_coração.svg" alt="Participação" width="28" height="28">
+                      </div>
+                      <div>
+                        <h4 class="feature-title">Participação</h4>
+                        <p class="feature-desc">Sua participação faz a diferença na nossa escola.</p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </section>
+
+
+
+
+        <!-- 2. TELA: DOCUMENTAÇÃO (VAZIA) -->
+        <section id="documento" class="d-none">
+          <div class="section-header">
+            <span class="section-tag">DOCUMENTAÇÃO</span>
+
+            <h2 class="section-title">Envie seus documentos</h2>
+
+            <p class="section-description">
+              Anexe documentos para análise da AAPM. Formatos aceitos: PDF,
+              JPG e PNG. Limite de 10 MB por arquivo.
+            </p>
+          </div>
+
+          <!-- Área de envio -->
+          <form id="docForm" class="card documents-card">
+            <div class="drop">
+              <div class="upload-icon">☁</div>
+
+              <h3>Selecione seu arquivo</h3>
+
+              <input id="docFile" type="file" accept=".pdf,.jpg,.jpeg,.png" required />
+
+              <p class="muted">PDF, JPG ou PNG • até 10 MB</p>
+            </div>
+
+            <button type="submit" class="btn">Enviar documento</button>
+
+            <p id="docMsg"></p>
+          </form>
+
+          <!-- Documentos enviados -->
+          <div class="documents-list">
+            <h2 class="section-title">Documentos enviados</h2>
+
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody id="documentsTable">
+                  <!-- Os documentos serão inseridos pelo JavaScript -->
+
+                  <tr>
+                    <td colspan="4" class="empty">
+                      Nenhum documento enviado.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Insira o conteúdo da tela Documentação aqui -->
+        </section>
+
+        <!-- 4. TELA: PEDIDOS DISPONÍVEIS (PRODUTOS DISPONÍVEIS) -->
+        <section id="pedidos" class="d-none my-4">
+          <div class="container-fluid px-0 text-white">
+
+            <!-- TÍTULO -->
+            <div class="mb-4 text-start">
+              <h2 class="fw-bold fs-1 text-white mb-1">
+                Produtos disponíveis
+              </h2>
+
+              <p class="text-secondary small">
+                Confira os produtos e serviços oferecidos pela AAPM para os
+                alunos do SENAI
+              </p>
+            </div>
+
+            <!-- FILTROS DE CATEGORIAS -->
+            <div class="products-filters d-flex flex-wrap gap-2 mb-4 align-items-center">
+
+              <button class="btn btn-filter active px-4 py-2" type="button" data-category="todos">
+                Todos
+              </button>
+
+              <button class="btn btn-filter px-4 py-2" type="button" data-category="uniformes">
+                Uniformes
+              </button>
+
+              <button class="btn btn-filter px-4 py-2" type="button" data-category="esportes">
+                Esportes
+              </button>
+
+              <button class="btn btn-filter px-4 py-2" type="button" data-category="jogos">
+                Jogos
+              </button>
+
+              <button class="btn btn-filter px-4 py-2" type="button" data-category="epi">
+                EPI
+              </button>
+
+              <button class="btn btn-filter px-4 py-2" type="button" data-category="acessorios">
+                Acessórios
+              </button>
+
+            </div>
+
+
+            <!-- GRID PRINCIPAL -->
+            <div class="row g-4">
+
+              <!-- COLUNA DA ESQUERDA -->
+              <div class="col-lg-9">
+
+                <!-- ============================= -->
+                <!-- CARROSSEL / PRODUTOS -->
+                <!-- ============================= -->
+
+                <div class="products-carousel" id="productsCarousel">
+
+                  <!-- BOTÃO ANTERIOR -->
+                  <button class="products-control products-prev" type="button" aria-label="Produtos anteriores">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+
+
+                  <!-- ÁREA DOS PRODUTOS -->
+                  <div class="products-viewport">
+
+                    <div class="products-track" id="productsTrack">
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 1 - UNIFORME -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="uniformes">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/camisa.png" alt="Uniforme Escolar Branco" class="img-fluid"
+                              style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Uniforme Escolar (Branco)
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Camisa oficial da rede. Conforto e identidade
+                              para o dia a dia escolar.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <div class="container-preco">
+
+                                <span class="preco-de">
+                                  De R$ 39,99
+                                </span>
+
+                                <strong class="preco-por">
+                                  Por R$ 24,99
+                                </strong>
+
+                                <span class="badge-desconto">
+                                  Economize 37.5%
+                                </span>
+
+                              </div>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 2 - JOGOS -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="jogos">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/pingpong.png" alt="Caixa de Bolinhas de Ping Pong"
+                              class="img-fluid" style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Caixa de Bolinhas de Ping Pong
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Bolinhas para treinos e campeonatos internos.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <div class="container-preco">
+
+                                <span class="preco-de">
+                                  De R$ 19,99
+                                </span>
+
+                                <strong class="preco-por">
+                                  Por R$ 9,99
+                                </strong>
+
+                                <span class="badge-desconto">
+                                  Economize 50%
+                                </span>
+
+                              </div>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 3 - ESPORTES -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="esportes">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/boladefutebol.png" alt="Bola de Futebol" class="img-fluid"
+                              style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Bola de Futebol
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Bola oficial para jogos e treinamentos.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <div class="container-preco">
+
+                                <span class="preco-de">
+                                  De R$ 66,99
+                                </span>
+
+                                <strong class="preco-por">
+                                  Por R$ 29,99
+                                </strong>
+
+                                <span class="badge-desconto">
+                                  Economize 55.23%
+                                </span>
+
+                              </div>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar / Reservar
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 4 - ESPORTES -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="esportes">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/boladevolei.png" alt="Bola de Vôlei" class="img-fluid"
+                              style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Bola de Vôlei
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Bola para jogos e atividades esportivas.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <div class="container-preco">
+
+                                <span class="preco-de">
+                                  De R$ 66,99
+                                </span>
+
+                                <strong class="preco-por">
+                                  Por R$ 29,99
+                                </strong>
+
+                                <span class="badge-desconto">
+                                  Economize 55.23%
+                                </span>
+
+                              </div>
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar / Reservar
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 5 - JOGOS -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="jogos">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/raquete.png" alt="Raquete de Ping Pong" class="img-fluid"
+                              style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Raquete de Ping Pong
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Raquete para treinos e atividades recreativas.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <div class="container-preco">
+
+                                <span class="preco-de">
+                                  De R$ 29,99
+                                </span>
+
+                                <strong class="preco-por">
+                                  Por R$ 19,99
+                                </strong>
+
+                                <span class="badge-desconto">
+                                  Economize 33.3%
+                                </span>
+
+                              </div>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 7 - ACESSÓRIOS -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="acessorios">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/Crachá.png" alt="Crachá" class="img-fluid"
+                              style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Crachá com Cordão
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Identificação para utilização no ambiente escolar.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <div class="container-preco">
+
+                                <span class="preco-de">
+                                  De R$ 13,99
+                                </span>
+
+                                <strong class="preco-por">
+                                  Por R$ 5,99
+                                </strong>
+
+                                <span class="badge-desconto">
+                                  Economize 57.1%
+                                </span>
+
+                              </div>
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 8 - UNIFORME -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="uniformes">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/uniforme_preto.png" alt="Uniforme Escolar Preto"
+                              class="img-fluid" style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Uniforme Escolar (Preto)
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Modelo de uniforme escolar.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                             <div class="container-preco">
+
+                                <span class="preco-de">
+                                  De R$ 49,99
+                                </span>
+
+                                <strong class="preco-por">
+                                  Por R$ 34,99
+                                </strong>
+
+                                <span class="badge-desconto">
+                                  Economize 37.5%
+                                </span>
+
+                              </div>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 9 - EPI -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="epi">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/Oculos_de_proteção.png" alt="Óculos de Proteção"
+                              class="img-fluid" style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Óculos de Proteção
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Equipamento de proteção individual.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <strong class="preco-por">
+                                Por R$ 30,00
+                              </strong>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 10 - EPI -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="epi">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/produto5.png" alt="Capacete de Proteção" class="img-fluid"
+                              style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Capacete de Proteção
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Equipamento de proteção individual.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <strong class="preco-por">
+                                Por R$ 30,00
+                              </strong>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <!-- ============================= -->
+                      <!-- PRODUTO 11 - EPI -->
+                      <!-- ============================= -->
+
+                      <div class="product-slide" data-category="epi">
+
+                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+
+                          <div class="text-center my-3 product-img-box">
+
+                            <img src="../landing/images/produto5.png" alt="Protetor de Ouvido" class="img-fluid"
+                              style="max-height: 160px" />
+
+                          </div>
+
+
+                          <div class="card-body d-flex flex-column p-0 text-start">
+
+                            <h5 class="fw-bold mb-1">
+                              Protetor de Ouvido
+                            </h5>
+
+                            <p class="text-secondary small mb-3">
+                              Equipamento de proteção individual.
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                              <strong class="preco-por">
+                                Por R$ 30,00
+                              </strong>
+
+
+                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+                                Comprar agora
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                  </div>
+
+
+                  <!-- BOTÃO PRÓXIMO -->
+                  <button class="products-control products-next" type="button" aria-label="Próximos produtos">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+
+                </div>
+
+
+
+                <!-- ============================= -->
+                <!-- BANNER ASSOCIADO -->
+                <!-- ============================= -->
+
+                <div class="card border-secondary rounded-3 bg-dark text-white overflow-hidden p-0 banner-associado">
+
+                  <div class="row g-0 align-items-center">
+
+                    <div class="col-md-5">
+
+                      <img src="../landing/images/fundopedidosAlunos.png" alt="Alunos AAPM"
+                        class="img-fluid w-100 h-100 object-fit-cover" style="min-height: 220px" />
+
+                    </div>
+
+
+                    <div class="col-md-7 p-4 text-start">
+
+                      <span class="text-danger text-uppercase fw-bold small d-block mb-1">
+                        FAÇA PARTE
+                      </span>
+
+                      <h3 class="fw-bold mb-2">
+                        Seja um associado da AAPM
+                      </h3>
+
+                      <p class="text-secondary small mb-4">
+                        Apoie as iniciativas estudantis e tenha acesso a
+                        benefícios exclusivos em produtos e atividades!
+                      </p>
+
+                      <a href="#sobre" class="btn btn-danger px-4 py-2 fw-semibold">
+                        Quero me associar
+                        <i class="bi bi-arrow-right ms-1"></i>
+                      </a>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+              <!-- ============================= -->
+              <!-- SIDEBAR DIREITA -->
+              <!-- ============================= -->
+
+              <div class="col-lg-3">
+
+                <div
+                  class="bg-dark p-4 rounded-3 border border-secondary text-start h-100 d-flex flex-column justify-content-between">
+
+                  <div>
+
+                    <!-- BENEFÍCIO 1 -->
+                    <div class="d-flex align-items-start gap-3 mb-4">
+
+                      <i class="bi bi-shield-check text-danger fs-3 lh-1"></i>
+
+                      <div>
+
+                        <h6 class="fw-bold mb-1 text-white">
+                          Qualidade garantida
+                        </h6>
+
+                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+                          Produtos oficiais e selecionados pela AAPM.
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    <!-- BENEFÍCIO 2 -->
+                    <div class="d-flex align-items-start gap-3 mb-4">
+
+                      <i class="bi bi-star text-danger fs-3 lh-1"></i>
+
+                      <div>
+
+                        <h6 class="fw-bold mb-1 text-white">
+                          Descontos exclusivos
+                        </h6>
+
+                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+                          Associados têm benefícios em diversos produtos.
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    <!-- BENEFÍCIO 3 -->
+                    <div class="d-flex align-items-start gap-3 mb-4">
+
+                      <i class="bi bi-calendar-event text-danger fs-3 lh-1"></i>
+
+                      <div>
+
+                        <h6 class="fw-bold mb-1 text-white">
+                          Agendamento fácil
+                        </h6>
+
+                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+                          Reserve espaços e itens de forma rápida e prática.
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    <!-- BENEFÍCIO 4 -->
+                    <div class="d-flex align-items-start gap-3 mb-4">
+
+                      <i class="bi bi-headset text-danger fs-3 lh-1"></i>
+
+                      <div>
+
+                        <h6 class="fw-bold mb-1 text-white">
+                          Suporte AAPM
+                        </h6>
+
+                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+                          Estamos aqui para apoiar sempre que precisar.
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- ÍCONE DECORATIVO -->
+
+                  <div class="text-center pt-4 border-top border-secondary mt-3">
+
+                    <div
+                      class="p-3 rounded-circle border border-danger d-inline-flex align-items-center justify-content-center"
+                      style="
                 width: 90px;
                 height: 90px;
                 background: rgba(220, 53, 69, 0.05);
-              "
-            >
+              ">
 
-              <i
-                class="bi bi-people-fill text-danger display-5"
-              ></i>
+                      <i class="bi bi-people-fill text-danger display-5"></i>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
 
             </div>
 
           </div>
+        </section>
 
-        </div>
 
-      </div>
+        <!-- 5. TELA: AVISOS GERAIS (VAZIA) -->
+        <section id="avisos" class="d-none">
+          <!-- Insira o conteúdo da tela Avisos Gerais aqui -->
+        </section>
 
-    </div>
+        <!-- 6. TELA: SOBRE A AAPM (VAZIA) -->
+        <section id="sobre" class="d-none">
+          <!-- Insira o conteúdo da tela Sobre a AAPM aqui -->
+        </section>
 
-  </div>
-</section>
+        <!-- TELA TEMPORADA DE FORMATURA -->
+        <section id="formatura" class="d-none my-4">
+          <div class="container-fluid px-0 text-white">
+            <!-- HERO BANNER COM BACKGROUND DE PARQUE -->
+            <div class="formatura-hero position-relative rounded-3 overflow-hidden p-4 p-md-5 mb-4">
+              <div class="formatura-hero-overlay"></div>
+              <div class="position-relative z-2 max-w-600 text-start">
+                <span class="text-uppercase fw-semibold text-danger small tracking-wider mb-2 d-block">Temporada de
+                  Formatura</span>
+                <h1 class="display-5 fw-bold text-white mb-3">
+                  Sua conquista merece <br />um dia
+                  <span class="text-danger">inesquecível</span>
+                </h1>
+                <p class="text-light-50 small lh-base mb-4 max-w-450">
+                  Anexe os documentos que comprovam os produtos disponíveis da
+                  AAPM.<br />
+                  Após o envio, nossa equipe irá analisar e validar as
+                  informações.
+                </p>
 
-          
-          <!-- 5. TELA: AVISOS GERAIS (VAZIA) -->
-          <section id="avisos" class="d-none">
-            <!-- Insira o conteúdo da tela Avisos Gerais aqui -->
-          </section>
+                <!-- Destaques / Benefícios (Badges) -->
+                <div class="d-flex flex-wrap gap-3 pt-2">
+                  <div class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2">
+                    <i class="bi bi-bus-front text-danger fs-5"></i>
+                    <span class="small fw-medium">Transporte incluso</span>
+                  </div>
+                  <div class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2">
+                    <i class="bi bi-utensils text-danger fs-5"></i>
+                    <span class="small fw-medium">Alimentação inclusa</span>
+                  </div>
+                  <div class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2">
+                    <i class="bi bi-people text-danger fs-5"></i>
+                    <span class="small fw-medium">Lazer e diversão garantidos</span>
+                  </div>
+                  <div class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2">
+                    <i class="bi bi-percent text-danger fs-5"></i>
+                    <span class="small fw-medium">Sem custos adicionais</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <!-- 6. TELA: SOBRE A AAPM (VAZIA) -->
-          <section id="sobre" class="d-none">
-            <!-- Insira o conteúdo da tela Sobre a AAPM aqui -->
-          </section>
-
-          <!-- TELA TEMPORADA DE FORMATURA -->
-          <section id="formatura" class="d-none my-4">
-            <div class="container-fluid px-0 text-white">
-              <!-- HERO BANNER COM BACKGROUND DE PARQUE -->
-              <div
-                class="formatura-hero position-relative rounded-3 overflow-hidden p-4 p-md-5 mb-4"
-              >
-                <div class="formatura-hero-overlay"></div>
-                <div class="position-relative z-2 max-w-600 text-start">
-                  <span
-                    class="text-uppercase fw-semibold text-danger small tracking-wider mb-2 d-block"
-                    >Temporada de Formatura</span
-                  >
-                  <h1 class="display-5 fw-bold text-white mb-3">
-                    Sua conquista merece <br />um dia
-                    <span class="text-danger">inesquecível</span>
-                  </h1>
-                  <p class="text-light-50 small lh-base mb-4 max-w-450">
-                    Anexe os documentos que comprovam os produtos disponíveis da
-                    AAPM.<br />
-                    Após o envio, nossa equipe irá analisar e validar as
-                    informações.
+            <!-- PASSO A PASSO (CARDS DE ETAPAS) -->
+            <div class="row g-3 mb-5 align-items-center">
+              <!-- Passo 1 -->
+              <div class="col-12 col-md-3">
+                <div class="step-card p-3 rounded-3 h-100 position-relative text-start">
+                  <i class="bi bi-mortarboard text-danger fs-4 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1">1. Conclua seu curso</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.78rem">
+                    Finalize todas as etapas do seu curso no SENAI.
                   </p>
-
-                  <!-- Destaques / Benefícios (Badges) -->
-                  <div class="d-flex flex-wrap gap-3 pt-2">
-                    <div
-                      class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2"
-                    >
-                      <i class="bi bi-bus-front text-danger fs-5"></i>
-                      <span class="small fw-medium">Transporte incluso</span>
-                    </div>
-                    <div
-                      class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2"
-                    >
-                      <i class="bi bi-utensils text-danger fs-5"></i>
-                      <span class="small fw-medium">Alimentação inclusa</span>
-                    </div>
-                    <div
-                      class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2"
-                    >
-                      <i class="bi bi-people text-danger fs-5"></i>
-                      <span class="small fw-medium"
-                        >Lazer e diversão garantidos</span
-                      >
-                    </div>
-                    <div
-                      class="formatura-badge d-flex align-items-center gap-2 px-3 py-2 rounded-2"
-                    >
-                      <i class="bi bi-percent text-danger fs-5"></i>
-                      <span class="small fw-medium">Sem custos adicionais</span>
-                    </div>
-                  </div>
                 </div>
               </div>
 
-              <!-- PASSO A PASSO (CARDS DE ETAPAS) -->
-              <div class="row g-3 mb-5 align-items-center">
-                <!-- Passo 1 -->
-                <div class="col-12 col-md-3">
-                  <div
-                    class="step-card p-3 rounded-3 h-100 position-relative text-start"
-                  >
-                    <i
-                      class="bi bi-mortarboard text-danger fs-4 mb-2 d-block"
-                    ></i>
-                    <h6 class="fw-bold mb-1">1. Conclua seu curso</h6>
-                    <p
-                      class="text-secondary small mb-0"
-                      style="font-size: 0.78rem"
-                    >
-                      Finalize todas as etapas do seu curso no SENAI.
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Passo 2 -->
-                <div class="col-12 col-md-3">
-                  <div
-                    class="step-card p-3 rounded-3 h-100 position-relative text-start"
-                  >
-                    <i
-                      class="bi bi-check-circle text-danger fs-4 mb-2 d-block"
-                    ></i>
-                    <h6 class="fw-bold mb-1">2. Quite todos os semestres</h6>
-                    <p
-                      class="text-secondary small mb-0"
-                      style="font-size: 0.78rem"
-                    >
-                      Esteja em dia com todos os pagamentos do programa AAPM.
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Passo 3 -->
-                <div class="col-12 col-md-3">
-                  <div
-                    class="step-card p-3 rounded-3 h-100 position-relative text-start"
-                  >
-                    <i class="bi bi-box-seam text-danger fs-4 mb-2 d-block"></i>
-                    <h6 class="fw-bold mb-1">3. Garanta seu benefício</h6>
-                    <p
-                      class="text-secondary small mb-0"
-                      style="font-size: 0.78rem"
-                    >
-                      Você estará automaticamente incluso na temporada de
-                      formatura.
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Passo 4 -->
-                <div class="col-12 col-md-3">
-                  <div
-                    class="step-card p-3 rounded-3 h-100 position-relative text-start"
-                  >
-                    <i
-                      class="bi bi-emoji-smile text-danger fs-4 mb-2 d-block"
-                    ></i>
-                    <h6 class="fw-bold mb-1">4. Aproveite o dia!</h6>
-                    <p
-                      class="text-secondary small mb-0"
-                      style="font-size: 0.78rem"
-                    >
-                      Um dia inteiro de diversão com tudo incluso e sem
-                      preocupações!
-                    </p>
-                  </div>
+              <!-- Passo 2 -->
+              <div class="col-12 col-md-3">
+                <div class="step-card p-3 rounded-3 h-100 position-relative text-start">
+                  <i class="bi bi-check-circle text-danger fs-4 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1">2. Quite todos os semestres</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.78rem">
+                    Esteja em dia com todos os pagamentos do programa AAPM.
+                  </p>
                 </div>
               </div>
 
-              <!-- DESTINOS QUE JÁ RECEBEMOS -->
-              <div class="mb-4 text-start">
-                <h5 class="fw-bold mb-3">Destinos que já recebemos</h5>
-
-                <div class="row g-3">
-                  <!-- Destino 1 -->
-                  <div class="col-12 col-sm-6 col-lg-3">
-                    <div
-                      class="destino-card rounded-3 overflow-hidden text-start"
-                    >
-                      <img
-                        src="../images/thermas_water_park.jpg"
-                        alt="Thermas Water Park"
-                        class="img-fluid w-100 destino-img"
-                      />
-                      <div class="p-2 px-3 bg-dark-card">
-                        <h6
-                          class="fw-bold mb-0 text-truncate"
-                          style="font-size: 0.9rem"
-                        >
-                          Thermas Water Park
-                        </h6>
-                        <small
-                          class="text-secondary d-block"
-                          style="font-size: 0.75rem"
-                          >São Pedro - SP</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Destino 2 -->
-                  <div class="col-12 col-sm-6 col-lg-3">
-                    <div
-                      class="destino-card rounded-3 overflow-hidden text-start"
-                    >
-                      <img
-                        src="../images/sitio_paraiso_verde.jpg"
-                        alt="Sítio Paraíso Verde"
-                        class="img-fluid w-100 destino-img"
-                      />
-                      <div class="p-2 px-3 bg-dark-card">
-                        <h6
-                          class="fw-bold mb-0 text-truncate"
-                          style="font-size: 0.9rem"
-                        >
-                          Sítio Paraíso Verde
-                        </h6>
-                        <small
-                          class="text-secondary d-block"
-                          style="font-size: 0.75rem"
-                          >Mairiporã - SP</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Destino 3 -->
-                  <div class="col-12 col-sm-6 col-lg-3">
-                    <div
-                      class="destino-card rounded-3 overflow-hidden text-start"
-                    >
-                      <img
-                        src="../images/hopi_hari.jpg"
-                        alt="Hopi Hari"
-                        class="img-fluid w-100 destino-img"
-                      />
-                      <div class="p-2 px-3 bg-dark-card">
-                        <h6
-                          class="fw-bold mb-0 text-truncate"
-                          style="font-size: 0.9rem"
-                        >
-                          Hopi Hari
-                        </h6>
-                        <small
-                          class="text-secondary d-block"
-                          style="font-size: 0.75rem"
-                          >Vinhedo - SP</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Destino 4 -->
-                  <div class="col-12 col-sm-6 col-lg-3">
-                    <div
-                      class="destino-card rounded-3 overflow-hidden text-start"
-                    >
-                      <img
-                        src="../images/sitio_recanto_feliz.jpg"
-                        alt="Sítio Recanto Feliz"
-                        class="img-fluid w-100 destino-img"
-                      />
-                      <div class="p-2 px-3 bg-dark-card">
-                        <h6
-                          class="fw-bold mb-0 text-truncate"
-                          style="font-size: 0.9rem"
-                        >
-                          Sítio Recanto Feliz
-                        </h6>
-                        <small
-                          class="text-secondary d-block"
-                          style="font-size: 0.75rem"
-                          >Atibaia - SP</small
-                        >
-                      </div>
-                    </div>
-                  </div>
+              <!-- Passo 3 -->
+              <div class="col-12 col-md-3">
+                <div class="step-card p-3 rounded-3 h-100 position-relative text-start">
+                  <i class="bi bi-box-seam text-danger fs-4 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1">3. Garanta seu benefício</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.78rem">
+                    Você estará automaticamente incluso na temporada de
+                    formatura.
+                  </p>
                 </div>
               </div>
 
-              <!-- AVISO IMPORTANTE NO RODAPÉ -->
-              <div
-                class="aviso-importante p-3 rounded-3 d-flex align-items-center gap-3 text-start mt-4"
-              >
-                <div
-                  class="aviso-icon flex-shrink-0 d-flex align-items-center justify-content-center text-danger"
-                >
-                  <i class="bi bi-asterisk fs-4"></i>
-                </div>
-                <div>
-                  <span class="fw-bold text-white d-block small"
-                    >Importante</span
-                  >
-                  <p
-                    class="text-secondary small mb-0"
-                    style="font-size: 0.8rem"
-                  >
-                    O bate-volta acontece apenas uma vez ao término do curso e é
-                    exclusivo para alunos que concluírem todas as etapas e
-                    estiverem em dia com o programa.
+              <!-- Passo 4 -->
+              <div class="col-12 col-md-3">
+                <div class="step-card p-3 rounded-3 h-100 position-relative text-start">
+                  <i class="bi bi-emoji-smile text-danger fs-4 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1">4. Aproveite o dia!</h6>
+                  <p class="text-secondary small mb-0" style="font-size: 0.78rem">
+                    Um dia inteiro de diversão com tudo incluso e sem
+                    preocupações!
                   </p>
                 </div>
               </div>
             </div>
-          </section>
 
-          <!-- 8. TELA: AJUDA (VAZIA) -->
-          <!-- 8. TELA: AJUDA E SUPORTE -->
-<section id="ajuda" class="d-none my-4">
-    <div class="container-fluid px-0 text-white text-start">
+            <!-- DESTINOS QUE JÁ RECEBEMOS -->
+            <div class="mb-4 text-start">
+              <h5 class="fw-bold mb-3">Destinos que já recebemos</h5>
 
-        <!-- CABEÇALHO COM BUSCA -->
-        <div class="help-hero p-4 p-md-5 rounded-3 mb-4 text-center text-md-start border border-secondary position-relative overflow-hidden">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <span class="text-uppercase fw-bold text-danger small mb-1 d-block tracking-wide">Central de Suporte TechCampus</span>
-                    <h2 class="display-6 fw-bold text-white mb-2">Como podemos <span class="text-danger">ajudar você?</span></h2>
-                    <p class="text-secondary small mb-4">Tire suas dúvidas sobre documentos, pagamentos, aplicativo e a temporada de formatura.</p>
-
-                    <!-- Barra de Pesquisa -->
-                    <div class="position-relative max-w-500">
-                        <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary fs-5"></i>
-                        <input type="text" id="helpSearchInput" class="form-control form-control-lg bg-dark text-white border-secondary ps-5 fs-6" placeholder="Digite sua dúvida (ex: documentos, pagamento, formatura...)">
+              <div class="row g-3">
+                <!-- Destino 1 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                  <div class="destino-card rounded-3 overflow-hidden text-start">
+                    <img src="../images/thermas_water_park.jpg" alt="Thermas Water Park"
+                      class="img-fluid w-100 destino-img" />
+                    <div class="p-2 px-3 bg-dark-card">
+                      <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
+                        Thermas Water Park
+                      </h6>
+                      <small class="text-secondary d-block" style="font-size: 0.75rem">São Pedro - SP</small>
                     </div>
+                  </div>
+                </div>
+
+                <!-- Destino 2 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                  <div class="destino-card rounded-3 overflow-hidden text-start">
+                    <img src="../images/sitio_paraiso_verde.jpg" alt="Sítio Paraíso Verde"
+                      class="img-fluid w-100 destino-img" />
+                    <div class="p-2 px-3 bg-dark-card">
+                      <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
+                        Sítio Paraíso Verde
+                      </h6>
+                      <small class="text-secondary d-block" style="font-size: 0.75rem">Mairiporã - SP</small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Destino 3 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                  <div class="destino-card rounded-3 overflow-hidden text-start">
+                    <img src="../images/hopi_hari.jpg" alt="Hopi Hari" class="img-fluid w-100 destino-img" />
+                    <div class="p-2 px-3 bg-dark-card">
+                      <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
+                        Hopi Hari
+                      </h6>
+                      <small class="text-secondary d-block" style="font-size: 0.75rem">Vinhedo - SP</small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Destino 4 -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                  <div class="destino-card rounded-3 overflow-hidden text-start">
+                    <img src="../images/sitio_recanto_feliz.jpg" alt="Sítio Recanto Feliz"
+                      class="img-fluid w-100 destino-img" />
+                    <div class="p-2 px-3 bg-dark-card">
+                      <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
+                        Sítio Recanto Feliz
+                      </h6>
+                      <small class="text-secondary d-block" style="font-size: 0.75rem">Atibaia - SP</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AVISO IMPORTANTE NO RODAPÉ -->
+            <div class="aviso-importante p-3 rounded-3 d-flex align-items-center gap-3 text-start mt-4">
+              <div class="aviso-icon flex-shrink-0 d-flex align-items-center justify-content-center text-danger">
+                <i class="bi bi-asterisk fs-4"></i>
+              </div>
+              <div>
+                <span class="fw-bold text-white d-block small">Importante</span>
+                <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+                  O bate-volta acontece apenas uma vez ao término do curso e é
+                  exclusivo para alunos que concluírem todas as etapas e
+                  estiverem em dia com o programa.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. TELA: AJUDA (VAZIA) -->
+        <!-- 8. TELA: AJUDA E SUPORTE -->
+        <section id="ajuda" class="d-none my-4">
+          <div class="container-fluid px-0 text-white text-start">
+
+            <!-- CABEÇALHO COM BUSCA -->
+            <div
+              class="help-hero p-4 p-md-5 rounded-3 mb-4 text-center text-md-start border border-secondary position-relative overflow-hidden">
+              <div class="row align-items-center">
+                <div class="col-lg-7">
+                  <span class="text-uppercase fw-bold text-danger small mb-1 d-block tracking-wide">Central de Suporte
+                    TechCampus</span>
+                  <h2 class="display-6 fw-bold text-white mb-2">Como podemos <span class="text-danger">ajudar
+                      você?</span></h2>
+                  <p class="text-secondary small mb-4">Tire suas dúvidas sobre documentos, pagamentos, aplicativo e a
+                    temporada de formatura.</p>
+
+                  <!-- Barra de Pesquisa -->
+                  <div class="position-relative max-w-500">
+                    <i
+                      class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary fs-5"></i>
+                    <input type="text" id="helpSearchInput"
+                      class="form-control form-control-lg bg-dark text-white border-secondary ps-5 fs-6"
+                      placeholder="Digite sua dúvida (ex: documentos, pagamento, formatura...)">
+                  </div>
                 </div>
                 <div class="col-lg-5 d-none d-lg-flex justify-content-center">
-                    <div class="p-4 rounded-circle bg-danger-subtle border border-danger d-flex align-items-center justify-content-center" style="width: 140px; height: 140px; background: rgba(206, 23, 39, 0.1);">
-                        <i class="bi bi-headset text-danger display-3"></i>
-                    </div>
+                  <div
+                    class="p-4 rounded-circle bg-danger-subtle border border-danger d-flex align-items-center justify-content-center"
+                    style="width: 140px; height: 140px; background: rgba(206, 23, 39, 0.1);">
+                    <i class="bi bi-headset text-danger display-3"></i>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
 
-        <!-- CATEGORIAS / NAVEGAÇÃO RÁPIDA -->
-        <div class="row g-3 mb-4">
-            <div class="col-6 col-md-3">
-                <div class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100" data-cat="documentos">
-                    <i class="bi bi-file-earmark-arrow-up text-danger fs-2 mb-2 d-block"></i>
-                    <h6 class="fw-bold mb-1 fs-6">Envio de Documentos</h6>
-                    <small class="text-secondary d-block" style="font-size: 0.75rem;">Anexos, prazos e validação</small>
+            <!-- CATEGORIAS / NAVEGAÇÃO RÁPIDA -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-md-3">
+                <div
+                  class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100"
+                  data-cat="documentos">
+                  <i class="bi bi-file-earmark-arrow-up text-danger fs-2 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1 fs-6">Envio de Documentos</h6>
+                  <small class="text-secondary d-block" style="font-size: 0.75rem;">Anexos, prazos e validação</small>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100" data-cat="pagamentos">
-                    <i class="bi bi-credit-card text-danger fs-2 mb-2 d-block"></i>
-                    <h6 class="fw-bold mb-1 fs-6">Pagamentos & PIX</h6>
-                    <small class="text-secondary d-block" style="font-size: 0.75rem;">Mensalidades, taxas e comprovantes</small>
+              </div>
+              <div class="col-6 col-md-3">
+                <div
+                  class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100"
+                  data-cat="pagamentos">
+                  <i class="bi bi-credit-card text-danger fs-2 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1 fs-6">Pagamentos & PIX</h6>
+                  <small class="text-secondary d-block" style="font-size: 0.75rem;">Mensalidades, taxas e
+                    comprovantes</small>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100" data-cat="formatura">
-                    <i class="bi bi-mortarboard text-danger fs-2 mb-2 d-block"></i>
-                    <h6 class="fw-bold mb-1 fs-6">Temporada Formatura</h6>
-                    <small class="text-secondary d-block" style="font-size: 0.75rem;">Viagens, requisitos e datas</small>
+              </div>
+              <div class="col-6 col-md-3">
+                <div
+                  class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100"
+                  data-cat="formatura">
+                  <i class="bi bi-mortarboard text-danger fs-2 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1 fs-6">Temporada Formatura</h6>
+                  <small class="text-secondary d-block" style="font-size: 0.75rem;">Viagens, requisitos e datas</small>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100" data-cat="contatos">
-                    <i class="bi bi-telephone text-danger fs-2 mb-2 d-block"></i>
-                    <h6 class="fw-bold mb-1 fs-6">Canais de Atendimento</h6>
-                    <small class="text-secondary d-block" style="font-size: 0.75rem;">WhatsApp, e-mail e presencial</small>
+              </div>
+              <div class="col-6 col-md-3">
+                <div
+                  class="help-cat-card p-3 rounded-3 bg-dark border border-secondary text-center cursor-pointer h-100"
+                  data-cat="contatos">
+                  <i class="bi bi-telephone text-danger fs-2 mb-2 d-block"></i>
+                  <h6 class="fw-bold mb-1 fs-6">Canais de Atendimento</h6>
+                  <small class="text-secondary d-block" style="font-size: 0.75rem;">WhatsApp, e-mail e
+                    presencial</small>
                 </div>
+              </div>
             </div>
-        </div>
 
-        <div class="row g-4">
-            <!-- COLUNA ESQUERDA: FAQ (PERGUNTAS FREQUENTES) -->
-            <div class="col-lg-8">
+            <div class="row g-4">
+              <!-- COLUNA ESQUERDA: FAQ (PERGUNTAS FREQUENTES) -->
+              <div class="col-lg-8">
                 <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
-                    <i class="bi bi-question-circle text-danger"></i> Perguntas Frequentes (FAQ)
+                  <i class="bi bi-question-circle text-danger"></i> Perguntas Frequentes (FAQ)
                 </h5>
 
                 <div class="accordion custom-accordion" id="faqAccordion">
 
-                    <!-- Pergunta 1: Documentos -->
-                    <div class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item" data-category="documentos">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                Como enviar meus documentos para validação da AAPM?
-                            </button>
-                        </h2>
-                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-secondary small border-top border-secondary">
-                                Acesse a aba <strong>Documentação</strong> no menu lateral. Faça o upload do arquivo nos formatos PDF, PNG ou JPG (até 10MB). Após o envio, nossa equipe analisa o documento em até 48 horas úteis.
-                            </div>
-                        </div>
+                  <!-- Pergunta 1: Documentos -->
+                  <div
+                    class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item"
+                    data-category="documentos">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        Como enviar meus documentos para validação da AAPM?
+                      </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                      <div class="accordion-body text-secondary small border-top border-secondary">
+                        Acesse a aba <strong>Documentação</strong> no menu lateral. Faça o upload do arquivo nos
+                        formatos PDF, PNG ou JPG (até 10MB). Após o envio, nossa equipe analisa o documento em até 48
+                        horas úteis.
+                      </div>
                     </div>
+                  </div>
 
-                    <!-- Pergunta 2: Pagamento -->
-                    <div class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item" data-category="pagamentos">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                Quais as formas de pagamento aceitas?
-                            </button>
-                        </h2>
-                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-secondary small border-top border-secondary">
-                                Aceitamos <strong>PIX</strong> (aprovação instantânea) e <strong>Cartão de Crédito</strong>. Para pagamento via boleto bancário, dirija-se presencialmente ao atendimento da AAPM dentro do campus SENAI.
-                            </div>
-                        </div>
+                  <!-- Pergunta 2: Pagamento -->
+                  <div
+                    class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item"
+                    data-category="pagamentos">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        Quais as formas de pagamento aceitas?
+                      </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                      <div class="accordion-body text-secondary small border-top border-secondary">
+                        Aceitamos <strong>PIX</strong> (aprovação instantânea) e <strong>Cartão de Crédito</strong>.
+                        Para pagamento via boleto bancário, dirija-se presencialmente ao atendimento da AAPM dentro do
+                        campus SENAI.
+                      </div>
                     </div>
+                  </div>
 
-                    <!-- Pergunta 3: Formatura -->
-                    <div class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item" data-category="formatura">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                Quem tem direito à viagem da Temporada de Formatura?
-                            </button>
-                        </h2>
-                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-secondary small border-top border-secondary">
-                                Têm direito todos os alunos regularmente matriculados no SENAI que concluírem o curso sem pendências acadêmicas e que estiverem em dia com a contribuição da AAPM durante o período letivo.
-                            </div>
-                        </div>
+                  <!-- Pergunta 3: Formatura -->
+                  <div
+                    class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item"
+                    data-category="formatura">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        Quem tem direito à viagem da Temporada de Formatura?
+                      </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                      <div class="accordion-body text-secondary small border-top border-secondary">
+                        Têm direito todos os alunos regularmente matriculados no SENAI que concluírem o curso sem
+                        pendências acadêmicas e que estiverem em dia com a contribuição da AAPM durante o período
+                        letivo.
+                      </div>
                     </div>
+                  </div>
 
-                    <!-- Pergunta 4: Pedidos e Uniformes -->
-                    <div class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item" data-category="documentos">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                                Como retirar meus produtos ou pedidos solicitados?
-                            </button>
-                        </h2>
-                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-secondary small border-top border-secondary">
-                                Após a aprovação do pedido na aba <strong>Pedidos disponíveis</strong>, apresente o QR Code do comprovante na sala da AAPM no seu horário de intervalo.
-                            </div>
-                        </div>
+                  <!-- Pergunta 4: Pedidos e Uniformes -->
+                  <div
+                    class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item"
+                    data-category="documentos">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                        Como retirar meus produtos ou pedidos solicitados?
+                      </button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                      <div class="accordion-body text-secondary small border-top border-secondary">
+                        Após a aprovação do pedido na aba <strong>Pedidos disponíveis</strong>, apresente o QR Code do
+                        comprovante na sala da AAPM no seu horário de intervalo.
+                      </div>
                     </div>
+                  </div>
 
-                    <!-- Pergunta 5: Contato e Presencial -->
-                    <div class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item" data-category="contatos">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                                Qual o horário de atendimento presencial da AAPM?
-                            </button>
-                        </h2>
-                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-secondary small border-top border-secondary">
-                                Nosso balcão atende de <strong>Segunda a Sexta-feira</strong>, das 07h30 às 11h30, das 13h00 às 17h00 e das 18h30 às 21h30 (no bloco administrativo).
-                            </div>
-                        </div>
+                  <!-- Pergunta 5: Contato e Presencial -->
+                  <div
+                    class="accordion-item bg-dark text-white border-secondary mb-3 rounded-3 overflow-hidden faq-item"
+                    data-category="contatos">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed bg-dark text-white border-0 shadow-none fw-semibold"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                        Qual o horário de atendimento presencial da AAPM?
+                      </button>
+                    </h2>
+                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                      <div class="accordion-body text-secondary small border-top border-secondary">
+                        Nosso balcão atende de <strong>Segunda a Sexta-feira</strong>, das 07h30 às 11h30, das 13h00 às
+                        17h00 e das 18h30 às 21h30 (no bloco administrativo).
+                      </div>
                     </div>
+                  </div>
 
                 </div>
 
                 <!-- FORMULÁRIO DE ABRIR CHAMADO / DUVIDA -->
                 <div class="p-4 rounded-3 bg-dark border border-secondary mt-4">
-                    <h5 class="fw-bold mb-1 text-white"><i class="bi bi-chat-left-dots text-danger me-2"></i>Ainda precisa de ajuda?</h5>
-                    <p class="text-secondary small mb-3">Envie uma mensagem direta para a equipe técnica da AAPM:</p>
+                  <h5 class="fw-bold mb-1 text-white"><i class="bi bi-chat-left-dots text-danger me-2"></i>Ainda precisa
+                    de ajuda?</h5>
+                  <p class="text-secondary small mb-3">Envie uma mensagem direta para a equipe técnica da AAPM:</p>
 
-                    <form id="helpContactForm">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label small text-secondary">Assunto</label>
-                                <select class="form-select bg-dark text-white border-secondary small" required>
-                                    <option value="" selected disabled>Selecione um assunto</option>
-                                    <option value="documentos">Problemas com Documentação</option>
-                                    <option value="pagamentos">Dúvidas sobre Pagamentos/PIX</option>
-                                    <option value="formatura">Temporada de Formatura</option>
-                                    <option value="outros">Outros assuntos</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-secondary">Seu e-mail cadastrado</label>
-                                <input type="email" class="form-control bg-dark text-white border-secondary small" placeholder="aluno@senai.br" required>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label small text-secondary">Descreva a sua dúvida ou problema</label>
-                                <textarea class="form-control bg-dark text-white border-secondary small" rows="3" placeholder="Escreva aqui detalhadamente..." required></textarea>
-                            </div>
-                            <div class="col-12 text-end">
-                                <button type="submit" class="btn btn-danger btn-help-send fw-semibold px-4 py-2">
-                                    <i class="bi bi-send me-1"></i> Enviar Mensagem
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                  <form id="helpContactForm">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label small text-secondary">Assunto</label>
+                        <select class="form-select bg-dark text-white border-secondary small" required>
+                          <option value="" selected disabled>Selecione um assunto</option>
+                          <option value="documentos">Problemas com Documentação</option>
+                          <option value="pagamentos">Dúvidas sobre Pagamentos/PIX</option>
+                          <option value="formatura">Temporada de Formatura</option>
+                          <option value="outros">Outros assuntos</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label small text-secondary">Seu e-mail cadastrado</label>
+                        <input type="email" class="form-control bg-dark text-white border-secondary small"
+                          placeholder="aluno@senai.br" required>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label small text-secondary">Descreva a sua dúvida ou problema</label>
+                        <textarea class="form-control bg-dark text-white border-secondary small" rows="3"
+                          placeholder="Escreva aqui detalhadamente..." required></textarea>
+                      </div>
+                      <div class="col-12 text-end">
+                        <button type="submit" class="btn btn-danger btn-help-send fw-semibold px-4 py-2">
+                          <i class="bi bi-send me-1"></i> Enviar Mensagem
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-            </div>
+              </div>
 
-            <!-- COLUNA DIREITA: CANAIS DE CONTATO RÁPIDO -->
-            <div class="col-lg-4">
-                <div class="bg-dark p-4 rounded-3 border border-secondary h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <h5 class="fw-bold mb-3 text-white"><i class="bi bi-envelope-open text-danger me-2"></i>Atendimento Direto</h5>
-                        <p class="text-secondary small mb-4">Escolha o melhor canal de contato para falar conosco:</p>
+              <!-- COLUNA DIREITA: CANAIS DE CONTATO RÁPIDO -->
+              <div class="col-lg-4">
+                <div
+                  class="bg-dark p-4 rounded-3 border border-secondary h-100 d-flex flex-column justify-content-between">
+                  <div>
+                    <h5 class="fw-bold mb-3 text-white"><i class="bi bi-envelope-open text-danger me-2"></i>Atendimento
+                      Direto</h5>
+                    <p class="text-secondary small mb-4">Escolha o melhor canal de contato para falar conosco:</p>
 
-                        <!-- Canal WhatsApp -->
-                        <div class="p-3 rounded-3 border border-secondary mb-3 bg-dark-card d-flex align-items-center gap-3">
-                            <div class="p-2 rounded bg-success-subtle text-success fs-3">
-                                <i class="bi bi-whatsapp"></i>
-                            </div>
-                            <div>
-                                <span class="fw-bold d-block text-white small">WhatsApp AAPM</span>
-                                <small class="text-secondary d-block" style="font-size: 0.75rem;">(11) 99999-8888</small>
-                                <a href="https://wa.me/5511999998888" target="_blank" class="text-danger small fw-semibold text-decoration-none" style="font-size: 0.75rem;">Conversar agora &rarr;</a>
-                            </div>
-                        </div>
-
-                        <!-- Canal E-mail -->
-                        <div class="p-3 rounded-3 border border-secondary mb-3 bg-dark-card d-flex align-items-center gap-3">
-                            <div class="p-2 rounded bg-danger-subtle text-danger fs-3">
-                                <i class="bi bi-envelope"></i>
-                            </div>
-                            <div>
-                                <span class="fw-bold d-block text-white small">E-mail Oficial</span>
-                                <small class="text-secondary d-block" style="font-size: 0.75rem;">aapm@sp.senai.br</small>
-                                <a href="mailto:aapm@sp.senai.br" class="text-danger small fw-semibold text-decoration-none" style="font-size: 0.75rem;">Enviar e-mail &rarr;</a>
-                            </div>
-                        </div>
-
-                        <!-- Localização -->
-                        <div class="p-3 rounded-3 border border-secondary mb-3 bg-dark-card d-flex align-items-center gap-3">
-                            <div class="p-2 rounded bg-primary-subtle text-primary fs-3">
-                                <i class="bi bi-geo-alt"></i>
-                            </div>
-                            <div>
-                                <span class="fw-bold d-block text-white small">Atendimento Presencial</span>
-                                <small class="text-secondary d-block" style="font-size: 0.75rem;">Sala AAPM - Bloco A (SENAI)</small>
-                            </div>
-                        </div>
+                    <!-- Canal WhatsApp -->
+                    <div
+                      class="p-3 rounded-3 border border-secondary mb-3 bg-dark-card d-flex align-items-center gap-3">
+                      <div class="p-2 rounded bg-success-subtle text-success fs-3">
+                        <i class="bi bi-whatsapp"></i>
+                      </div>
+                      <div>
+                        <span class="fw-bold d-block text-white small">WhatsApp AAPM</span>
+                        <small class="text-secondary d-block" style="font-size: 0.75rem;">(11) 99999-8888</small>
+                        <a href="https://wa.me/5511999998888" target="_blank"
+                          class="text-danger small fw-semibold text-decoration-none"
+                          style="font-size: 0.75rem;">Conversar agora &rarr;</a>
+                      </div>
                     </div>
 
-                    <!-- Banner de Apoio -->
-                    <div class="p-3 rounded-3 border border-danger text-center mt-3" style="background: rgba(206, 23, 39, 0.05);">
-                        <i class="bi bi-shield-heart text-danger fs-2 mb-1 d-block"></i>
-                        <span class="fw-bold text-white d-block small">AAPM SENAI</span>
-                        <small class="text-secondary d-block" style="font-size: 0.7rem;">Sua voz e representatividade na escola.</small>
+                    <!-- Canal E-mail -->
+                    <div
+                      class="p-3 rounded-3 border border-secondary mb-3 bg-dark-card d-flex align-items-center gap-3">
+                      <div class="p-2 rounded bg-danger-subtle text-danger fs-3">
+                        <i class="bi bi-envelope"></i>
+                      </div>
+                      <div>
+                        <span class="fw-bold d-block text-white small">E-mail Oficial</span>
+                        <small class="text-secondary d-block" style="font-size: 0.75rem;">aapm@sp.senai.br</small>
+                        <a href="mailto:aapm@sp.senai.br" class="text-danger small fw-semibold text-decoration-none"
+                          style="font-size: 0.75rem;">Enviar e-mail &rarr;</a>
+                      </div>
                     </div>
+
+                    <!-- Localização -->
+                    <div
+                      class="p-3 rounded-3 border border-secondary mb-3 bg-dark-card d-flex align-items-center gap-3">
+                      <div class="p-2 rounded bg-primary-subtle text-primary fs-3">
+                        <i class="bi bi-geo-alt"></i>
+                      </div>
+                      <div>
+                        <span class="fw-bold d-block text-white small">Atendimento Presencial</span>
+                        <small class="text-secondary d-block" style="font-size: 0.75rem;">Sala AAPM - Bloco A
+                          (SENAI)</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Banner de Apoio -->
+                  <div class="p-3 rounded-3 border border-danger text-center mt-3"
+                    style="background: rgba(206, 23, 39, 0.05);">
+                    <i class="bi bi-shield-heart text-danger fs-2 mb-1 d-block"></i>
+                    <span class="fw-bold text-white d-block small">AAPM SENAI</span>
+                    <small class="text-secondary d-block" style="font-size: 0.7rem;">Sua voz e representatividade na
+                      escola.</small>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
       </main>
     </div>
   </section>
@@ -2623,11 +2138,7 @@
         <!-- LOGO -->
         <div class="col-lg-4 col-md-6 text-center text-md-start">
           <a href="#inicio" class="footer-brand">
-            <img
-              src="../landing/images/Logo TechCampus Horizontal.png"
-              alt="TechCampus"
-              class="img-fluid"
-            />
+            <img src="../landing/images/Logo TechCampus Horizontal.png" alt="TechCampus" class="img-fluid" />
           </a>
 
           <p class="footer-description mb-0">
@@ -2638,11 +2149,7 @@
 
         <!-- DESENVOLVEDORES -->
         <div class="col-lg-4 col-md-6 text-center">
-          <a
-            href="https://gustavonunes7.github.io/COD_NEW_ERA/"
-            class="footer-title mb-2"
-            target="_blank"
-          >
+          <a href="https://gustavonunes7.github.io/COD_NEW_ERA/" class="footer-title mb-2" target="_blank">
             Desenvolvido por COD NEW ERA
           </a>
 
@@ -2682,9 +2189,9 @@
 
   <!-- SCRIPTS -->
 
-    <!-- SCRIPTS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../landing/script.js"></script>
-  </body>
-</html>
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../landing/script.js"></script>
+</body>
 
+</html>
