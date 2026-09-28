@@ -370,127 +370,77 @@
 
             <!-- APARÊNCIA -->
             <div class="col-lg-6">
-
               <div class="card settings-card">
-
                 <div class="settings-card-header">
-
                   <div class="settings-icon">
                     <i class="bi bi-palette"></i>
                   </div>
-
                   <div>
                     <h3>Aparência</h3>
-                    <p>
-                      Personalize a aparência da plataforma.
-                    </p>
+                    <p>Personalize a aparência da plataforma.</p>
                   </div>
-
                 </div>
 
 
                 <div class="settings-field">
-
-                  <label for="tema" class="form-label">
-                    Tema da interface
-                  </label>
-
+                  <label for="tema" class="form-label">Tema da interface</label>
                   <select id="tema" name="tema" class="form-select">
-                    <option value="escuro" selected>
-                      Escuro
-                    </option>
-
-                    <option value="claro">
-                      Claro
-                    </option>
-
-                    <option value="sistema">
-                      Seguir configuração do sistema
-                    </option>
+                    <option value="escuro" selected>Escuro</option>
+                    <option value="claro">Claro</option>
+                    <option value="sistema">Seguir configuração do sistema </option>
                   </select>
-
                 </div>
-
               </div>
-
             </div>
 
 
             <!-- PRIVACIDADE -->
             <div class="col-lg-6">
-
               <div class="card settings-card">
-
                 <div class="settings-card-header">
-
                   <div class="settings-icon">
                     <i class="bi bi-shield-lock"></i>
                   </div>
-
                   <div>
                     <h3>Privacidade</h3>
-                    <p>
-                      Controle a visibilidade das suas informações.
-                    </p>
+                    <p>Controle a visibilidade das suas informações.</p>
                   </div>
-
                 </div>
 
 
                 <div class="settings-option">
-
                   <div>
                     <strong>Exibir telefone</strong>
-
-                    <span>
-                      Permitir que seu telefone seja exibido.
-                    </span>
+                    <span>Permitir que seu telefone seja exibido.</span>
                   </div>
-
                   <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="exibirTelefone">
                   </div>
-
                 </div>
 
 
                 <div class="settings-option">
-
                   <div>
-                    <strong>Exibir e-mail</strong>
-
-                    <span>
-                      Permitir que seu e-mail seja exibido.
-                    </span>
+                    <strong>Exibir e-mail</strong>Permitir que seu e-mail seja exibido.</span>
                   </div>
-
                   <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="exibirEmail">
                   </div>
-
                 </div>
-
               </div>
-
             </div>
 
 
             <!-- SEGURANÇA -->
             <div class="col-lg-6">
-
               <div class="card settings-card">
-
                 <div class="settings-card-header">
-
                   <div class="settings-icon">
                     <i class="bi bi-lock"></i>
                   </div>
-
                   <div>
                     <h3>Segurança</h3>
-                    <p>
-                      Gerencie a segurança da sua conta.
-                    </p>
+                    <p> Gerencie a segurança da sua conta.</p>
                   </div>
 
                 </div>
@@ -501,7 +451,6 @@
                     <i class="bi bi-key me-2"></i>
                     Alterar senha
                   </span>
-
                   <i class="bi bi-chevron-right"></i>
                 </button>
 
@@ -511,51 +460,30 @@
                     <i class="bi bi-box-arrow-right me-2"></i>
                     Encerrar sessão
                   </span>
-
                   <i class="bi bi-chevron-right"></i>
                 </button>
-
               </div>
-
             </div>
-
           </div>
 
 
           <!-- SALVAR CONFIGURAÇÕES -->
           <div class="settings-actions mt-4">
-
             <button type="button" class="btn btn-secondary">
               Restaurar padrão
             </button>
-
             <button type="submit" class="btn btn-profile-save">
               <i class="bi bi-check-lg me-2"></i>
               Salvar configurações
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </section>
 
+ <!------------------------------------------------------------------------------------------------------------------------------------------------->
 
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="layout-wrapper">
+    <div class="layout-wrapper d-flex flex-column">
       <!-- SIDEBAR -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-top">
@@ -564,25 +492,59 @@
               style="max-width: 230px" />
           </div>
 
-          <nav class="nav-menu">
-            <a href="#inicio" class="menu-item ativo"><img src="../landing/images/icon-inicio.svg" alt="inicio"
-                width="25" height="25" />Início</a>
-            <a href="#documento" class="menu-item"><img src="../landing/images/icon-documento.svg" alt="documento"
-                width="30" height="30" />Documentação</a>
+      <nav class="nav-menu d-flex flex-column gap-3">
+  
+  <!-- Início (Sem subtítulo) -->
+  <a href="#inicio" class="menu-item d-flex align-items-center gap-3 text-decoration-none text-white p-2 rounded">
+    <img src="../landing/images/icon-inicio.svg" alt="Início" width="30" height="30" class="flex-shrink-0" />
+    <span class="fw-bold fs-6">Início</span>
+  </a>
 
-            <a href="#pedidos" class="menu-item"><img src="../landing/images/icon-pedido-disponivel.svg"
-                alt="pedido disponivel" width="30" height="30" />Pedidos disponíveis</a>
-            <a href="#avisos" class="menu-item"><img src="../landing/images/icon_aviso.svg" alt="aviso" width="40"
-                height="40" />Avisos gerais</a>
-            <a href="#sobre" class="menu-item"><img src="../landing/images/icon_sobre.svg" alt="sobre" width="30"
-                height="30" />Sobre a AAPM</a>
-            <a href="#formatura" class="menu-item"><img src="../landing/images/icon_agenda.svg" alt="formatura"
-                width="30" height="30" />Temporada de Formatura</a>
-            <a href="#ajuda" class="menu-item"><img src="../landing/images/icon_ajuda.svg" alt="ajuda" width="40"
-                height="40" />Ajuda</a>
-          </nav>
-        </div>
+  <!-- Documentação -->
+  <a href="#documento" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+    <img src="../landing/images/icon-documento.svg" alt="Documentação" width="30" height="30" class="flex-shrink-0 mt-1" />
+    <div class="d-flex flex-column">
+      <span class="fw-bold fs-6">Documentação</span>
+      <span class="text-white-50 small">Comprovante de pagamentos de uniformes</span>
+    </div>
+  </a>
 
+  <!-- Pedidos de uniformes -->
+  <a href="#pedidos" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+    <img src="../landing/images/icon-pedido-disponivel.svg" alt="Pedidos de uniformes" width="30" height="30" class="flex-shrink-0 mt-1" />
+    <div class="d-flex flex-column">
+      <span class="fw-bold fs-6">Pedidos disponiveis</span>
+      <span class="text-white-50 small">Uniformes, jogos e mais</span>
+    </div>
+  </a>
+
+  <!-- Avisos gerais -->
+ <a href="#avisos" class="menu-item d-flex align-items-start gap-2 text-decoration-none text-white p-2 rounded">
+    <img src="../landing/images/icon_aviso.svg" alt="Avisos gerais" width="50" height="50" class="flex-shrink-0 mt-1" />
+    <div class="d-flex flex-column">
+      <span class="fw-bold fs-6">Avisos gerais</span>
+      <span class="text-white-50 small">Fique por dentro das informações</span>
+    </div>
+  </a>
+  <!-- Sobre a AAPM -->
+  <a href="#sobre" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+    <img src="../landing/images/icon_sobre.svg" alt="Sobre a AAPM" width="30" height="30" class="flex-shrink-0 mt-1" />
+    <div class="d-flex flex-column">
+      <span class="fw-bold fs-6">Sobre a AAPM</span>
+      <span class="text-white-50 small">Quem somos</span>
+    </div>
+  </a>
+
+  <!-- Ajuda -->
+  <a href="#ajuda" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+    <img src="../landing/images/icon_ajuda.svg" alt="Ajuda" width="30" height="30" class="flex-shrink-0 mt-1" />
+    <div class="d-flex flex-column">
+      <span class="fw-bold fs-6">Ajuda</span>
+      <span class="text-white-50 small">Dúvidas frequentes</span>
+    </div>
+  </a>
+
+</nav>
         <div class="sidebar-bottom pt-3">
           <a href="../landing/index.html">
             <button id="loginBtn"
