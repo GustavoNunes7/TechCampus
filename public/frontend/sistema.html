@@ -7,6 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="../landing/styles.css" />
+  <link rel="stylesheet" href="../landing/tema.css">
   <title>TechCampus</title>
 <style>body { visibility: hidden; }</style>
   <script src="/frontend/auth.js" defer></script>
@@ -483,10 +484,25 @@
       <!-- SIDEBAR -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-top">
-          <div class="brand mb-4">
-            <img src="../landing/images/Logo TechCampus Horizontal.png " alt="TechCampus" class="img-fluid"
-              style="max-width: 230px" />
-          </div>
+          
+<div class="brand mb-4">
+  <!-- Logo para o modo escuro -->
+  <img
+    src="../landing/images/Logo TechCampus Horizontal.png"
+    alt="TechCampus"
+    class="img-fluid logo-dark"
+    style="max-width: 230px"
+  >
+
+  <!-- Logo para o modo claro -->
+  <img
+    src="../landing/images/Logo_TechCampus__Modo_Dark.png"
+    alt="TechCampus"
+    class="img-fluid logo-light"
+    style="max-width: 230px"
+  >
+</div>
+          
 
       <nav class="nav-menu d-flex flex-column gap-3">
   
@@ -820,855 +836,576 @@
         </section>
 
         <!-- 4. TELA: PEDIDOS DISPONÍVEIS (PRODUTOS DISPONÍVEIS) -->
-        <section id="pedidos" class="d-none my-4">
-          <div class="container-fluid px-0 text-white">
-
-            <!-- TÍTULO -->
-            <div class="mb-4 text-start">
-              <h2 class="fw-bold fs-1 text-white mb-1">
-                Produtos disponíveis
-              </h2>
-
-              <p class="text-secondary small">
-                Confira os produtos e serviços oferecidos pela AAPM para os
+       <section class="d-none my-4" id="pedidos">
+ <div class="container-fluid px-0 text-white">
+  <!-- TÍTULO -->
+  <div class="mb-4 text-start">
+   <h2 class="fw-bold fs-1 text-white mb-1">
+    Produtos dispon&iacute;veis
+   </h2>
+   <p class="text-secondary small">
+    Confira os produtos e servi&ccedil;os oferecidos pela AAPM para os
                 alunos do SENAI
-              </p>
-            </div>
-
-            <!-- FILTROS DE CATEGORIAS -->
-            <div class="products-filters d-flex flex-wrap gap-2 mb-4 align-items-center">
-
-              <button class="btn btn-filter active px-4 py-2" type="button" data-category="todos">
-                Todos
-              </button>
-
-              <button class="btn btn-filter px-4 py-2" type="button" data-category="uniformes">
-                Uniformes
-              </button>
-
-              <button class="btn btn-filter px-4 py-2" type="button" data-category="esportes">
-                Esportes
-              </button>
-
-              <button class="btn btn-filter px-4 py-2" type="button" data-category="jogos">
-                Jogos
-              </button>
-
-              <button class="btn btn-filter px-4 py-2" type="button" data-category="epi">
-                EPI
-              </button>
-
-              <button class="btn btn-filter px-4 py-2" type="button" data-category="acessorios">
-                Acessórios
-              </button>
-
-            </div>
-
-
-            <!-- GRID PRINCIPAL -->
-            <div class="row g-4">
-
-              <!-- COLUNA DA ESQUERDA -->
-              <div class="col-lg-9">
-
-  
-                <!-- ============================= -->
-                <!-- CARROSSEL / PRODUTOS -->
-                <!-- ============================= -->
-
-                <div class="products-carousel" id="productsCarousel">
-
-                  <!-- BOTÃO ANTERIOR -->
-                  <button class="products-control products-prev" type="button" aria-label="Produtos anteriores">
-                    <i class="bi bi-chevron-left"></i>
-                  </button>
-
-                  <!-- ÁREA DOS PRODUTOS -->
-                  <div class="products-viewport">
-
-                    <div class="products-track" id="productsTrack">
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 1 - UNIFORME -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="uniformes">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/camisa.png" alt="Uniforme Escolar Branco" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Uniforme Escolar (Branco)
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Camisa oficial da rede. Conforto e identidade para o dia a dia escolar.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 39,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 24,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 37.5%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 2 - JOGOS -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="jogos">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/pingpong.png" alt="Caixa de Bolinhas de Ping Pong"
-                              class="img-fluid" style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Caixa de Bolinhas de Ping Pong
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Bolinhas para treinos e campeonatos internos.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 19,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 9,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 50%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 3 - ESPORTES -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="esportes">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/boladefutebol.png" alt="Bola de Futebol" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Bola de Futebol
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Bola oficial para jogos e treinamentos.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 66,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 29,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 55.23%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar / Reservar
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 4 - ESPORTES -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="esportes">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/boladevolei.png" alt="Bola de Vôlei" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Bola de Vôlei
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Bola para jogos e atividades esportivas.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 66,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 29,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 55.23%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar / Reservar
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 5 - JOGOS -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="jogos">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/raquete.png" alt="Raquete de Ping Pong" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Raquete de Ping Pong
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Raquete para treinos e atividades recreativas.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 29,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 19,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 33.3%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 6 - ACESSÓRIOS -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="acessorios">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/cracha.png" alt="Crachá" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Crachá com Cordão
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Identificação para utilização no ambiente escolar.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 13,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 5,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 57.1%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 7 - UNIFORME -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="uniformes">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/uniforme_preto.png" alt="Uniforme Escolar Preto"
-                              class="img-fluid" style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Uniforme Escolar (Preto)
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Modelo de uniforme escolar.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 49,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 34,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 37.5%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 8 - EPI -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="epi">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/oculosprotecao.png" alt="Óculos de Proteção"
-                              class="img-fluid" style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Óculos de Proteção
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Equipamento de proteção individual.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 25,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 7,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 69.2%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 9 - EPI -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="epi">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/capacete.png" alt="Capacete de Proteção" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Capacete de Proteção
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Equipamento de proteção individual.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 54,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 27,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 49.1%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 10 - EPI -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="epi">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/protetor-auricular.png" alt="Protetor de Ouvido" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Protetor Auricular
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Equipamento de proteção individual.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 19,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 6,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 65%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-
-                      <!-- ============================= -->
-                      <!-- PRODUTO 11 - UNIFORME -->
-                      <!-- ============================= -->
-
-                      <div class="product-slide" data-category="uniformes">
-
-                        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
-
-                          <div class="text-center my-3 product-img-box">
-                            <img src="../landing/images/.png" alt="Jaleco Mecânica" class="img-fluid"
-                              style="max-height: 160px" />
-                          </div>
-
-                          <div class="card-body d-flex flex-column p-0 text-start">
-
-                            <h5 class="fw-bold mb-1">
-                              Jaleco Mecânica
-                            </h5>
-
-                            <p class="text-secondary small mb-3">
-                              Modelo de jaleco para a área da Mecânica.
-                            </p>
-
-                            <div class="mt-auto">
-
-                              <div class="container-preco">
-                                <span class="preco-de">
-                                  De R$ 103,99
-                                </span>
-
-                                <strong class="preco-por">
-                                  Por R$ 57,99
-                                </strong>
-
-                                <span class="badge-desconto">
-                                  Economize 44.2%
-                                </span>
-                              </div>
-
-                              <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-                                Comprar agora
-                              </button>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-                  </div>
-
-
-                  <!-- BOTÃO PRÓXIMO -->
-                  <button class="products-control products-next" type="button" aria-label="Próximos produtos">
-                    <i class="bi bi-chevron-right"></i>
-                  </button>
-
-                </div>
-
-
-
-
-
-                <!-- ============================= -->
-                <!-- BANNER ASSOCIADO -->
-                <!-- ============================= -->
-                   
-     <div class="container my-auto">
-    <div class="row g-4 justify-content-center">
-      
+   </p>
+  </div>
+  <!-- FILTROS DE CATEGORIAS -->
+  <div class="products-filters d-flex flex-wrap gap-2 mb-4 align-items-center">
+   <button class="btn btn-filter active px-4 py-2" data-category="todos" type="button">
+    Todos
+   </button>
+   <button class="btn btn-filter px-4 py-2" data-category="uniformes" type="button">
+    Uniformes
+   </button>
+   <button class="btn btn-filter px-4 py-2" data-category="esportes" type="button">
+    Esportes
+   </button>
+   <button class="btn btn-filter px-4 py-2" data-category="jogos" type="button">
+    Jogos
+   </button>
+   <button class="btn btn-filter px-4 py-2" data-category="epi" type="button">
+    EPI
+   </button>
+   <button class="btn btn-filter px-4 py-2" data-category="acessorios" type="button">
+    Acess&oacute;rios
+   </button>
+  </div>
+  <!-- GRID PRINCIPAL -->
+  <div class="row g-4">
+   <!-- COLUNA DA ESQUERDA -->
+   <div class="col-12 col-lg-9">
+    <!-- ============================= -->
+    <!-- CARROSSEL / PRODUTOS -->
+    <!-- ============================= -->
+    <div class="products-carousel" id="productsCarousel">
+     <!-- BOTÃO ANTERIOR -->
+     <button aria-label="Produtos anteriores" class="products-control products-prev" type="button">
+      <i class="bi bi-chevron-left">
+      </i>
+     </button>
+     <!-- ÁREA DOS PRODUTOS -->
+     <div class="products-viewport">
+      <div class="products-track" id="productsTrack">
+       <!-- ============================= -->
+       <!-- PRODUTO 1 - UNIFORME -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="uniformes">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Uniforme Escolar Branco" class="img-fluid" src="../landing/images/camisa.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Uniforme Escolar (Branco)
+          </h5>
+          <p class="text-secondary small mb-3">
+           Camisa oficial da rede. Conforto e identidade para o dia a dia escolar.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 39,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 24,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 37.5%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 2 - JOGOS -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="jogos">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Caixa de Bolinhas de Ping Pong" class="img-fluid" src="../landing/images/pingpong.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Caixa de Bolinhas de Ping Pong
+          </h5>
+          <p class="text-secondary small mb-3">
+           Bolinhas para treinos e campeonatos internos.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 19,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 9,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 50%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 3 - ESPORTES -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="esportes">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Bola de Futebol" class="img-fluid" src="../landing/images/boladefutebol.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Bola de Futebol
+          </h5>
+          <p class="text-secondary small mb-3">
+           Bola oficial para jogos e treinamentos.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 66,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 29,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 55.23%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar / Reservar
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 4 - ESPORTES -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="esportes">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Bola de V&ocirc;lei" class="img-fluid" src="../landing/images/boladevolei.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Bola de V&ocirc;lei
+          </h5>
+          <p class="text-secondary small mb-3">
+           Bola para jogos e atividades esportivas.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 66,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 29,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 55.23%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar / Reservar
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 5 - JOGOS -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="jogos">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Raquete de Ping Pong" class="img-fluid" src="../landing/images/raquete.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Raquete de Ping Pong
+          </h5>
+          <p class="text-secondary small mb-3">
+           Raquete para treinos e atividades recreativas.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 29,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 19,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 33.3%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 6 - ACESSÓRIOS -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="acessorios">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Crach&aacute;" class="img-fluid" src="../landing/images/cracha.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Crach&aacute; com Cord&atilde;o
+          </h5>
+          <p class="text-secondary small mb-3">
+           Identifica&ccedil;&atilde;o para utiliza&ccedil;&atilde;o no ambiente escolar.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 13,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 5,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 57.1%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 7 - UNIFORME -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="uniformes">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Uniforme Escolar Preto" class="img-fluid" src="../landing/images/uniforme_preto.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Uniforme Escolar (Preto)
+          </h5>
+          <p class="text-secondary small mb-3">
+           Modelo de uniforme escolar.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 49,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 34,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 37.5%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 8 - EPI -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="epi">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="&Oacute;culos de Prote&ccedil;&atilde;o" class="img-fluid" src="../landing/images/oculosprotecao.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           &Oacute;culos de Prote&ccedil;&atilde;o
+          </h5>
+          <p class="text-secondary small mb-3">
+           Equipamento de prote&ccedil;&atilde;o individual.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 25,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 7,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 69.2%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 9 - EPI -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="epi">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Capacete de Prote&ccedil;&atilde;o" class="img-fluid" src="../landing/images/capacete.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Capacete de Prote&ccedil;&atilde;o
+          </h5>
+          <p class="text-secondary small mb-3">
+           Equipamento de prote&ccedil;&atilde;o individual.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 54,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 27,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 49.1%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 10 - EPI -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="epi">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Protetor de Ouvido" class="img-fluid" src="../landing/images/protetor-auricular.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Protetor Auricular
+          </h5>
+          <p class="text-secondary small mb-3">
+           Equipamento de prote&ccedil;&atilde;o individual.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 19,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 6,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 65%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- ============================= -->
+       <!-- PRODUTO 11 - UNIFORME -->
+       <!-- ============================= -->
+       <div class="product-slide" data-category="uniformes">
+        <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
+         <div class="text-center my-3 product-img-box">
+          <img alt="Jaleco Mec&acirc;nica" class="img-fluid" src="../landing/images/.png" style="max-height: 160px"/>
+         </div>
+         <div class="card-body d-flex flex-column p-0 text-start">
+          <h5 class="fw-bold mb-1">
+           Jaleco Mec&acirc;nica
+          </h5>
+          <p class="text-secondary small mb-3">
+           Modelo de jaleco para a &aacute;rea da Mec&acirc;nica.
+          </p>
+          <div class="mt-auto">
+           <div class="container-preco">
+            <span class="preco-de">
+             De R$ 103,99
+            </span>
+            <strong class="preco-por">
+             Por R$ 57,99
+            </strong>
+            <span class="badge-desconto">
+             Economize 44.2%
+            </span>
+           </div>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
+            Comprar agora
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- BOTÃO PRÓXIMO -->
+     <button aria-label="Pr&oacute;ximos produtos" class="products-control products-next" type="button">
+      <i class="bi bi-chevron-right">
+      </i>
+     </button>
+    </div>
+    <!-- ============================= -->
+    <!-- BANNER ASSOCIADO -->
+    <!-- ============================= -->
+    <div class="w-100 mt-4 mb-4">
+     <div class="row g-4 justify-content-center">
       <!-- CARD 1: Jogos de Tabuleiro -->
       <div class="col-12 col-md-6 col-lg-5">
-        <div class="custom-card card-jogos">
-          <div class="card-content">
-            <h2 class="card-title-custom">Jogos de Tabuleiro</h2>
-            <p class="card-subtitle-custom">
-              Diversão garantida! jogos disponíveis para momentos de lazer e integração.
-            </p>
-            <a href="#agendar-jogos" class="btn btn-gradient-red">Agendar / Reservar</a>
-          </div>
+       <div class="custom-card card-jogos">
+        <div class="card-content">
+         <h2 class="card-title-custom">
+          Jogos de Tabuleiro
+         </h2>
+         <p class="card-subtitle-custom">
+          Divers&atilde;o garantida! jogos dispon&iacute;veis para momentos de lazer e integra&ccedil;&atilde;o.
+         </p>
+         <a class="btn btn-gradient-red" href="#agendar-jogos">
+          Agendar / Reservar
+         </a>
         </div>
+       </div>
       </div>
-
       <!-- CARD 2: Agendar Quadra -->
       <div class="col-12 col-md-6 col-lg-5">
-        <div class="custom-card card-quadra">
-          <div class="card-content">
-            <h2 class="card-title-custom">Agendar Quadra</h2>
-            <p class="card-subtitle-custom">
-              Reserve a quadra para esportes, treinamentos e atividades.
-            </p>
-            <a href="#agendar-quadra" class="btn btn-gradient-red">Agendar / Reservar</a>
-          </div>
+       <div class="custom-card card-quadra">
+        <div class="card-content">
+         <h2 class="card-title-custom">
+          Agendar Quadra
+         </h2>
+         <p class="card-subtitle-custom">
+          Reserve a quadra para esportes, treinamentos e atividades.
+         </p>
+         <a class="btn btn-gradient-red" href="#agendar-quadra">
+          Agendar / Reservar
+         </a>
         </div>
+       </div>
       </div>
-
+     </div>
+     <div class="card border-secondary rounded-3 bg-dark text-white overflow-hidden p-0 banner-associado">
+      <div class="row g-0 align-items-center">
+       <div class="col-md-5">
+        <img alt="Alunos AAPM" class="img-fluid w-100 h-100 object-fit-cover" src="../landing/images/fundopedidosAlunos.png" style="min-height: 220px"/>
+       </div>
+       <div class="col-md-7 p-4 text-start">
+        <span class="text-danger text-uppercase fw-bold small d-block mb-1">
+         FA&Ccedil;A PARTE
+        </span>
+        <h3 class="fw-bold mb-2">
+         Seja um associado da AAPM
+        </h3>
+        <p class="text-secondary small mb-4">
+         Apoie as iniciativas estudantis e tenha acesso a
+                        benef&iacute;cios exclusivos em produtos e atividades!
+        </p>
+        <a class="btn btn-danger px-4 py-2 fw-semibold" href="#sobre">
+         Quero me associar
+         <i class="bi bi-arrow-right ms-1">
+         </i>
+        </a>
+       </div>
+      </div>
+     </div>
     </div>
-                <div class="card border-secondary rounded-3 bg-dark text-white overflow-hidden p-0 banner-associado">
-
-                  <div class="row g-0 align-items-center">
-
-                    <div class="col-md-5">
-
-                      <img src="../landing/images/fundopedidosAlunos.png" alt="Alunos AAPM"
-                        class="img-fluid w-100 h-100 object-fit-cover" style="min-height: 220px" />
-
-                    </div>
-
-
-                    <div class="col-md-7 p-4 text-start">
-
-                      <span class="text-danger text-uppercase fw-bold small d-block mb-1">
-                        FAÇA PARTE
-                      </span>
-
-                      <h3 class="fw-bold mb-2">
-                        Seja um associado da AAPM
-                      </h3>
-
-                      <p class="text-secondary small mb-4">
-                        Apoie as iniciativas estudantis e tenha acesso a
-                        benefícios exclusivos em produtos e atividades!
-                      </p>
-
-                      <a href="#sobre" class="btn btn-danger px-4 py-2 fw-semibold">
-                        Quero me associar
-                        <i class="bi bi-arrow-right ms-1"></i>
-                      </a>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-              <!-- ============================= -->
-              <!-- SIDEBAR DIREITA -->
-              <!-- ============================= -->
-
-              <div class="col-lg-3">
-
-                <div
-                  class="bg-dark p-4 rounded-3 border border-secondary text-start h-100 d-flex flex-column justify-content-between">
-
-                  <div>
-
-                    <!-- BENEFÍCIO 1 -->
-                    <div class="d-flex align-items-start gap-3 mb-4">
-
-                      <i class="bi bi-shield-check text-danger fs-3 lh-1"></i>
-
-                      <div>
-
-                        <h6 class="fw-bold mb-1 text-white">
-                          Qualidade garantida
-                        </h6>
-
-                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
-                          Produtos oficiais e selecionados pela AAPM.
-                        </p>
-
-                      </div>
-
-                    </div>
-
-
-                    <!-- BENEFÍCIO 2 -->
-                    <div class="d-flex align-items-start gap-3 mb-4">
-
-                      <i class="bi bi-star text-danger fs-3 lh-1"></i>
-
-                      <div>
-
-                        <h6 class="fw-bold mb-1 text-white">
-                          Descontos exclusivos
-                        </h6>
-
-                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
-                          Associados têm benefícios em diversos produtos.
-                        </p>
-
-                      </div>
-
-                    </div>
-
-
-                    <!-- BENEFÍCIO 3 -->
-                    <div class="d-flex align-items-start gap-3 mb-4">
-
-                      <i class="bi bi-calendar-event text-danger fs-3 lh-1"></i>
-
-                      <div>
-
-                        <h6 class="fw-bold mb-1 text-white">
-                          Agendamento fácil
-                        </h6>
-
-                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
-                          Reserve espaços e itens de forma rápida e prática.
-                        </p>
-
-                      </div>
-
-                    </div>
-
-
-                    <!-- BENEFÍCIO 4 -->
-                    <div class="d-flex align-items-start gap-3 mb-4">
-
-                      <i class="bi bi-headset text-danger fs-3 lh-1"></i>
-
-                      <div>
-
-                        <h6 class="fw-bold mb-1 text-white">
-                          Suporte AAPM
-                        </h6>
-
-                        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
-                          Estamos aqui para apoiar sempre que precisar.
-                        </p>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-
-                  <!-- ÍCONE DECORATIVO -->
-
-                  <div class="text-center pt-4 border-top border-secondary mt-3">
-
-                    <div
-                      class="p-3 rounded-circle border border-danger d-inline-flex align-items-center justify-content-center"
-                      style="
+    <!-- ============================= -->
+    <!-- SIDEBAR DIREITA -->
+    <!-- ============================= -->
+   </div>
+   <div class="col-12 col-lg-3">
+    <div class="bg-dark p-4 rounded-3 border border-secondary text-start h-100 d-flex flex-column justify-content-between">
+     <div>
+      <!-- BENEFÍCIO 1 -->
+      <div class="d-flex align-items-start gap-3 mb-4">
+       <i class="bi bi-shield-check text-danger fs-3 lh-1">
+       </i>
+       <div>
+        <h6 class="fw-bold mb-1 text-white">
+         Qualidade garantida
+        </h6>
+        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+         Produtos oficiais e selecionados pela AAPM.
+        </p>
+       </div>
+      </div>
+      <!-- BENEFÍCIO 2 -->
+      <div class="d-flex align-items-start gap-3 mb-4">
+       <i class="bi bi-star text-danger fs-3 lh-1">
+       </i>
+       <div>
+        <h6 class="fw-bold mb-1 text-white">
+         Descontos exclusivos
+        </h6>
+        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+         Associados t&ecirc;m benef&iacute;cios em diversos produtos.
+        </p>
+       </div>
+      </div>
+      <!-- BENEFÍCIO 3 -->
+      <div class="d-flex align-items-start gap-3 mb-4">
+       <i class="bi bi-calendar-event text-danger fs-3 lh-1">
+       </i>
+       <div>
+        <h6 class="fw-bold mb-1 text-white">
+         Agendamento f&aacute;cil
+        </h6>
+        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+         Reserve espa&ccedil;os e itens de forma r&aacute;pida e pr&aacute;tica.
+        </p>
+       </div>
+      </div>
+      <!-- BENEFÍCIO 4 -->
+      <div class="d-flex align-items-start gap-3 mb-4">
+       <i class="bi bi-headset text-danger fs-3 lh-1">
+       </i>
+       <div>
+        <h6 class="fw-bold mb-1 text-white">
+         Suporte AAPM
+        </h6>
+        <p class="text-secondary small mb-0" style="font-size: 0.8rem">
+         Estamos aqui para apoiar sempre que precisar.
+        </p>
+       </div>
+      </div>
+     </div>
+     <!-- ÍCONE DECORATIVO -->
+     <div class="text-center pt-4 border-top border-secondary mt-3">
+      <div class="p-3 rounded-circle border border-danger d-inline-flex align-items-center justify-content-center" style="
                 width: 90px;
                 height: 90px;
                 background: rgba(220, 53, 69, 0.05);
               ">
-
-                      <i class="bi bi-people-fill text-danger display-5"></i>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-        </section>
+       <i class="bi bi-people-fill text-danger display-5">
+       </i>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
 
 
 <!-- =========================================================
@@ -2314,9 +2051,171 @@
        
 
         <!-- 6. TELA: SOBRE A AAPM (VAZIA) -->
-        <section id="sobre" class="d-none">
-          <!-- Insira o conteúdo da tela Sobre a AAPM aqui -->
-        </section>
+       <!-- =====================================================
+     6. TELA: SOBRE A AAPM
+===================================================== -->
+
+<section id="sobre" class="d-none">
+  <div class="container-fluid px-0 text-white">
+    <!-- CABEÇALHO -->
+    <div class="sobre-aapm-header mb-4">
+      <span class="text-danger text-uppercase fw-bold small">Sobre a AAPM</span>
+      <h1 class="display-5 fw-bold mt-2 mb-3">Conheça a <span class="text-danger"> AAPM </span>
+      </h1>
+      <p class="text-secondary mb-0">Associação de Alunos, Ex-alunos, Pais e Mestres</p>
+      <br>
+      <p> A AAPM é uma organização sem fins lucrativos que atua em parceria<br> com o SENAI, apoiando a gestão da escola e promovendo a integração <br> entre a instituição, os alunos e a comunidade.
+    </div>
+
+
+    <!-- =================================================
+         BLOCO PRINCIPAL
+    ================================================== -->
+
+    <div class="card  bg-dark border-secondary rounded-3 overflow-hidden mb-4">
+      <div class="row g-0 align-items-center">
+        <!-- IMAGEM -->
+        <div class="col-lg-5 bg-white">
+          <div class="sobre-aapm-imagem">
+            <img
+              src="../landing/images/logo AAPM.png"
+              alt="Alunos da AAPM"
+              class="img-fluid "
+              height="40px"
+            >
+          </div>
+        </div>
+
+        <!-- TEXTO -->
+        <div class="col-lg-7">
+          <div class="p-4 p-md-5">
+            <span class="sobre-tag">QUEM SOMOS</span>
+            <h2 class="fw-bold mt-2 mb-3">O que é a <span class="text-danger"> AAPM? </span></h2>
+            <p class="text-secondary lh-lg">A AAPM é uma associação sem fins lucrativos,  formada por alunos, ex-alunos, pais e mestres,  que trabalha em conjuto com o SENAI para apoiar os objetivos da escolas e fortalecer a relação com a comunidade.</p>
+            <p class="text-secondary lh-lg">Por meio de ações, projetos, atividades culturais, esportivas e iniciativas de integração, a AAPM busca proporcionar experiências que complementem a formação dos estudantes.</p>
+            <div class="sobre-linha"></div>
+            <p class="small text-secondary mb-0">Uma comunidade mais participativa começa com acolaboração de todos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- =================================================
+         OBJETIVOS
+    ================================================== -->
+
+    <div class="row g-3 mb-4">
+      <!-- CARD 1 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="sobre-info-card h-100">
+          <div class="sobre-icon">
+            <i class="bi bi-mortarboard-fill"></i>
+          </div>
+          <h5 class="fw-bold text-white">Apoio ao ensino</h5>
+          <p class="text-secondary small mb-0"> Contribuir para ações que apoiem o processo de ensino e aprendizagem dos alunos.</p>
+        </div>
+      </div>
+
+
+      <!-- CARD 2 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="sobre-info-card h-100">
+          <div class="sobre-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <h5 class="fw-bold text-white">Comunidade</h5><p class="text-secondary small mb-0"> Aproximar alunos, famílias, professores e a comunidade escolar.</p>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="sobre-info-card h-100">
+          <div class="sobre-icon">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+          <h5 class="fw-bold text-white"> Cultura e lazer</h5>
+          <p class="text-secondary small mb-0">Incentivar atividades culturais, esportivas e de lazer para os estudantes.</p>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="sobre-info-card h-100">
+          <div class="sobre-icon">
+            <i class="bi bi-heart-fill"></i>
+          </div>
+          <h5 class="fw-bold text-white"> Participação </h5>
+          <p class="text-secondary small mb-0"> Estimular a participação dos alunos nas iniciativas da comunidade escolar. </p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- =================================================
+         COMO A AAPM CONTRIBUI
+    ================================================== -->
+    <div class="sobre-contribui mb-4">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-5">
+          <span class="text-danger text-uppercase fw-bold small">Nossa atuação</span>
+          <h2 class="fw-bold text-white mt-2">Como a AAPM<span class="text-danger">contribui?</span></h2>
+          <p class="text-secondary lh-lg">A atuação da AAPM busca complementar a experiência dos estudantes dentro da escola, promovendo açõesque incentivem convivência, participação e desenvolvimento.</p>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="sobre-lista">
+            <div class="sobre-lista-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <div>
+                <strong>Incentivo aos alunos</strong>
+                <p> Apoio a iniciativas que beneficiem a comunidade escolar. </p>
+              </div>
+            </div>
+
+            <div class="sobre-lista-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <div>
+                <strong>Eventos e atividades </strong>
+                <p>Participação em ações culturais, esportivas e de integração.</p>
+              </div>
+            </div>
+
+            <div class="sobre-lista-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <div>
+                <strong>Integração</strong>
+                <p> Fortalecimento da relação entre estudantes e comunidade escolar.</p>
+              </div>
+            </div>
+
+            <div class="sobre-lista-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <div>
+                <strong>Projetos e iniciativas</strong>
+              <p> Desenvolvimento de ações voltadas ao bem-estar e à formação dos alunos. </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- =================================================
+         CTA
+    ================================================== -->
+
+    <div class="sobre-cta">
+      <div>
+        <span class="text-uppercase small fw-bold"> Faça parte </span>
+        <h3 class="fw-bold mt-1 mb-1">A AAPM também é feita por você.</h3>
+        <p class="mb-0"> Participe das ações e acompanhe as novidades da associação.</p>
+      </div>
+      <a href="#avisos" class="btn btn-light fw-semibold px-4"> Ver avisos <i class="bi bi-arrow-right ms-2"></i> </a>
+    </div>
+  </div>
+</section>
 
         <!-- TELA TEMPORADA DE FORMATURA -->
         <section id="formatura" class="d-none my-4">
@@ -2838,6 +2737,7 @@
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../landing/script.js"></script>
+  <script src="/frontend/tema.js" defer></script>
 </body>
 
 </html>

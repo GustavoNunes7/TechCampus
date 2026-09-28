@@ -3222,3 +3222,183 @@ a {
     .btn-gradient-red:active {
       transform: scale(0.98);
     }
+/* =====================================================
+   SOBRE A AAPM
+===================================================== */
+
+.sobre-aapm-header {
+  padding: 10px 0 15px;
+}
+
+.sobre-aapm-header h1 {
+  letter-spacing: -1px;
+}
+
+.sobre-aapm-imagem {
+  min-height: 330px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sobre-aapm-imagem img {
+  width: 0%;
+  height: 60%;
+
+  object-fit: cover;
+}
+
+.sobre-tag {
+  display: inline-block;
+  color: #d7192f;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  border-left: 3px solid #d7192f;
+  padding-left: 10px;
+}
+
+.sobre-linha {
+  width: 50px;
+  height: 3px;
+  background: #d7192f;
+  margin: 20px 0;
+}
+
+
+/* CARDS */
+
+.sobre-info-card {
+  background: #151515;
+  border: 1px solid #343434;
+  border-radius: 12px;
+  padding: 25px;
+  transition: all 0.25s ease;
+}
+
+.sobre-info-card:hover {
+  border-color: #d7192f;
+  transform: translateY(-4px);
+}
+
+.sobre-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: rgba(215, 25, 47, 0.12);
+  border: 1px solid rgba(215, 25, 47, 0.35);
+  color: #d7192f;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+
+/* CONTRIBUI */
+
+.sobre-contribui {
+  background: #111111;
+  border: 1px solid #303030;
+  border-radius: 12px;
+  padding: 35px;
+}
+
+.sobre-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sobre-lista-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+
+  background: #171717;
+  border: 1px solid #303030;
+  border-radius: 10px;
+
+  padding: 15px;
+}
+
+.sobre-lista-item > i {
+  color: #d7192f;
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+.sobre-lista-item strong {
+  color: #fff;
+  font-size: 14px;
+}
+
+.sobre-lista-item p {
+  color: #777;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+
+/* CTA */
+
+.sobre-cta {
+  background: linear-gradient(
+    90deg,
+    #8f0f1e,
+    #d7192f
+  );
+
+  border-radius: 12px;
+
+  padding: 25px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+}
+
+.sobre-cta span {
+  color: #ffd9dd;
+}
+
+.sobre-cta h3 {
+  color: #fff;
+}
+
+.sobre-cta p {
+  color: #f5dfe2;
+  font-size: 14px;
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 767px) {
+
+  .sobre-aapm-imagem,
+  .sobre-aapm-imagem img {
+    min-height: 240px;
+  }
+
+  .sobre-contribui {
+    padding: 25px;
+  }
+
+  .sobre-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sobre-cta .btn {
+    width: 100%;
+  }
+
+}
