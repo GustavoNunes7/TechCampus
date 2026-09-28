@@ -34,3 +34,8 @@
   else if (media.addListener) media.addListener(() => { if (preference === 'sistema') apply(); });
   window.TechCampusTema = { set: setTheme, get: () => preference, apply };
 })();
+
+
+
+
+

@@ -23,6 +23,8 @@
 
       <div class="d-flex align-items-center gap-3 ms-auto">
         <div class="dropdown">
+          
+
           <button class="notification-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notificações">    
             <i class="bi bi-bell fs-5"></i>
             <span class="notification-badge"></span>
@@ -292,16 +294,26 @@
      CONFIGURAÇÕES
 ========================================================= -->
     <section id="configuracoes" class="d-none">
+  <div class="container-fluid py-4">
 
-      <div class="container-fluid py-4">
+    <div class="settings-page-header mb-4">
+      <button
+        type="button"
+        id="voltarConfiguracoes"
+        class="btn settings-back-btn"
+      >
+        <i class="bi bi-arrow-left"></i>
+        <span>Voltar</span>
+      </button>
 
-        <div class="section-header mb-4">
-          <span class="section-tag">CONFIGURAÇÕES</span>
-          <h2 class="section-title">Configurações</h2>
-          <p class="section-description">
-            Personalize sua experiência no TechCampus.
-          </p>
-        </div>
+      <div class="section-header mt-3">
+        <span class="section-tag">CONFIGURAÇÕES</span>
+        <h2 class="section-title">Configurações</h2>
+        <p class="section-description">
+          Personalize sua experiência no TechCampus.
+        </p>
+      </div>
+    </div>
 
 
         <form id="configuracoesForm">
@@ -502,6 +514,7 @@
     style="max-width: 230px"
   >
 </div>
+
           
 
       <nav class="nav-menu d-flex flex-column gap-3">
@@ -563,6 +576,14 @@
     <div class="d-flex flex-column">
       <span class="fw-bold fs-6">Ajuda</span>
       <span class="text-white-50 small">Dúvidas frequentes</span>
+    </div>
+  </a><hr>
+  <!-- Usuários -->
+  <a href="#usuario" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+    <img src="../landing/images/icon_pessoas.svg" alt="Usuário" width="40" height="40" class="flex-shrink-0 mt-1" />
+    <div class="d-flex flex-column">
+      <span class="fw-bold fs-6">Usuários</span>
+      <span class="text-white-50 small">Gerencie perfis de usuários</span>
     </div>
   </a>
 
@@ -707,7 +728,7 @@
 
                 <!-- Coluna da Esquerda: Imagem -->
                 <div class="col-lg-5">
-                  <img src="./images/imagem_sem_fundo_preto.png" alt="Alunos AAPM" class="img-fluid aapm-img">
+                  <img src="../landing/images/alunosJuntos.png" alt="Alunos AAPM" class="img-fluid aapm-img">
                 </div>
 
                 <!-- Coluna Central: Conteúdo e Botão -->
@@ -733,7 +754,7 @@
                     <!-- Item 1: Comunidade -->
                     <div class="feature-item">
                       <div class="feature-icon">
-                        <img src="./images/icon_pessoas.svg" alt="Comunidade" width="28" height="28">
+                        <img src="../landing/images/icon_pessoas.svg" alt="Comunidade" width="28" height="28">
                       </div>
                       <div>
                         <h4 class="feature-title">Comunidade</h4>
@@ -744,7 +765,7 @@
                     <!-- Item 2: Benefícios -->
                     <div class="feature-item">
                       <div class="feature-icon">
-                        <img src="./images/icon_estrela.svg" alt="Benefícios" width="28" height="28">
+                        <img src="../landing/images/icon_estrela.svg" alt="Benefícios" width="28" height="28">
                       </div>
                       <div>
                         <h4 class="feature-title">Benefícios</h4>
@@ -755,7 +776,7 @@
                     <!-- Item 3: Participação -->
                     <div class="feature-item">
                       <div class="feature-icon">
-                        <img src="./images/icon_coração.svg" alt="Participação" width="28" height="28">
+                        <img src="../landing/images/icon_coracao.svg" alt="Participação" width="28" height="28">
                       </div>
                       <div>
                         <h4 class="feature-title">Participação</h4>
@@ -1231,7 +1252,7 @@
        <div class="product-slide" data-category="uniformes">
         <div class="card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card">
          <div class="text-center my-3 product-img-box">
-          <img alt="Jaleco Mec&acirc;nica" class="img-fluid" src="../landing/images/.png" style="max-height: 160px"/>
+          <img alt="Jaleco Mec&acirc;nica" class="img-fluid" src="../landing/images/Jaleco.png" style="max-height: 160px"/>
          </div>
          <div class="card-body d-flex flex-column p-0 text-start">
           <h5 class="fw-bold mb-1">
@@ -2674,6 +2695,455 @@
       </main>
     </div>
   </section>
+
+
+
+
+  <!-- 8. TELA: USUÁRIOS (Apenas Coodernador) -->
+        <!-- =====================================================
+     USUÁRIOS / ADMINISTRAÇÃO
+====================================================== -->
+<section id="usuarios" class="page-section" style="display: none;">
+
+    <div class="container-fluid">
+
+        <!-- Cabeçalho -->
+        <div class="section-header mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">
+                    <i class="bi bi-people-fill"></i>
+                    Gerenciamento de Usuários
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Gerencie os cadastros de alunos e professores.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="btnNovoUsuario">
+                <i class="bi bi-person-plus-fill"></i>
+                Novo cadastro
+            </button>
+        </div>
+
+
+        <!-- Cards de resumo -->
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4">
+                <div class="card usuario-resumo-card">
+                    <div class="card-body">
+                        <div class="usuario-resumo-icon aluno">
+                            <i class="bi bi-mortarboard-fill"></i>
+                        </div>
+
+                        <div>
+                            <span>Total de alunos</span>
+                            <strong id="totalAlunos">0</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card usuario-resumo-card">
+                    <div class="card-body">
+                        <div class="usuario-resumo-icon professor">
+                            <i class="bi bi-person-workspace"></i>
+                        </div>
+
+                        <div>
+                            <span>Total de professores</span>
+                            <strong id="totalProfessores">0</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card usuario-resumo-card">
+                    <div class="card-body">
+                        <div class="usuario-resumo-icon ativo">
+                            <i class="bi bi-person-check-fill"></i>
+                        </div>
+
+                        <div>
+                            <span>Usuários ativos</span>
+                            <strong id="totalAtivos">0</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Área da tabela -->
+        <div class="card usuarios-card">
+
+            <div class="card-header usuarios-toolbar">
+
+                <div>
+                    <h5 class="mb-1">
+                        Contas cadastradas
+                    </h5>
+
+                    <small class="text-muted">
+                        Alunos e professores do sistema
+                    </small>
+                </div>
+
+
+                <div class="usuarios-filtros">
+
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+
+                        <input
+                            type="search"
+                            id="buscarUsuario"
+                            class="form-control"
+                            placeholder="Pesquisar usuário...">
+                    </div>
+
+
+                    <select
+                        id="filtroTipoUsuario"
+                        class="form-select">
+
+                        <option value="todos">
+                            Todos
+                        </option>
+
+                        <option value="aluno">
+                            Alunos
+                        </option>
+
+                        <option value="professor">
+                            Professores
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="filtroStatusUsuario"
+                        class="form-select">
+
+                        <option value="todos">
+                            Todos os status
+                        </option>
+
+                        <option value="ativo">
+                            Ativos
+                        </option>
+
+                        <option value="inativo">
+                            Inativos
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- Tabela -->
+            <div class="table-responsive">
+
+                <table class="table usuarios-table align-middle mb-0">
+
+                    <thead>
+                        <tr>
+
+                            <th>Nome</th>
+
+                            <th>Matrícula</th>
+
+                            <th>E-mail</th>
+
+                            <th>Perfil</th>
+
+                            <th>Status</th>
+
+                            <th class="text-end">
+                                Ações
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabelaUsuarios">
+
+                        <!-- Preenchido pelo JavaScript -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Estado vazio -->
+            <div
+                id="usuariosVazio"
+                class="usuarios-vazio"
+                style="display: none;">
+
+                <i class="bi bi-person-x"></i>
+
+                <h5>
+                    Nenhum usuário encontrado
+                </h5>
+
+                <p>
+                    Não existem usuários correspondentes aos filtros.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     MODAL - CADASTRO DE USUÁRIO
+====================================================== -->
+
+<div
+    class="modal fade"
+    id="modalUsuario"
+    tabindex="-1"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h5 class="modal-title" id="tituloModalUsuario">
+                        Novo cadastro
+                    </h5>
+
+                    <small class="text-muted">
+                        Preencha os dados do usuário.
+                    </small>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Fechar">
+                </button>
+
+            </div>
+
+
+            <form id="formUsuario">
+
+                <div class="modal-body">
+
+                    <input
+                        type="hidden"
+                        id="usuarioId">
+
+
+                    <div class="row g-3">
+
+                        <!-- Nome -->
+                        <div class="col-md-8">
+
+                            <label
+                                for="usuarioNome"
+                                class="form-label">
+
+                                Nome completo
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="usuarioNome"
+                                class="form-control"
+                                placeholder="Digite o nome completo"
+                                required>
+
+                        </div>
+
+
+                        <!-- Tipo -->
+                        <div class="col-md-4">
+
+                            <label
+                                for="usuarioTipo"
+                                class="form-label">
+
+                                Perfil
+
+                            </label>
+
+                            <select
+                                id="usuarioTipo"
+                                class="form-select"
+                                required>
+
+                                <option value="">
+                                    Selecione
+                                </option>
+
+                                <option value="aluno">
+                                    Aluno
+                                </option>
+
+                                <option value="professor">
+                                    Professor
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Matrícula -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="usuarioMatricula"
+                                class="form-label">
+
+                                Matrícula
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="usuarioMatricula"
+                                class="form-control"
+                                placeholder="Ex.: 202600123">
+
+                        </div>
+
+
+                        <!-- E-mail -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="usuarioEmail"
+                                class="form-label">
+
+                                E-mail
+
+                            </label>
+
+                            <input
+                                type="email"
+                                id="usuarioEmail"
+                                class="form-control"
+                                placeholder="usuario@escola.com"
+                                required>
+
+                        </div>
+
+
+                        <!-- Senha -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="usuarioSenha"
+                                class="form-label">
+
+                                Senha
+
+                            </label>
+
+                            <input
+                                type="password"
+                                id="usuarioSenha"
+                                class="form-control"
+                                placeholder="Digite a senha">
+
+                            <div class="form-text">
+                                Ao editar, deixe vazio para manter a senha atual.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Status -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="usuarioStatus"
+                                class="form-label">
+
+                                Status
+
+                            </label>
+
+                            <select
+                                id="usuarioStatus"
+                                class="form-select">
+
+                                <option value="ativo">
+                                    Ativo
+                                </option>
+
+                                <option value="inativo">
+                                    Inativo
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                        Cancelar
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        <i class="bi bi-check-lg"></i>
+                        Salvar cadastro
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 
   <!-- FOOTER -->
   <footer class="techcampus-footer">

@@ -1152,14 +1152,11 @@ document.addEventListener("DOMContentLoaded", () => {
   filterProducts();
 });
 
-
-
 /* =========================================================
    AVISOS GERAIS - CALENDÁRIO
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const calendarDays = document.getElementById("calendarDays");
   const calendarMonth = document.getElementById("calendarMonth");
 
@@ -1171,7 +1168,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-
   /* =======================================================
      DADOS DOS AVISOS
 
@@ -1180,7 +1176,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ======================================================= */
 
   const avisos = [
-
     {
       id: 1,
       titulo: "Semana de Integração 2026",
@@ -1189,7 +1184,7 @@ document.addEventListener("DOMContentLoaded", () => {
       horario: "08:00",
       local: "Auditório SENAI",
       descricao:
-        "Participe da Semana de Integração 2026. Serão realizadas atividades para integração entre os alunos."
+        "Participe da Semana de Integração 2026. Serão realizadas atividades para integração entre os alunos.",
     },
 
     {
@@ -1199,8 +1194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       data: "2026-10-02",
       horario: "23:59",
       local: "Plataforma TechCampus",
-      descricao:
-        "Prazo final para entrega dos projetos acadêmicos da turma."
+      descricao: "Prazo final para entrega dos projetos acadêmicos da turma.",
     },
 
     {
@@ -1211,7 +1205,7 @@ document.addEventListener("DOMContentLoaded", () => {
       horario: "15:00",
       local: "Sala de reuniões da AAPM",
       descricao:
-        "Reunião para tratar das atividades, projetos e próximos eventos da AAPM."
+        "Reunião para tratar das atividades, projetos e próximos eventos da AAPM.",
     },
 
     {
@@ -1221,19 +1215,15 @@ document.addEventListener("DOMContentLoaded", () => {
       data: "2026-10-08",
       horario: "17:00",
       local: "TechCampus",
-      descricao:
-        "Último dia para envio dos documentos pendentes para análise."
-    }
-
+      descricao: "Último dia para envio dos documentos pendentes para análise.",
+    },
   ];
-
 
   /* =======================================================
      ESTADO DO CALENDÁRIO
   ======================================================= */
 
   let currentDate = new Date();
-
 
   /* =======================================================
      NOMES DOS MESES
@@ -1251,115 +1241,78 @@ document.addEventListener("DOMContentLoaded", () => {
     "Setembro",
     "Outubro",
     "Novembro",
-    "Dezembro"
+    "Dezembro",
   ];
-
 
   /* =======================================================
      RENDERIZAR CALENDÁRIO
   ======================================================= */
 
   function renderCalendar() {
-
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
-    calendarMonth.textContent =
-      `${monthNames[month]} ${year}`;
+    calendarMonth.textContent = `${monthNames[month]} ${year}`;
 
     calendarDays.innerHTML = "";
 
-
     /* Primeiro dia do mês */
 
-    const firstDay =
-      new Date(year, month, 1).getDay();
-
+    const firstDay = new Date(year, month, 1).getDay();
 
     /* Último dia do mês */
 
-    const lastDate =
-      new Date(year, month + 1, 0).getDate();
-
+    const lastDate = new Date(year, month + 1, 0).getDate();
 
     /* Dias do mês anterior */
 
-    const previousLastDate =
-      new Date(year, month, 0).getDate();
-
+    const previousLastDate = new Date(year, month, 0).getDate();
 
     /* =====================================================
        DIAS DO MÊS ANTERIOR
     ====================================================== */
 
     for (let i = firstDay - 1; i >= 0; i--) {
-
-      const day = createDayElement(
-        previousLastDate - i,
-        true
-      );
+      const day = createDayElement(previousLastDate - i, true);
 
       calendarDays.appendChild(day);
-
     }
-
 
     /* =====================================================
        DIAS DO MÊS ATUAL
     ====================================================== */
 
     for (let dayNumber = 1; dayNumber <= lastDate; dayNumber++) {
-
-      const day = createDayElement(
-        dayNumber,
-        false
-      );
+      const day = createDayElement(dayNumber, false);
 
       calendarDays.appendChild(day);
-
     }
-
 
     /* =====================================================
        COMPLETAR GRID
     ====================================================== */
 
-    const totalCells =
-      calendarDays.children.length;
+    const totalCells = calendarDays.children.length;
 
-    const remaining =
-      (7 - (totalCells % 7)) % 7;
-
+    const remaining = (7 - (totalCells % 7)) % 7;
 
     for (let i = 1; i <= remaining; i++) {
-
-      const day = createDayElement(
-        i,
-        true
-      );
+      const day = createDayElement(i, true);
 
       calendarDays.appendChild(day);
-
     }
-
   }
-
 
   /* =======================================================
      CRIAR DIA
   ======================================================= */
 
   function createDayElement(dayNumber, otherMonth) {
+    const element = document.createElement("div");
 
-    const element =
-      document.createElement("div");
-
-    element.className =
-      "calendar-day";
-
+    element.className = "calendar-day";
 
     if (otherMonth) {
-
       element.classList.add("other-month");
 
       element.innerHTML = `
@@ -1369,54 +1322,37 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
 
       return element;
-
     }
 
+    const year = currentDate.getFullYear();
 
-    const year =
-      currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
-    const month =
-      currentDate.getMonth();
-
-
-    const dateString =
-      `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
-
+    const dateString = `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
 
     /* =====================================================
        VERIFICAR SE É HOJE
     ====================================================== */
 
-    const today =
-      new Date();
+    const today = new Date();
 
     if (
       dayNumber === today.getDate() &&
       month === today.getMonth() &&
       year === today.getFullYear()
     ) {
-
       element.classList.add("today");
-
     }
-
 
     /* =====================================================
        AVISOS DO DIA
     ====================================================== */
 
-    const dayAvisos =
-      avisos.filter(
-        aviso => aviso.data === dateString
-      );
-
+    const dayAvisos = avisos.filter((aviso) => aviso.data === dateString);
 
     let eventsHTML = "";
 
-
-    dayAvisos.forEach(aviso => {
-
+    dayAvisos.forEach((aviso) => {
       eventsHTML += `
         <div
           class="calendar-event ${aviso.categoria}"
@@ -1426,9 +1362,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         </div>
       `;
-
     });
-
 
     element.innerHTML = `
 
@@ -1442,309 +1376,320 @@ document.addEventListener("DOMContentLoaded", () => {
 
     `;
 
-
     /* =====================================================
        CLIQUE NO DIA
     ====================================================== */
 
     if (dayAvisos.length > 0) {
-
       element.addEventListener("click", () => {
-
         abrirAviso(dayAvisos[0]);
-
       });
-
     }
 
-
     return element;
-
   }
-
 
   /* =======================================================
      ABRIR MODAL
   ======================================================= */
 
   function abrirAviso(aviso) {
-
-    const modalElement =
-      document.getElementById("avisoModal");
+    const modalElement = document.getElementById("avisoModal");
 
     if (!modalElement) return;
 
+    document.getElementById("avisoModalLabel").textContent = aviso.titulo;
 
-    document.getElementById(
-      "avisoModalLabel"
-    ).textContent = aviso.titulo;
-
-
-    document.getElementById(
-      "modalAvisoCategoria"
-    ).textContent =
+    document.getElementById("modalAvisoCategoria").textContent =
       formatarCategoria(aviso.categoria);
 
-
-    document.getElementById(
-      "modalAvisoCategoria"
-    ).className =
+    document.getElementById("modalAvisoCategoria").className =
       `agenda-tag ${aviso.categoria}`;
 
+    document.getElementById("modalAvisoData").textContent = formatarData(
+      aviso.data,
+    );
 
-    document.getElementById(
-      "modalAvisoData"
-    ).textContent =
-      formatarData(aviso.data);
+    document.getElementById("modalAvisoHorario").textContent = aviso.horario;
 
+    document.getElementById("modalAvisoLocal").textContent = aviso.local;
 
-    document.getElementById(
-      "modalAvisoHorario"
-    ).textContent =
-      aviso.horario;
-
-
-    document.getElementById(
-      "modalAvisoLocal"
-    ).textContent =
-      aviso.local;
-
-
-    document.getElementById(
-      "modalAvisoDescricao"
-    ).textContent =
+    document.getElementById("modalAvisoDescricao").textContent =
       aviso.descricao;
 
-
-    const modal =
-      bootstrap.Modal.getOrCreateInstance(
-        modalElement
-      );
+    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
 
     modal.show();
-
   }
-
 
   /* =======================================================
      FORMATAR CATEGORIA
   ======================================================= */
 
   function formatarCategoria(categoria) {
-
     const categorias = {
-
       evento: "Evento",
 
       academico: "Acadêmico",
 
       reuniao: "Reunião",
 
-      importante: "Importante"
-
+      importante: "Importante",
     };
 
     return categorias[categoria] || "Aviso";
-
   }
-
 
   /* =======================================================
      FORMATAR DATA
   ======================================================= */
 
   function formatarData(data) {
+    const partes = data.split("-");
 
-    const partes =
-      data.split("-");
-
-    const dataObj =
-      new Date(
-        Number(partes[0]),
-        Number(partes[1]) - 1,
-        Number(partes[2])
-      );
-
-
-    return dataObj.toLocaleDateString(
-      "pt-BR",
-      {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      }
+    const dataObj = new Date(
+      Number(partes[0]),
+      Number(partes[1]) - 1,
+      Number(partes[2]),
     );
 
+    return dataObj.toLocaleDateString("pt-BR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
   }
-
 
   /* =======================================================
      NAVEGAÇÃO
   ======================================================= */
 
-  previousButton?.addEventListener(
-    "click",
-    () => {
+  previousButton?.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
 
-      currentDate.setMonth(
-        currentDate.getMonth() - 1
-      );
+    renderCalendar();
+  });
 
-      renderCalendar();
+  nextButton?.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
 
-    }
-  );
+    renderCalendar();
+  });
 
+  todayButton?.addEventListener("click", () => {
+    currentDate = new Date();
 
-  nextButton?.addEventListener(
-    "click",
-    () => {
-
-      currentDate.setMonth(
-        currentDate.getMonth() + 1
-      );
-
-      renderCalendar();
-
-    }
-  );
-
-
-  todayButton?.addEventListener(
-    "click",
-    () => {
-
-      currentDate = new Date();
-
-      renderCalendar();
-
-    }
-  );
-
+    renderCalendar();
+  });
 
   /* =======================================================
      FILTROS
   ======================================================= */
 
-  const filterButtons =
-    document.querySelectorAll(
-      ".avisos-filter"
-    );
+  const filterButtons = document.querySelectorAll(".avisos-filter");
 
-  const agendaItems =
-    document.querySelectorAll(
-      ".agenda-item"
-    );
+  const agendaItems = document.querySelectorAll(".agenda-item");
 
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter;
 
-  filterButtons.forEach(button => {
+      filterButtons.forEach((btn) => {
+        btn.classList.remove("active");
+        btn.classList.remove("btn-danger");
 
-    button.addEventListener(
-      "click",
-      () => {
+        btn.classList.add("btn-outline-secondary");
+      });
 
-        const filter =
-          button.dataset.filter;
+      button.classList.add("active");
+      button.classList.remove("btn-outline-secondary");
+      button.classList.add("btn-danger");
 
+      let visible = 0;
 
-        filterButtons.forEach(btn => {
+      agendaItems.forEach((item) => {
+        const category = item.dataset.category;
 
-          btn.classList.remove("active");
-          btn.classList.remove("btn-danger");
+        const show = filter === "todos" || category === filter;
 
-          btn.classList.add("btn-outline-secondary");
+        item.style.display = show ? "flex" : "none";
 
-        });
-
-
-        button.classList.add("active");
-        button.classList.remove("btn-outline-secondary");
-        button.classList.add("btn-danger");
-
-
-        let visible = 0;
-
-
-        agendaItems.forEach(item => {
-
-          const category =
-            item.dataset.category;
-
-
-          const show =
-            filter === "todos" ||
-            category === filter;
-
-
-          item.style.display =
-            show ? "flex" : "none";
-
-
-          if (show) {
-            visible++;
-          }
-
-        });
-
-
-        const empty =
-          document.getElementById(
-            "agendaEmpty"
-          );
-
-
-        if (empty) {
-
-          empty.classList.toggle(
-            "d-none",
-            visible !== 0
-          );
-
+        if (show) {
+          visible++;
         }
+      });
 
+      const empty = document.getElementById("agendaEmpty");
+
+      if (empty) {
+        empty.classList.toggle("d-none", visible !== 0);
       }
-    );
-
+    });
   });
-
 
   /* =======================================================
      CLIQUE NOS PRÓXIMOS AVISOS
   ======================================================= */
 
-  agendaItems.forEach(item => {
+  agendaItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const id = Number(item.dataset.aviso);
 
-    item.addEventListener(
-      "click",
-      () => {
+      const aviso = avisos.find((aviso) => aviso.id === id);
 
-        const id =
-          Number(item.dataset.aviso);
-
-
-        const aviso =
-          avisos.find(
-            aviso => aviso.id === id
-          );
-
-
-        if (aviso) {
-
-          abrirAviso(aviso);
-
-        }
-
+      if (aviso) {
+        abrirAviso(aviso);
       }
-    );
-
+    });
   });
-
 
   /* =======================================================
      INICIALIZAR
   ======================================================= */
 
   renderCalendar();
-
 });
 
+/* VOLTAR DAS CONFIGURAÇÕES */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const botaoVoltar = document.getElementById("voltarConfiguracoes");
+
+  const linksConfiguracoes = document.querySelectorAll(
+    'a[href="#configuracoes"]',
+  );
+
+  const telas = [
+    "inicio",
+    "documento",
+    "pedidos",
+    "avisos",
+    "sobre",
+    "formatura",
+    "ajuda",
+    "perfil",
+  ];
+
+  let telaAnterior = "inicio";
+
+  function obterTelaAtual() {
+    // Prioriza a seção que está realmente visível.
+    for (const id of telas) {
+      const secao = document.getElementById(id);
+
+      if (
+        secao &&
+        !secao.classList.contains("d-none") &&
+        getComputedStyle(secao).display !== "none"
+      ) {
+        return id;
+      }
+    }
+
+    // Alternativa: usa a URL.
+    const hash = location.hash.replace("#", "");
+
+    return telas.includes(hash) ? hash : "inicio";
+  }
+
+  // Guarda a tela ao clicar em Configurações.
+  linksConfiguracoes.forEach((link) => {
+    link.addEventListener(
+      "click",
+      () => {
+        telaAnterior = obterTelaAtual();
+      },
+      { capture: true },
+    );
+  });
+
+  if (botaoVoltar) {
+    botaoVoltar.addEventListener("click", () => {
+      const destino = telas.includes(telaAnterior) ? telaAnterior : "inicio";
+
+      // Reutiliza a navegação existente do sistema.
+      const linkMenu = document.querySelector(
+        `.nav-menu a[href="#${destino}"]`,
+      );
+
+      if (linkMenu) {
+        linkMenu.click();
+      } else {
+        location.hash = destino;
+      }
+    });
+  }
+});
+
+/* TechCampus: organiza Perfil e Configurações na mesma área das outras telas. */
+(() => {
+  "use strict";
+  const ids = [
+    "inicio",
+    "documento",
+    "pedidos",
+    "avisos",
+    "sobre",
+    "formatura",
+    "ajuda",
+    "perfil",
+    "configuracoes",
+  ];
+  let previous = "inicio";
+  const visible = (el) =>
+    el &&
+    !el.classList.contains("d-none") &&
+    getComputedStyle(el).display !== "none";
+  const current = () =>
+    ids.find(
+      (id) => id !== "configuracoes" && visible(document.getElementById(id)),
+    ) || "inicio";
+  document.addEventListener("DOMContentLoaded", () => {
+    const main = document.querySelector(".layout-wrapper > .main-content");
+    if (!main) {
+      console.warn("TechCampus: .main-content não encontrado.");
+      return;
+    }
+    // Corrige a estrutura sem recriar os formulários nem perder IDs/eventos.
+    for (const id of ["perfil", "configuracoes"]) {
+      const section = document.getElementById(id);
+      if (section && section.parentElement !== main) main.appendChild(section);
+    }
+    const back = document.getElementById("voltarConfiguracoes");
+    // Captura a tela de origem antes de o script principal ocultá-la.
+    document.querySelectorAll('a[href="#configuracoes"]').forEach((link) => {
+      link.addEventListener(
+        "click",
+        () => {
+          previous = current();
+        },
+        true,
+      );
+    });
+    back?.addEventListener("click", () => {
+      const target =
+        document.getElementById(previous) || document.getElementById("inicio");
+      if (!target) return;
+      // Navega pelo mesmo mecanismo já usado pelos links do TechCampus.
+      const nav = document.querySelector(`.nav-menu a[href="#${target.id}"]`);
+      if (nav) nav.click();
+      else {
+        ids.forEach((id) =>
+          document.getElementById(id)?.classList.add("d-none"),
+        );
+        target.classList.remove("d-none");
+        location.hash = target.id;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    // Corrige o fechamento da sidebar-top, caso o HTML original esteja incompleto.
+    const sidebar = document.getElementById("sidebar");
+    const sidebarTop = sidebar?.querySelector(".sidebar-top");
+    const nav = sidebar?.querySelector(".nav-menu");
+    const bottom = sidebar?.querySelector(".sidebar-bottom");
+    if (sidebar && sidebarTop && nav && nav.parentElement === sidebarTop)
+      sidebar.insertBefore(nav, bottom || null);
+    if (sidebar && bottom && bottom.parentElement !== sidebar)
+      sidebar.appendChild(bottom);
+  });
+})();
