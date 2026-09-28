@@ -278,17 +278,11 @@
                     <i class="bi bi-check-lg me-2"></i>
                     Salvar alterações
                   </button>
-
                 </div>
-
               </div>
-
             </div>
-
           </form>
-
         </div>
-
       </div>
     </section>
 
@@ -1483,7 +1477,37 @@
                 <!-- ============================= -->
                 <!-- BANNER ASSOCIADO -->
                 <!-- ============================= -->
+                   
+     <div class="container my-auto">
+    <div class="row g-4 justify-content-center">
+      
+      <!-- CARD 1: Jogos de Tabuleiro -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <div class="custom-card card-jogos">
+          <div class="card-content">
+            <h2 class="card-title-custom">Jogos de Tabuleiro</h2>
+            <p class="card-subtitle-custom">
+              Diversão garantida! jogos disponíveis para momentos de lazer e integração.
+            </p>
+            <a href="#agendar-jogos" class="btn btn-gradient-red">Agendar / Reservar</a>
+          </div>
+        </div>
+      </div>
 
+      <!-- CARD 2: Agendar Quadra -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <div class="custom-card card-quadra">
+          <div class="card-content">
+            <h2 class="card-title-custom">Agendar Quadra</h2>
+            <p class="card-subtitle-custom">
+              Reserve a quadra para esportes, treinamentos e atividades.
+            </p>
+            <a href="#agendar-quadra" class="btn btn-gradient-red">Agendar / Reservar</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
                 <div class="card border-secondary rounded-3 bg-dark text-white overflow-hidden p-0 banner-associado">
 
                   <div class="row g-0 align-items-center">
@@ -1647,10 +1671,647 @@
         </section>
 
 
-        <!-- 5. TELA: AVISOS GERAIS (VAZIA) -->
-        <section id="avisos" class="d-none">
-          <!-- Insira o conteúdo da tela Avisos Gerais aqui -->
-        </section>
+<!-- =========================================================
+     5. TELA: AVISOS GERAIS
+========================================================= -->
+<section id="avisos" class="d-none my-4">
+
+  <div class="container-fluid px-0 text-white">
+
+    
+    <!-- =====================================================
+         DESTAQUE
+    ====================================================== -->
+    <div class="avisos-hero mb-4">
+
+      <div class="row align-items-center g-4">
+
+        <div class="col-lg-8">
+
+          <span class="text-danger text-uppercase fw-bold small">
+            <i class="bi bi-calendar-event me-1"></i>
+            Calendário TechCampus
+          </span>
+
+          <h1 class="fw-bold text-white mt-2 mb-3">
+            Fique por dentro de tudo que acontece na escola.
+          </h1>
+
+          <p class="text-secondary mb-0">
+            Consulte o calendário para encontrar eventos,
+            reuniões, atividades acadêmicas, prazos e outros
+            comunicados importantes.
+          </p>
+
+        </div>
+
+        <div class="col-lg-4 text-center d-none d-lg-block">
+
+          <div class="avisos-hero-icon">
+            <i class="bi bi-calendar3"></i>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FILTROS
+    ====================================================== -->
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
+
+      <button
+        type="button"
+        class="btn btn-danger avisos-filter active"
+        data-filter="todos">
+
+        <i class="bi bi-grid me-1"></i>
+        Todos
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary avisos-filter"
+        data-filter="evento">
+
+        <i class="bi bi-calendar-event me-1"></i>
+        Eventos
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary avisos-filter"
+        data-filter="academico">
+
+        <i class="bi bi-mortarboard me-1"></i>
+        Acadêmico
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary avisos-filter"
+        data-filter="reuniao">
+
+        <i class="bi bi-people me-1"></i>
+        Reuniões
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary avisos-filter"
+        data-filter="importante">
+
+        <i class="bi bi-exclamation-circle me-1"></i>
+        Importantes
+
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         CALENDÁRIO + PRÓXIMOS AVISOS
+    ====================================================== -->
+    <div class="row g-4">
+
+
+      <!-- ===================================================
+           CALENDÁRIO
+      ==================================================== -->
+      <div class="col-xl-8">
+
+        <div class="avisos-calendar-card">
+
+          <!-- CABEÇALHO DO CALENDÁRIO -->
+          <div class="calendar-header">
+
+            <div>
+
+              <span class="text-secondary small">
+                CALENDÁRIO
+              </span>
+
+              <h3
+                id="calendarMonth"
+                class="fw-bold text-white mb-0">
+                Setembro 2026
+              </h3>
+
+            </div>
+
+
+            <div class="d-flex gap-2">
+
+              <button
+                type="button"
+                id="calendarPrev"
+                class="calendar-control"
+                aria-label="Mês anterior">
+
+                <i class="bi bi-chevron-left"></i>
+
+              </button>
+
+
+              <button
+                type="button"
+                id="calendarToday"
+                class="calendar-today">
+
+                Hoje
+
+              </button>
+
+
+              <button
+                type="button"
+                id="calendarNext"
+                class="calendar-control"
+                aria-label="Próximo mês">
+
+                <i class="bi bi-chevron-right"></i>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- DIAS DA SEMANA -->
+          <div class="calendar-weekdays">
+
+            <div>DOM</div>
+            <div>SEG</div>
+            <div>TER</div>
+            <div>QUA</div>
+            <div>QUI</div>
+            <div>SEX</div>
+            <div>SÁB</div>
+
+          </div>
+
+
+          <!-- DIAS -->
+          <div
+            id="calendarDays"
+            class="calendar-days">
+
+            <!--
+              Os dias serão gerados pelo JavaScript.
+            -->
+
+          </div>
+
+
+          <!-- LEGENDA -->
+          <div class="calendar-legend">
+
+            <div>
+              <span class="legend-dot evento"></span>
+              Evento
+            </div>
+
+            <div>
+              <span class="legend-dot academico"></span>
+              Acadêmico
+            </div>
+
+            <div>
+              <span class="legend-dot reuniao"></span>
+              Reunião
+            </div>
+
+            <div>
+              <span class="legend-dot importante"></span>
+              Importante
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           PRÓXIMOS AVISOS
+      ==================================================== -->
+      <div class="col-xl-4">
+
+        <div class="proximos-avisos-card">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+              <span class="text-secondary small">
+                AGENDA
+              </span>
+
+              <h3 class="fw-bold text-white mb-0">
+                Próximos avisos
+              </h3>
+
+            </div>
+
+            <div class="agenda-icon">
+              <i class="bi bi-bell"></i>
+            </div>
+
+          </div>
+
+
+          <!-- AVISO 1 -->
+          <div
+            class="agenda-item"
+            data-category="evento"
+            data-aviso="1">
+
+            <div class="agenda-date">
+
+              <span class="agenda-day">
+                30
+              </span>
+
+              <span class="agenda-month">
+                SET
+              </span>
+
+            </div>
+
+
+            <div class="agenda-content">
+
+              <span class="agenda-tag evento">
+                Evento
+              </span>
+
+              <h5>
+                Semana de Integração 2026
+              </h5>
+
+              <p>
+                Atividades de integração entre alunos.
+              </p>
+
+              <small>
+                <i class="bi bi-clock me-1"></i>
+                08:00
+              </small>
+
+            </div>
+
+            <i class="bi bi-chevron-right agenda-arrow"></i>
+
+          </div>
+
+
+          <!-- AVISO 2 -->
+          <div
+            class="agenda-item"
+            data-category="academico"
+            data-aviso="2">
+
+            <div class="agenda-date">
+
+              <span class="agenda-day">
+                02
+              </span>
+
+              <span class="agenda-month">
+                OUT
+              </span>
+
+            </div>
+
+
+            <div class="agenda-content">
+
+              <span class="agenda-tag academico">
+                Acadêmico
+              </span>
+
+              <h5>
+                Entrega de Projetos
+              </h5>
+
+              <p>
+                Prazo para entrega dos projetos da turma.
+              </p>
+
+              <small>
+                <i class="bi bi-clock me-1"></i>
+                23:59
+              </small>
+
+            </div>
+
+            <i class="bi bi-chevron-right agenda-arrow"></i>
+
+          </div>
+
+
+          <!-- AVISO 3 -->
+          <div
+            class="agenda-item"
+            data-category="reuniao"
+            data-aviso="3">
+
+            <div class="agenda-date">
+
+              <span class="agenda-day">
+                05
+              </span>
+
+              <span class="agenda-month">
+                OUT
+              </span>
+
+            </div>
+
+
+            <div class="agenda-content">
+
+              <span class="agenda-tag reuniao">
+                Reunião
+              </span>
+
+              <h5>
+                Reunião da AAPM
+              </h5>
+
+              <p>
+                Reunião para tratar das atividades da AAPM.
+              </p>
+
+              <small>
+                <i class="bi bi-clock me-1"></i>
+                15:00
+              </small>
+
+            </div>
+
+            <i class="bi bi-chevron-right agenda-arrow"></i>
+
+          </div>
+
+
+          <!-- AVISO 4 -->
+          <div
+            class="agenda-item"
+            data-category="importante"
+            data-aviso="4">
+
+            <div class="agenda-date">
+
+              <span class="agenda-day">
+                08
+              </span>
+
+              <span class="agenda-month">
+                OUT
+              </span>
+
+            </div>
+
+
+            <div class="agenda-content">
+
+              <span class="agenda-tag importante">
+                Importante
+              </span>
+
+              <h5>
+                Prazo para documentação
+              </h5>
+
+              <p>
+                Último dia para enviar documentos pendentes.
+              </p>
+
+              <small>
+                <i class="bi bi-clock me-1"></i>
+                17:00
+              </small>
+
+            </div>
+
+            <i class="bi bi-chevron-right agenda-arrow"></i>
+
+          </div>
+
+
+          <!-- SEM AVISOS -->
+          <div
+            id="agendaEmpty"
+            class="text-center py-4 d-none">
+
+            <i class="bi bi-calendar-x text-secondary fs-1"></i>
+
+            <p class="text-secondary mt-2 mb-0">
+              Nenhum aviso encontrado.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         AVISO EM DESTAQUE
+    ====================================================== -->
+    <div class="avisos-important mt-4">
+
+      <div class="important-icon">
+
+        <i class="bi bi-megaphone-fill"></i>
+
+      </div>
+
+      <div>
+
+        <span class="text-uppercase text-danger fw-bold small">
+          Informação importante
+        </span>
+
+        <h5 class="fw-bold text-white mt-1 mb-1">
+          Acompanhe regularmente os avisos
+        </h5>
+
+        <p class="text-secondary small mb-0">
+          Novos eventos, prazos e comunicados poderão ser
+          adicionados ao calendário pelos responsáveis da escola.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       MODAL DO AVISO
+  ====================================================== -->
+  <div
+    class="modal fade"
+    id="avisoModal"
+    tabindex="-1"
+    aria-labelledby="avisoModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content bg-dark text-white border border-secondary">
+
+        <div class="modal-header border-secondary">
+
+          <div>
+
+            <span
+              id="modalAvisoCategoria"
+              class="agenda-tag evento">
+
+              Evento
+
+            </span>
+
+            <h5
+              class="modal-title fw-bold mt-2"
+              id="avisoModalLabel">
+
+              Semana de Integração 2026
+
+            </h5>
+
+          </div>
+
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Fechar">
+          </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+          <div class="modal-info-item">
+
+            <i class="bi bi-calendar-event"></i>
+
+            <div>
+
+              <span>Data</span>
+
+              <strong id="modalAvisoData">
+                30 de setembro de 2026
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="modal-info-item">
+
+            <i class="bi bi-clock"></i>
+
+            <div>
+
+              <span>Horário</span>
+
+              <strong id="modalAvisoHorario">
+                08:00
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="modal-info-item">
+
+            <i class="bi bi-geo-alt"></i>
+
+            <div>
+
+              <span>Local</span>
+
+              <strong id="modalAvisoLocal">
+                Auditório SENAI
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <hr class="border-secondary my-4">
+
+
+          <div>
+
+            <span class="text-secondary small">
+              DESCRIÇÃO
+            </span>
+
+            <p
+              id="modalAvisoDescricao"
+              class="text-light mt-2 mb-0">
+
+              Participe da Semana de Integração 2026.
+              Serão realizadas atividades para integração
+              entre os alunos.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer border-secondary">
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-dismiss="modal">
+
+            Fechar
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+       
 
         <!-- 6. TELA: SOBRE A AAPM (VAZIA) -->
         <section id="sobre" class="d-none">
@@ -1664,6 +2325,7 @@
             <div class="formatura-hero position-relative rounded-3 overflow-hidden p-4 p-md-5 mb-4">
               <div class="formatura-hero-overlay"></div>
               <div class="position-relative z-2 max-w-600 text-start">
+                
                 <span class="text-uppercase fw-semibold text-danger small tracking-wider mb-2 d-block">Temporada de
                   Formatura</span>
                 <h1 class="display-5 fw-bold text-white mb-3">
@@ -1756,7 +2418,7 @@
                 <!-- Destino 1 -->
                 <div class="col-12 col-sm-6 col-lg-3">
                   <div class="destino-card rounded-3 overflow-hidden text-start">
-                    <img src="../images/thermas_water_park.jpg" alt="Thermas Water Park"
+                    <img src="../landing/images/thermasPark.jpg" alt="Thermas Water Park"
                       class="img-fluid w-100 destino-img" />
                     <div class="p-2 px-3 bg-dark-card">
                       <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
@@ -1770,7 +2432,7 @@
                 <!-- Destino 2 -->
                 <div class="col-12 col-sm-6 col-lg-3">
                   <div class="destino-card rounded-3 overflow-hidden text-start">
-                    <img src="../images/sitio_paraiso_verde.jpg" alt="Sítio Paraíso Verde"
+                    <img src="../landing/images/sitioParaisoVerde.jpg" alt="Sítio Paraíso Verde"
                       class="img-fluid w-100 destino-img" />
                     <div class="p-2 px-3 bg-dark-card">
                       <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
@@ -1784,7 +2446,7 @@
                 <!-- Destino 3 -->
                 <div class="col-12 col-sm-6 col-lg-3">
                   <div class="destino-card rounded-3 overflow-hidden text-start">
-                    <img src="../images/hopi_hari.jpg" alt="Hopi Hari" class="img-fluid w-100 destino-img" />
+                    <img src="../landing/images/hopihari.jpg" alt="Hopi Hari" class="img-fluid w-100 destino-img" />
                     <div class="p-2 px-3 bg-dark-card">
                       <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
                         Hopi Hari
@@ -1797,7 +2459,7 @@
                 <!-- Destino 4 -->
                 <div class="col-12 col-sm-6 col-lg-3">
                   <div class="destino-card rounded-3 overflow-hidden text-start">
-                    <img src="../images/sitio_recanto_feliz.jpg" alt="Sítio Recanto Feliz"
+                    <img src="../landing/images/sitioRecantoFeliz.jpg" alt="Sítio Recanto Feliz"
                       class="img-fluid w-100 destino-img" />
                     <div class="p-2 px-3 bg-dark-card">
                       <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">

@@ -1151,3 +1151,600 @@ document.addEventListener("DOMContentLoaded", () => {
 
   filterProducts();
 });
+
+
+
+/* =========================================================
+   AVISOS GERAIS - CALENDÁRIO
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const calendarDays = document.getElementById("calendarDays");
+  const calendarMonth = document.getElementById("calendarMonth");
+
+  const previousButton = document.getElementById("calendarPrev");
+  const nextButton = document.getElementById("calendarNext");
+  const todayButton = document.getElementById("calendarToday");
+
+  if (!calendarDays || !calendarMonth) {
+    return;
+  }
+
+
+  /* =======================================================
+     DADOS DOS AVISOS
+
+     Futuramente estes dados podem vir da API:
+     GET /api/avisos
+  ======================================================= */
+
+  const avisos = [
+
+    {
+      id: 1,
+      titulo: "Semana de Integração 2026",
+      categoria: "evento",
+      data: "2026-09-30",
+      horario: "08:00",
+      local: "Auditório SENAI",
+      descricao:
+        "Participe da Semana de Integração 2026. Serão realizadas atividades para integração entre os alunos."
+    },
+
+    {
+      id: 2,
+      titulo: "Entrega de Projetos",
+      categoria: "academico",
+      data: "2026-10-02",
+      horario: "23:59",
+      local: "Plataforma TechCampus",
+      descricao:
+        "Prazo final para entrega dos projetos acadêmicos da turma."
+    },
+
+    {
+      id: 3,
+      titulo: "Reunião da AAPM",
+      categoria: "reuniao",
+      data: "2026-10-05",
+      horario: "15:00",
+      local: "Sala de reuniões da AAPM",
+      descricao:
+        "Reunião para tratar das atividades, projetos e próximos eventos da AAPM."
+    },
+
+    {
+      id: 4,
+      titulo: "Prazo para documentação",
+      categoria: "importante",
+      data: "2026-10-08",
+      horario: "17:00",
+      local: "TechCampus",
+      descricao:
+        "Último dia para envio dos documentos pendentes para análise."
+    }
+
+  ];
+
+
+  /* =======================================================
+     ESTADO DO CALENDÁRIO
+  ======================================================= */
+
+  let currentDate = new Date();
+
+
+  /* =======================================================
+     NOMES DOS MESES
+  ======================================================= */
+
+  const monthNames = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+  ];
+
+
+  /* =======================================================
+     RENDERIZAR CALENDÁRIO
+  ======================================================= */
+
+  function renderCalendar() {
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    calendarMonth.textContent =
+      `${monthNames[month]} ${year}`;
+
+    calendarDays.innerHTML = "";
+
+
+    /* Primeiro dia do mês */
+
+    const firstDay =
+      new Date(year, month, 1).getDay();
+
+
+    /* Último dia do mês */
+
+    const lastDate =
+      new Date(year, month + 1, 0).getDate();
+
+
+    /* Dias do mês anterior */
+
+    const previousLastDate =
+      new Date(year, month, 0).getDate();
+
+
+    /* =====================================================
+       DIAS DO MÊS ANTERIOR
+    ====================================================== */
+
+    for (let i = firstDay - 1; i >= 0; i--) {
+
+      const day = createDayElement(
+        previousLastDate - i,
+        true
+      );
+
+      calendarDays.appendChild(day);
+
+    }
+
+
+    /* =====================================================
+       DIAS DO MÊS ATUAL
+    ====================================================== */
+
+    for (let dayNumber = 1; dayNumber <= lastDate; dayNumber++) {
+
+      const day = createDayElement(
+        dayNumber,
+        false
+      );
+
+      calendarDays.appendChild(day);
+
+    }
+
+
+    /* =====================================================
+       COMPLETAR GRID
+    ====================================================== */
+
+    const totalCells =
+      calendarDays.children.length;
+
+    const remaining =
+      (7 - (totalCells % 7)) % 7;
+
+
+    for (let i = 1; i <= remaining; i++) {
+
+      const day = createDayElement(
+        i,
+        true
+      );
+
+      calendarDays.appendChild(day);
+
+    }
+
+  }
+
+
+  /* =======================================================
+     CRIAR DIA
+  ======================================================= */
+
+  function createDayElement(dayNumber, otherMonth) {
+
+    const element =
+      document.createElement("div");
+
+    element.className =
+      "calendar-day";
+
+
+    if (otherMonth) {
+
+      element.classList.add("other-month");
+
+      element.innerHTML = `
+        <span class="calendar-day-number">
+          ${dayNumber}
+        </span>
+      `;
+
+      return element;
+
+    }
+
+
+    const year =
+      currentDate.getFullYear();
+
+    const month =
+      currentDate.getMonth();
+
+
+    const dateString =
+      `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
+
+
+    /* =====================================================
+       VERIFICAR SE É HOJE
+    ====================================================== */
+
+    const today =
+      new Date();
+
+    if (
+      dayNumber === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear()
+    ) {
+
+      element.classList.add("today");
+
+    }
+
+
+    /* =====================================================
+       AVISOS DO DIA
+    ====================================================== */
+
+    const dayAvisos =
+      avisos.filter(
+        aviso => aviso.data === dateString
+      );
+
+
+    let eventsHTML = "";
+
+
+    dayAvisos.forEach(aviso => {
+
+      eventsHTML += `
+        <div
+          class="calendar-event ${aviso.categoria}"
+          title="${aviso.titulo}">
+
+          ${aviso.titulo}
+
+        </div>
+      `;
+
+    });
+
+
+    element.innerHTML = `
+
+      <span class="calendar-day-number">
+        ${dayNumber}
+      </span>
+
+      <div class="calendar-events">
+        ${eventsHTML}
+      </div>
+
+    `;
+
+
+    /* =====================================================
+       CLIQUE NO DIA
+    ====================================================== */
+
+    if (dayAvisos.length > 0) {
+
+      element.addEventListener("click", () => {
+
+        abrirAviso(dayAvisos[0]);
+
+      });
+
+    }
+
+
+    return element;
+
+  }
+
+
+  /* =======================================================
+     ABRIR MODAL
+  ======================================================= */
+
+  function abrirAviso(aviso) {
+
+    const modalElement =
+      document.getElementById("avisoModal");
+
+    if (!modalElement) return;
+
+
+    document.getElementById(
+      "avisoModalLabel"
+    ).textContent = aviso.titulo;
+
+
+    document.getElementById(
+      "modalAvisoCategoria"
+    ).textContent =
+      formatarCategoria(aviso.categoria);
+
+
+    document.getElementById(
+      "modalAvisoCategoria"
+    ).className =
+      `agenda-tag ${aviso.categoria}`;
+
+
+    document.getElementById(
+      "modalAvisoData"
+    ).textContent =
+      formatarData(aviso.data);
+
+
+    document.getElementById(
+      "modalAvisoHorario"
+    ).textContent =
+      aviso.horario;
+
+
+    document.getElementById(
+      "modalAvisoLocal"
+    ).textContent =
+      aviso.local;
+
+
+    document.getElementById(
+      "modalAvisoDescricao"
+    ).textContent =
+      aviso.descricao;
+
+
+    const modal =
+      bootstrap.Modal.getOrCreateInstance(
+        modalElement
+      );
+
+    modal.show();
+
+  }
+
+
+  /* =======================================================
+     FORMATAR CATEGORIA
+  ======================================================= */
+
+  function formatarCategoria(categoria) {
+
+    const categorias = {
+
+      evento: "Evento",
+
+      academico: "Acadêmico",
+
+      reuniao: "Reunião",
+
+      importante: "Importante"
+
+    };
+
+    return categorias[categoria] || "Aviso";
+
+  }
+
+
+  /* =======================================================
+     FORMATAR DATA
+  ======================================================= */
+
+  function formatarData(data) {
+
+    const partes =
+      data.split("-");
+
+    const dataObj =
+      new Date(
+        Number(partes[0]),
+        Number(partes[1]) - 1,
+        Number(partes[2])
+      );
+
+
+    return dataObj.toLocaleDateString(
+      "pt-BR",
+      {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }
+    );
+
+  }
+
+
+  /* =======================================================
+     NAVEGAÇÃO
+  ======================================================= */
+
+  previousButton?.addEventListener(
+    "click",
+    () => {
+
+      currentDate.setMonth(
+        currentDate.getMonth() - 1
+      );
+
+      renderCalendar();
+
+    }
+  );
+
+
+  nextButton?.addEventListener(
+    "click",
+    () => {
+
+      currentDate.setMonth(
+        currentDate.getMonth() + 1
+      );
+
+      renderCalendar();
+
+    }
+  );
+
+
+  todayButton?.addEventListener(
+    "click",
+    () => {
+
+      currentDate = new Date();
+
+      renderCalendar();
+
+    }
+  );
+
+
+  /* =======================================================
+     FILTROS
+  ======================================================= */
+
+  const filterButtons =
+    document.querySelectorAll(
+      ".avisos-filter"
+    );
+
+  const agendaItems =
+    document.querySelectorAll(
+      ".agenda-item"
+    );
+
+
+  filterButtons.forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const filter =
+          button.dataset.filter;
+
+
+        filterButtons.forEach(btn => {
+
+          btn.classList.remove("active");
+          btn.classList.remove("btn-danger");
+
+          btn.classList.add("btn-outline-secondary");
+
+        });
+
+
+        button.classList.add("active");
+        button.classList.remove("btn-outline-secondary");
+        button.classList.add("btn-danger");
+
+
+        let visible = 0;
+
+
+        agendaItems.forEach(item => {
+
+          const category =
+            item.dataset.category;
+
+
+          const show =
+            filter === "todos" ||
+            category === filter;
+
+
+          item.style.display =
+            show ? "flex" : "none";
+
+
+          if (show) {
+            visible++;
+          }
+
+        });
+
+
+        const empty =
+          document.getElementById(
+            "agendaEmpty"
+          );
+
+
+        if (empty) {
+
+          empty.classList.toggle(
+            "d-none",
+            visible !== 0
+          );
+
+        }
+
+      }
+    );
+
+  });
+
+
+  /* =======================================================
+     CLIQUE NOS PRÓXIMOS AVISOS
+  ======================================================= */
+
+  agendaItems.forEach(item => {
+
+    item.addEventListener(
+      "click",
+      () => {
+
+        const id =
+          Number(item.dataset.aviso);
+
+
+        const aviso =
+          avisos.find(
+            aviso => aviso.id === id
+          );
+
+
+        if (aviso) {
+
+          abrirAviso(aviso);
+
+        }
+
+      }
+    );
+
+  });
+
+
+  /* =======================================================
+     INICIALIZAR
+  ======================================================= */
+
+  renderCalendar();
+
+});
+
