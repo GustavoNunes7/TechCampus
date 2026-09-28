@@ -1,20 +1,20 @@
-const jwt = require('jsonwebtoken');
-
+const jwt = require("jsonwebtoken");
 function autenticar(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token      = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ erro: 'Token não fornecido. Faça login.' });
-  }
-
+  const match = /^Bearer (.+)$/i.exec(req.headers.authorization || "");
+  if (!match) return res.status(401).json({ erro: "Token não fornecido." });
   try {
-    const payload  = jwt.verify(token, process.env.JWT_SECRET);
-    req.usuario    = payload;
+    req.usuario = jwt.verify(match[1], process.env.JWT_SECRET, {
+      algorithms: ["HS256"],
+    });
     next();
-  } catch (erro) {
-    return res.status(401).json({ erro: 'Token inválido ou expirado.' });
+  } catch {
+    return res.status(401).json({ erro: "Token inválido ou expirado." });
   }
 }
-
+function admin(req, res, next) {
+  if (req.usuario?.papel !== "admin")
+    return res.status(403).json({ erro: "Acesso restrito a administradores." });
+  next();
+}
 module.exports = autenticar;
+module.exports.admin = admin;

@@ -14,15 +14,16 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
 
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="/landing/styles.css" />
 
     <title>Login | TechCampus</title>
   </head>
 
   <body class="login-body">
-
-    <header class="topbar d-flex align-items-center justify-content-between px-4 py-2">
-      <a href="../index.html">
+    <header
+      class="topbar d-flex align-items-center justify-content-between px-4 py-2"
+    >
+      <a href="/landing/index.html">
         <button
           id="loginBtn"
           class="btn w-10 d-flex align-items-center justify-content-center gap-2 text-white border-secondary"
@@ -34,7 +35,6 @@
     </header>
 
     <main class="login-page">
-
       <!-- Imagem de fundo -->
       <div class="login-background"></div>
 
@@ -43,83 +43,54 @@
 
       <!-- Conteúdo -->
       <div class="container-fluid login-content">
-
         <div class="row align-items-center min-vh-100">
-
           <!-- LADO ESQUERDO -->
           <div class="col-lg-7 d-none d-lg-block">
-
             <div class="login-welcome">
-
               <h1>
                 Bem-vindo<br />
                 a <span>AAPM</span>
               </h1>
 
-              <h2>
-                Informações, benefícios e oportunidades em um só lugar.
-              </h2>
+              <h2>Informações, benefícios e oportunidades em um só lugar.</h2>
 
               <p>
                 O TechCampus conecta você à AAPM da escola, reunindo avisos,
                 benefícios, eventos e serviços em uma única plataforma.
               </p>
-
             </div>
-
           </div>
-
 
           <!-- LADO DIREITO -->
           <div class="col-lg-5 col-md-8 col-sm-10 mx-auto">
-
             <div class="login-card">
-
-
               <!-- =====================================================
                    LOGIN
               ====================================================== -->
 
               <div id="loginSection">
-
                 <!-- Cabeçalho -->
 
                 <div class="login-header">
-
-                  <h3>
-                    Entrar na sua conta
-                  </h3>
+                  <h3>Entrar na sua conta</h3>
 
                   <p>
                     Utilize seu e-mail e senha institucionais da escola para
                     acessar a plataforma.
                   </p>
-
                 </div>
 
-
-                <form>
-
+                <form id="loginForm">
                   <!-- E-MAIL -->
 
                   <div class="mb-3">
-
-                    <label
-                      for="email"
-                      class="form-label"
-                    >
+                    <label for="email" class="form-label">
                       E-mail institucional
                     </label>
 
                     <div class="input-group">
-
                       <span class="input-group-text">
-
-                        <img
-                          src="../images/icon_emai.svg"
-                          alt="E-mail"
-                        />
-
+                        <img src="/landing/images/icon_emai.svg" alt="E-mail" />
                       </span>
 
                       <input
@@ -128,32 +99,20 @@
                         class="form-control"
                         placeholder="Digite seu email"
                       />
-
                     </div>
-
                   </div>
-
 
                   <!-- SENHA -->
 
                   <div class="mb-2">
-
-                    <label
-                      for="senha"
-                      class="form-label"
-                    >
-                      Senha
-                    </label>
+                    <label for="senha" class="form-label"> Senha </label>
 
                     <div class="input-group">
-
                       <span class="input-group-text">
-
                         <img
-                          src="../images/icon_cadeado.svg"
+                          src="/landing/images/icon_cadeado.svg"
                           alt="Senha"
                         />
-
                       </span>
 
                       <input
@@ -162,101 +121,60 @@
                         class="form-control"
                         placeholder="Digite sua senha"
                       />
-
                     </div>
-
                   </div>
-
 
                   <!-- ESQUECEU SENHA -->
 
                   <div class="forgot-password">
-
-                    <a
-                      href="#"
-                      id="forgotPasswordLink"
-                    >
+                    <a href="#" id="forgotPasswordLink">
                       Esqueceu sua senha?
                     </a>
-
                   </div>
-
 
                   <!-- BOTÃO -->
 
-                  <button
-                    type="submit"
-                    class="btn login-button w-100"
-                  >
+                  <button type="submit" class="btn login-button w-100">
                     Entrar
                   </button>
-
 
                   <!-- SEGURANÇA -->
 
                   <div class="login-security">
-
                     <i class="bi bi-lock"></i>
 
-                    <span>
-                      Acesso restrito a contas
-                    </span>
-
+                    <span> Acesso restrito a contas </span>
                   </div>
-
                 </form>
-
               </div>
-
-
 
               <!-- =====================================================
                    RECUPERAR SENHA
               ====================================================== -->
 
-              <div
-                id="forgotPasswordSection"
-                hidden
-              >
-
+              <div id="forgotPasswordSection" hidden>
                 <!-- Cabeçalho -->
 
                 <div class="login-header">
-
-                  <h3>
-                    Recuperar senha
-                  </h3>
+                  <h3>Recuperar senha</h3>
 
                   <p>
-                    Informe seu e-mail institucional para recuperar
-                    o acesso à sua conta.
+                    Informe seu e-mail institucional para recuperar o acesso à
+                    sua conta.
                   </p>
-
                 </div>
 
-
                 <form id="forgotPasswordForm">
-
                   <!-- E-MAIL -->
 
                   <div class="mb-3">
-
-                    <label
-                      for="recoveryEmail"
-                      class="form-label"
-                    >
+                    <label for="recoveryEmail" class="form-label">
                       E-mail institucional
                     </label>
 
                     <div class="input-group">
-
                       <span class="input-group-text">
-
-                        <img
-                          src="../images/icon_emai.svg"
-                          alt="E-mail"
-                        />
-
+                        <img src="/landing/images/icon_emai.svg" alt="E-mail" />
                       </span>
 
                       <input
@@ -266,77 +184,45 @@
                         placeholder="Digite seu email"
                         required
                       />
-
                     </div>
-
                   </div>
-
 
                   <!-- BOTÃO -->
 
-                  <button
-                    type="submit"
-                    class="btn login-button w-100"
-                  >
+                  <button type="submit" class="btn login-button w-100">
                     Recuperar senha
                   </button>
-
 
                   <!-- VOLTAR -->
 
                   <div class="forgot-password text-center mt-3">
-
-                    <a
-                      href="#"
-                      id="backToLogin"
-                    >
+                    <a href="#" id="backToLogin">
                       <i class="bi bi-arrow-left"></i>
                       Voltar para o login
                     </a>
-
                   </div>
-
 
                   <!-- SEGURANÇA -->
 
                   <div class="login-security">
-
                     <i class="bi bi-lock"></i>
 
-                    <span>
-                      Acesso restrito a contas
-                    </span>
-
+                    <span> Acesso restrito a contas </span>
                   </div>
-
                 </form>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </main>
-
 
     <!-- Bootstrap -->
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    ></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Script existente do projeto -->
 
-    <script src="../sistema/script.js"></script>
-
-
-  
-
+    <script src="/frontend/login.js"></script>
   </body>
 </html>

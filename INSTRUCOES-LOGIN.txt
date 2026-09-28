@@ -1,0 +1,34 @@
+TECHCAMPUS — LOGIN BASEADO NO FLUXO DO PROJETO-PIZZARIA
+
+1. Na pasta TechCampus, crie o arquivo .env a partir de .env.example.
+2. Defina JWT_SECRET com pelo menos 32 caracteres.
+3. Instale tudo de uma vez:
+
+   npm install
+
+4. Crie os dados de demonstração:
+
+   node seed.js
+
+5. Inicie o servidor:
+
+   npm start
+
+6. Abra:
+
+   http://localhost:3001/landing/index.html
+
+7. Clique em Entrar.
+
+LOGIN DE TESTE
+E-mail: teste@techcampus.com
+Senha:  Teste123456!
+
+FLUXO
+Landing -> Login.html -> POST /api/auth/login -> JWT -> sessionStorage -> sistema.html
+
+O sistema.html verifica o JWT em /api/perfil. Se o token estiver válido, o usuário permanece
+logado na página. Ao clicar em Sair, a sessão é removida e o usuário volta para a landing.
+
+Observação: o usuário acima é somente para teste local. Troque/remova esse usuário antes de
+usar dados reais.

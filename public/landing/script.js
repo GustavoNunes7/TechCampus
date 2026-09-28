@@ -1,127 +1,134 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // ======================================================
+  // 1. ABRIR / FECHAR SIDEBAR (TOGGLE)
+  // ======================================================
+  const sidebarToggle = document.getElementById("sidebarToggle");
+  const sidebar = document.getElementById("sidebar");
+  const mainContent = document.querySelector(".main-content");
 
-    // ======================================================
-    // 1. ABRIR / FECHAR SIDEBAR (TOGGLE)
-    // ======================================================
-    const sidebarToggle = document.getElementById("sidebarToggle");
-    const sidebar = document.getElementById("sidebar");
-    const mainContent = document.querySelector(".main-content");
+  if (sidebarToggle && sidebar && mainContent) {
+    sidebarToggle.addEventListener("click", function () {
+      const sidebarFechada = sidebar.classList.toggle("fechado");
 
-    if (sidebarToggle && sidebar && mainContent) {
-        sidebarToggle.addEventListener("click", function () {
-            const sidebarFechada = sidebar.classList.toggle("fechado");
-
-            mainContent.classList.toggle("expandido", sidebarFechada);
-            document.body.classList.toggle("sidebar-fechada", sidebarFechada);
-            sidebarToggle.setAttribute("aria-expanded", String(!sidebarFechada));
-        });
-    }
-
-
-    // ======================================================
-    // 2. SISTEMA DE ROTAS / NAVEGAÇÃO ENTRE AS SEÇÕES DO HTML
-    // ======================================================
-    // Seleciona os links do menu lateral e os links do rodapé
-    const menuLinks = document.querySelectorAll(".nav-menu .menu-item, .footer-links a, .footer-brand");
-
-    menuLinks.forEach(link => {
-        link.addEventListener("click", function (event) {
-            const targetId = this.getAttribute("href");
-
-            // Verifica se o link clicado é uma rota interna (ex: #documento)
-            if (targetId && targetId.startsWith("#")) {
-                event.preventDefault();
-
-                // Busca a seção com o ID correspondente ao href clicado
-                const secaoAlvo = document.querySelector(targetId);
-
-                if (secaoAlvo) {
-                    // 1. Oculta todas as seções filhas diretas da <main class="main-content">
-                    const todasAsSecoes = mainContent.children;
-                    Array.from(todasAsSecoes).forEach(secao => {
-                        secao.classList.add("d-none");
-                    });
-
-                    // 2. Exibe apenas a seção selecionada
-                    secaoAlvo.classList.remove("d-none");
-
-                    // 3. Atualiza a marcação visual de item "ativo" no menu lateral
-                    document.querySelectorAll(".nav-menu .menu-item").forEach(item => {
-                        item.classList.remove("ativo");
-                    });
-
-                    // Procura o item correspondente no menu da sidebar e ativa a cor de destaque
-                    const itemSidebarCorrespondente = document.querySelector(`.nav-menu a[href="${targetId}"]`);
-                    if (itemSidebarCorrespondente) {
-                        itemSidebarCorrespondente.classList.add("ativo");
-                    }
-
-                    // 4. Rola a página para o topo de forma suave
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                }
-            }
-        });
+      mainContent.classList.toggle("expandido", sidebarFechada);
+      document.body.classList.toggle("sidebar-fechada", sidebarFechada);
+      sidebarToggle.setAttribute("aria-expanded", String(!sidebarFechada));
     });
+  }
 
+  // ======================================================
+  // 2. SISTEMA DE ROTAS / NAVEGAÇÃO ENTRE AS SEÇÕES DO HTML
+  // ======================================================
+  // Seleciona os links do menu lateral e os links do rodapé
+  const menuLinks = document.querySelectorAll(
+    ".nav-menu .menu-item, .footer-links a, .footer-brand",
+  );
 
-    // ======================================================
-    // 3. RECUPERAÇÃO DE SENHA / LOGIN (SE HOUVER FORMULÁRIO)
-    // ======================================================
-    const loginSection = document.getElementById("loginSection");
-    const forgotPasswordSection = document.getElementById("forgotPasswordSection");
-    const forgotPasswordLink = document.getElementById("forgotPasswordLink");
-    const backToLogin = document.getElementById("backToLogin");
-    const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", function (event) {
+      const targetId = this.getAttribute("href");
 
-    /* Abrir formulário de recuperação de senha */
-    if (forgotPasswordLink && forgotPasswordSection && loginSection) {
-        forgotPasswordLink.addEventListener("click", function (event) {
-            event.preventDefault();
-            loginSection.hidden = true;
-            forgotPasswordSection.hidden = false;
-        });
-    }
+      // Verifica se o link clicado é uma rota interna (ex: #documento)
+      if (targetId && targetId.startsWith("#")) {
+        event.preventDefault();
 
-    /* Voltar para tela de login */
-    if (backToLogin && forgotPasswordSection && loginSection) {
-        backToLogin.addEventListener("click", function (event) {
-            event.preventDefault();
-            forgotPasswordSection.hidden = true;
-            loginSection.hidden = false;
-        });
-    }
+        // Busca a seção com o ID correspondente ao href clicado
+        const secaoAlvo = document.querySelector(targetId);
 
-    /* Submissão do formulário de senha */
-    if (forgotPasswordForm) {
-        forgotPasswordForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            alert("A recuperação de senha será conectada ao Back-end posteriormente.");
-        });
-    }
+        if (secaoAlvo) {
+          // 1. Oculta todas as seções filhas diretas da <main class="main-content">
+          const todasAsSecoes = mainContent.children;
+          Array.from(todasAsSecoes).forEach((secao) => {
+            secao.classList.add("d-none");
+          });
 
+          // 2. Exibe apenas a seção selecionada
+          secaoAlvo.classList.remove("d-none");
+
+          // 3. Atualiza a marcação visual de item "ativo" no menu lateral
+          document.querySelectorAll(".nav-menu .menu-item").forEach((item) => {
+            item.classList.remove("ativo");
+          });
+
+          // Procura o item correspondente no menu da sidebar e ativa a cor de destaque
+          const itemSidebarCorrespondente = document.querySelector(
+            `.nav-menu a[href="${targetId}"]`,
+          );
+          if (itemSidebarCorrespondente) {
+            itemSidebarCorrespondente.classList.add("ativo");
+          }
+
+          // 4. Rola a página para o topo de forma suave
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    });
+  });
+
+  // ======================================================
+  // 3. RECUPERAÇÃO DE SENHA / LOGIN (SE HOUVER FORMULÁRIO)
+  // ======================================================
+  const loginSection = document.getElementById("loginSection");
+  const forgotPasswordSection = document.getElementById(
+    "forgotPasswordSection",
+  );
+  const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+  const backToLogin = document.getElementById("backToLogin");
+  const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+
+  /* Abrir formulário de recuperação de senha */
+  if (forgotPasswordLink && forgotPasswordSection && loginSection) {
+    forgotPasswordLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      loginSection.hidden = true;
+      forgotPasswordSection.hidden = false;
+    });
+  }
+
+  /* Voltar para tela de login */
+  if (backToLogin && forgotPasswordSection && loginSection) {
+    backToLogin.addEventListener("click", function (event) {
+      event.preventDefault();
+      forgotPasswordSection.hidden = true;
+      loginSection.hidden = false;
+    });
+  }
+
+  /* Submissão do formulário de senha */
+  if (forgotPasswordForm) {
+    forgotPasswordForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      alert(
+        "A recuperação de senha será conectada ao Back-end posteriormente.",
+      );
+    });
+  }
 });
 
 // Filtro da Tela de Produtos Disponíveis
 const filterButtons = document.querySelectorAll(".btn-filter");
 const productCards = document.querySelectorAll(".product-card-item");
 
-filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        // Altera visual dos botões
-        filterButtons.forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    // Altera visual dos botões
+    filterButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
 
-        const category = button.getAttribute("data-category");
+    const category = button.getAttribute("data-category");
 
-        // Exibe/Oculta os cards baseados na categoria
-        productCards.forEach(card => {
-            if (category === "todos" || card.getAttribute("data-category") === category) {
-                card.classList.remove("d-none");
-            } else {
-                card.classList.add("d-none");
-            }
-        });
+    // Exibe/Oculta os cards baseados na categoria
+    productCards.forEach((card) => {
+      if (
+        category === "todos" ||
+        card.getAttribute("data-category") === category
+      ) {
+        card.classList.remove("d-none");
+      } else {
+        card.classList.add("d-none");
+      }
     });
+  });
 });
 
 const productsTrack = document.getElementById("productsTrack");
@@ -131,122 +138,97 @@ const prevButton = document.querySelector(".products-prev");
 
 let currentProduct = 0;
 
-
 /* =========================================================
    QUANTIDADE DE PRODUTOS VISÍVEIS
    ========================================================= */
 
 function getVisibleProducts() {
+  if (window.innerWidth <= 767) {
+    return 1;
+  }
 
-    if (window.innerWidth <= 767) {
-        return 1;
-    }
-
-    return 3;
+  return 3;
 }
-
 
 /* =========================================================
    ATUALIZA O CARROSSEL
    ========================================================= */
 
 function updateProductsCarousel() {
+  const products = document.querySelectorAll(".product-slide");
 
-    const products = document.querySelectorAll(".product-slide");
+  const visibleProducts = getVisibleProducts();
 
-    const visibleProducts = getVisibleProducts();
+  const totalProducts = products.length;
 
-    const totalProducts = products.length;
+  const maxPosition = totalProducts - visibleProducts;
 
-    const maxPosition = totalProducts - visibleProducts;
+  /* Não deixa passar do limite */
 
+  if (currentProduct > maxPosition) {
+    currentProduct = maxPosition;
+  }
 
-    /* Não deixa passar do limite */
+  if (currentProduct < 0) {
+    currentProduct = 0;
+  }
 
-    if (currentProduct > maxPosition) {
-        currentProduct = maxPosition;
-    }
+  /* Calcula o tamanho de cada produto */
 
-    if (currentProduct < 0) {
-        currentProduct = 0;
-    }
+  const productWidth = products[0].getBoundingClientRect().width;
 
+  const gap = 15;
 
-    /* Calcula o tamanho de cada produto */
+  /* Move os produtos */
 
-    const productWidth = products[0].getBoundingClientRect().width;
+  productsTrack.style.transform = `translateX(-${currentProduct * (productWidth + gap)}px)`;
 
-    const gap = 15;
+  /* Desativa botão anterior */
 
+  prevButton.disabled = currentProduct === 0;
 
-    /* Move os produtos */
+  /* Desativa botão próximo */
 
-    productsTrack.style.transform =
-        `translateX(-${currentProduct * (productWidth + gap)}px)`;
-
-
-    /* Desativa botão anterior */
-
-    prevButton.disabled = currentProduct === 0;
-
-
-    /* Desativa botão próximo */
-
-    nextButton.disabled =
-        currentProduct >= maxPosition;
+  nextButton.disabled = currentProduct >= maxPosition;
 }
-
 
 /* =========================================================
    PRÓXIMO
    ========================================================= */
 
 nextButton.addEventListener("click", () => {
+  const products = document.querySelectorAll(".product-slide");
 
-    const products = document.querySelectorAll(".product-slide");
+  const visibleProducts = getVisibleProducts();
 
-    const visibleProducts = getVisibleProducts();
+  const maxPosition = products.length - visibleProducts;
 
-    const maxPosition =
-        products.length - visibleProducts;
+  if (currentProduct < maxPosition) {
+    currentProduct++;
 
-
-    if (currentProduct < maxPosition) {
-
-        currentProduct++;
-
-        updateProductsCarousel();
-    }
-
+    updateProductsCarousel();
+  }
 });
-
 
 /* =========================================================
    ANTERIOR
    ========================================================= */
 
 prevButton.addEventListener("click", () => {
+  if (currentProduct > 0) {
+    currentProduct--;
 
-    if (currentProduct > 0) {
-
-        currentProduct--;
-
-        updateProductsCarousel();
-    }
-
+    updateProductsCarousel();
+  }
 });
-
 
 /* =========================================================
    RESPONSIVIDADE
    ========================================================= */
 
 window.addEventListener("resize", () => {
-
-    updateProductsCarousel();
-
+  updateProductsCarousel();
 });
-
 
 /* =========================================================
    INICIALIZAÇÃO
@@ -255,1289 +237,917 @@ window.addEventListener("resize", () => {
 updateProductsCarousel();
 
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. Busca ao vivo nas Perguntas Frequentes (FAQ)
-    const searchInput = document.getElementById("helpSearchInput");
-    const faqItems = document.querySelectorAll(".faq-item");
+  // 1. Busca ao vivo nas Perguntas Frequentes (FAQ)
+  const searchInput = document.getElementById("helpSearchInput");
+  const faqItems = document.querySelectorAll(".faq-item");
 
-    if (searchInput) {
-        searchInput.addEventListener("input", function (e) {
-            const searchTerm = e.target.value.toLowerCase().trim();
+  if (searchInput) {
+    searchInput.addEventListener("input", function (e) {
+      const searchTerm = e.target.value.toLowerCase().trim();
 
-            faqItems.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    item.classList.remove("d-none");
-                } else {
-                    item.classList.add("d-none");
-                }
-            });
-        });
-    }
-
-    // 2. Filtro rápido ao clicar nos Cards de Categoria
-    const categoryCards = document.querySelectorAll(".help-cat-card");
-
-    categoryCards.forEach(card => {
-        card.addEventListener("click", function () {
-            const cat = this.getAttribute("data-cat");
-
-            faqItems.forEach(item => {
-                const itemCat = item.getAttribute("data-category");
-                if (cat === "contatos" || itemCat === cat) {
-                    item.classList.remove("d-none");
-                } else {
-                    item.classList.add("d-none");
-                }
-            });
-        });
+      faqItems.forEach((item) => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          item.classList.remove("d-none");
+        } else {
+          item.classList.add("d-none");
+        }
+      });
     });
+  }
 
-    // 3. Simulação de Envio do Formulário de Suporte
-    const contactForm = document.getElementById("helpContactForm");
+  // 2. Filtro rápido ao clicar nos Cards de Categoria
+  const categoryCards = document.querySelectorAll(".help-cat-card");
 
-    if (contactForm) {
-        contactForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            alert("Sua dúvida foi enviada com sucesso! A equipe da AAPM responderá no seu e-mail em breve.");
-            contactForm.reset();
-        });
-    }
+  categoryCards.forEach((card) => {
+    card.addEventListener("click", function () {
+      const cat = this.getAttribute("data-cat");
+
+      faqItems.forEach((item) => {
+        const itemCat = item.getAttribute("data-category");
+        if (cat === "contatos" || itemCat === cat) {
+          item.classList.remove("d-none");
+        } else {
+          item.classList.add("d-none");
+        }
+      });
+    });
+  });
+
+  // 3. Simulação de Envio do Formulário de Suporte
+  const contactForm = document.getElementById("helpContactForm");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert(
+        "Sua dúvida foi enviada com sucesso! A equipe da AAPM responderá no seu e-mail em breve.",
+      );
+      contactForm.reset();
+    });
+  }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    /* =========================================================
+  /* =========================================================
        NAVEGAÇÃO ENTRE AS TELAS
     ========================================================= */
 
-    const telas = [
-        "inicio",
-        "documento",
-        "pedidos",
-        "avisos",
-        "sobre",
-        "formatura",
-        "ajuda",
-        "perfil",
-        "configuracoes"
-    ];
+  const telas = [
+    "inicio",
+    "documento",
+    "pedidos",
+    "avisos",
+    "sobre",
+    "formatura",
+    "ajuda",
+    "perfil",
+    "configuracoes",
+  ];
 
-    function mostrarTela(id) {
+  function mostrarTela(id) {
+    // Verifica se a tela existe
+    const tela = document.getElementById(id);
 
-        // Verifica se a tela existe
-        const tela = document.getElementById(id);
-
-        if (!tela) {
-            console.warn("Tela não encontrada:", id);
-            return;
-        }
-
-        // Esconde todas as telas
-        telas.forEach(function (telaId) {
-
-            const elemento = document.getElementById(telaId);
-
-            if (elemento) {
-                elemento.classList.add("d-none");
-            }
-
-        });
-
-        // Mostra a tela selecionada
-        tela.classList.remove("d-none");
-
-        // Atualiza menu lateral
-        document.querySelectorAll(".menu-item").forEach(function (item) {
-            item.classList.remove("ativo");
-
-            const href = item.getAttribute("href");
-
-            if (href === "#" + id) {
-                item.classList.add("ativo");
-            }
-        });
-
-        // Volta o conteúdo para o topo
-        const mainContent = document.querySelector(".main-content");
-
-        if (mainContent) {
-            mainContent.scrollTop = 0;
-        }
+    if (!tela) {
+      console.warn("Tela não encontrada:", id);
+      return;
     }
 
+    // Esconde todas as telas
+    telas.forEach(function (telaId) {
+      const elemento = document.getElementById(telaId);
 
-    /* =========================================================
+      if (elemento) {
+        elemento.classList.add("d-none");
+      }
+    });
+
+    // Mostra a tela selecionada
+    tela.classList.remove("d-none");
+
+    // Atualiza menu lateral
+    document.querySelectorAll(".menu-item").forEach(function (item) {
+      item.classList.remove("ativo");
+
+      const href = item.getAttribute("href");
+
+      if (href === "#" + id) {
+        item.classList.add("ativo");
+      }
+    });
+
+    // Volta o conteúdo para o topo
+    const mainContent = document.querySelector(".main-content");
+
+    if (mainContent) {
+      mainContent.scrollTop = 0;
+    }
+  }
+
+  /* =========================================================
        NAVEGAÇÃO POR HASH
     ========================================================= */
 
-    function navegarPeloHash() {
+  function navegarPeloHash() {
+    let id = window.location.hash.replace("#", "");
 
-        let id = window.location.hash.replace("#", "");
-
-        // Corrige caso não exista hash
-        if (!id || !telas.includes(id)) {
-            id = "inicio";
-        }
-
-        mostrarTela(id);
+    // Corrige caso não exista hash
+    if (!id || !telas.includes(id)) {
+      id = "inicio";
     }
 
+    mostrarTela(id);
+  }
 
-    // Detecta mudança de # na URL
-    window.addEventListener("hashchange", navegarPeloHash);
+  // Detecta mudança de # na URL
+  window.addEventListener("hashchange", navegarPeloHash);
 
+  // Links que possuem #
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      const href = this.getAttribute("href");
 
-    // Links que possuem #
-    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      if (!href || href === "#") {
+        return;
+      }
 
-        link.addEventListener("click", function (event) {
+      const id = href.substring(1);
 
-            const href = this.getAttribute("href");
+      if (telas.includes(id)) {
+        event.preventDefault();
 
-            if (!href || href === "#") {
-                return;
-            }
+        window.location.hash = id;
 
-            const id = href.substring(1);
-
-            if (telas.includes(id)) {
-
-                event.preventDefault();
-
-                window.location.hash = id;
-
-                mostrarTela(id);
-            }
-
-        });
-
+        mostrarTela(id);
+      }
     });
+  });
 
-
-    /* =========================================================
+  /* =========================================================
        SIDEBAR
     ========================================================= */
 
-    const sidebarToggle = document.getElementById("sidebarToggle");
-    const sidebar = document.getElementById("sidebar");
+  const sidebarToggle = document.getElementById("sidebarToggle");
+  const sidebar = document.getElementById("sidebar");
 
-    if (sidebarToggle && sidebar) {
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.addEventListener("click", function () {
+      sidebar.classList.toggle("collapsed");
+    });
+  }
 
-        sidebarToggle.addEventListener("click", function () {
-
-            sidebar.classList.toggle("collapsed");
-
-        });
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        MEU PERFIL
     ========================================================= */
 
-    const perfilForm = document.getElementById("perfilForm");
+  const perfilForm = document.getElementById("perfilForm");
 
-    const profilePhoto = document.getElementById("profilePhoto");
-    const profilePreview = document.getElementById("profilePreview");
+  const profilePhoto = document.getElementById("profilePhoto");
+  const profilePreview = document.getElementById("profilePreview");
 
-    const nomeInput = document.getElementById("nome");
-    const emailInput = document.getElementById("email");
-    const dataNascimentoInput = document.getElementById("dataNascimento");
-    const cpfInput = document.getElementById("cpf");
-    const telefoneInput = document.getElementById("telefone");
-    const generoInput = document.getElementById("genero");
-    const observacaoInput = document.getElementById("observacao");
+  const nomeInput = document.getElementById("nome");
+  const emailInput = document.getElementById("email");
+  const dataNascimentoInput = document.getElementById("dataNascimento");
+  const cpfInput = document.getElementById("cpf");
+  const telefoneInput = document.getElementById("telefone");
+  const generoInput = document.getElementById("genero");
+  const observacaoInput = document.getElementById("observacao");
 
-
-    /* =========================================================
+  /* =========================================================
        CARREGAR PERFIL SALVO
     ========================================================= */
 
-    function carregarPerfil() {
+  function carregarPerfil() {
+    const perfilSalvo = localStorage.getItem("techcampusPerfil");
 
-        const perfilSalvo = localStorage.getItem("techcampusPerfil");
-
-        if (!perfilSalvo) {
-            return;
-        }
-
-        try {
-
-            const perfil = JSON.parse(perfilSalvo);
-
-            if (nomeInput) {
-                nomeInput.value = perfil.nome || "";
-            }
-
-            if (emailInput) {
-                emailInput.value = perfil.email || "";
-            }
-
-            if (dataNascimentoInput) {
-                dataNascimentoInput.value = perfil.dataNascimento || "";
-            }
-
-            if (cpfInput) {
-                cpfInput.value = perfil.cpf || "";
-            }
-
-            if (telefoneInput) {
-                telefoneInput.value = perfil.telefone || "";
-            }
-
-            if (generoInput) {
-                generoInput.value = perfil.genero || "";
-            }
-
-            if (observacaoInput) {
-                observacaoInput.value = perfil.observacao || "";
-            }
-
-            if (perfil.foto && profilePreview) {
-                profilePreview.src = perfil.foto;
-            }
-
-        } catch (erro) {
-
-            console.error("Erro ao carregar perfil:", erro);
-
-        }
+    if (!perfilSalvo) {
+      return;
     }
 
+    try {
+      const perfil = JSON.parse(perfilSalvo);
 
-    /* =========================================================
+      if (nomeInput) {
+        nomeInput.value = perfil.nome || "";
+      }
+
+      if (emailInput) {
+        emailInput.value = perfil.email || "";
+      }
+
+      if (dataNascimentoInput) {
+        dataNascimentoInput.value = perfil.dataNascimento || "";
+      }
+
+      if (cpfInput) {
+        cpfInput.value = perfil.cpf || "";
+      }
+
+      if (telefoneInput) {
+        telefoneInput.value = perfil.telefone || "";
+      }
+
+      if (generoInput) {
+        generoInput.value = perfil.genero || "";
+      }
+
+      if (observacaoInput) {
+        observacaoInput.value = perfil.observacao || "";
+      }
+
+      if (perfil.foto && profilePreview) {
+        profilePreview.src = perfil.foto;
+      }
+    } catch (erro) {
+      console.error("Erro ao carregar perfil:", erro);
+    }
+  }
+
+  /* =========================================================
        SALVAR PERFIL
     ========================================================= */
 
-    if (perfilForm) {
+  if (perfilForm) {
+    perfilForm.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-        perfilForm.addEventListener("submit", function (event) {
+      const perfil = {
+        nome: nomeInput ? nomeInput.value.trim() : "",
 
-            event.preventDefault();
+        email: emailInput ? emailInput.value.trim() : "",
 
-            const perfil = {
+        dataNascimento: dataNascimentoInput ? dataNascimentoInput.value : "",
 
-                nome: nomeInput ? nomeInput.value.trim() : "",
+        cpf: cpfInput ? cpfInput.value.trim() : "",
 
-                email: emailInput ? emailInput.value.trim() : "",
+        telefone: telefoneInput ? telefoneInput.value.trim() : "",
 
-                dataNascimento: dataNascimentoInput
-                    ? dataNascimentoInput.value
-                    : "",
+        genero: generoInput ? generoInput.value : "",
 
-                cpf: cpfInput
-                    ? cpfInput.value.trim()
-                    : "",
+        observacao: observacaoInput ? observacaoInput.value.trim() : "",
 
-                telefone: telefoneInput
-                    ? telefoneInput.value.trim()
-                    : "",
+        foto: profilePreview ? profilePreview.src : "",
+      };
 
-                genero: generoInput
-                    ? generoInput.value
-                    : "",
+      localStorage.setItem("techcampusPerfil", JSON.stringify(perfil));
 
-                observacao: observacaoInput
-                    ? observacaoInput.value.trim()
-                    : "",
+      // Atualiza nome no topo
+      atualizarNomeUsuario(perfil.nome);
 
-                foto: profilePreview
-                    ? profilePreview.src
-                    : ""
+      mostrarMensagem("Perfil atualizado com sucesso!", "success");
+    });
+  }
 
-            };
-
-
-            localStorage.setItem(
-                "techcampusPerfil",
-                JSON.stringify(perfil)
-            );
-
-
-            // Atualiza nome no topo
-            atualizarNomeUsuario(perfil.nome);
-
-
-            mostrarMensagem(
-                "Perfil atualizado com sucesso!",
-                "success"
-            );
-
-        });
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        FOTO DE PERFIL
     ========================================================= */
 
-    if (profilePhoto) {
+  if (profilePhoto) {
+    profilePhoto.addEventListener("change", function () {
+      const arquivo = this.files[0];
 
-        profilePhoto.addEventListener("change", function () {
+      if (!arquivo) {
+        return;
+      }
 
-            const arquivo = this.files[0];
+      // Verifica o tamanho
+      if (arquivo.size > 5 * 1024 * 1024) {
+        mostrarMensagem("A foto deve ter no máximo 5 MB.", "danger");
 
-            if (!arquivo) {
-                return;
-            }
+        this.value = "";
 
+        return;
+      }
 
-            // Verifica o tamanho
-            if (arquivo.size > 5 * 1024 * 1024) {
+      // Verifica o tipo
+      const tiposPermitidos = ["image/jpeg", "image/png"];
 
-                mostrarMensagem(
-                    "A foto deve ter no máximo 5 MB.",
-                    "danger"
-                );
+      if (!tiposPermitidos.includes(arquivo.type)) {
+        mostrarMensagem("Utilize uma imagem JPG ou PNG.", "danger");
 
-                this.value = "";
+        this.value = "";
 
-                return;
-            }
+        return;
+      }
 
+      const leitor = new FileReader();
 
-            // Verifica o tipo
-            const tiposPermitidos = [
-                "image/jpeg",
-                "image/png"
-            ];
+      leitor.onload = function (event) {
+        if (profilePreview) {
+          profilePreview.src = event.target.result;
 
-            if (!tiposPermitidos.includes(arquivo.type)) {
+          salvarFotoTemporaria(event.target.result);
+        }
+      };
 
-                mostrarMensagem(
-                    "Utilize uma imagem JPG ou PNG.",
-                    "danger"
-                );
+      leitor.readAsDataURL(arquivo);
+    });
+  }
 
-                this.value = "";
-
-                return;
-            }
-
-
-            const leitor = new FileReader();
-
-
-            leitor.onload = function (event) {
-
-                if (profilePreview) {
-
-                    profilePreview.src = event.target.result;
-
-                    salvarFotoTemporaria(event.target.result);
-
-                }
-
-            };
-
-
-            leitor.readAsDataURL(arquivo);
-
-        });
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        SALVAR FOTO NO LOCALSTORAGE
     ========================================================= */
 
-    function salvarFotoTemporaria(foto) {
+  function salvarFotoTemporaria(foto) {
+    const perfilSalvo = localStorage.getItem("techcampusPerfil");
 
-        const perfilSalvo = localStorage.getItem("techcampusPerfil");
+    let perfil = {};
 
-        let perfil = {};
-
-        if (perfilSalvo) {
-
-            try {
-                perfil = JSON.parse(perfilSalvo);
-            } catch (erro) {
-                perfil = {};
-            }
-
-        }
-
-        perfil.foto = foto;
-
-        localStorage.setItem(
-            "techcampusPerfil",
-            JSON.stringify(perfil)
-        );
-
+    if (perfilSalvo) {
+      try {
+        perfil = JSON.parse(perfilSalvo);
+      } catch (erro) {
+        perfil = {};
+      }
     }
 
+    perfil.foto = foto;
 
-    /* =========================================================
+    localStorage.setItem("techcampusPerfil", JSON.stringify(perfil));
+  }
+
+  /* =========================================================
        BOTÃO CANCELAR DO PERFIL
     ========================================================= */
 
-    const botoesCancelar = document.querySelectorAll(
-        "#perfilForm .btn-secondary"
-    );
+  const botoesCancelar = document.querySelectorAll(
+    "#perfilForm .btn-secondary",
+  );
 
-    botoesCancelar.forEach(function (botao) {
+  botoesCancelar.forEach(function (botao) {
+    botao.addEventListener("click", function () {
+      carregarPerfil();
 
-        botao.addEventListener("click", function () {
-
-            carregarPerfil();
-
-            mostrarMensagem(
-                "Alterações canceladas.",
-                "secondary"
-            );
-
-        });
-
+      mostrarMensagem("Alterações canceladas.", "secondary");
     });
+  });
 
-
-    /* =========================================================
+  /* =========================================================
        MÁSCARA CPF
     ========================================================= */
 
-    if (cpfInput) {
+  if (cpfInput) {
+    cpfInput.addEventListener("input", function () {
+      let valor = this.value.replace(/\D/g, "");
 
-        cpfInput.addEventListener("input", function () {
+      valor = valor.substring(0, 11);
 
-            let valor = this.value.replace(/\D/g, "");
+      valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
 
-            valor = valor.substring(0, 11);
+      valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
 
-            valor = valor.replace(
-                /(\d{3})(\d)/,
-                "$1.$2"
-            );
+      valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
-            valor = valor.replace(
-                /(\d{3})(\d)/,
-                "$1.$2"
-            );
+      this.value = valor;
+    });
+  }
 
-            valor = valor.replace(
-                /(\d{3})(\d{1,2})$/,
-                "$1-$2"
-            );
-
-            this.value = valor;
-
-        });
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        MÁSCARA TELEFONE
     ========================================================= */
 
-    if (telefoneInput) {
+  if (telefoneInput) {
+    telefoneInput.addEventListener("input", function () {
+      let valor = this.value.replace(/\D/g, "");
 
-        telefoneInput.addEventListener("input", function () {
+      valor = valor.substring(0, 11);
 
-            let valor = this.value.replace(/\D/g, "");
+      if (valor.length <= 10) {
+        valor = valor.replace(/(\d{2})(\d)/, "($1) $2");
 
-            valor = valor.substring(0, 11);
+        valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+      } else {
+        valor = valor.replace(/(\d{2})(\d)/, "($1) $2");
 
-            if (valor.length <= 10) {
+        valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+      }
 
-                valor = valor.replace(
-                    /(\d{2})(\d)/,
-                    "($1) $2"
-                );
+      this.value = valor;
+    });
+  }
 
-                valor = valor.replace(
-                    /(\d{4})(\d)/,
-                    "$1-$2"
-                );
-
-            } else {
-
-                valor = valor.replace(
-                    /(\d{2})(\d)/,
-                    "($1) $2"
-                );
-
-                valor = valor.replace(
-                    /(\d{5})(\d)/,
-                    "$1-$2"
-                );
-
-            }
-
-            this.value = valor;
-
-        });
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        CONFIGURAÇÕES
     ========================================================= */
 
-    const configuracoesForm =
-        document.getElementById("configuracoesForm");
+  const configuracoesForm = document.getElementById("configuracoesForm");
 
+  function carregarConfiguracoes() {
+    const configuracoesSalvas = localStorage.getItem("techcampusConfiguracoes");
 
-    function carregarConfiguracoes() {
-
-        const configuracoesSalvas =
-            localStorage.getItem("techcampusConfiguracoes");
-
-        if (!configuracoesSalvas) {
-            return;
-        }
-
-        try {
-
-            const config = JSON.parse(configuracoesSalvas);
-
-
-            const notificacoesSistema =
-                document.getElementById("notificacoesSistema");
-
-            const notificacoesEmail =
-                document.getElementById("notificacoesEmail");
-
-            const exibirTelefone =
-                document.getElementById("exibirTelefone");
-
-            const exibirEmail =
-                document.getElementById("exibirEmail");
-
-            const tema =
-                document.getElementById("tema");
-
-
-            if (notificacoesSistema) {
-                notificacoesSistema.checked =
-                    config.notificacoesSistema ?? true;
-            }
-
-            if (notificacoesEmail) {
-                notificacoesEmail.checked =
-                    config.notificacoesEmail ?? true;
-            }
-
-            if (exibirTelefone) {
-                exibirTelefone.checked =
-                    config.exibirTelefone ?? false;
-            }
-
-            if (exibirEmail) {
-                exibirEmail.checked =
-                    config.exibirEmail ?? false;
-            }
-
-            if (tema) {
-                tema.value =
-                    config.tema || "escuro";
-            }
-
-        } catch (erro) {
-
-            console.error(
-                "Erro ao carregar configurações:",
-                erro
-            );
-
-        }
-
+    if (!configuracoesSalvas) {
+      return;
     }
 
+    try {
+      const config = JSON.parse(configuracoesSalvas);
 
-    /* =========================================================
+      const notificacoesSistema = document.getElementById(
+        "notificacoesSistema",
+      );
+
+      const notificacoesEmail = document.getElementById("notificacoesEmail");
+
+      const exibirTelefone = document.getElementById("exibirTelefone");
+
+      const exibirEmail = document.getElementById("exibirEmail");
+
+      const tema = document.getElementById("tema");
+
+      if (notificacoesSistema) {
+        notificacoesSistema.checked = config.notificacoesSistema ?? true;
+      }
+
+      if (notificacoesEmail) {
+        notificacoesEmail.checked = config.notificacoesEmail ?? true;
+      }
+
+      if (exibirTelefone) {
+        exibirTelefone.checked = config.exibirTelefone ?? false;
+      }
+
+      if (exibirEmail) {
+        exibirEmail.checked = config.exibirEmail ?? false;
+      }
+
+      if (tema) {
+        tema.value = config.tema || "escuro";
+      }
+    } catch (erro) {
+      console.error("Erro ao carregar configurações:", erro);
+    }
+  }
+
+  /* =========================================================
        SALVAR CONFIGURAÇÕES
     ========================================================= */
 
-    if (configuracoesForm) {
+  if (configuracoesForm) {
+    configuracoesForm.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-        configuracoesForm.addEventListener(
-            "submit",
-            function (event) {
+      const configuracoes = {
+        notificacoesSistema:
+          document.getElementById("notificacoesSistema")?.checked ?? true,
 
-                event.preventDefault();
+        notificacoesEmail:
+          document.getElementById("notificacoesEmail")?.checked ?? true,
 
+        exibirTelefone:
+          document.getElementById("exibirTelefone")?.checked ?? false,
 
-                const configuracoes = {
+        exibirEmail: document.getElementById("exibirEmail")?.checked ?? false,
 
-                    notificacoesSistema:
-                        document.getElementById(
-                            "notificacoesSistema"
-                        )?.checked ?? true,
+        tema: document.getElementById("tema")?.value || "escuro",
+      };
 
-                    notificacoesEmail:
-                        document.getElementById(
-                            "notificacoesEmail"
-                        )?.checked ?? true,
+      localStorage.setItem(
+        "techcampusConfiguracoes",
+        JSON.stringify(configuracoes),
+      );
 
-                    exibirTelefone:
-                        document.getElementById(
-                            "exibirTelefone"
-                        )?.checked ?? false,
+      aplicarTema(configuracoes.tema);
 
-                    exibirEmail:
-                        document.getElementById(
-                            "exibirEmail"
-                        )?.checked ?? false,
+      mostrarMensagem("Configurações salvas com sucesso!", "success");
+    });
+  }
 
-                    tema:
-                        document.getElementById(
-                            "tema"
-                        )?.value || "escuro"
-
-                };
-
-
-                localStorage.setItem(
-                    "techcampusConfiguracoes",
-                    JSON.stringify(configuracoes)
-                );
-
-
-                aplicarTema(configuracoes.tema);
-
-
-                mostrarMensagem(
-                    "Configurações salvas com sucesso!",
-                    "success"
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        TEMA
     ========================================================= */
 
-    function aplicarTema(tema) {
+  function aplicarTema(tema) {
+    /*
+     * Por enquanto o TechCampus continua
+     * utilizando o tema escuro.
+     *
+     * O suporte ao tema claro pode ser
+     * implementado posteriormente no CSS.
+     */
 
-        /*
-         * Por enquanto o TechCampus continua
-         * utilizando o tema escuro.
-         *
-         * O suporte ao tema claro pode ser
-         * implementado posteriormente no CSS.
-         */
-
-        if (tema === "escuro") {
-
-            document.body.classList.remove("tema-claro");
-
-        }
-
-        if (tema === "claro") {
-
-            document.body.classList.add("tema-claro");
-
-        }
-
-        if (tema === "sistema") {
-
-            const prefereClaro =
-                window.matchMedia(
-                    "(prefers-color-scheme: light)"
-                ).matches;
-
-            document.body.classList.toggle(
-                "tema-claro",
-                prefereClaro
-            );
-
-        }
-
+    if (tema === "escuro") {
+      document.body.classList.remove("tema-claro");
     }
 
+    if (tema === "claro") {
+      document.body.classList.add("tema-claro");
+    }
 
-    /* =========================================================
+    if (tema === "sistema") {
+      const prefereClaro = window.matchMedia(
+        "(prefers-color-scheme: light)",
+      ).matches;
+
+      document.body.classList.toggle("tema-claro", prefereClaro);
+    }
+  }
+
+  /* =========================================================
        RESTAURAR CONFIGURAÇÕES
     ========================================================= */
 
-    const restaurarBtn =
-        document.querySelector(
-            "#configuracoesForm .settings-actions .btn-secondary"
-        );
+  const restaurarBtn = document.querySelector(
+    "#configuracoesForm .settings-actions .btn-secondary",
+  );
 
+  if (restaurarBtn) {
+    restaurarBtn.addEventListener("click", function () {
+      const confirmar = confirm("Deseja restaurar as configurações padrão?");
 
-    if (restaurarBtn) {
+      if (!confirmar) {
+        return;
+      }
 
-        restaurarBtn.addEventListener(
-            "click",
-            function () {
+      localStorage.removeItem("techcampusConfiguracoes");
 
-                const confirmar =
-                    confirm(
-                        "Deseja restaurar as configurações padrão?"
-                    );
+      const notificacoesSistema = document.getElementById(
+        "notificacoesSistema",
+      );
 
-                if (!confirmar) {
-                    return;
-                }
+      const notificacoesEmail = document.getElementById("notificacoesEmail");
 
+      const exibirTelefone = document.getElementById("exibirTelefone");
 
-                localStorage.removeItem(
-                    "techcampusConfiguracoes"
-                );
+      const exibirEmail = document.getElementById("exibirEmail");
 
+      const tema = document.getElementById("tema");
 
-                const notificacoesSistema =
-                    document.getElementById(
-                        "notificacoesSistema"
-                    );
+      if (notificacoesSistema) notificacoesSistema.checked = true;
 
-                const notificacoesEmail =
-                    document.getElementById(
-                        "notificacoesEmail"
-                    );
+      if (notificacoesEmail) notificacoesEmail.checked = true;
 
-                const exibirTelefone =
-                    document.getElementById(
-                        "exibirTelefone"
-                    );
+      if (exibirTelefone) exibirTelefone.checked = false;
 
-                const exibirEmail =
-                    document.getElementById(
-                        "exibirEmail"
-                    );
+      if (exibirEmail) exibirEmail.checked = false;
 
-                const tema =
-                    document.getElementById("tema");
+      if (tema) tema.value = "escuro";
 
+      aplicarTema("escuro");
 
-                if (notificacoesSistema)
-                    notificacoesSistema.checked = true;
+      mostrarMensagem("Configurações restauradas.", "success");
+    });
+  }
 
-                if (notificacoesEmail)
-                    notificacoesEmail.checked = true;
-
-                if (exibirTelefone)
-                    exibirTelefone.checked = false;
-
-                if (exibirEmail)
-                    exibirEmail.checked = false;
-
-                if (tema)
-                    tema.value = "escuro";
-
-
-                aplicarTema("escuro");
-
-
-                mostrarMensagem(
-                    "Configurações restauradas.",
-                    "success"
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        ATUALIZAR NOME DO USUÁRIO
     ========================================================= */
 
-    function atualizarNomeUsuario(nome) {
-
-        if (!nome) {
-            return;
-        }
-
-        const nomeTopo =
-            document.querySelector(
-                "#userDropdown .fw-semibold"
-            );
-
-        if (nomeTopo) {
-            nomeTopo.textContent = nome;
-        }
-
+  function atualizarNomeUsuario(nome) {
+    if (!nome) {
+      return;
     }
 
+    const nomeTopo = document.querySelector("#userDropdown .fw-semibold");
 
-    /* =========================================================
+    if (nomeTopo) {
+      nomeTopo.textContent = nome;
+    }
+  }
+
+  /* =========================================================
        MENSAGEM TEMPORÁRIA
     ========================================================= */
 
-    function mostrarMensagem(mensagem, tipo = "success") {
+  function mostrarMensagem(mensagem, tipo = "success") {
+    const antiga = document.getElementById("techcampusMessage");
 
-        const antiga =
-            document.getElementById(
-                "techcampusMessage"
-            );
+    if (antiga) {
+      antiga.remove();
+    }
 
-        if (antiga) {
-            antiga.remove();
-        }
+    const alerta = document.createElement("div");
 
+    alerta.id = "techcampusMessage";
 
-        const alerta =
-            document.createElement("div");
+    alerta.className = `alert alert-${tipo} position-fixed`;
 
-        alerta.id = "techcampusMessage";
+    alerta.style.top = "80px";
+    alerta.style.right = "25px";
+    alerta.style.zIndex = "9999";
+    alerta.style.minWidth = "280px";
 
-        alerta.className =
-            `alert alert-${tipo} position-fixed`;
-
-        alerta.style.top = "80px";
-        alerta.style.right = "25px";
-        alerta.style.zIndex = "9999";
-        alerta.style.minWidth = "280px";
-
-
-        alerta.innerHTML = `
+    alerta.innerHTML = `
             <div class="d-flex align-items-center gap-2">
                 <i class="bi bi-check-circle"></i>
                 <span>${mensagem}</span>
             </div>
         `;
 
+    document.body.appendChild(alerta);
 
-        document.body.appendChild(alerta);
+    setTimeout(function () {
+      alerta.remove();
+    }, 3000);
+  }
 
-
-        setTimeout(function () {
-
-            alerta.remove();
-
-        }, 3000);
-
-    }
-
-
-    /* =========================================================
+  /* =========================================================
        INICIALIZAÇÃO
     ========================================================= */
 
-    carregarPerfil();
+  carregarPerfil();
 
-    carregarConfiguracoes();
+  carregarConfiguracoes();
 
-    const perfilSalvo =
-        localStorage.getItem("techcampusPerfil");
+  const perfilSalvo = localStorage.getItem("techcampusPerfil");
 
-    if (perfilSalvo) {
+  if (perfilSalvo) {
+    try {
+      const perfil = JSON.parse(perfilSalvo);
 
-        try {
-
-            const perfil =
-                JSON.parse(perfilSalvo);
-
-            atualizarNomeUsuario(perfil.nome);
-
-        } catch (erro) {
-
-            console.error(erro);
-
-        }
-
+      atualizarNomeUsuario(perfil.nome);
+    } catch (erro) {
+      console.error(erro);
     }
+  }
 
-
-    // Inicializa a tela correta
-    navegarPeloHash();
-
+  // Inicializa a tela correta
+  navegarPeloHash();
 });
-
 
 /* =========================================================
    PRODUTOS - FILTROS + CARROSSEL
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+  const carousel = document.getElementById("productsCarousel");
+  const track = document.getElementById("productsTrack");
 
-    const carousel = document.getElementById("productsCarousel");
-    const track = document.getElementById("productsTrack");
+  if (!carousel || !track) {
+    return;
+  }
 
-    if (!carousel || !track) {
-        return;
+  const prevButton = carousel.querySelector(".products-prev");
+  const nextButton = carousel.querySelector(".products-next");
+
+  const categoryButtons = document.querySelectorAll(
+    ".products-filters .btn-filter",
+  );
+
+  const products = Array.from(track.querySelectorAll(".product-slide"));
+
+  /*
+   * Índice atual do carrossel.
+   */
+  let currentIndex = 0;
+
+  /*
+   * Categoria atual.
+   */
+  let currentCategory = "todos";
+
+  /*
+   * Quantidade de produtos visíveis.
+   */
+  function getVisibleProducts() {
+    if (window.innerWidth <= 767) {
+      return 1;
     }
 
-
-    const prevButton = carousel.querySelector(".products-prev");
-    const nextButton = carousel.querySelector(".products-next");
-
-    const categoryButtons = document.querySelectorAll(
-        ".products-filters .btn-filter"
-    );
-
-    const products = Array.from(
-        track.querySelectorAll(".product-slide")
-    );
-
-
-    /*
-     * Índice atual do carrossel.
-     */
-    let currentIndex = 0;
-
-
-    /*
-     * Categoria atual.
-     */
-    let currentCategory = "todos";
-
-
-    /*
-     * Quantidade de produtos visíveis.
-     */
-    function getVisibleProducts() {
-
-        if (window.innerWidth <= 767) {
-            return 1;
-        }
-
-        if (window.innerWidth <= 1199) {
-            return 2;
-        }
-
-        return 3;
+    if (window.innerWidth <= 1199) {
+      return 2;
     }
 
+    return 3;
+  }
 
-    /*
-     * Produtos pertencentes à categoria selecionada.
-     */
-    function getFilteredProducts() {
-
-        if (currentCategory === "todos") {
-            return products;
-        }
-
-        return products.filter(product => {
-
-            return product.dataset.category === currentCategory;
-
-        });
-
+  /*
+   * Produtos pertencentes à categoria selecionada.
+   */
+  function getFilteredProducts() {
+    if (currentCategory === "todos") {
+      return products;
     }
 
-
-    /*
-     * Atualiza o estado visual dos botões.
-     */
-    function updateButtons() {
-
-        categoryButtons.forEach(button => {
-
-            const category = button.dataset.category;
-
-            button.classList.toggle(
-                "active",
-                category === currentCategory
-            );
-
-        });
-
-    }
-
-
-    /*
-     * Atualiza os controles do carrossel.
-     */
-    function updateCarouselControls() {
-
-        if (currentCategory !== "todos") {
-
-            if (prevButton) {
-                prevButton.style.display = "none";
-            }
-
-            if (nextButton) {
-                nextButton.style.display = "none";
-            }
-
-            return;
-        }
-
-
-        if (prevButton) {
-            prevButton.style.display = "";
-        }
-
-        if (nextButton) {
-            nextButton.style.display = "";
-        }
-
-
-        const visibleProducts = getVisibleProducts();
-
-        const maxIndex = Math.max(
-            0,
-            products.length - visibleProducts
-        );
-
-
-        if (prevButton) {
-            prevButton.disabled = currentIndex <= 0;
-        }
-
-        if (nextButton) {
-            nextButton.disabled = currentIndex >= maxIndex;
-        }
-
-    }
-
-
-    /*
-     * Atualiza a posição do carrossel.
-     */
-    function updateCarouselPosition() {
-
-        if (currentCategory !== "todos") {
-
-            track.style.transform = "none";
-
-            return;
-        }
-
-
-        const visibleProducts = getVisibleProducts();
-
-        if (!products.length) {
-            return;
-        }
-
-
-        const firstProduct = products[0];
-
-        const productWidth = firstProduct.offsetWidth;
-
-
-        if (!productWidth) {
-            return;
-        }
-
-
-        const gap = parseFloat(
-            getComputedStyle(track).gap
-        ) || 0;
-
-
-        const move = currentIndex * (productWidth + gap);
-
-
-        track.style.transform =
-            `translateX(-${move}px)`;
-
-    }
-
-
-    /*
-     * Mostra/esconde os produtos de acordo com a categoria.
-     */
-    function filterProducts() {
-
-        const filteredProducts = getFilteredProducts();
-
-
-        /*
-         * MODO TODOS
-         *
-         * Todos os produtos aparecem e
-         * o carrossel fica ativo.
-         */
-        if (currentCategory === "todos") {
-
-            carousel.classList.remove("category-mode");
-
-
-            products.forEach(product => {
-
-                product.classList.remove("product-hidden");
-
-                product.style.display = "";
-
-            });
-
-
-            currentIndex = 0;
-
-            updateCarouselPosition();
-            updateCarouselControls();
-
-            return;
-        }
-
-
-        /*
-         * MODO CATEGORIA
-         *
-         * O carrossel é desativado.
-         */
-        carousel.classList.add("category-mode");
-
-
-        products.forEach(product => {
-
-            const productCategory =
-                product.dataset.category;
-
-
-            if (productCategory === currentCategory) {
-
-                product.classList.remove("product-hidden");
-
-                product.style.display = "";
-
-            } else {
-
-                product.classList.add("product-hidden");
-
-                product.style.display = "none";
-
-            }
-
-        });
-
-
-        /*
-         * Garante que o track não fique
-         * deslocado por causa do carrossel.
-         */
-        track.style.transform = "none";
-
-
-        updateCarouselControls();
-
-    }
-
-
-    /*
-     * Clique nas categorias.
-     */
-    categoryButtons.forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const category =
-                button.dataset.category;
-
-
-            if (!category) {
-                return;
-            }
-
-
-            currentCategory = category;
-
-
-            updateButtons();
-
-            filterProducts();
-
-        });
-
+    return products.filter((product) => {
+      return product.dataset.category === currentCategory;
     });
+  }
 
+  /*
+   * Atualiza o estado visual dos botões.
+   */
+  function updateButtons() {
+    categoryButtons.forEach((button) => {
+      const category = button.dataset.category;
 
-    /*
-     * Botão ANTERIOR.
-     */
+      button.classList.toggle("active", category === currentCategory);
+    });
+  }
+
+  /*
+   * Atualiza os controles do carrossel.
+   */
+  function updateCarouselControls() {
+    if (currentCategory !== "todos") {
+      if (prevButton) {
+        prevButton.style.display = "none";
+      }
+
+      if (nextButton) {
+        nextButton.style.display = "none";
+      }
+
+      return;
+    }
+
     if (prevButton) {
-
-        prevButton.addEventListener("click", () => {
-
-            if (currentCategory !== "todos") {
-                return;
-            }
-
-
-            currentIndex--;
-
-            if (currentIndex < 0) {
-                currentIndex = 0;
-            }
-
-
-            updateCarouselPosition();
-            updateCarouselControls();
-
-        });
-
+      prevButton.style.display = "";
     }
 
-
-    /*
-     * Botão PRÓXIMO.
-     */
     if (nextButton) {
-
-        nextButton.addEventListener("click", () => {
-
-            if (currentCategory !== "todos") {
-                return;
-            }
-
-
-            const visibleProducts =
-                getVisibleProducts();
-
-
-            const maxIndex = Math.max(
-                0,
-                products.length - visibleProducts
-            );
-
-
-            currentIndex++;
-
-
-            if (currentIndex > maxIndex) {
-                currentIndex = maxIndex;
-            }
-
-
-            updateCarouselPosition();
-            updateCarouselControls();
-
-        });
-
+      nextButton.style.display = "";
     }
 
+    const visibleProducts = getVisibleProducts();
+
+    const maxIndex = Math.max(0, products.length - visibleProducts);
+
+    if (prevButton) {
+      prevButton.disabled = currentIndex <= 0;
+    }
+
+    if (nextButton) {
+      nextButton.disabled = currentIndex >= maxIndex;
+    }
+  }
+
+  /*
+   * Atualiza a posição do carrossel.
+   */
+  function updateCarouselPosition() {
+    if (currentCategory !== "todos") {
+      track.style.transform = "none";
+
+      return;
+    }
+
+    const visibleProducts = getVisibleProducts();
+
+    if (!products.length) {
+      return;
+    }
+
+    const firstProduct = products[0];
+
+    const productWidth = firstProduct.offsetWidth;
+
+    if (!productWidth) {
+      return;
+    }
+
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+
+    const move = currentIndex * (productWidth + gap);
+
+    track.style.transform = `translateX(-${move}px)`;
+  }
+
+  /*
+   * Mostra/esconde os produtos de acordo com a categoria.
+   */
+  function filterProducts() {
+    const filteredProducts = getFilteredProducts();
 
     /*
-     * Ao redimensionar a tela,
-     * recalcula o carrossel.
+     * MODO TODOS
+     *
+     * Todos os produtos aparecem e
+     * o carrossel fica ativo.
      */
-    window.addEventListener("resize", () => {
+    if (currentCategory === "todos") {
+      carousel.classList.remove("category-mode");
 
-        if (currentCategory === "todos") {
+      products.forEach((product) => {
+        product.classList.remove("product-hidden");
 
-            const visibleProducts =
-                getVisibleProducts();
+        product.style.display = "";
+      });
 
+      currentIndex = 0;
 
-            const maxIndex = Math.max(
-                0,
-                products.length - visibleProducts
-            );
+      updateCarouselPosition();
+      updateCarouselControls();
 
+      return;
+    }
 
-            if (currentIndex > maxIndex) {
-                currentIndex = maxIndex;
-            }
+    /*
+     * MODO CATEGORIA
+     *
+     * O carrossel é desativado.
+     */
+    carousel.classList.add("category-mode");
 
+    products.forEach((product) => {
+      const productCategory = product.dataset.category;
 
-            updateCarouselPosition();
-            updateCarouselControls();
+      if (productCategory === currentCategory) {
+        product.classList.remove("product-hidden");
 
-        }
+        product.style.display = "";
+      } else {
+        product.classList.add("product-hidden");
 
+        product.style.display = "none";
+      }
     });
 
-
     /*
-     * Inicialização.
+     * Garante que o track não fique
+     * deslocado por causa do carrossel.
      */
-    updateButtons();
+    track.style.transform = "none";
 
-    filterProducts();
+    updateCarouselControls();
+  }
 
+  /*
+   * Clique nas categorias.
+   */
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const category = button.dataset.category;
+
+      if (!category) {
+        return;
+      }
+
+      currentCategory = category;
+
+      updateButtons();
+
+      filterProducts();
+    });
+  });
+
+  /*
+   * Botão ANTERIOR.
+   */
+  if (prevButton) {
+    prevButton.addEventListener("click", () => {
+      if (currentCategory !== "todos") {
+        return;
+      }
+
+      currentIndex--;
+
+      if (currentIndex < 0) {
+        currentIndex = 0;
+      }
+
+      updateCarouselPosition();
+      updateCarouselControls();
+    });
+  }
+
+  /*
+   * Botão PRÓXIMO.
+   */
+  if (nextButton) {
+    nextButton.addEventListener("click", () => {
+      if (currentCategory !== "todos") {
+        return;
+      }
+
+      const visibleProducts = getVisibleProducts();
+
+      const maxIndex = Math.max(0, products.length - visibleProducts);
+
+      currentIndex++;
+
+      if (currentIndex > maxIndex) {
+        currentIndex = maxIndex;
+      }
+
+      updateCarouselPosition();
+      updateCarouselControls();
+    });
+  }
+
+  /*
+   * Ao redimensionar a tela,
+   * recalcula o carrossel.
+   */
+  window.addEventListener("resize", () => {
+    if (currentCategory === "todos") {
+      const visibleProducts = getVisibleProducts();
+
+      const maxIndex = Math.max(0, products.length - visibleProducts);
+
+      if (currentIndex > maxIndex) {
+        currentIndex = maxIndex;
+      }
+
+      updateCarouselPosition();
+      updateCarouselControls();
+    }
+  });
+
+  /*
+   * Inicialização.
+   */
+  updateButtons();
+
+  filterProducts();
 });
