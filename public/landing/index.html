@@ -20,20 +20,27 @@
   </head>
 
   <body class="bg-dark text-white">
+
     <!-- =====================================================
-       NAVBAR
-  ====================================================== -->
+         NAVBAR
+    ====================================================== -->
 
     <nav
       class="navbar navbar-expand-lg navbar-dark"
       style="background-color: #86151b"
     >
-      <div class="container-fluid px-4">
-        <!-- LOGO -->
-        <a href="#inicio" class="navbar-brand d-flex align-items-center gap-2">
-          
 
-         
+      <div class="container-fluid px-4">
+
+        <!-- LOGO -->
+         <img src="./images/Logo TechCampus Horizontal.png" alt="" width="175px">
+        <a
+          href="#inicio"
+          class="navbar-brand d-flex align-items-center gap-2"
+        >
+          <!-- Coloque sua logo aqui se quiser -->
+        </a>
+
 
         <!-- BOTÃO MENU MOBILE -->
 
@@ -46,107 +53,354 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
+
         <!-- MENU -->
 
         <div
           id="menuPrincipal"
           class="collapse navbar-collapse justify-content-center"
         >
+
           <ul class="navbar-nav gap-lg-5 text-center">
+
             <li class="nav-item">
-              <a href="#inicio" class="nav-link active"> Início </a>
+              <a href="#inicio" class="nav-link active">
+                Início
+              </a>
             </li>
+
             <li class="nav-item">
-              <a href="#sobre" class="nav-link"> Sobre </a>
+              <a href="#sobre" class="nav-link">
+                Sobre
+              </a>
             </li>
+
             <li class="nav-item">
-              <a href="#cursos" class="nav-link"> Cursos </a>
+              <a href="#cursos" class="nav-link">
+                Cursos
+              </a>
             </li>
+
             <li class="nav-item">
-              <a href="#beneficios" class="nav-link"> Benefícios </a>
+              <a href="#beneficios" class="nav-link">
+                Benefícios
+              </a>
             </li>
+
           </ul>
+
         </div>
 
+
         <!-- BOTÃO AAPM -->
+
         <a
           href="/frontend/login.html"
-          class="btn btn-outline-light rounded-pill px-4 d-none d-lg-flex align-items-center gap-2" >Acessar AAPM
+          class="btn btn-outline-light rounded-pill px-4 d-none d-lg-flex align-items-center gap-2"
+        >
+          Acessar AAPM
           <i class="bi bi-arrow-right"></i>
         </a>
+
       </div>
+
     </nav>
 
-    <!-- =====================================================
-       HERO
-  ====================================================== -->
 
-    <section id="inicio" class="container-fluid bg-black p-0">
-      <div class="row g-0 min-vh-100">
-        <!-- =================================================
-           LADO ESQUERDO
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section
+      id="inicio"
+      class="container-fluid p-0 position-relative overflow-hidden"
+      style="min-height: calc(100vh - 56px)"
+    >
+
+      <!-- =================================================
+           IMAGEM DE FUNDO
       ================================================== -->
 
+      <img
+        src="images/fundoLanding.png"
+        alt="Alunos TechCampus"
+        class="
+          position-absolute
+          top-0
+          start-0
+          w-100
+          h-100
+        "
+        style="
+          object-fit: cover;
+          object-position: center;
+          z-index: 0;
+        "
+      />
+
+
+      <!-- =================================================
+           DEGRADÊ PRETO
+      ================================================== -->
+
+      <div
+        class="
+          position-absolute
+          top-0
+          start-0
+          w-100
+          h-100
+        "
+        style="
+          background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0.98) 22%,
+            rgba(0, 0, 0, 0.85) 35%,
+            rgba(0, 0, 0, 0.50) 50%,
+            rgba(0, 0, 0, 0.10) 70%,
+            rgba(0, 0, 0, 0) 100%
+          );
+          z-index: 1;
+        "
+      ></div>
+
+
+      <!-- =================================================
+           CONTEÚDO
+      ================================================== -->
+
+      <div
+        class="
+          container-fluid
+          position-relative
+          d-flex
+          align-items-center
+          h-100
+          px-4
+          px-md-5
+        "
+        style="
+          min-height: calc(100vh - 56px);
+          z-index: 2;
+        "
+      >
+
         <div
-          class="col-lg-5 d-flex flex-column justify-content-center px-4 px-md-5 py-5"
+          class="
+            col-12
+            col-md-7
+            col-lg-5
+            py-5
+          "
         >
+
           <!-- TAG -->
 
           <div
-            class="d-flex align-items-center gap-2 text-danger fw-bold mb-3"
+            class="
+              d-flex
+              align-items-center
+              gap-2
+              text-danger
+              fw-bold
+              mb-3
+            "
             style="font-size: 10px"
           >
-            <span class="bg-danger" style="width: 22px; height: 2px"></span> SEU FUTURO COMEÇA AQUI
+
+            <span
+              class="bg-danger"
+              style="
+                width: 22px;
+                height: 2px;
+              "
+            ></span>
+
+            SEU FUTURO COMEÇA AQUI
+
           </div>
+
+
           <!-- TÍTULO -->
-          <h1 class="display-3 fw-bold lh-1 mb-3">
-            Mais que ensino, <br > é preparo para  <br /> <span class="text-danger"> o seu amanhã. </span>
+
+          <h1
+            class="
+              display-3
+              fw-bold
+              lh-1
+              mb-3
+            "
+          >
+
+            Mais que ensino,
+
+            <br />
+
+            é preparo para
+
+            <br />
+
+            <span class="text-danger">
+              o seu amanhã.
+            </span>
+
           </h1>
+
+
           <!-- DESCRIÇÃO -->
-          <p class="text-white-50 mb-4" style="max-width: 330px"> No TechCampus, você aprende na prática, desenvolve suas habilidades  e constrói um futuro com mais oportunidades. </p>
+
+          <p
+            class="text-white-50 mb-4"
+            style="max-width: 330px"
+          >
+
+            No TechCampus, você aprende na prática,
+            desenvolve suas habilidades e constrói um
+            futuro com mais oportunidades.
+
+          </p>
+
+
           <!-- BOTÃO -->
-          <a href="#sobre" class="btn btn-danger rounded-pill px-4 py-2 align-self-start d-flex align-items-center gap-3" > Conheça nosso projeto
+
+          <a
+            href="#sobre"
+            class="
+              btn
+              btn-danger
+              rounded-pill
+              px-4
+              py-2
+              align-self-start
+              d-inline-flex
+              align-items-center
+              gap-3
+            "
+          >
+
+            Conheça nosso projeto
+
             <i class="bi bi-arrow-right"></i>
+
           </a>
 
+
           <!-- =================================================
-             DIFERENCIAIS
-        ================================================== -->
+               DIFERENCIAIS
+          ================================================== -->
 
           <div class="row mt-5 g-3">
+
+
             <!-- FORMAÇÃO -->
+
             <div class="col-4">
-              <i class="bi bi-mortarboard-fill text-danger fs-2"></i>
-              <p class="text-white-50 mt-2 mb-0" style="font-size: 15px"> Formação <br /> de qualidade</p>
+
+              <i
+                class="
+                  bi
+                  bi-mortarboard-fill
+                  text-danger
+                  fs-2
+                "
+              ></i>
+
+              <p
+                class="
+                  text-white-50
+                  mt-2
+                  mb-0
+                "
+                style="font-size: 15px"
+              >
+
+                Formação
+                <br />
+                de qualidade
+
+              </p>
+
             </div>
+
+
             <!-- TECNOLOGIA -->
+
             <div class="col-4">
-              <i class="bi bi-gear-fill text-danger fs-2"></i>
-              <p class="text-white-50 mt-2 mb-0" style="font-size: 15px"> Prática e <br /> tecnologia </p>
+
+              <i
+                class="
+                  bi
+                  bi-gear-fill
+                  text-danger
+                  fs-2
+                "
+              ></i>
+
+              <p
+                class="
+                  text-white-50
+                  mt-2
+                  mb-0
+                "
+                style="font-size: 15px"
+              >
+
+                Prática e
+                <br />
+                tecnologia
+
+              </p>
+
             </div>
+
+
             <!-- PROFESSORES -->
+
             <div class="col-4">
-              <i class="bi bi-person-workspace text-danger fs-2"></i>
-              <p class="text-white-50 mt-2 mb-0" style="font-size: 15px"> Professores <br /> especializados</p>
+
+              <i
+                class="
+                  bi
+                  bi-person-workspace
+                  text-danger
+                  fs-2
+                "
+              ></i>
+
+              <p
+                class="
+                  text-white-50
+                  mt-2
+                  mb-0
+                "
+                style="font-size: 15px"
+              >
+
+                Professores
+                <br />
+                especializados
+
+              </p>
+
             </div>
+
           </div>
+
         </div>
 
-        <!-- =================================================
-           IMAGEM
-      ================================================== -->
-
-        <div class="col-lg-7 p-0 d-flex">
-          <img
-            src="images/fundoLanding.png"
-            alt="Alunos TechCampus"
-            class="img-fluid w-100"
-            style="object-fit: cover; min-height: 500px"
-          />
-        </div>
       </div>
+
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- BOOTSTRAP JS -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
   </body>
 </html>
