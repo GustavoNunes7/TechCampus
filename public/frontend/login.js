@@ -72,3 +72,29 @@
     }
   });
 })();
+
+// ==========================================
+// MOSTRAR / OCULTAR SENHA
+// ==========================================
+const togglePassword = document.getElementById("togglePassword");
+const senha = document.getElementById("senha");
+
+if (togglePassword && senha) {
+  togglePassword.addEventListener("click", () => {
+    const mostrandoSenha = senha.type === "text";
+
+    senha.type = mostrandoSenha ? "password" : "text";
+
+    const icon = togglePassword.querySelector("i");
+
+    if (icon) {
+      icon.classList.toggle("bi-eye", mostrandoSenha);
+      icon.classList.toggle("bi-eye-slash", !mostrandoSenha);
+    }
+
+    togglePassword.setAttribute(
+      "aria-label",
+      mostrandoSenha ? "Mostrar senha" : "Ocultar senha"
+    );
+  });
+}
