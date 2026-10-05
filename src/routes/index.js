@@ -300,6 +300,109 @@ r.get("/pedidos/:id", autenticar, (req, res) => {
     return res.sendStatus(403);
   res.json(p);
 });
+// Pagamentos
+r.post("/pedidos/:id/pagamento", autenticar, (req, res) => {
+  const pedidoId = positiveId(req.params.id);
+  const metodo = req.body.metodo;
+
+  if (!allowed(metodo, ["pix", "cartao"]))
+    return bad(res, "Forma de pagamento inválida.");
+
+  const pedido = get("pedidos", pedidoId);
+
+  if (!pedido)
+    return res.status(404).json({ erro: "Pedido não encontrado." });
+
+  if (pedido.usuario_id !== req.usuario.id && req.usuario.papel !== "admin")
+    return res.sendStatus(403);
+
+  if (pedido.status !== "pendente")
+    return bad(res, "Este pedido não pode receber pagamento.");
+
+  const existente = db
+    .prepare("SELECT * FROM pagamentos WHERE pedido_id=?")
+    .get(pedidoId);
+
+  if (existente)
+    return res.json(existente);
+
+  const total = db
+    .prepare(
+      "SELECT COALESCE(SUM(quantidade * preco_unitario_centavos), 0) AS total FROM itens_pedido WHERE pedido_id=?",
+    )
+    .get(pedidoId).total;
+
+  const codigo =
+    metodo === "pix"
+      ? crypto.randomBytes(16).toString("hex")
+      : null;
+
+  const info = db
+    .prepare(
+      "INSERT INTO pagamentos(pedido_id,metodo,valor_centavos,codigo) VALUES(?,?,?,?)",
+    )
+    .run(pedidoId, metodo, total, codigo);
+
+  res.status(201).json(get("pagamentos", info.lastInsertRowid));
+});
+
+r.post("/pedidos/:id/cancelar", autenticar, (req, res) => {
+  const pedido = get("pedidos", positiveId(req.params.id));
+
+  if (!pedido)
+    return res.status(404).json({ erro: "Pedido não encontrado." });
+
+  if (pedido.usuario_id !== req.usuario.id && req.usuario.papel !== "admin")
+    return res.sendStatus(403);
+
+  if (pedido.status !== "pendente")
+    return bad(res, "Este pedido não pode ser cancelado.");
+
+  db.transaction(() => {
+    for (const item of db
+      .prepare("SELECT * FROM itens_pedido WHERE pedido_id=?")
+      .all(pedido.id)) {
+      db.prepare("UPDATE produtos SET estoque=estoque+? WHERE id=?").run(
+        item.quantidade,
+        item.produto_id,
+      );
+    }
+
+    db.prepare("UPDATE pedidos SET status='cancelado' WHERE id=?").run(
+      pedido.id,
+    );
+
+    db.prepare(
+      "UPDATE pagamentos SET status='cancelado' WHERE pedido_id=?",
+    ).run(pedido.id);
+  })();
+
+  res.json(detalharPedido(pedido.id));
+});
+
+r.post("/pagamentos/:id/confirmar-simulado", autenticar, (req, res) => {
+  const pagamento = get("pagamentos", positiveId(req.params.id));
+
+  if (!pagamento)
+    return res.status(404).json({ erro: "Pagamento não encontrado." });
+
+  const pedido = get("pedidos", pagamento.pedido_id);
+
+  if (!pedido)
+    return res.status(404).json({ erro: "Pedido não encontrado." });
+
+  if (pedido.usuario_id !== req.usuario.id && req.usuario.papel !== "admin")
+    return res.sendStatus(403);
+
+  if (pagamento.status !== "pendente")
+    return bad(res, "Este pagamento já foi processado.");
+
+  db.prepare(
+    "UPDATE pagamentos SET status='confirmado' WHERE id=?",
+  ).run(pagamento.id);
+
+  res.json(get("pagamentos", pagamento.id));
+});
 r.patch("/pedidos/:id/status", autenticar, admin, (req, res) => {
   const p = get("pedidos", positiveId(req.params.id)),
     status = req.body.status;

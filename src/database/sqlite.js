@@ -33,6 +33,15 @@ CREATE TABLE IF NOT EXISTS itens_pedido (
  produto_id INTEGER NOT NULL REFERENCES produtos(id), quantidade INTEGER NOT NULL CHECK(quantidade > 0),
  preco_unitario_centavos INTEGER NOT NULL CHECK(preco_unitario_centavos >= 0)
 );
+CREATE TABLE IF NOT EXISTS pagamentos (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ pedido_id INTEGER NOT NULL UNIQUE REFERENCES pedidos(id) ON DELETE CASCADE,
+ metodo TEXT NOT NULL CHECK(metodo IN ('pix','cartao')),
+ valor_centavos INTEGER NOT NULL CHECK(valor_centavos >= 0),
+ status TEXT NOT NULL DEFAULT 'pendente' CHECK(status IN ('pendente','confirmado','cancelado')),
+ codigo TEXT,
+ criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 CREATE TABLE IF NOT EXISTS documentos (
  id INTEGER PRIMARY KEY AUTOINCREMENT, usuario_id INTEGER NOT NULL REFERENCES usuarios(id),
  nome TEXT NOT NULL, arquivo TEXT NOT NULL, mime TEXT NOT NULL, tamanho INTEGER NOT NULL,
