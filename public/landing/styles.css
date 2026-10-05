@@ -3729,3 +3729,71 @@ a {
     width: 100%;
   }
 }
+
+/* =========================================
+   DESTINOS - FORMAtURA
+   ========================================= */
+
+.destino-clicavel {
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.destino-clicavel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.destino-clicavel:focus {
+  outline: 2px solid #dc3545;
+  outline-offset: 2px;
+}
+
+
+/* Imagem dentro do modal */
+
+.destino-modal-img {
+  height: 330px;
+  object-fit: cover;
+  display: block;
+}
+
+
+/* Modal */
+
+#modalDestino .modal-content {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+#modalDestino .modal-header {
+  background: #151515;
+}
+
+#modalDestino .modal-body {
+  background: #121212;
+}
+
+#modalDestinoSite {
+  transition: all 0.2s ease;
+}
+
+#modalDestinoSite:hover {
+  transform: translateY(-1px);
+}
+
+
+/* Responsivo */
+
+@media (max-width: 576px) {
+
+  .destino-modal-img {
+    height: 220px;
+  }
+
+  #modalDestino .modal-body .p-4 {
+    padding: 1.25rem !important;
+  }
+
+}
+

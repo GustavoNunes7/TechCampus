@@ -301,6 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "sobre",
     "formatura",
     "ajuda",
+    "usuarios",
     "perfil",
     "configuracoes",
   ];
@@ -1693,3 +1694,96 @@ document.addEventListener("DOMContentLoaded", () => {
       sidebar.appendChild(bottom);
   });
 })();
+
+/* =========================================
+   MODAL - DESTINOS DA FORMATURA
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const modal = document.getElementById("modalDestino");
+
+  if (!modal) return;
+
+  const imagem = document.getElementById("modalDestinoImagem");
+  const nome = document.getElementById("modalDestinoNome");
+  const endereco = document.getElementById("modalDestinoEndereco");
+  const descricao = document.getElementById("modalDestinoDescricao");
+  const site = document.getElementById("modalDestinoSite");
+
+  const destinos = document.querySelectorAll(".destino-clicavel");
+
+  destinos.forEach((destino) => {
+
+    destino.addEventListener("click", () => {
+
+      const local = destino.dataset.local;
+      const enderecoLocal = destino.dataset.endereco;
+      const descricaoLocal = destino.dataset.descricao;
+      const imagemLocal = destino.dataset.imagem;
+      const siteLocal = destino.dataset.site;
+
+      nome.textContent = local;
+
+      endereco.textContent = enderecoLocal;
+
+      descricao.textContent = descricaoLocal;
+
+      imagem.src = imagemLocal;
+      imagem.alt = local;
+
+      /*
+       * Se o local possuir site,
+       * mostra o botão.
+       */
+
+      if (siteLocal && siteLocal !== "#") {
+
+        site.href = siteLocal;
+        site.style.display = "inline-block";
+
+      } else {
+
+        site.style.display = "none";
+
+      }
+
+    });
+
+  });
+
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menuUsuarios = document.getElementById("menuUsuarios");
+    const secaoUsuarios = document.getElementById("usuarios");
+
+    if (!menuUsuarios || !secaoUsuarios) {
+        return;
+    }
+
+    let usuario = null;
+
+    try {
+        usuario = JSON.parse(localStorage.getItem("usuario"));
+    } catch (erro) {
+        usuario = null;
+    }
+
+    const tipoUsuario = usuario?.tipo || usuario?.perfil || usuario?.role;
+
+    const ehAdmin =
+        tipoUsuario &&
+        tipoUsuario.toString().toLowerCase() === "admin";
+
+    if (!ehAdmin) {
+        // Esconde o item do menu
+        menuUsuarios.style.display = "none";
+
+        // Esconde a seção
+        secaoUsuarios.style.display = "none";
+    }
+
+});

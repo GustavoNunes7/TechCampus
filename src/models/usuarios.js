@@ -1,112 +1,162 @@
-/* =====================================================
-   TECHCAMPUS - GERENCIAMENTO DE USUÁRIOS
-===================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
-  const tabela = document.getElementById("tabelaUsuarios");
-  const busca = document.getElementById("buscarUsuario");
-  const filtroTipo = document.getElementById("filtroTipoUsuario");
-  const filtroStatus = document.getElementById("filtroStatusUsuario");
 
-  const totalAlunos = document.getElementById("totalAlunos");
-  const totalProfessores = document.getElementById("totalProfessores");
-  const totalAtivos = document.getElementById("totalAtivos");
-
-  const modalElement = document.getElementById("modalUsuario");
-
-  if (!tabela || !modalElement) {
-    return;
-  }
-
-  let usuarios = [
-    {
-      id: 1,
-      nome: "João da Silva",
-      matricula: "202600001",
-      email: "joao@aluno.com",
-      tipo: "aluno",
-      status: "ativo",
-    },
-    {
-      id: 2,
-      nome: "Maria Oliveira",
-      matricula: "202600002",
-      email: "maria@aluno.com",
-      tipo: "aluno",
-      status: "ativo",
-    },
-    {
-      id: 3,
-      nome: "Carlos Souza",
-      matricula: "PROF001",
-      email: "carlos@escola.com",
-      tipo: "professor",
-      status: "ativo",
-    },
-  ];
-
-  let usuarioEditando = null;
-
-  const modal = new bootstrap.Modal(modalElement);
-
-  function atualizarResumo() {
-    const alunos = usuarios.filter((usuario) => usuario.tipo === "aluno");
-
-    const professores = usuarios.filter(
-      (usuario) => usuario.tipo === "professor",
-    );
-
-    const ativos = usuarios.filter((usuario) => usuario.status === "ativo");
-
-    totalAlunos.textContent = alunos.length;
-    totalProfessores.textContent = professores.length;
-    totalAtivos.textContent = ativos.length;
-  }
-
-  function renderizarUsuarios() {
-    const termo = busca.value.toLowerCase().trim();
-
-    const tipo = filtroTipo.value;
-    const status = filtroStatus.value;
-
-    const filtrados = usuarios.filter((usuario) => {
-      const correspondeBusca =
-        usuario.nome.toLowerCase().includes(termo) ||
-        usuario.email.toLowerCase().includes(termo) ||
-        usuario.matricula.toLowerCase().includes(termo);
-
-      const correspondeTipo = tipo === "todos" || usuario.tipo === tipo;
-
-      const correspondeStatus = status === "todos" || usuario.status === status;
-
-      return correspondeBusca && correspondeTipo && correspondeStatus;
-    });
-
-    tabela.innerHTML = "";
-
+    const tabela = document.getElementById("tabelaUsuarios");
     const vazio = document.getElementById("usuariosVazio");
 
-    if (filtrados.length === 0) {
-      vazio.style.display = "block";
+    const totalAlunos = document.getElementById("totalAlunos");
+    const totalProfessores = document.getElementById("totalProfessores");
+    const totalAtivos = document.getElementById("totalAtivos");
 
-      atualizarResumo();
+    const busca = document.getElementById("buscarUsuario");
+    const filtroTipo = document.getElementById("filtroTipoUsuario");
+    const filtroStatus = document.getElementById("filtroStatusUsuario");
 
-      return;
+    if (!tabela) {
+        return;
     }
 
-    vazio.style.display = "none";
+    let usuarios = [];
 
-    filtrados.forEach((usuario) => {
-      const tr = document.createElement("tr");
 
-      const tipoTexto = usuario.tipo === "aluno" ? "Aluno" : "Professor";
+    // ==========================================
+    // CARREGAR USUÁRIOS
+    // ==========================================
 
-      tr.innerHTML = `
+    async function carregarUsuarios() {
 
+        try {
+
+            const resposta = await fetch("/api/usuarios", {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!resposta.ok) {
+
+                if (resposta.status === 403) {
+                    throw new Error(
+                        "Você não possui permissão para acessar esta área."
+                    );
+                }
+
+                throw new Error("Erro ao carregar usuários.");
+            }
+
+            usuarios = await resposta.json();
+
+            atualizarResumo();
+            renderizarUsuarios();
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            tabela.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center text-danger py-4">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        ${erro.message}
+                    </td>
+                </tr>
+            `;
+
+        }
+    }
+
+
+    // ==========================================
+    // RESUMO
+    // ==========================================
+
+    function atualizarResumo() {
+
+        const alunos = usuarios.filter(
+            usuario =>
+                String(usuario.tipo).toLowerCase() === "aluno"
+        );
+
+        const professores = usuarios.filter(
+            usuario =>
+                String(usuario.tipo).toLowerCase() === "professor"
+        );
+
+        const ativos = usuarios.filter(
+            usuario =>
+                String(usuario.status).toLowerCase() === "ativo"
+        );
+
+        totalAlunos.textContent = alunos.length;
+        totalProfessores.textContent = professores.length;
+        totalAtivos.textContent = ativos.length;
+    }
+
+
+    // ==========================================
+    // RENDERIZAR TABELA
+    // ==========================================
+
+    function renderizarUsuarios() {
+
+        const termo = busca.value
+            .trim()
+            .toLowerCase();
+
+        const tipo = filtroTipo.value;
+        const status = filtroStatus.value;
+
+
+        const filtrados = usuarios.filter(usuario => {
+
+            const nome = String(usuario.nome || "").toLowerCase();
+            const email = String(usuario.email || "").toLowerCase();
+            const matricula = String(usuario.matricula || "").toLowerCase();
+
+            const correspondeBusca =
+                !termo ||
+                nome.includes(termo) ||
+                email.includes(termo) ||
+                matricula.includes(termo);
+
+            const correspondeTipo =
+                tipo === "todos" ||
+                String(usuario.tipo).toLowerCase() === tipo;
+
+            const correspondeStatus =
+                status === "todos" ||
+                String(usuario.status).toLowerCase() === status;
+
+            return (
+                correspondeBusca &&
+                correspondeTipo &&
+                correspondeStatus
+            );
+        });
+
+
+        tabela.innerHTML = "";
+
+
+        if (filtrados.length === 0) {
+
+            vazio.style.display = "block";
+
+            return;
+        }
+
+
+        vazio.style.display = "none";
+
+
+        filtrados.forEach(usuario => {
+
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
                 <td>
-                    <div class="usuario-nome">
-                        ${usuario.nome}
-                    </div>
+                    <strong>
+                        ${usuario.nome || "-"}
+                    </strong>
                 </td>
 
                 <td>
@@ -114,186 +164,66 @@ document.addEventListener("DOMContentLoaded", () => {
                 </td>
 
                 <td>
-                    <span class="usuario-email">
-                        ${usuario.email}
+                    ${usuario.email || "-"}
+                </td>
+
+                <td>
+                    <span class="badge bg-primary">
+                        ${usuario.tipo || "-"}
                     </span>
                 </td>
 
                 <td>
-                    <span class="usuario-badge ${usuario.tipo}">
-                        <i class="bi ${
-                          usuario.tipo === "aluno"
-                            ? "bi-mortarboard-fill"
-                            : "bi-person-workspace"
-                        }"></i>
-
-                        ${tipoTexto}
+                    <span class="badge ${
+                        String(usuario.status).toLowerCase() === "ativo"
+                            ? "bg-success"
+                            : "bg-secondary"
+                    }">
+                        ${usuario.status || "-"}
                     </span>
                 </td>
 
-                <td>
-                    <span class="usuario-status ${usuario.status}">
-                        ${usuario.status === "ativo" ? "Ativo" : "Inativo"}
-                    </span>
-                </td>
+                <td class="text-end">
 
-                <td>
+                    <button
+                        class="btn btn-sm btn-outline-primary"
+                        onclick="editarUsuario(${usuario.id})"
+                        title="Editar"
+                    >
+                        <i class="bi bi-pencil"></i>
+                    </button>
 
-                    <div class="usuario-acoes">
-
-                        <button
-                            type="button"
-                            class="btn btn-outline-secondary btn-sm"
-                            title="Editar"
-                            data-editar="${usuario.id}">
-
-                            <i class="bi bi-pencil"></i>
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="btn btn-outline-danger btn-sm"
-                            title="Excluir"
-                            data-excluir="${usuario.id}">
-
-                            <i class="bi bi-trash"></i>
-
-                        </button>
-
-                    </div>
+                    <button
+                        class="btn btn-sm btn-outline-danger"
+                        onclick="excluirUsuario(${usuario.id})"
+                        title="Excluir"
+                    >
+                        <i class="bi bi-trash"></i>
+                    </button>
 
                 </td>
-
             `;
 
-      tabela.appendChild(tr);
-    });
-
-    atualizarResumo();
-  }
-
-  function abrirNovoUsuario() {
-    usuarioEditando = null;
-
-    document.getElementById("tituloModalUsuario").textContent = "Novo cadastro";
-
-    document.getElementById("formUsuario").reset();
-
-    document.getElementById("usuarioId").value = "";
-
-    modal.show();
-  }
-
-  function editarUsuario(id) {
-    const usuario = usuarios.find((item) => item.id === id);
-
-    if (!usuario) {
-      return;
-    }
-
-    usuarioEditando = usuario;
-
-    document.getElementById("tituloModalUsuario").textContent =
-      "Editar cadastro";
-
-    document.getElementById("usuarioId").value = usuario.id;
-
-    document.getElementById("usuarioNome").value = usuario.nome;
-
-    document.getElementById("usuarioTipo").value = usuario.tipo;
-
-    document.getElementById("usuarioMatricula").value = usuario.matricula;
-
-    document.getElementById("usuarioEmail").value = usuario.email;
-
-    document.getElementById("usuarioSenha").value = "";
-
-    document.getElementById("usuarioStatus").value = usuario.status;
-
-    modal.show();
-  }
-
-  function excluirUsuario(id) {
-    const usuario = usuarios.find((item) => item.id === id);
-
-    if (!usuario) {
-      return;
-    }
-
-    const confirmar = confirm(
-      `Deseja realmente excluir o cadastro de ${usuario.nome}?`,
-    );
-
-    if (!confirmar) {
-      return;
-    }
-
-    usuarios = usuarios.filter((item) => item.id !== id);
-
-    renderizarUsuarios();
-  }
-
-  document
-    .getElementById("btnNovoUsuario")
-    ?.addEventListener("click", abrirNovoUsuario);
-
-  document
-    .getElementById("formUsuario")
-    ?.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const dados = {
-        nome: document.getElementById("usuarioNome").value.trim(),
-
-        matricula: document.getElementById("usuarioMatricula").value.trim(),
-
-        email: document.getElementById("usuarioEmail").value.trim(),
-
-        tipo: document.getElementById("usuarioTipo").value,
-
-        status: document.getElementById("usuarioStatus").value,
-      };
-
-      if (usuarioEditando) {
-        usuarioEditando.nome = dados.nome;
-        usuarioEditando.matricula = dados.matricula;
-        usuarioEditando.email = dados.email;
-        usuarioEditando.tipo = dados.tipo;
-        usuarioEditando.status = dados.status;
-      } else {
-        usuarios.push({
-          id: Date.now(),
-
-          ...dados,
+            tabela.appendChild(tr);
         });
-      }
-
-      modal.hide();
-
-      renderizarUsuarios();
-    });
-
-  tabela.addEventListener("click", (event) => {
-    const editar = event.target.closest("[data-editar]");
-
-    const excluir = event.target.closest("[data-excluir]");
-
-    if (editar) {
-      editarUsuario(Number(editar.dataset.editar));
     }
 
-    if (excluir) {
-      excluirUsuario(Number(excluir.dataset.excluir));
-    }
-  });
 
-  busca.addEventListener("input", renderizarUsuarios);
+    // ==========================================
+    // FILTROS
+    // ==========================================
 
-  filtroTipo.addEventListener("change", renderizarUsuarios);
+    busca.addEventListener("input", renderizarUsuarios);
 
-  filtroStatus.addEventListener("change", renderizarUsuarios);
+    filtroTipo.addEventListener("change", renderizarUsuarios);
 
-  renderizarUsuarios();
+    filtroStatus.addEventListener("change", renderizarUsuarios);
+
+
+    // ==========================================
+    // INICIALIZA
+    // ==========================================
+
+    carregarUsuarios();
+
 });
