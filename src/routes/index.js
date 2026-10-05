@@ -501,7 +501,7 @@ r.get("/documentos/:id/arquivo", autenticar, (req, res) => {
   res.type(d.mime);
   res.set(
     "Content-Disposition",
-    'attachment; filename="documento-' + d.id + path.extname(d.arquivo) + '"',
+    'inline; filename="documento-' + d.id + path.extname(d.arquivo) + '"',
   );
   res.sendFile(path.join(uploadDir, d.arquivo));
 });
