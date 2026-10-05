@@ -1787,3 +1787,233 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+// ==========================================
+// DOCUMENTOS - UPLOAD E LISTAGEM
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const docForm = document.getElementById("docForm");
+  const docFile = document.getElementById("docFile");
+  const docMsg = document.getElementById("docMsg");
+  const documentsTable = document.getElementById("documentsTable");
+
+  if (!docForm || !docFile || !documentsTable) return;
+
+  const token = () => sessionStorage.getItem("techcampus_token");
+
+  function escapeHtml(valor) {
+    return String(valor ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function formatarData(data) {
+    if (!data) return "-";
+    const valor = new Date(data.replace(" ", "T") + (data.endsWith("Z") ? "" : "Z"));
+    if (Number.isNaN(valor.getTime())) return data;
+    return valor.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  function nomeTipo(mime) {
+    if (mime === "application/pdf") return "PDF";
+    if (mime === "image/png") return "PNG";
+    if (mime === "image/jpeg") return "JPG";
+    return "Arquivo";
+  }
+
+  function statusInfo(status) {
+    const mapa = {
+      pendente: { texto: "Em análise", classe: "bg-warning text-dark" },
+      aprovado: { texto: "Aprovado", classe: "bg-success" },
+      rejeitado: { texto: "Rejeitado", classe: "bg-danger" }
+    };
+    return mapa[status] || { texto: status || "Em análise", classe: "bg-secondary" };
+  }
+
+  async function carregarDocumentos() {
+    const authToken = token();
+
+    if (!authToken) return;
+
+    try {
+      const resposta = await fetch("/api/documentos", {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+      });
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(dados.erro || "Não foi possível carregar os documentos.");
+      }
+
+      if (!Array.isArray(dados) || dados.length === 0) {
+        documentsTable.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty">
+              Nenhum documento enviado.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      documentsTable.innerHTML = dados.map((documento) => {
+        const status = statusInfo(documento.status);
+        const url = `/api/documentos/${documento.id}/arquivo`;
+
+        return `
+          <tr>
+            <td>
+              <a
+                href="${url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-white text-decoration-none fw-semibold"
+                title="Abrir documento"
+              >
+                <i class="bi bi-file-earmark-text me-2 text-danger"></i>
+                ${escapeHtml(documento.nome)}
+              </a>
+            </td>
+
+            <td>
+              <span class="badge bg-secondary">
+                ${nomeTipo(documento.mime)}
+              </span>
+            </td>
+
+            <td>
+              ${formatarData(documento.criado_em)}
+            </td>
+
+            <td>
+              <span class="badge ${status.classe}">
+                ${status.texto}
+              </span>
+            </td>
+
+            <td>
+              <a
+                href="${url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-sm btn-outline-light"
+                title="Visualizar documento"
+              >
+                <i class="bi bi-eye"></i>
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+    } catch (erro) {
+      console.error("Erro ao carregar documentos:", erro);
+
+      documentsTable.innerHTML = `
+        <tr>
+          <td colspan="5" class="text-center text-danger py-4">
+            ${escapeHtml(erro.message)}
+          </td>
+        </tr>
+      `;
+    }
+  }
+
+  docForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const arquivo = docFile.files[0];
+
+    if (!arquivo) {
+      docMsg.textContent = "Selecione um arquivo.";
+      docMsg.className = "text-danger mt-2";
+      return;
+    }
+
+    const tiposPermitidos = [
+      "application/pdf",
+      "image/jpeg",
+      "image/png"
+    ];
+
+    if (!tiposPermitidos.includes(arquivo.type)) {
+      docMsg.textContent = "Formato inválido. Envie PDF, JPG ou PNG.";
+      docMsg.className = "text-danger mt-2";
+      return;
+    }
+
+    if (arquivo.size > 10 * 1024 * 1024) {
+      docMsg.textContent = "O arquivo não pode ultrapassar 10 MB.";
+      docMsg.className = "text-danger mt-2";
+      return;
+    }
+
+    const authToken = token();
+    if (!authToken) {
+      docMsg.textContent = "Sua sessão expirou. Faça login novamente.";
+      docMsg.className = "text-danger mt-2";
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("arquivo", arquivo);
+
+    const botao = docForm.querySelector('button[type="submit"]');
+    const textoOriginal = botao ? botao.textContent : "";
+
+    try {
+      if (botao) {
+        botao.disabled = true;
+        botao.textContent = "Enviando...";
+      }
+
+      docMsg.textContent = "";
+
+      const resposta = await fetch("/api/documentos", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        },
+        body: formData
+      });
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(dados.erro || "Erro ao enviar documento.");
+      }
+
+      docMsg.textContent = "Documento enviado com sucesso.";
+      docMsg.className = "text-success mt-2";
+
+      docForm.reset();
+      await carregarDocumentos();
+
+    } catch (erro) {
+      console.error("Erro ao enviar documento:", erro);
+      docMsg.textContent = erro.message || "Erro ao enviar documento.";
+      docMsg.className = "text-danger mt-2";
+
+    } finally {
+      if (botao) {
+        botao.disabled = false;
+        botao.textContent = textoOriginal;
+      }
+    }
+  });
+
+  carregarDocumentos();
+});
