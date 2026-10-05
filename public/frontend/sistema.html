@@ -26,12 +26,14 @@
             <i class="bi bi-bell fs-5"></i>
             <span class="notification-badge"></span>
           </button>
+
           <div class="dropdown-menu dropdown-menu-end glass-panel p-3 text-white border-secondary"
             style="width: 300px; background-color: var(--bg-card);">
             <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
               <h6 class="mb-0 fw-bold">Notificações</h6>
               <span class="badge bg-danger">2 Novas</span>
             </div>
+
             <div class="d-flex flex-column gap-2 small">
               <a href="#" class="text-decoration-none text-light p-2 rounded bg-dark border border-secondary d-block">
                 <span class="fw-semibold text-danger">AAPM Avisos:</span> Rematrícula aberta para a temporada.</a>
@@ -53,6 +55,7 @@
               <small class="text-secondary" style="font-size: 0.75rem">Aluno SENAI</small>
             </div>
           </a>
+
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end text-small shadow"
             aria-labelledby="userDropdown">
             <li>
@@ -94,6 +97,7 @@
         <div class="card profile-card">
           <form id="perfilForm">
             <div class="row g-4">
+             
               <!-- FOTO -->
               <div class="col-lg-3">
                 <div class="profile-photo-section text-center">
@@ -112,9 +116,7 @@
 
               <!-- INFORMAÇÕES -->
               <div class="col-lg-9">
-
                 <div class="row g-3">
-
                   <!-- NOME -->
                   <div class="col-md-6">
                     <label for="nome" class="form-label"> Nome completo</label>
@@ -411,108 +413,123 @@
       </div>
     </section>
 
- <!------------------------------------------------------------------------------------------------------------------------------------------------->
-    <div class="layout-wrapper d-flex flex-column">
-      <!-- SIDEBAR -->
-      <aside class="sidebar" id="sidebar">
+
+    <!-- ========================================================= -->
+     <!-- LAYOUT WRAPPER -->
+<div class="layout-wrapper d-flex flex-column">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        
+        <!-- SIDEBAR TOP (BRAND & NAVIGATION) -->
         <div class="sidebar-top">
-          
-<div class="brand mb-4">
+            
+            <!-- BRAND LOGO -->
+            <div class="brand mb-4">
+                <!-- Logo para o modo escuro -->
+                <a href="#inicio" class="logo text-decoration-none">
+                    <img src="../landing/images/Logo TechCampus Horizontal.png" alt="TechCampus" class="img-fluid logo-dark" style="max-width: 220px">
+                </a>
+                <!-- Logo para o modo claro -->
+                <a href="#inicio" class="logo text-decoration-none">
+                    <img src="../landing/images/Logo_TechCampus__Modo_Dark.png" alt="TechCampus" class="img-fluid logo-light">
+                </a>
+            </div>
 
-  <!-- Logo para o modo escuro -->
-  <a href="#inicio" class="logo text-decoration-none">
-    <img src="../landing/images/Logo TechCampus Horizontal.png" alt="TechCampus" class="img-fluid logo-dark"style="max-width: 220px"
-    >
-  </a>
+            <!-- MENU ITEMS -->
+            <nav class="menu-navigation d-flex flex-column gap-1">
+                <!-- Início (Sem subtítulo) -->
+                <a href="#inicio" class="menu-item d-flex align-items-center gap-3 text-decoration-none text-white p-2 rounded">
+                    <img src="../landing/images/icon-inicio.svg" alt="Início" width="30" height="30" class="flex-shrink-0" />
+                    <span class="fw-bold fs-6">Início</span>
+                </a>
 
-  <!-- Logo para o modo claro -->
-  <a href="#inicio" class="logo text-decoration-none">
-    <img src="../landing/images/Logo_TechCampus__Modo_Dark.png" alt="TechCampus" class="img-fluid logo-light">
-  </a>
+                <!-- Documentação -->
+                <a href="#documento" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+                    <img src="../landing/images/icon-documento.svg" alt="Documentação" width="30" height="30" class="flex-shrink-0 mt-1" />
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-6">Documentação</span>
+                        <span class="text-white-50 small">Comprovante de pagamentos de uniformes</span>
+                    </div>
+                </a>
+
+                <!-- Pedidos de uniformes -->
+                <a href="#pedidos" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+                    <img src="../landing/images/icon-pedido-disponivel.svg" alt="Pedidos de uniformes" width="30" height="30" class="flex-shrink-0 mt-1" />
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-6">Pedidos disponiveis</span>
+                        <span class="text-white-50 small">Uniformes, jogos e mais</span>
+                    </div>
+                </a>
+
+                <!-- Avisos gerais -->
+                <a href="#avisos" class="menu-item d-flex align-items-start gap-2 text-decoration-none text-white p-2 rounded">
+                    <img src="../landing/images/icon_aviso.svg" alt="Avisos gerais" width="50" height="50" class="flex-shrink-0 mt-1" />
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-6">Avisos gerais</span>
+                        <span class="text-white-50 small">Fique por dentro das informações</span>
+                    </div>
+                </a>
+
+                <!-- Sobre a AAPM -->
+                <a href="#sobre" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+                    <img src="../landing/images/icon_sobre.svg" alt="Sobre a AAPM" width="30" height="30" class="flex-shrink-0 mt-1" />
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-6">Sobre a AAPM</span>
+                        <span class="text-white-50 small">Quem somos</span>
+                    </div>
+                </a>
+
+                <!-- Temporada de Formatura -->
+                <a href="#formatura" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+                    <img src="../landing/images/icon_formatura.svg" alt="Temporada de Formatura" width="30" height="30" class="flex-shrink-0 mt-1" />
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-6">Temporada de Formatura</span>
+                        <span class="text-white-50 small">Sua conquista merece celebração</span>
+                    </div>
+                </a>
+
+                <!-- Ajuda -->
+                <a href="#ajuda" class="menu-item d-flex align-items-start gap-3 text-white text-decoration-none p-2 rounded">
+                    <img src="../landing/images/icon_ajuda.svg" alt="Ajuda" width="30" height="30" class="flex-shrink-0 mt-1" />
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-6">Ajuda</span>
+                        <span class="text-white-50 small">Dúvidas frequentes</span>
+                    </div>
+                </a>
+
+                <hr class="text-white-50 my-2">
+
+                <!-- Usuários -->
+                <a href="#usuarios" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
+                    <img src="../landing/images/icon_pessoas.svg" alt="Usuário" width="40" height="40" class="flex-shrink-0 mt-1" />
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-6">Usuários</span>
+                        <span class="text-white-50 small">Gerencie perfis de usuários</span>
+                    </div>
+                </a>
+            </nav>
+
+        </div>
+
+        <!-- SIDEBAR BOTTOM (LOGOUT) -->
+        <div class="sidebar-bottom pt-3 mt-auto">
+            <a href="../landing/index.html" class="text-decoration-none">
+                <button id="loginBtn" class="btn w-100 d-flex align-items-center justify-content-center gap-2 text-white border-secondary">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span>Sair</span>
+                </button>
+            </a>
+        </div>
+
+    </aside>
+
 </div>
 
-      <nav class="nav-menu d-flex flex-column gap-3">
-  
-  <!-- Início (Sem subtítulo) -->
-  <a href="#inicio" class="menu-item d-flex align-items-center gap-3 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon-inicio.svg" alt="Início" width="30" height="30" class="flex-shrink-0" />
-    <span class="fw-bold fs-6">Início</span>
-  </a>
+    <!-- ========================================================= -->
+     
 
-  <!-- Documentação -->
-  <a href="#documento" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon-documento.svg" alt="Documentação" width="30" height="30" class="flex-shrink-0 mt-1" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold fs-6">Documentação</span>
-      <span class="text-white-50 small">Comprovante de pagamentos de uniformes</span>
-    </div>
-  </a>
-
-  <!-- Pedidos de uniformes -->
-  <a href="#pedidos" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon-pedido-disponivel.svg" alt="Pedidos de uniformes" width="30" height="30" class="flex-shrink-0 mt-1" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold fs-6">Pedidos disponiveis</span>
-      <span class="text-white-50 small">Uniformes, jogos e mais</span>
-    </div>
-  </a>
-
-  <!-- Avisos gerais -->
- <a href="#avisos" class="menu-item d-flex align-items-start gap-2 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon_aviso.svg" alt="Avisos gerais" width="50" height="50" class="flex-shrink-0 mt-1" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold fs-6">Avisos gerais</span>
-      <span class="text-white-50 small">Fique por dentro das informações</span>
-    </div>
-  </a>
-
-  <!-- Sobre a AAPM -->
-  <a href="#sobre" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon_sobre.svg" alt="Sobre a AAPM" width="30" height="30" class="flex-shrink-0 mt-1" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold fs-6">Sobre a AAPM</span>
-      <span class="text-white-50 small">Quem somos</span>
-    </div>
-  </a>
-
-  <a href="#formatura" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon_formatura.svg" alt="Temporada de Formatura" width="30" height="30" class="flex-shrink-0 mt-1" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold fs-6">Temporada de Formatura</span>
-      <span class="text-white-50 small">Sua conquista merece celebração</span>
-    </div>
-  </a>
-
-  <!-- Ajuda -->
-  <a href="#ajuda" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon_ajuda.svg" alt="Ajuda" width="30" height="30" class="flex-shrink-0 mt-1" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold fs-6">Ajuda</span>
-      <span class="text-white-50 small">Dúvidas frequentes</span>
-    </div>
-  </a>
-  <hr>
-
-  <!-- Usuários -->
-  <a href="#usuarios" class="menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded">
-    <img src="../landing/images/icon_pessoas.svg" alt="Usuário" width="40" height="40" class="flex-shrink-0 mt-1" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold fs-6">Usuários</span>
-      <span class="text-white-50 small">Gerencie perfis de usuários</span>
-    </div>
-  </a>
-
-</nav>
-        <div class="sidebar-bottom pt-3">
-          <a href="../landing/index.html">
-            <button id="loginBtn"
-              class="btn w-100 d-flex align-items-center justify-content-center gap-2 text-white border-secondary">
-              <i class="bi bi-box-arrow-in-right"></i>
-              <span>Sair</span>
-            </button>
-          </a>
-        </div>
-      </aside>
+ 
 
       <!-- CONTEÚDO PRINCIPAL (ÁREA DAS TELAS) -->
       <main class="main-content">
@@ -801,16 +818,14 @@
            <div class="container-preco">
             <span class="preco-de">De R$ 39,99</span>
             <strong class="preco-por">Por R$ 24,99</strong>
-            <span class="badge-desconto"> Economize 37.5%
-            </span>
+            <span class="badge-desconto">Economize 37.5%</span>
            </div>
-           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-            Comprar agora
-           </button>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">Comprar agora</button>
           </div>
          </div>
         </div>
        </div>
+
        <!-- ============================= -->
        <!-- PRODUTO 2 - JOGOS -->
        <!-- ============================= -->
@@ -820,31 +835,21 @@
           <img alt="Caixa de Bolinhas de Ping Pong" class="img-fluid" src="../landing/images/pingpong.png" style="max-height: 160px"/>
          </div>
          <div class="card-body d-flex flex-column p-0 text-start">
-          <h5 class="fw-bold mb-1">
-           Caixa de Bolinhas de Ping Pong
-          </h5>
-          <p class="text-secondary small mb-3">
-           Bolinhas para treinos e campeonatos internos.
-          </p>
+          <h5 class="fw-bold mb-1">Caixa de Bolinhas de Ping Pong</h5>
+          <p class="text-secondary small mb-3">Bolinhas para treinos e campeonatos internos.</p>
           <div class="mt-auto">
            <div class="container-preco">
-            <span class="preco-de">
-             De R$ 19,99
-            </span>
-            <strong class="preco-por">
-             Por R$ 9,99
+            <span class="preco-de">De R$ 19,99</span>
+            <strong class="preco-por">Por R$ 9,99
             </strong>
-            <span class="badge-desconto">
-             Economize 50%
-            </span>
+            <span class="badge-desconto">Economize 50%</span>
            </div>
-           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-            Comprar agora
-           </button>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">Comprar agora</button>
           </div>
          </div>
         </div>
        </div>
+
        <!-- ============================= -->
        <!-- PRODUTO 3 - ESPORTES -->
        <!-- ============================= -->
@@ -854,31 +859,20 @@
           <img alt="Bola de Futebol" class="img-fluid" src="../landing/images/boladefutebol.png" style="max-height: 160px"/>
          </div>
          <div class="card-body d-flex flex-column p-0 text-start">
-          <h5 class="fw-bold mb-1">
-           Bola de Futebol
-          </h5>
-          <p class="text-secondary small mb-3">
-           Bola oficial para jogos e treinamentos.
-          </p>
+          <h5 class="fw-bold mb-1">Bola de Futebol</h5>
+          <p class="text-secondary small mb-3">Bola oficial para jogos e treinamentos.</p>
           <div class="mt-auto">
            <div class="container-preco">
-            <span class="preco-de">
-             De R$ 66,99
-            </span>
-            <strong class="preco-por">
-             Por R$ 29,99
-            </strong>
-            <span class="badge-desconto">
-             Economize 55.23%
-            </span>
+            <span class="preco-de">De R$ 66,99</span>
+            <strong class="preco-por">Por R$ 29,99</strong>
+            <span class="badge-desconto">Economize 55.23%</span>
            </div>
-           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-            Comprar / Reservar
-           </button>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">Comprar / Reservar</button>
           </div>
          </div>
         </div>
        </div>
+
        <!-- ============================= -->
        <!-- PRODUTO 4 - ESPORTES -->
        <!-- ============================= -->
@@ -889,26 +883,16 @@
          </div>
          <div class="card-body d-flex flex-column p-0 text-start">
           <h5 class="fw-bold mb-1">
-           Bola de V&ocirc;lei
-          </h5>
+           Bola de V&ocirc;lei</h5>
           <p class="text-secondary small mb-3">
-           Bola para jogos e atividades esportivas.
-          </p>
+           Bola para jogos e atividades esportivas.</p>
           <div class="mt-auto">
            <div class="container-preco">
-            <span class="preco-de">
-             De R$ 66,99
-            </span>
-            <strong class="preco-por">
-             Por R$ 29,99
-            </strong>
-            <span class="badge-desconto">
-             Economize 55.23%
-            </span>
+            <span class="preco-de">De R$ 66,99</span>
+            <strong class="preco-por">Por R$ 29,99</strong>
+            <span class="badge-desconto">Economize 55.23%</span>
            </div>
-           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">
-            Comprar / Reservar
-           </button>
+           <button class="btn btn-outline-danger text-white w-100 mt-3" type="button">Comprar / Reservar</button>
           </div>
          </div>
         </div>
@@ -1754,11 +1738,8 @@
             </p>
 
           </div>
-
         </div>
-
       </div>
-
     </div>
 
 
@@ -1818,52 +1799,29 @@
 
             </div>
           </div>
-
           <hr class="border-secondary my-4">
 
 
           <div>
-
-            <span class="text-secondary small">
-              DESCRIÇÃO
-            </span>
-
-            <p
-              id="modalAvisoDescricao"
-              class="text-light mt-2 mb-0">
-
-              Participe da Semana de Integração 2026.
-              Serão realizadas atividades para integração
-              entre os alunos.
-
+            <span class="text-secondary small"> DESCRIÇÃO</span>
+            <p id="modalAvisoDescricao" class="text-light mt-2 mb-0"> Participe da Semana de Integração 2026. Serão realizadas atividades para integração entre os alunos.
             </p>
-
           </div>
-
         </div>
 
 
         <div class="modal-footer border-secondary">
-
           <button
             type="button"
             class="btn btn-outline-secondary"
             data-bs-dismiss="modal">
-
             Fechar
-
           </button>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </section>
-
 
        
 
@@ -2029,7 +1987,7 @@
         <h3 class="fw-bold mt-1 mb-1">A AAPM também é feita por você.</h3>
         <p class="mb-0"> Participe das ações e acompanhe as novidades da associação.</p>
       </div>
-      <a href="#avisos" class="btn btn-light fw-semibold px-4"> Ver avisos <i class="bi bi-arrow-right ms-2"></i> </a>
+      <a href="https://forms.gle/Sz4J6s5VqGmnvJQu6" class="btn btn-light fw-semibold px-4"> Seja Voluntário <i class="bi bi-arrow-right ms-2"></i> </a>
     </div>
   </div>
 </section>
@@ -2160,8 +2118,7 @@
           </h6>
 
           <small
-            class="text-secondary d-block"
-            style="font-size: 0.75rem"
+            class="text-secondary d-block" style="font-size: 0.75rem"
           >
             São Pedro - SP
           </small>
@@ -2193,9 +2150,7 @@
         />
 
         <div class="p-2 px-3 bg-dark-card">
-          <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
-            Sítio Paraíso Verde
-          </h6>
+          <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem"> Sítio Paraíso Verde</h6>
 
           <small
             class="text-secondary d-block"
@@ -2224,16 +2179,10 @@
         data-site="https://www.hopihari.com.br/"
       >
 
-        <img
-          src="../landing/images/hopihari.jpg"
-          alt="Hopi Hari"
-          class="img-fluid w-100 destino-img"
-        />
+        <img src="../landing/images/hopihari.jpg" alt="Hopi Hari" class="img-fluid w-100 destino-img"/>
 
         <div class="p-2 px-3 bg-dark-card">
-          <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem">
-            Hopi Hari
-          </h6>
+          <h6 class="fw-bold mb-0 text-truncate" style="font-size: 0.9rem"> Hopi Hari </h6>
 
           <small
             class="text-secondary d-block"
@@ -2334,57 +2283,28 @@
         <div class="p-4">
 
           <!-- NOME -->
-          <h3
-            id="modalDestinoNome"
-            class="fw-bold mb-2"
-          ></h3>
+          <h3 id="modalDestinoNome" class="fw-bold mb-2"></h3>
 
           <!-- ENDEREÇO -->
           <div class="d-flex align-items-start gap-2 mb-3">
-
             <i class="bi bi-geo-alt-fill text-danger fs-5"></i>
-
-            <span
-              id="modalDestinoEndereco"
-              class="text-secondary"
-            ></span>
-
+            <span id="modalDestinoEndereco" class="text-secondary"></span>
           </div>
 
-
           <!-- DESCRIÇÃO -->
-          <h6 class="fw-bold mb-2">
-            Sobre o local
-          </h6>
-
-          <p
-            id="modalDestinoDescricao"
-            class="text-secondary lh-base mb-4"
-          ></p>
-
+          <h6 class="fw-bold mb-2"> Sobre o local </h6>
+          <p id="modalDestinoDescricao" class="text-secondary lh-base mb-4" ></p>
 
           <!-- SAIBA MAIS -->
-          <a
-            id="modalDestinoSite"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-danger fw-semibold"
-          >
+          <a id="modalDestinoSite" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-danger fw-semibold">
             <i class="bi bi-box-arrow-up-right me-2"></i>
             Saiba mais
           </a>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-</div>
-
-            
+</div>         
 
             <!-- AVISO IMPORTANTE NO RODAPÉ -->
             <div class="aviso-importante p-3 rounded-3 d-flex align-items-center gap-3 text-start mt-4">
@@ -2393,11 +2313,7 @@
               </div>
               <div>
                 <span class="fw-bold text-white d-block small">Importante</span>
-                <p class="text-secondary small mb-0" style="font-size: 0.8rem">
-                  O bate-volta acontece apenas uma vez ao término do curso e é
-                  exclusivo para alunos que concluírem todas as etapas e
-                  estiverem em dia com o programa.
-                </p>
+                <p class="text-secondary small mb-0" style="font-size: 0.8rem"> O bate-volta acontece apenas uma vez ao término do curso e é exclusivo para alunos que concluírem todas as etapas e estiverem em dia com o programa. </p>
               </div>
             </div>
           </div>
@@ -2413,12 +2329,9 @@
               class="help-hero p-4 p-md-5 rounded-3 mb-4 text-center text-md-start border border-secondary position-relative overflow-hidden">
               <div class="row align-items-center">
                 <div class="col-lg-7">
-                  <span class="text-uppercase fw-bold text-danger small mb-1 d-block tracking-wide">Central de Suporte
-                    TechCampus</span>
-                  <h2 class="display-6 fw-bold text-white mb-2">Como podemos <span class="text-danger">ajudar
-                      você?</span></h2>
-                  <p class="text-secondary small mb-4">Tire suas dúvidas sobre documentos, pagamentos, aplicativo e a
-                    temporada de formatura.</p>
+                  <span class="text-uppercase fw-bold text-danger small mb-1 d-block tracking-wide">Central de Suporte TechCampus</span>
+                  <h2 class="display-6 fw-bold text-white mb-2">Como podemos <span class="text-danger">ajudar você?</span></h2>
+                  <p class="text-secondary small mb-4">Tire suas dúvidas sobre documentos, pagamentos, aplicativo e a temporada de formatura.</p>
 
                   <!-- Barra de Pesquisa -->
                   <div class="position-relative max-w-500">
@@ -2582,7 +2495,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
 
                 <!-- FORMULÁRIO DE ABRIR CHAMADO / DUVIDA -->
@@ -2628,8 +2540,7 @@
                 <div
                   class="bg-dark p-4 rounded-3 border border-secondary h-100 d-flex flex-column justify-content-between">
                   <div>
-                    <h5 class="fw-bold mb-3 text-white"><i class="bi bi-envelope-open text-danger me-2"></i>Atendimento
-                      Direto</h5>
+                    <h5 class="fw-bold mb-3 text-white"><i class="bi bi-envelope-open text-danger me-2"></i>Atendimento Direto</h5>
                     <p class="text-secondary small mb-4">Escolha o melhor canal de contato para falar conosco:</p>
 
                     <!-- Canal WhatsApp -->
@@ -2669,8 +2580,7 @@
                       </div>
                       <div>
                         <span class="fw-bold d-block text-white small">Atendimento Presencial</span>
-                        <small class="text-secondary d-block" style="font-size: 0.75rem;">Sala AAPM - Bloco A
-                          (SENAI)</small>
+                        <small class="text-secondary d-block" style="font-size: 0.75rem;">Sala AAPM - Bloco A (SENAI)</small>
                       </div>
                     </div>
                   </div>
@@ -2680,33 +2590,20 @@
                     style="background: rgba(206, 23, 39, 0.05);">
                     <i class="bi bi-shield-heart text-danger fs-2 mb-1 d-block"></i>
                     <span class="fw-bold text-white d-block small">AAPM SENAI</span>
-                    <small class="text-secondary d-block" style="font-size: 0.7rem;">Sua voz e representatividade na
-                      escola.</small>
+                    <small class="text-secondary d-block" style="font-size: 0.7rem;">Sua voz e representatividade na escola.</small>
                   </div>
                 </div>
               </div>
-            </div>
-      
+            </div>      
     </div>
   </section>
-
-
-  
-
-
-
 
 <!-- =====================================================
      8. TELA: USUÁRIOS
      Acesso exclusivo ao Coordenador
 ====================================================== -->
 
-<section
-  id="usuarios"
-  class="page-section"
-
->
-
+<section id="usuarios" class="page-section">
   <div class="container-fluid">
 
     <!-- =================================================
@@ -2714,27 +2611,18 @@
     ================================================== -->
 
     <div class="section-header mb-4">
-
       <div>
         <h2 class="fw-bold mb-1">
           <i class="bi bi-people-fill"></i>
           Gerenciamento de Usuários
         </h2>
-
-        <p class="text-muted mb-0">
-          Gerencie os cadastros de alunos e professores.
-        </p>
+        <p class="text-muted mb-0"> Gerencie os cadastros dos alunos.</p>
       </div>
 
-      <button
-        type="button"
-        class="btn btn-primary"
-        id="btnNovoUsuario"
-      >
+      <button type="button" class="btn btn-primary" id="btnNovoUsuario">
         <i class="bi bi-person-plus-fill"></i>
         Novo cadastro
       </button>
-
     </div>
 
 
@@ -2746,74 +2634,34 @@
 
       <!-- Total de alunos -->
       <div class="col-12 col-md-4">
-
         <div class="card usuario-resumo-card h-100">
-
           <div class="card-body">
-
             <div class="usuario-resumo-icon aluno">
               <i class="bi bi-mortarboard-fill"></i>
             </div>
-
             <div>
               <span>Total de alunos</span>
               <strong id="totalAlunos">0</strong>
             </div>
-
           </div>
-
         </div>
-
-      </div>
-
-
-      <!-- Total de professores -->
-      <div class="col-12 col-md-4">
-
-        <div class="card usuario-resumo-card h-100">
-
-          <div class="card-body">
-
-            <div class="usuario-resumo-icon professor">
-              <i class="bi bi-person-workspace"></i>
-            </div>
-
-            <div>
-              <span>Total de professores</span>
-              <strong id="totalProfessores">0</strong>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
+     </div>
 
       <!-- Usuários ativos -->
       <div class="col-12 col-md-4">
-
         <div class="card usuario-resumo-card h-100">
-
           <div class="card-body">
-
             <div class="usuario-resumo-icon ativo">
               <i class="bi bi-person-check-fill"></i>
             </div>
-
             <div>
               <span>Usuários ativos</span>
               <strong id="totalAtivos">0</strong>
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
 
     <!-- =================================================
          CARD PRINCIPAL - USUÁRIOS
@@ -2829,82 +2677,42 @@
 
         <!-- Título -->
         <div>
-
-          <h5 class="mb-1">
-            Contas cadastradas
-          </h5>
-
-          <small class="text-muted">
-            Alunos e professores do sistema
-          </small>
-
+          <h5 class="mb-1"> Contas cadastradas </h5>
+          <small class="text-muted"> Alunos do sistema </small>
         </div>
-
 
         <!-- Filtros -->
         <div class="usuarios-filtros">
 
           <!-- Pesquisa -->
           <div class="input-group">
-
             <span class="input-group-text">
               <i class="bi bi-search"></i>
             </span>
-
             <input
-              type="search"
-              id="buscarUsuario"
-              class="form-control"
-              placeholder="Pesquisar usuário..."
-              autocomplete="off"
-            >
-
-          </div>
-
+              type="search" id="buscarUsuario" class="form-control" placeholder="Pesquisar usuário..." autocomplete="off">
+           </div>
 
           <!-- Filtro por perfil -->
-          <select
-            id="filtroTipoUsuario"
-            class="form-select"
-          >
-
-            <option value="todos">
-              Todos
-            </option>
-
+          <select id="filtroTipoUsuario" class="form-select" >            
             <option value="aluno">
               Alunos
             </option>
-
-            <option value="professor">
-              Professores
-            </option>
-
-          </select>
-
+       </select>
 
           <!-- Filtro por status -->
-          <select
-            id="filtroStatusUsuario"
-            class="form-select"
-          >
-
+          <select id="filtroStatusUsuario" class="form-select">
             <option value="todos">
               Todos os status
             </option>
-
             <option value="ativo">
               Ativos
             </option>
-
             <option value="inativo">
               Inativos
             </option>
-
           </select>
-
         </div>
-
       </div>
 
 
@@ -2913,41 +2721,29 @@
       ================================================== -->
 
       <div class="table-responsive">
-
         <table class="table usuarios-table align-middle mb-0">
-
           <thead>
-
             <tr>
-
               <th>
                 Nome
               </th>
-
               <th>
                 Matrícula
               </th>
-
               <th>
                 E-mail
               </th>
-
               <th>
                 Perfil
               </th>
-
               <th>
                 Status
               </th>
-
               <th class="text-end">
                 Ações
               </th>
-
             </tr>
-
           </thead>
-
 
           <tbody id="tabelaUsuarios">
             <!--
@@ -2955,9 +2751,7 @@
               dinamicamente pelo JavaScript.
             -->
           </tbody>
-
         </table>
-
       </div>
 
 
@@ -2966,27 +2760,13 @@
       ================================================== -->
 
       <div
-        id="usuariosVazio"
-        class="usuarios-vazio"
-        style="display: none;"
-      >
-
+        id="usuariosVazio" class="usuarios-vazio" style="display: none;">
         <i class="bi bi-person-x"></i>
-
-        <h5>
-          Nenhum usuário encontrado
-        </h5>
-
-        <p>
-          Não existem usuários correspondentes aos filtros.
-        </p>
-
+        <h5> Nenhum usuário encontrado</h5>
+        <p>Não existem usuários correspondentes aos filtros.</p>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
 
@@ -2994,48 +2774,21 @@
      MODAL - CADASTRO / EDIÇÃO DE USUÁRIO
 ====================================================== -->
 
-<div
-  class="modal fade"
-  id="modalUsuario"
-  tabindex="-1"
-  aria-labelledby="tituloModalUsuario"
-  aria-hidden="true"
->
-
+<div  class="modal fade"  id="modalUsuario"  tabindex="-1" aria-labelledby="tituloModalUsuario"  aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
-
     <div class="modal-content">
-
 
       <!-- =================================================
            CABEÇALHO DO MODAL
       ================================================== -->
 
       <div class="modal-header">
-
         <div>
-
-          <h5
-            class="modal-title"
-            id="tituloModalUsuario"
-          >
-            Novo cadastro
-          </h5>
-
-          <small class="text-muted">
-            Preencha os dados do usuário.
-          </small>
-
+          <h5 class="modal-title" id="tituloModalUsuario" > Novo cadastro</h5>
+          <small class="text-muted"> Preencha os dados do usuário. </small>
         </div>
 
-
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Fechar"
-        ></button>
-
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
       </div>
 
 
@@ -3044,16 +2797,9 @@
       ================================================== -->
 
       <form id="formUsuario">
-
         <div class="modal-body">
-
           <!-- ID usado na edição -->
-          <input
-            type="hidden"
-            id="usuarioId"
-          >
-
-
+          <input type="hidden" id="usuarioId">
           <div class="row g-3">
 
             <!-- =================================================
@@ -3061,23 +2807,8 @@
             ================================================== -->
 
             <div class="col-12 col-md-8">
-
-              <label
-                for="usuarioNome"
-                class="form-label"
-              >
-                Nome completo
-              </label>
-
-              <input
-                type="text"
-                id="usuarioNome"
-                class="form-control"
-                placeholder="Digite o nome completo"
-                autocomplete="name"
-                required
-              >
-
+              <label for="usuarioNome" class="form-label">Nome completo</label>
+              <input type="text" id="usuarioNome" class="form-control" placeholder="Digite o nome completo" autocomplete="name" required >
             </div>
 
 
@@ -3086,34 +2817,15 @@
             ================================================== -->
 
             <div class="col-12 col-md-4">
-
-              <label
-                for="usuarioTipo"
-                class="form-label"
-              >
-                Perfil
-              </label>
-
-              <select
-                id="usuarioTipo"
-                class="form-select"
-                required
-              >
-
+              <label for="usuarioTipo" class="form-label"> Perfil</label>
+              <select id="usuarioTipo" class="form-select" required>
                 <option value="">
                   Selecione
                 </option>
-
                 <option value="aluno">
                   Aluno
                 </option>
-
-                <option value="professor">
-                  Professor
-                </option>
-
               </select>
-
             </div>
 
 
@@ -3122,48 +2834,20 @@
             ================================================== -->
 
             <div class="col-12 col-md-6">
-
-              <label
-                for="usuarioMatricula"
-                class="form-label"
-              >
-                Matrícula
+              <label for="usuarioMatricula"class="form-label"> Matrícula
               </label>
-
-              <input
-                type="text"
-                id="usuarioMatricula"
-                class="form-control"
-                placeholder="Ex.: 202600123"
-                autocomplete="off"
-              >
-
+              <input type="text" id="usuarioMatricula" class="form-control" placeholder="Ex.: 202600123" autocomplete="off" >
             </div>
-
 
             <!-- =================================================
                  E-MAIL
             ================================================== -->
 
             <div class="col-12 col-md-6">
-
-              <label
-                for="usuarioEmail"
-                class="form-label"
-              >
-                E-mail
+              <label for="usuarioEmail" class="form-label">E-mail
               </label>
-
-              <input
-                type="email"
-                id="usuarioEmail"
-                class="form-control"
-                placeholder="usuario@escola.com"
-                autocomplete="email"
-                required
-              >
-
-            </div>
+              <input type="email" id="usuarioEmail" class="form-control" placeholder="usuario@escola.com" autocomplete="email" required >
+             </div>
 
 
             <!-- =================================================
@@ -3171,97 +2855,47 @@
             ================================================== -->
 
             <div class="col-12 col-md-6">
-
-              <label
-                for="usuarioSenha"
-                class="form-label"
-              >
-                Senha
-              </label>
-
-              <input
-                type="password"
-                id="usuarioSenha"
-                class="form-control"
-                placeholder="Digite a senha"
-                autocomplete="new-password"
-              >
-
-              <div class="form-text">
-                Ao editar, deixe vazio para manter a senha atual.
+              <label for="usuarioSenha" class="form-label"> Senha </label>
+              <input type="password" id="usuarioSenha" class="form-control" placeholder="Digite a senha" autocomplete="new-password">
+              <div class="form-text"> Ao editar, deixe vazio para manter a senha atual.
               </div>
-
             </div>
-
 
             <!-- =================================================
                  STATUS
             ================================================== -->
 
             <div class="col-12 col-md-6">
-
-              <label
-                for="usuarioStatus"
-                class="form-label"
-              >
-                Status
-              </label>
-
-              <select
-                id="usuarioStatus"
-                class="form-select"
-              >
-
+              <label for="usuarioStatus" class="form-label"> Status </label>
+              <select id="usuarioStatus" class="form-select">
                 <option value="ativo">
                   Ativo
                 </option>
-
                 <option value="inativo">
                   Inativo
                 </option>
-
               </select>
-
             </div>
-
           </div>
-
         </div>
-
 
         <!-- =================================================
              RODAPÉ DO MODAL
         ================================================== -->
-
         <div class="modal-footer">
-
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancelar
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancelar
           </button>
-
-          <button
-            type="submit"
-            class="btn btn-primary"
-          >
+          <button type="submit" class="btn btn-primary">
             <i class="bi bi-check-lg"></i>
             Salvar cadastro
           </button>
-
         </div>
-
       </form>
-
     </div>
-
   </div>
-
 </div>
+</main> 
 
-</main>
   <!-- FOOTER -->
   <footer class="techcampus-footer">
     <div class="container-fluid px-4 px-lg-5 py-4">
@@ -3272,20 +2906,13 @@
           <a href="#inicio" class="footer-brand">
             <img src="../landing/images/Logo TechCampus Horizontal.png" alt="TechCampus" class="img-fluid" />
           </a>
-          <p class="footer-description mb-0">
-            Conectando você à AAPM com informação, benefícios e
-            oportunidades.
-          </p>
+          <p class="footer-description mb-0">Conectando você à AAPM com informação, benefícios e oportunidades.</p>
         </div>
 
         <!-- DESENVOLVEDORES -->
         <div class="col-lg-4 col-md-6 text-center">
-          <a href="https://gustavonunes7.github.io/COD_NEW_ERA/" class="footer-title mb-2" target="_blank">
-            Desenvolvido por COD NEW ERA
-          </a>
-          <p class="footer-year mb-0">
-            &copy; 2026 TechCampus. Todos os direitos reservados.
-          </p>
+          <a href="https://gustavonunes7.github.io/COD_NEW_ERA/" class="footer-title mb-2" target="_blank"> Desenvolvido por COD NEW ERA </a>
+          <p class="footer-year mb-0">&copy; 2026 TechCampus. Todos os direitos reservados.</p>
         </div>
 
         <!-- LINKS -->
@@ -3317,8 +2944,6 @@
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../landing/script.js"></script>
-  <script src="loja.js"></script>
   <script src="/frontend/tema.js" defer></script>
 </body>
-
 </html>
