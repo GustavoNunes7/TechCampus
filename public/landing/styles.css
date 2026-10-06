@@ -22,6 +22,8 @@ body {
   min-height: 100vh;
 }
 
+
+
 /* ==========================================
    TOPBAR SUPERIOR
 ========================================== */
@@ -526,102 +528,6 @@ body {
   }
 }
 
-/* Responsividade */
-@media (max-width: 991px) {
-  .layout-wrapper {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    min-width: 100%;
-    height: auto;
-    position: relative;
-  }
-
-  .hero-card {
-    padding: 30px 15px;
-  }
-
-  .carousel-container {
-    padding: 20px 15px;
-  }
-
-  .avisos-section {
-    padding: 20px 15px;
-  }
-}
-
-/* --- CONFIGURAÇÃO DA SIDEBAR FIXA COM TRANSIÇÃO --- */
-.sidebar {
-  position: fixed;
-  top: 56px; /* Ajuste isso baseado na altura da sua topbar (ex: 56px ou 60px) */
-  left: 0;
-  height: calc(100vh - 56px);
-  width: 260px; /* Altere para a largura real que você usou na sua sidebar */
-  z-index: 1030;
-  transition:
-    transform 0.3s ease,
-    cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* --- ESPAÇAMENTO PADRÃO DO CONTEÚDO PRINCIPAL --- */
-.main-content {
-  margin-left: 260px; /* Mesma largura da sidebar */
-  transition: margin-left 0.3s ease;
-  padding: 20px;
-}
-
-/* --- ESTADO FECHADO (Ativado pelo JavaScript) --- */
-.sidebar.fechado {
-  transform: translateX(
-    -100%
-  ); /* Joga a barra inteira para a esquerda fora da tela */
-}
-
-.main-content.expandido {
-  margin-left: 0; /* Ocupa a tela inteira quando a sidebar fecha */
-}
-
-/* --- RESPONSIVIDADE (Celulares e Tablets) --- */
-@media (max-width: 991.98px) {
-  .main-content {
-    margin-left: 0; /* Em telas menores o conteúdo já começa expandido */
-  }
-  .sidebar {
-    transform: translateX(-100%); /* E a sidebar começa fechada */
-  }
-  /* Inverte a lógica no mobile: quando remover o 'fechado', ela aparece sobrepondo o conteúdo */
-  .sidebar:not(.fechado) {
-    transform: translateX(0);
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
-  }
-}
-
-.sidebar {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 250px;
-  min-width: 250px;
-  height: calc(100vh - 60px);
-  z-index: 1030;
-
-  transition: transform 0.3s ease;
-}
-
-.sidebar.fechado {
-  transform: translateX(-100%);
-}
-
-.main-content {
-  margin-left: 250px;
-  transition: margin-left 0.3s ease;
-}
-
-.main-content.expandido {
-  margin-left: 0;
-}
 /* ==========================================
    FOOTER COMPACTO TECHCAMPUS
 ========================================== */
@@ -3797,3 +3703,188 @@ a {
 
 }
 
+/* =========================================================
+   TECHCAMPUS — LAYOUT PRINCIPAL DO SISTEMA
+   =========================================================
+   Regra única para TOPBAR + SIDEBAR + CONTEÚDO.
+   Evita os conflitos antigos de margin/padding/position.
+   ========================================================= */
+
+:root {
+  --topbar-height: 60px;
+  --sidebar-width: 250px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Topbar fixa no topo */
+#sistemaInicio .topbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--topbar-height);
+  min-height: var(--topbar-height);
+  z-index: 1040;
+}
+
+/* Área que contém a sidebar */
+#sistemaInicio .layout-wrapper {
+  width: 100%;
+  min-height: 0;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar fixa logo abaixo da topbar */
+#sistemaInicio .sidebar {
+  position: fixed !important;
+  top: var(--topbar-height);
+  left: 0;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: calc(100vh - var(--topbar-height));
+  margin: 0;
+  z-index: 1030;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: translateX(0);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Conteúdo: começa imediatamente abaixo da topbar.
+   NÃO existe padding/margin superior gigante. */
+#sistemaInicio .main-content {
+  position: relative;
+  width: calc(100% - var(--sidebar-width));
+  min-width: 0;
+  min-height: calc(100vh - var(--topbar-height));
+  margin: var(--topbar-height) 0 0 var(--sidebar-width) !important;
+  padding: 0 !important;
+  background: var(--bg-dark);
+  display: block;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* Todas as telas começam no topo da área útil */
+#sistemaInicio .main-content > section {
+  position: relative;
+  top: auto;
+  inset: auto;
+  width: 100%;
+  min-width: 0;
+  margin-top: 0 !important;
+  box-sizing: border-box;
+}
+
+/* A tela inicial não ganha espaço artificial */
+#sistemaInicio #inicio {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* As telas que possuem my-4 do Bootstrap mantêm apenas o espaçamento lateral/interno,
+   sem criar uma faixa preta gigante acima delas. */
+#sistemaInicio .main-content > section.my-4 {
+  margin-top: 0 !important;
+}
+
+/* Quando a sidebar é fechada pelo JavaScript */
+#sistemaInicio .sidebar.fechado {
+  transform: translateX(-100%);
+}
+
+#sistemaInicio .main-content.expandido {
+  width: 100%;
+  margin-left: 0 !important;
+}
+
+/* Esconder scrollbar da sidebar sem remover a rolagem */
+#sistemaInicio .sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+#sistemaInicio .sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#sistemaInicio .sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+}
+
+/* Rodapé acompanha a sidebar */
+#sistemaInicio .techcampus-footer {
+  margin-left: var(--sidebar-width);
+  transition: margin-left 0.3s ease;
+}
+
+body.sidebar-fechada #sistemaInicio .techcampus-footer {
+  margin-left: 0;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+  :root {
+    --sidebar-width: 250px;
+  }
+
+  #sistemaInicio .main-content {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-top: var(--topbar-height);
+  }
+
+  #sistemaInicio .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.35);
+  }
+
+  #sistemaInicio .sidebar:not(.fechado) {
+    transform: translateX(0);
+  }
+
+  #sistemaInicio .techcampus-footer {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --topbar-height: 58px;
+    --sidebar-width: min(250px, 88vw);
+  }
+
+  #sistemaInicio .topbar {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+
+    width: var(--sidebar-width);
+    height: calc(100vh - 60px);
+
+    overflow-y: auto;
+
+    transition:
+        transform 0.3s ease,
+        width 0.3s ease;
+
+    z-index: 1030;
+}

@@ -211,5 +211,60 @@ html[data-bs-theme="light"] .techcampus-footer :is(a,p,span,.footer-description,
 }
 
 
+/* =========================================================
+   TECHCAMPUS — SIDEBAR + TEMA CLARO
+========================================================= */
 
+:root {
+  --tc-sidebar-bg: #080a0d;
+  --tc-sidebar-text: #ffffff;
+  --tc-sidebar-border: #25282e;
+  --tc-sidebar-hover: #1d2229;
+}
 
+/* MODO ESCURO */
+html[data-bs-theme="dark"] .sidebar {
+  background: var(--tc-sidebar-bg);
+  border-right-color: var(--tc-sidebar-border);
+}
+
+html[data-bs-theme="dark"] .sidebar a {
+  color: var(--tc-sidebar-text);
+}
+
+/* MODO CLARO */
+html[data-bs-theme="light"] .sidebar {
+  background: #ffffff;
+  border-right: 1px solid #dee2e6;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.06);
+}
+
+html[data-bs-theme="light"] .sidebar a {
+  color: #212529;
+}
+
+html[data-bs-theme="light"] .sidebar a:hover {
+  background-color: #f1f3f5;
+  color: #a91f1f;
+}
+
+html[data-bs-theme="light"] .sidebar a.ativo {
+  background-color: #a91f1f;
+  color: #ffffff;
+}
+
+/* Ícones */
+html[data-bs-theme="light"] .sidebar a i {
+  color: inherit;
+}
+
+/* Texto secundário da sidebar */
+html[data-bs-theme="light"] .sidebar .text-secondary {
+  color: #6c757d !important;
+}
+
+/* Divisórias */
+html[data-bs-theme="light"] .sidebar hr {
+  border-color: #dee2e6;
+  opacity: 1;
+}
