@@ -23,29 +23,9 @@
     const d = new Date(String(s).replace(" ", "T") + "Z");
     return isNaN(d) ? "" : d.toLocaleString("pt-BR");
   };
-  const STATUS = {
-    pendente: "Pendente",
-    aprovado: "Aprovado",
-    rejeitado: "Rejeitado",
-    entregue: "Entregue",
-    cancelado: "Cancelado",
-  };
-  const PAG = {
-    pendente: "Aguardando",
-    pago: "Pago",
-    falhou: "Falhou",
-    estornado: "Estornado",
-  };
-  const COR = {
-    pendente: "warning",
-    aprovado: "success",
-    rejeitado: "danger",
-    entregue: "info",
-    cancelado: "secondary",
-    pago: "success",
-    falhou: "danger",
-    estornado: "secondary",
-  };
+  const STATUS = { pendente: "Pendente", aprovado: "Aprovado", rejeitado: "Rejeitado", entregue: "Entregue", cancelado: "Cancelado" };
+  const PAG = { pendente: "Aguardando", pago: "Pago", falhou: "Falhou", estornado: "Estornado" };
+  const COR = { pendente: "warning", aprovado: "success", rejeitado: "danger", entregue: "info", cancelado: "secondary", pago: "success", falhou: "danger", estornado: "secondary" };
 
   // Cria elementos com textContent (nunca innerHTML com dados vindos da API → sem XSS)
   const h = (tag, attrs = {}, ...kids) => {
@@ -55,31 +35,18 @@
       else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
       else if (v !== false && v != null) n.setAttribute(k, v === true ? "" : v);
     }
-    kids
-      .flat()
-      .forEach((c) =>
-        n.append(c instanceof Node ? c : document.createTextNode(c ?? "")),
-      );
+    kids.flat().forEach((c) => n.append(c instanceof Node ? c : document.createTextNode(c ?? "")));
     return n;
   };
-  const badge = (txt, cor) =>
-    h("span", { class: `badge text-bg-${cor || "secondary"}` }, txt);
+  const badge = (txt, cor) => h("span", { class: `badge text-bg-${cor || "secondary"}` }, txt);
 
   async function api(path, opts = {}) {
     const res = await fetch("/api" + path, {
       ...opts,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        ...(opts.headers || {}),
-      },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
     });
     let data = null;
-    try {
-      data = await res.json();
-    } catch {
-      /* 204 etc. */
-    }
+    try { data = await res.json(); } catch { /* 204 etc. */ }
     if (!res.ok) {
       if (res.status === 401) {
         sessionStorage.clear();
@@ -103,13 +70,7 @@
   let modalCompra, atual;
 
   function resetAtual() {
-    atual = {
-      produto: null,
-      pedido: null,
-      pagamento: null,
-      pago: false,
-      token: null,
-    };
+    atual = { produto: null, pedido: null, pagamento: null, pago: false };
   }
 
   function montarModalCompra() {
@@ -151,37 +112,9 @@
               <p class="small text-white-50 mb-0" id="cpNota"></p>
             </div>
             <div id="cpPasso3" hidden class="text-center py-3">
-  <i class="bi bi-check-circle-fill text-success display-4"></i>
-
-  <p class="mt-2 mb-3 fw-semibold" id="cpOk"></p>
-
-  <div id="cpTokenBox" class="p-4 rounded-3 border border-secondary bg-black">
-    <div class="small text-white-50 mb-2">
-      Seu código de retirada
-    </div>
-
-    <div
-      id="cpToken"
-      class="display-5 fw-bold text-info"
-      style="letter-spacing: 8px;"
-    >
-      ------
-    </div>
-
-    <div class="small text-white-50 mt-3">
-      Digite este código no dispositivo para liberar sua retirada.
-    </div>
-
-    <button
-      type="button"
-      class="btn btn-outline-light btn-sm mt-3"
-      id="cpCopiarToken"
-    >
-      <i class="bi bi-copy me-1"></i>
-      Copiar código
-    </button>
-  </div>
-</div>
+              <i class="bi bi-check-circle-fill text-success display-4"></i>
+              <p class="mt-2 mb-0" id="cpOk"></p>
+            </div>
             <div id="cpMsg" role="alert" class="small mt-3"></div>
           </div>
           <div class="modal-footer border-secondary" id="cpRodape"></div>
@@ -194,36 +127,14 @@
     el.addEventListener("hidden.bs.modal", async () => {
       // Fechou sem pagar: cancela para devolver o estoque reservado
       if (atual.pedido && !atual.pago) {
-        try {
-          await api(`/pedidos/${atual.pedido.id}/cancelar`, { method: "POST" });
-        } catch {
-          /* já tratado no servidor */
-        }
+        try { await api(`/pedidos/${atual.pedido.id}/cancelar`, { method: "POST" }); } catch { /* já tratado no servidor */ }
         carregarProdutos();
       }
       resetAtual();
     });
     document.getElementById("cpQtd").addEventListener("input", atualizarTotal);
     document.getElementById("cpCopiar").addEventListener("click", async () => {
-      document
-        .getElementById("cpCopiarToken")
-        .addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText($("cpToken").textContent);
-
-            setMsg($("cpMsg"), "Código de retirada copiado.", "success");
-          } catch {
-            setMsg($("cpMsg"), "Não foi possível copiar o código.", "danger");
-          }
-        });
-      try {
-        await navigator.clipboard.writeText(
-          document.getElementById("cpCodigo").value,
-        );
-        setMsg(document.getElementById("cpMsg"), "Código copiado.", "success");
-      } catch {
-        /* sem permissão */
-      }
+      try { await navigator.clipboard.writeText(document.getElementById("cpCodigo").value); setMsg(document.getElementById("cpMsg"), "Código copiado.", "success"); } catch { /* sem permissão */ }
     });
   }
 
@@ -242,107 +153,13 @@
   function passo(n) {
     [1, 2, 3].forEach((i) => ($("cpPasso" + i).hidden = i !== n));
   }
-  /* =====================================================
-   CARRINHO
-===================================================== */
-
-  let carrinho = [];
-  let modalCarrinho = null;
-
-  function salvarCarrinho() {
-    sessionStorage.setItem("techcampus_carrinho", JSON.stringify(carrinho));
-  }
-
-  function carregarCarrinho() {
-    try {
-      carrinho =
-        JSON.parse(sessionStorage.getItem("techcampus_carrinho")) || [];
-    } catch {
-      carrinho = [];
-    }
-  }
-
-  function quantidadeCarrinho() {
-    return carrinho.reduce((total, item) => total + item.quantidade, 0);
-  }
-
-  function totalCarrinho() {
-    return carrinho.reduce(
-      (total, item) => total + item.preco_centavos * item.quantidade,
-      0,
-    );
-  }
-
-  function adicionarCarrinho(produto, quantidade = 1) {
-    if (!produto || produto.estoque <= 0) {
-      return;
-    }
-
-    const existente = carrinho.find((item) => item.produto_id === produto.id);
-
-    if (existente) {
-      existente.quantidade = Math.min(
-        existente.quantidade + quantidade,
-        produto.estoque,
-      );
-    } else {
-      carrinho.push({
-        produto_id: produto.id,
-        nome: produto.nome,
-        imagem: produto.imagem || "",
-        preco_centavos: produto.preco_centavos,
-        estoque: produto.estoque,
-        quantidade,
-      });
-    }
-
-    salvarCarrinho();
-
-    atualizarBadgeCarrinho();
-
-    mostrarAvisoCarrinho(`${produto.nome} foi adicionado ao carrinho.`);
-  }
-
-  function removerCarrinho(produtoId) {
-    carrinho = carrinho.filter((item) => item.produto_id !== produtoId);
-
-    salvarCarrinho();
-
-    atualizarCarrinhoUI();
-  }
-
-  function alterarQuantidadeCarrinho(produtoId, novaQuantidade) {
-    const item = carrinho.find((item) => item.produto_id === produtoId);
-
-    if (!item) return;
-
-    novaQuantidade = Math.max(
-      1,
-      Math.min(Number(novaQuantidade), item.estoque),
-    );
-
-    item.quantidade = novaQuantidade;
-
-    salvarCarrinho();
-
-    atualizarCarrinhoUI();
-  }
-
-  function limparCarrinho() {
-    carrinho = [];
-
-    salvarCarrinho();
-
-    atualizarCarrinhoUI();
-  }
 
   function abrirCompra(p) {
     resetAtual();
     atual.produto = p;
     $("cpImg").src = p.imagem || "";
     $("cpNome").textContent = p.nome;
-    $("cpUnit").textContent =
-      `${brl(p.preco_centavos)} cada • ${p.estoque} em estoque`;
+    $("cpUnit").textContent = `${brl(p.preco_centavos)} cada • ${p.estoque} em estoque`;
     $("cpQtd").max = Math.min(100, p.estoque);
     $("cpQtd").value = 1;
     $("cpPix").checked = true;
@@ -350,25 +167,8 @@
     passo(1);
     atualizarTotal();
     rodape(
-      h(
-        "button",
-        {
-          class: "btn btn-outline-secondary",
-          type: "button",
-          "data-bs-dismiss": "modal",
-        },
-        "Cancelar",
-      ),
-      h(
-        "button",
-        {
-          class: "btn btn-danger",
-          type: "button",
-          id: "cpContinuar",
-          onclick: iniciarPagamento,
-        },
-        "Continuar para pagamento",
-      ),
+      h("button", { class: "btn btn-outline-secondary", type: "button", "data-bs-dismiss": "modal" }, "Cancelar"),
+      h("button", { class: "btn btn-danger", type: "button", id: "cpContinuar", onclick: iniciarPagamento }, "Continuar para pagamento"),
     );
     modalCompra.show();
   }
@@ -378,15 +178,11 @@
     btn.disabled = true;
     setMsg($("cpMsg"), "");
     try {
-      const metodo = document.querySelector(
-        'input[name="cpMetodo"]:checked',
-      ).value;
+      const metodo = document.querySelector('input[name="cpMetodo"]:checked').value;
       if (!atual.pedido)
         atual.pedido = await api("/pedidos", {
           method: "POST",
-          body: JSON.stringify({
-            itens: [{ produto_id: atual.produto.id, quantidade: quantidade() }],
-          }),
+          body: JSON.stringify({ itens: [{ produto_id: atual.produto.id, quantidade: quantidade() }] }),
         });
       atual.pagamento = await api(`/pedidos/${atual.pedido.id}/pagamento`, {
         method: "POST",
@@ -402,8 +198,7 @@
   function mostrarPagamento() {
     const pg = atual.pagamento;
     passo(2);
-    $("cpPedidoInfo").textContent =
-      `Pedido #${atual.pedido.id} • Total ${brl(pg.valor_centavos)}`;
+    $("cpPedidoInfo").textContent = `Pedido #${atual.pedido.id} • Total ${brl(pg.valor_centavos)}`;
     $("cpBlocoPix").hidden = pg.metodo !== "pix";
     $("cpCodigo").value = pg.codigo || "";
     $("cpNota").textContent =
@@ -411,440 +206,73 @@
         ? "Pague o Pix com o código acima. Seu pedido será analisado pelo gerente após a confirmação do pagamento."
         : "O pagamento com cartão será feito na tela segura do provedor de pagamento. Este site nunca recebe nem guarda dados do seu cartão.";
     rodape(
-      h(
-        "button",
-        {
-          class: "btn btn-outline-secondary",
-          type: "button",
-          onclick: cancelarPedido,
-        },
-        "Cancelar pedido",
-      ),
-      h(
-        "button",
-        {
-          class: "btn btn-danger",
-          type: "button",
-          id: "cpSimular",
-          onclick: simularPagamento,
-        },
-        "Simular pagamento (modo teste)",
-      ),
+      h("button", { class: "btn btn-outline-secondary", type: "button", onclick: cancelarPedido }, "Cancelar pedido"),
+      h("button", { class: "btn btn-danger", type: "button", id: "cpSimular", onclick: simularPagamento }, "Simular pagamento (modo teste)"),
     );
   }
 
-  function atualizarCarrinhoUI() {
-    const container = $("carrinhoItens");
-    const vazio = $("carrinhoVazio");
-    const resumo = $("carrinhoResumo");
-    const total = $("carrinhoTotal");
-    const quantidade = $("carrinhoQuantidade");
-    const footer = $("carrinhoFooter");
-
-    if (!container) return;
-
-    quantidade.textContent = `${quantidadeCarrinho()} ${
-      quantidadeCarrinho() === 1 ? "item" : "itens"
-    }`;
-
-    container.replaceChildren();
-
-    if (!carrinho.length) {
-      vazio.hidden = false;
-      resumo.hidden = true;
-
-      footer.replaceChildren(
-        h(
-          "button",
-          {
-            class: "btn btn-outline-secondary",
-            type: "button",
-            "data-bs-dismiss": "modal",
-          },
-          "Continuar comprando",
-        ),
-      );
-
-      return;
-    }
-
-    vazio.hidden = true;
-    resumo.hidden = false;
-
-    carrinho.forEach((item) => {
-      const subtotal = item.preco_centavos * item.quantidade;
-
-      const card = h(
-        "div",
-        {
-          class:
-            "d-flex gap-3 align-items-center border-bottom border-secondary py-3",
-        },
-
-        h("img", {
-          src: item.imagem || "",
-          alt: item.nome,
-          class: "rounded",
-          style: "width:70px;height:70px;object-fit:contain;background:#111;",
-        }),
-
-        h(
-          "div",
-          {
-            class: "flex-grow-1",
-          },
-
-          h(
-            "div",
-            {
-              class: "fw-bold",
-            },
-            item.nome,
-          ),
-
-          h(
-            "div",
-            {
-              class: "small text-white-50",
-            },
-            `${brl(item.preco_centavos)} cada`,
-          ),
-
-          h(
-            "div",
-            {
-              class: "d-flex align-items-center gap-2 mt-2",
-            },
-
-            h(
-              "button",
-              {
-                class: "btn btn-sm btn-outline-light",
-                type: "button",
-                onclick: () =>
-                  alterarQuantidadeCarrinho(
-                    item.produto_id,
-                    item.quantidade - 1,
-                  ),
-              },
-              "−",
-            ),
-
-            h(
-              "span",
-              {
-                class: "px-2 fw-bold",
-              },
-              String(item.quantidade),
-            ),
-
-            h(
-              "button",
-              {
-                class: "btn btn-sm btn-outline-light",
-                type: "button",
-                onclick: () =>
-                  alterarQuantidadeCarrinho(
-                    item.produto_id,
-                    item.quantidade + 1,
-                  ),
-              },
-              "+",
-            ),
-          ),
-        ),
-
-        h(
-          "div",
-          {
-            class: "text-end",
-          },
-
-          h(
-            "div",
-            {
-              class: "fw-bold text-info",
-            },
-            brl(subtotal),
-          ),
-
-          h(
-            "button",
-            {
-              class: "btn btn-sm btn-link text-danger p-0 mt-2",
-              type: "button",
-              onclick: () => removerCarrinho(item.produto_id),
-            },
-            "Remover",
-          ),
-        ),
-      );
-
-      container.append(card);
-    });
-
-    total.textContent = brl(totalCarrinho());
-
-    footer.replaceChildren(
-      h(
-        "button",
-        {
-          class: "btn btn-outline-danger",
-          type: "button",
-          onclick: () => {
-            if (confirm("Deseja limpar o carrinho?")) {
-              limparCarrinho();
-            }
-          },
-        },
-        "Limpar carrinho",
-      ),
-
-      h(
-        "button",
-        {
-          class: "btn btn-outline-secondary",
-          type: "button",
-          "data-bs-dismiss": "modal",
-        },
-        "Continuar comprando",
-      ),
-
-      h(
-        "button",
-        {
-          class: "btn btn-danger",
-          type: "button",
-          onclick: finalizarCarrinho,
-        },
-        h("i", {
-          class: "bi bi-credit-card me-1",
-        }),
-        "Finalizar compra",
-      ),
-    );
-  }
-
-  function abrirCarrinho() {
-    atualizarCarrinhoUI();
-    $("carrinhoMsg").textContent = "";
-    modalCarrinho.show();
-  }
   async function cancelarPedido() {
     try {
       await api(`/pedidos/${atual.pedido.id}/cancelar`, { method: "POST" });
       atual.pedido = null; // evita novo cancelamento ao fechar
       modalCompra.hide();
       carregarProdutos();
-    } catch (e) {
-      setMsg($("cpMsg"), e.message);
-    }
+    } catch (e) { setMsg($("cpMsg"), e.message); }
   }
 
   async function simularPagamento() {
     $("cpSimular").disabled = true;
-
     try {
-      await api(`/pagamentos/${atual.pagamento.id}/confirmar-simulado`, {
-        method: "POST",
-      });
-
+      await api(`/pagamentos/${atual.pagamento.id}/confirmar-simulado`, { method: "POST" });
       atual.pago = true;
-
-      // Depois que o pagamento foi confirmado,
-      // solicita o token ao sistema.
-      const tokenRetirada = await obterTokenPedido();
-
       passo(3);
-
-      $("cpOk").textContent =
-        `Pagamento do pedido #${atual.pedido.id} confirmado!`;
-
-      $("cpToken").textContent = tokenRetirada;
-
-      setMsg($("cpMsg"), "", "success");
-
-      rodape(
-        h(
-          "button",
-          {
-            class: "btn btn-danger",
-            type: "button",
-            "data-bs-dismiss": "modal",
-          },
-          "Fechar",
-        ),
-      );
-
+      $("cpOk").textContent = `Pagamento do pedido #${atual.pedido.id} confirmado! Agora é só aguardar a aprovação do gerente.`;
+      setMsg($("cpMsg"), "");
+      rodape(h("button", { class: "btn btn-danger", type: "button", "data-bs-dismiss": "modal" }, "Fechar"));
       carregarProdutos();
     } catch (e) {
-      setMsg(
-        $("cpMsg"),
-        e.status === 404
-          ? "A confirmação de teste está desativada. O pagamento será confirmado automaticamente quando o provedor estiver integrado."
-          : e.message,
-      );
-
+      setMsg($("cpMsg"), e.status === 404
+        ? "A confirmação de teste está desativada. O pagamento será confirmado automaticamente quando o provedor estiver integrado."
+        : e.message);
       $("cpSimular").disabled = false;
     }
-  }
-  async function obterTokenPedido() {
-    if (!atual.pedido?.id) {
-      throw new Error("Pedido inválido.");
-    }
-
-    const resposta = await api(`/pedidos/${atual.pedido.id}/token`);
-
-    if (!resposta?.token) {
-      throw new Error(
-        "O pagamento foi confirmado, mas o código ainda não foi disponibilizado.",
-      );
-    }
-
-    atual.token = resposta.token;
-    return resposta.token;
   }
 
   function ligarCards() {
     const mapa = new Map(produtos.map((p) => [norm(p.nome), p]));
-    document
-      .querySelectorAll("#productsTrack .product-slide")
-      .forEach((card) => {
-        const btn = card.querySelector("button");
-        if (!btn) return;
-        if (!btn.dataset.original)
-          btn.dataset.original = btn.textContent.trim();
-        const p = mapa.get(norm(card.querySelector("h5")?.textContent));
-        btn.disabled = false;
-        btn.textContent = btn.dataset.original;
-        if (!p) {
-          btn.disabled = true;
-          btn.textContent = "Indisponível";
-          btn.onclick = null;
-          return;
-        }
-        const por = card.querySelector(".preco-por");
-        if (por && p.preco_centavos > 0)
-          por.textContent = "Por " + brl(p.preco_centavos);
-        if (p.estoque <= 0) {
-          btn.disabled = true;
-          btn.textContent = "Esgotado";
-          btn.onclick = null;
-          return;
-        }
-        if (p.preco_centavos <= 0) {
-          btn.disabled = true;
-          btn.textContent = "Em breve";
-          btn.onclick = null;
-          return;
-        }
-        btn.onclick = () => {
-          adicionarCarrinho(p);
-        }; // onclick (e não addEventListener) evita duplicar ao recarregar
-      });
+    document.querySelectorAll("#productsTrack .product-slide").forEach((card) => {
+      const btn = card.querySelector("button");
+      if (!btn) return;
+      if (!btn.dataset.original) btn.dataset.original = btn.textContent.trim();
+      const p = mapa.get(norm(card.querySelector("h5")?.textContent));
+      btn.disabled = false;
+      btn.textContent = btn.dataset.original;
+      if (!p) { btn.disabled = true; btn.textContent = "Indisponível"; btn.onclick = null; return; }
+      const por = card.querySelector(".preco-por");
+      if (por && p.preco_centavos > 0) por.textContent = "Por " + brl(p.preco_centavos);
+      if (p.estoque <= 0) { btn.disabled = true; btn.textContent = "Esgotado"; btn.onclick = null; return; }
+      if (p.preco_centavos <= 0) { btn.disabled = true; btn.textContent = "Em breve"; btn.onclick = null; return; }
+      btn.onclick = () => abrirCompra(p); // onclick (e não addEventListener) evita duplicar ao recarregar
+    });
   }
 
-  function criarBotaoCarrinho() {
-
-  if ($("botaoCarrinho")) return;
-
-  const botao = h(
-    "button",
-    {
-      id: "botaoCarrinho",
-      type: "button",
-      class:
-        "btn btn-danger position-fixed shadow-lg",
-      style:
-        "right:24px;bottom:24px;z-index:1050;border-radius:50px;padding:12px 20px;",
-      onclick: abrirCarrinho
-    },
-
-    h(
-      "i",
-      {
-        class:
-          "bi bi-cart3 me-2"
-      }
-    ),
-
-    "Carrinho ",
-
-    h(
-      "span",
-      {
-        id: "carrinhoBadge",
-        class:
-          "badge text-bg-light text-dark ms-1"
-      },
-      "0"
-    )
-  );
-
-  document.body.append(botao);
-
-  atualizarBadgeCarrinho();
-}
-function atualizarBadgeCarrinho() {
-
-  const badge = $("carrinhoBadge");
-
-  if (!badge) return;
-
-  const qtd = quantidadeCarrinho();
-
-  badge.textContent = qtd;
-
-  badge.hidden = qtd === 0;
-}
   async function carregarProdutos() {
-    try {
-      produtos = await api("/produtos");
-    } catch {
-      produtos = [];
-    }
+    try { produtos = await api("/produtos"); } catch { produtos = []; }
     ligarCards();
   }
 
   /* =====================================================
      2) PAINEL DO GERENTE
   ===================================================== */
-  const TELAS = [
-    "inicio",
-    "documento",
-    "pedidos",
-    "avisos",
-    "sobre",
-    "formatura",
-    "ajuda",
-    "perfil",
-    "configuracoes",
-    "usuarios",
-  ];
+  const TELAS = ["inicio", "documento", "pedidos", "avisos", "sobre", "formatura", "ajuda", "perfil", "configuracoes", "usuarios"];  
   const CATEGORIAS = ["uniformes", "esportes", "jogos", "epi", "acessorios"];
-  let secGerente,
-    modalProd,
-    editandoId = null;
+  let secGerente, modalProd, editandoId = null;
 
   function tabela(cabecalho, corpo) {
-    return h(
-      "div",
-      { class: "table-responsive" },
-      h(
-        "table",
-        { class: "table table-dark table-hover align-middle mb-0" },
-        h(
-          "thead",
-          {},
-          h(
-            "tr",
-            {},
-            cabecalho.map((c) => h("th", {}, c)),
-          ),
-        ),
-        corpo,
-      ),
-    );
+    return h("div", { class: "table-responsive" },
+      h("table", { class: "table table-dark table-hover align-middle mb-0" },
+        h("thead", {}, h("tr", {}, cabecalho.map((c) => h("th", {}, c)))),
+        corpo));
   }
 
   function montarPainel() {
@@ -915,97 +343,6 @@ function atualizarBadgeCarrinho() {
       </div></div>
     </div>`;
     document.body.append(m.firstElementChild);
-    const carrinhoWrap = h("div");
-
-    carrinhoWrap.innerHTML = `
-<div class="modal fade" id="modalCarrinho" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content bg-dark text-white border-secondary">
-
-      <div class="modal-header border-secondary">
-        <div>
-          <h5 class="modal-title fw-bold">
-            <i class="bi bi-cart3 me-2"></i>
-            Meu Carrinho
-          </h5>
-          <div class="small text-white-50" id="carrinhoQuantidade">
-            0 itens
-          </div>
-        </div>
-
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          data-bs-dismiss="modal"
-          aria-label="Fechar">
-        </button>
-      </div>
-
-      <div class="modal-body">
-
-        <div id="carrinhoVazio" class="text-center py-5">
-          <i class="bi bi-cart-x display-3 text-white-50"></i>
-
-          <h5 class="mt-3">
-            Seu carrinho está vazio
-          </h5>
-
-          <p class="text-white-50 mb-0">
-            Adicione produtos da loja para começar.
-          </p>
-        </div>
-
-        <div id="carrinhoItens"></div>
-
-        <div
-          id="carrinhoResumo"
-          class="border-top border-secondary mt-3 pt-3"
-          hidden>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="text-white-50">
-              Total
-            </span>
-
-            <strong
-              id="carrinhoTotal"
-              class="fs-4 text-info">
-              R$ 0,00
-            </strong>
-          </div>
-
-        </div>
-
-        <div
-          id="carrinhoMsg"
-          role="alert"
-          class="small mt-3">
-        </div>
-
-      </div>
-
-      <div
-        class="modal-footer border-secondary"
-        id="carrinhoFooter">
-
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          data-bs-dismiss="modal">
-          Continuar comprando
-        </button>
-
-      </div>
-
-    </div>
-  </div>
-</div>
-`;
-
-    document.body.append(carrinhoWrap.firstElementChild);
-
-    const modalCarrinho = new bootstrap.Modal($("modalCarrinho"));
-
     modalProd = new bootstrap.Modal($("modalProdAdmin"));
 
     $("tabGProd").onclick = () => aba("prod");
@@ -1014,10 +351,7 @@ function atualizarBadgeCarrinho() {
     $("gNovo").onclick = () => abrirProduto(null);
     $("mpSalvar").onclick = salvarProduto;
     $("gFiltroPed").onchange = carregarPedidosAdmin;
-    $("gAtualizar").onclick = () => {
-      carregarProdutosAdmin();
-      carregarPedidosAdmin();
-    };
+    $("gAtualizar").onclick = () => { carregarProdutosAdmin(); carregarPedidosAdmin(); };
   }
 
   function aba(qual) {
@@ -1031,71 +365,22 @@ function atualizarBadgeCarrinho() {
   // ----- produtos (gerente) -----
   let listaProdAdmin = [];
   async function carregarProdutosAdmin() {
-    try {
-      listaProdAdmin = await api("/admin/produtos");
-      renderProdutosAdmin();
-    } catch (e) {
-      setMsg($("gMsg"), e.message);
-    }
+    try { listaProdAdmin = await api("/admin/produtos"); renderProdutosAdmin(); }
+    catch (e) { setMsg($("gMsg"), e.message); }
   }
   function renderProdutosAdmin() {
     const q = norm($("gBusca").value);
-    const rows = listaProdAdmin.filter(
-      (p) => !q || norm(p.nome + p.categoria).includes(q),
-    );
-    const corpo = h(
-      "tbody",
-      {},
-      rows.length
-        ? rows.map((p) =>
-            h(
-              "tr",
-              {},
-              h("td", {}, p.nome),
-              h("td", {}, p.categoria),
-              h("td", {}, brl(p.preco_centavos)),
-              h(
-                "td",
-                {},
-                p.estoque <= 0
-                  ? badge("Esgotado", "danger")
-                  : String(p.estoque),
-              ),
-              h(
-                "td",
-                {},
-                p.ativo
-                  ? badge("Ativo", "success")
-                  : badge("Inativo", "secondary"),
-              ),
-              h(
-                "td",
-                { class: "text-end" },
-                h(
-                  "button",
-                  {
-                    class: "btn btn-sm btn-outline-light",
-                    type: "button",
-                    onclick: () => abrirProduto(p),
-                  },
-                  "Editar",
-                ),
-              ),
-            ),
-          )
-        : h(
-            "tr",
-            {},
-            h(
-              "td",
-              { colspan: 6, class: "text-center text-secondary" },
-              "Nenhum produto encontrado.",
-            ),
-          ),
-    );
-    $("gProdTabela").replaceChildren(
-      tabela(["Produto", "Categoria", "Preço", "Estoque", "Status", ""], corpo),
-    );
+    const rows = listaProdAdmin.filter((p) => !q || norm(p.nome + p.categoria).includes(q));
+    const corpo = h("tbody", {}, rows.length ? rows.map((p) =>
+      h("tr", {},
+        h("td", {}, p.nome),
+        h("td", {}, p.categoria),
+        h("td", {}, brl(p.preco_centavos)),
+        h("td", {}, p.estoque <= 0 ? badge("Esgotado", "danger") : String(p.estoque)),
+        h("td", {}, p.ativo ? badge("Ativo", "success") : badge("Inativo", "secondary")),
+        h("td", { class: "text-end" }, h("button", { class: "btn btn-sm btn-outline-light", type: "button", onclick: () => abrirProduto(p) }, "Editar"))))
+      : h("tr", {}, h("td", { colspan: 6, class: "text-center text-secondary" }, "Nenhum produto encontrado.")));
+    $("gProdTabela").replaceChildren(tabela(["Produto", "Categoria", "Preço", "Estoque", "Status", ""], corpo));
   }
   function abrirProduto(p) {
     editandoId = p ? p.id : null;
@@ -1112,220 +397,77 @@ function atualizarBadgeCarrinho() {
     modalProd.show();
   }
   async function salvarProduto() {
-    const preco = Math.round(
-      parseFloat(String($("mpPreco").value).replace(",", ".")) * 100,
-    );
+    const preco = Math.round(parseFloat(String($("mpPreco").value).replace(",", ".")) * 100);
     const estoque = parseInt($("mpEstoque").value, 10);
     const nome = $("mpNome").value.trim();
-    if (
-      !nome ||
-      !Number.isSafeInteger(preco) ||
-      preco < 0 ||
-      !Number.isSafeInteger(estoque) ||
-      estoque < 0
-    )
+    if (!nome || !Number.isSafeInteger(preco) || preco < 0 || !Number.isSafeInteger(estoque) || estoque < 0)
       return setMsg($("mpMsg"), "Informe nome, preço e estoque válidos.");
-    const body = {
-      nome,
-      categoria: $("mpCat").value,
-      descricao: $("mpDesc").value,
-      imagem: $("mpImg").value,
-      preco_centavos: preco,
-      estoque,
-    };
+    const body = { nome, categoria: $("mpCat").value, descricao: $("mpDesc").value, imagem: $("mpImg").value, preco_centavos: preco, estoque };
     try {
-      if (editandoId)
-        await api(`/produtos/${editandoId}`, {
-          method: "PATCH",
-          body: JSON.stringify({
-            ...body,
-            ativo: $("mpAtivo").checked ? 1 : 0,
-          }),
-        });
-      else
-        await api("/produtos", { method: "POST", body: JSON.stringify(body) });
+      if (editandoId) await api(`/produtos/${editandoId}`, { method: "PATCH", body: JSON.stringify({ ...body, ativo: $("mpAtivo").checked ? 1 : 0 }) });
+      else await api("/produtos", { method: "POST", body: JSON.stringify(body) });
       modalProd.hide();
       await carregarProdutosAdmin();
       carregarProdutos(); // atualiza a vitrine
-    } catch (e) {
-      setMsg($("mpMsg"), e.message);
-    }
+    } catch (e) { setMsg($("mpMsg"), e.message); }
   }
 
   // ----- pedidos (gerente) -----
   async function carregarPedidosAdmin() {
     try {
       const s = $("gFiltroPed").value;
-      const lista = await api(
-        "/admin/pedidos" + (s ? `?status=${encodeURIComponent(s)}` : ""),
-      );
+      const lista = await api("/admin/pedidos" + (s ? `?status=${encodeURIComponent(s)}` : ""));
       renderPedidosAdmin(lista);
-    } catch (e) {
-      setMsg($("gMsg"), e.message);
-    }
+    } catch (e) { setMsg($("gMsg"), e.message); }
   }
   async function mudarStatus(id, status) {
-    if (
-      status === "rejeitado" &&
-      !confirm(`Rejeitar o pedido #${id}? O estoque será devolvido.`)
-    )
-      return;
+    if (status === "rejeitado" && !confirm(`Rejeitar o pedido #${id}? O estoque será devolvido.`)) return;
     try {
-      await api(`/pedidos/${id}/status`, {
-        method: "PATCH",
-        body: JSON.stringify({ status }),
-      });
-      setMsg(
-        $("gMsg"),
-        `Pedido #${id}: ${STATUS[status].toLowerCase()}.`,
-        "success",
-      );
+      await api(`/pedidos/${id}/status`, { method: "PATCH", body: JSON.stringify({ status }) });
+      setMsg($("gMsg"), `Pedido #${id}: ${STATUS[status].toLowerCase()}.`, "success");
       carregarPedidosAdmin();
       carregarProdutosAdmin();
-    } catch (e) {
-      setMsg($("gMsg"), e.message);
-    }
+    } catch (e) { setMsg($("gMsg"), e.message); }
   }
   async function alternarItens(tr, id) {
     const proximo = tr.nextElementSibling;
-    if (proximo && proximo.dataset.itensDe === String(id))
-      return proximo.remove();
+    if (proximo && proximo.dataset.itensDe === String(id)) return proximo.remove();
     try {
       const ped = await api(`/pedidos/${id}`);
-      const lista = h(
-        "ul",
-        { class: "mb-0 small" },
-        ped.itens.map((i) =>
-          h(
-            "li",
-            {},
-            `${i.quantidade}× ${i.nome} — ${brl(i.preco_unitario_centavos)} cada`,
-          ),
-        ),
-      );
-      if (ped.observacao)
-        lista.append(
-          h("li", { class: "text-secondary" }, "Obs.: " + ped.observacao),
-        );
-      tr.after(
-        h(
-          "tr",
-          { "data-itens-de": id },
-          h("td", { colspan: 7, class: "bg-black" }, lista),
-        ),
-      );
-    } catch (e) {
-      setMsg($("gMsg"), e.message);
-    }
+      const lista = h("ul", { class: "mb-0 small" }, ped.itens.map((i) =>
+        h("li", {}, `${i.quantidade}× ${i.nome} — ${brl(i.preco_unitario_centavos)} cada`)));
+      if (ped.observacao) lista.append(h("li", { class: "text-secondary" }, "Obs.: " + ped.observacao));
+      tr.after(h("tr", { "data-itens-de": id }, h("td", { colspan: 7, class: "bg-black" }, lista)));
+    } catch (e) { setMsg($("gMsg"), e.message); }
   }
   function renderPedidosAdmin(lista) {
-    const corpo = h(
-      "tbody",
-      {},
-      lista.length
-        ? lista.map((p) => {
-            const tr = h(
-              "tr",
-              {},
-              h("td", {}, "#" + p.id),
-              h(
-                "td",
-                {},
-                h("div", {}, p.cliente),
-                h("div", { class: "small text-secondary" }, p.cliente_email),
-              ),
-              h("td", {}, dataBR(p.criado_em)),
-              h("td", {}, brl(p.total_centavos)),
-              h(
-                "td",
-                {},
-                p.pagamento_status
-                  ? badge(PAG[p.pagamento_status], COR[p.pagamento_status])
-                  : badge("Sem pagamento", "secondary"),
-              ),
-              h("td", {}, badge(STATUS[p.status] || p.status, COR[p.status])),
-              h(
-                "td",
-                { class: "text-end text-nowrap" },
-                h(
-                  "button",
-                  {
-                    class: "btn btn-sm btn-outline-secondary me-1",
-                    type: "button",
-                    onclick: () => alternarItens(tr, p.id),
-                  },
-                  "Itens",
-                ),
-                p.status === "pendente" && [
-                  h(
-                    "button",
-                    {
-                      class: "btn btn-sm btn-success me-1",
-                      type: "button",
-                      disabled: p.pagamento_status !== "pago",
-                      title:
-                        p.pagamento_status !== "pago"
-                          ? "Aguardando pagamento"
-                          : "",
-                      onclick: () => mudarStatus(p.id, "aprovado"),
-                    },
-                    "Aprovar",
-                  ),
-                  h(
-                    "button",
-                    {
-                      class: "btn btn-sm btn-outline-danger",
-                      type: "button",
-                      onclick: () => mudarStatus(p.id, "rejeitado"),
-                    },
-                    "Rejeitar",
-                  ),
-                ],
-                p.status === "aprovado" &&
-                  h(
-                    "button",
-                    {
-                      class: "btn btn-sm btn-info",
-                      type: "button",
-                      onclick: () => mudarStatus(p.id, "entregue"),
-                    },
-                    "Marcar entregue",
-                  ),
-              ),
-            );
-            return tr;
-          })
-        : h(
-            "tr",
-            {},
-            h(
-              "td",
-              { colspan: 7, class: "text-center text-secondary" },
-              "Nenhum pedido encontrado.",
-            ),
-          ),
-    );
-    $("gPedTabela").replaceChildren(
-      tabela(
-        ["Pedido", "Cliente", "Data", "Total", "Pagamento", "Status", ""],
-        corpo,
-      ),
-    );
+    const corpo = h("tbody", {}, lista.length ? lista.map((p) => {
+      const tr = h("tr", {},
+        h("td", {}, "#" + p.id),
+        h("td", {}, h("div", {}, p.cliente), h("div", { class: "small text-secondary" }, p.cliente_email)),
+        h("td", {}, dataBR(p.criado_em)),
+        h("td", {}, brl(p.total_centavos)),
+        h("td", {}, p.pagamento_status ? badge(PAG[p.pagamento_status], COR[p.pagamento_status]) : badge("Sem pagamento", "secondary")),
+        h("td", {}, badge(STATUS[p.status] || p.status, COR[p.status])),
+        h("td", { class: "text-end text-nowrap" },
+          h("button", { class: "btn btn-sm btn-outline-secondary me-1", type: "button", onclick: () => alternarItens(tr, p.id) }, "Itens"),
+          p.status === "pendente" && [
+            h("button", { class: "btn btn-sm btn-success me-1", type: "button", disabled: p.pagamento_status !== "pago", title: p.pagamento_status !== "pago" ? "Aguardando pagamento" : "", onclick: () => mudarStatus(p.id, "aprovado") }, "Aprovar"),
+            h("button", { class: "btn btn-sm btn-outline-danger", type: "button", onclick: () => mudarStatus(p.id, "rejeitado") }, "Rejeitar"),
+          ],
+          p.status === "aprovado" && h("button", { class: "btn btn-sm btn-info", type: "button", onclick: () => mudarStatus(p.id, "entregue") }, "Marcar entregue")));
+      return tr;
+    }) : h("tr", {}, h("td", { colspan: 7, class: "text-center text-secondary" }, "Nenhum pedido encontrado.")));
+    $("gPedTabela").replaceChildren(tabela(["Pedido", "Cliente", "Data", "Total", "Pagamento", "Status", ""], corpo));
   }
 
   // ----- navegação do painel (script.js só conhece as telas fixas) -----
   function sincronizarGerente() {
     if (!secGerente) return;
     if (location.hash === "#gerente") {
-      TELAS.forEach((id) =>
-        document.getElementById(id)?.classList.add("d-none"),
-      );
+      TELAS.forEach((id) => document.getElementById(id)?.classList.add("d-none"));
       secGerente.classList.remove("d-none");
-      document
-        .querySelectorAll(".menu-item")
-        .forEach((i) =>
-          i.classList.toggle("ativo", i.getAttribute("href") === "#gerente"),
-        );
+      document.querySelectorAll(".menu-item").forEach((i) => i.classList.toggle("ativo", i.getAttribute("href") === "#gerente"));
       carregarProdutosAdmin();
     } else {
       secGerente.classList.add("d-none");
@@ -1334,30 +476,18 @@ function atualizarBadgeCarrinho() {
 
   function ativarModoGerente() {
     montarPainel();
-    const link = h(
-      "a",
-      {
-        href: "#gerente",
-        class:
-          "menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded",
-      },
+    const link = h("a", { href: "#gerente", class: "menu-item d-flex align-items-start gap-3 text-decoration-none text-white p-2 rounded" },
       h("i", { class: "bi bi-shop fs-3 flex-shrink-0" }),
-      h(
-        "div",
-        { class: "d-flex flex-column" },
+      h("div", { class: "d-flex flex-column" },
         h("span", { class: "fw-bold fs-6" }, "Gerência"),
-        h("span", { class: "text-white-50 small" }, "Produtos e pedidos"),
-      ),
-    );
+        h("span", { class: "text-white-50 small" }, "Produtos e pedidos")));
     const alvo = document.querySelector('a.menu-item[href="#usuarios"]');
-    alvo
-      ? alvo.before(link)
-      : document.querySelector("#sidebar nav")?.append(link);
+    alvo ? alvo.before(link) : document.querySelector("#sidebar nav")?.append(link);
     window.addEventListener("hashchange", sincronizarGerente);
     sincronizarGerente();
   }
 
-  /* =====================================================
+    /* =====================================================
      3) AGENDAMENTOS (Jogos de Tabuleiro / Quadra)
   ===================================================== */
   const DURACAO_MIN = 60; // cada reserva dura 1 hora
@@ -1382,9 +512,7 @@ function atualizarBadgeCarrinho() {
       const botao = form.querySelector('[type="submit"]');
       botao.disabled = true;
       try {
-        const inicio = new Date(
-          `${$("agendamentoData").value}T${$("agendamentoHorario").value}:00`,
-        );
+        const inicio = new Date(`${$("agendamentoData").value}T${$("agendamentoHorario").value}:00`);
         const fim = new Date(inicio.getTime() + DURACAO_MIN * 60000);
         await api("/agendamentos", {
           method: "POST",
@@ -1394,11 +522,7 @@ function atualizarBadgeCarrinho() {
             fim: fim.toISOString(),
           }),
         });
-        setMsg(
-          msg,
-          "Solicitação enviada! Aguarde a aprovação da AAPM.",
-          "success",
-        );
+        setMsg(msg, "Solicitação enviada! Aguarde a aprovação da AAPM.", "success");
         setTimeout(() => bootstrap.Modal.getInstance(modalEl)?.hide(), 1500);
       } catch (err) {
         setMsg(msg, err.message);
@@ -1407,38 +531,25 @@ function atualizarBadgeCarrinho() {
       }
     });
   }
-
+  
   /* =====================================================
      INICIALIZAÇÃO
   =========== */
   async function iniciar() {
     resetAtual();
     let user = null;
-    try {
-      user = await api("/perfil");
-    } catch {
-      return;
-    }
-    ligarAgendamento();
+    try { user = await api("/perfil"); } catch { return; }
+        ligarAgendamento();
 
     const nome = document.querySelector("#userDropdown .fw-semibold");
     const sub = document.querySelector("#userDropdown small");
     if (nome) nome.textContent = user.nome;
-    if (sub)
-      sub.textContent = user.papel === "admin" ? "Gerente" : "Aluno SENAI";
+    if (sub) sub.textContent = user.papel === "admin" ? "Gerente" : "Aluno SENAI";
 
     if (document.getElementById("productsTrack")) {
-
-  carregarCarrinho();
-
-  montarModalCompra();
-
-  criarBotaoCarrinho();
-
-  atualizarCarrinhoUI();
-
-  carregarProdutos();
-}
+      montarModalCompra();
+      carregarProdutos();
+    }
     if (user.papel === "admin") ativarModoGerente();
     else document.querySelector('a.menu-item[href="#usuarios"]')?.remove(); // item só para gerente
   }
