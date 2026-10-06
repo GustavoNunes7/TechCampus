@@ -42,7 +42,19 @@
         "techcampus_usuario",
         JSON.stringify(data.usuario),
       );
-      location.replace("/frontend/sistema.html");
+
+      sessionStorage.setItem("techcampus_token", data.token);
+sessionStorage.setItem(
+  "techcampus_usuario",
+  JSON.stringify(data.usuario),
+);
+
+if (data.usuario.papel === "admin") {
+  location.replace("/frontend/admin.html");
+} else {
+  location.replace("/frontend/sistema.html");
+}
+      
     } catch (err) {
       message.textContent = err.message || "Falha de conexão com o servidor.";
     } finally {

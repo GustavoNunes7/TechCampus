@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Painel Administrativo - TechCampus</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f1115;
+      color: white;
+      visibility: hidden;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 240px;
+      background: #080a0d;
+      padding: 25px 15px;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 40px;
+    }
+
+    .logo span {
+      color: #e3262e;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu a {
+      color: #ddd;
+      text-decoration: none;
+      padding: 14px;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .menu a:hover,
+    .menu a.ativo {
+      background: #d62828;
+      color: white;
+    }
+
+    .sair {
+      margin-top: 40px;
+      border: 1px solid #555;
+      text-align: center;
+    }
+
+    .conteudo {
+      flex: 1;
+      padding: 35px;
+    }
+
+    .topo h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+
+    .topo p {
+      color: #aaa;
+      margin-bottom: 35px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #181c21;
+      border: 1px solid #292e35;
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #ddd;
+    }
+
+    .numero {
+      font-size: 32px;
+      font-weight: bold;
+      color: #e3262e;
+    }
+
+    .secoes {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .secao {
+      background: #181c21;
+      border: 1px solid #292e35;
+      border-radius: 12px;
+      padding: 25px;
+    }
+
+    .secao h2 {
+      margin-top: 0;
+    }
+
+    .botao {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #d62828;
+      color: white;
+      text-decoration: none;
+      border-radius: 7px;
+    }
+
+    @media (max-width: 900px) {
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .secoes {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .layout {
+        display: block;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .conteudo {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+
+      <div class="logo">
+        <span>TC</span> TECHCAMPUS
+      </div>
+
+      <nav class="menu">
+
+        <a href="#" class="ativo">
+          🏠 Dashboard
+        </a>
+
+        <a href="#usuarios">
+          👥 Usuários
+        </a>
+
+        <a href="#pedidos">
+          🛒 Pedidos
+        </a>
+
+        <a href="#produtos">
+          📦 Produtos
+        </a>
+
+        <a href="#avisos">
+          📢 Avisos
+        </a>
+
+        <a href="#documentos">
+          📄 Documentos
+        </a>
+
+        <a href="#formatura">
+          🎓 Formatura
+        </a>
+
+        <a href="#chamados">
+          💬 Chamados
+        </a>
+
+        <a href="/landing/index.html" class="sair">
+          ⇥ Sair
+        </a>
+
+      </nav>
+
+    </aside>
+
+    <main class="conteudo">
+
+      <div class="topo">
+        <h1>Painel Administrativo</h1>
+
+        <p>
+          Gerencie os usuários, pedidos, produtos e informações da AAPM.
+        </p>
+      </div>
+
+      <section class="cards">
+
+        <div class="card">
+            <h3>Usuários</h3>
+            <div class="numero" id="totalUsuarios">-</div>
+            <p>Usuários cadastrados</p>
+        </div>
+
+        <div class="card">
+          <h3>Pedidos</h3>
+          <div class="numero" id="totalPedidos">-</div>
+          <p>Pedidos realizados</p>
+        </div>
+
+        <div class="card">
+          <h3>Produtos</h3>
+          <div class="numero" id="totalProdutos">-</div>
+          <p>Produtos cadastrados</p>
+        </div>
+
+        <div class="card">
+          <h3>Chamados</h3>
+          <div class="numero" id="totalChamados">-</div>
+          <p>Solicitações dos alunos</p>
+        </div>
+
+      </section>
+
+      <section class="secoes">
+
+        <div class="secao" id="usuarios">
+          <h2>👥 Usuários</h2>
+
+          <p>
+            Visualize e gerencie os usuários cadastrados no sistema.
+          </p>
+
+          <a href="#" class="botao">
+            Gerenciar usuários
+          </a>
+        </div>
+
+        <div class="secao" id="pedidos">
+          <h2>🛒 Pedidos</h2>
+
+          <p>
+            Consulte os pedidos e altere o status das solicitações.
+          </p>
+
+          <a href="#" class="botao">
+            Ver pedidos
+          </a>
+        </div>
+
+        <div class="secao" id="produtos">
+          <h2>📦 Produtos</h2>
+
+          <p>
+            Cadastre, altere e controle os produtos disponíveis.
+          </p>
+
+          <a href="#" class="botao">
+            Gerenciar produtos
+          </a>
+        </div>
+
+        <div class="secao" id="avisos">
+          <h2>📢 Avisos</h2>
+
+          <p>
+            Publique informações e comunicados para os alunos.
+          </p>
+
+          <a href="#" class="botao">
+            Gerenciar avisos
+          </a>
+        </div>
+
+        <div class="secao" id="documentos">
+          <h2>📄 Documentos</h2>
+
+          <p>
+            Analise documentos enviados pelos alunos.
+          </p>
+
+          <a href="#" class="botao">
+            Ver documentos
+          </a>
+        </div>
+
+        <div class="secao" id="formatura">
+          <h2>🎓 Formatura</h2>
+
+          <p>
+            Gerencie informações e solicitações relacionadas à formatura.
+          </p>
+
+          <a href="#" class="botao">
+            Gerenciar formatura
+          </a>
+        </div>
+
+        <div class="secao" id="chamados">
+          <h2>💬 Chamados</h2>
+
+          <p>
+            Veja e responda aos chamados enviados pelos alunos.
+          </p>
+
+          <a href="#" class="botao">
+            Ver chamados
+          </a>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="./js/auth.js" defer></script>
+  <script>
+  async function carregarUsuarios() {
+    const token = sessionStorage.getItem("techcampus_token");
+
+    try {
+      const response = await fetch("/api/usuarios", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Não foi possível carregar os usuários.");
+      }
+
+      const usuarios = await response.json();
+
+      document.getElementById("totalUsuarios").textContent =
+        usuarios.length;
+
+    } catch (erro) {
+      console.error(erro);
+      document.getElementById("totalUsuarios").textContent = "0";
+    }
+  }
+
+  carregarUsuarios();
+
+</script>
+
+<script>
+  async function carregarPedidos() {
+    const token = sessionStorage.getItem("techcampus_token");
+
+    try {
+      const response = await fetch("/api/pedidos", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Não foi possível carregar os pedidos.");
+      }
+
+      const pedidos = await response.json();
+
+      document.getElementById("totalPedidos").textContent =
+        pedidos.length;
+
+    } catch (erro) {
+      console.error(erro);
+      document.getElementById("totalPedidos").textContent = "0";
+    }
+  }
+
+  carregarPedidos();
+</script>
+<script>
+  async function carregarProdutos() {
+    try {
+      const response = await fetch("/api/produtos");
+
+      if (!response.ok) {
+        throw new Error("Não foi possível carregar os produtos.");
+      }
+
+      const produtos = await response.json();
+
+      document.getElementById("totalProdutos").textContent =
+        produtos.length;
+
+    } catch (erro) {
+      console.error(erro);
+      document.getElementById("totalProdutos").textContent = "0";
+    }
+  }
+
+  carregarProdutos();
+</script>
+<script>
+  async function carregarChamados() {
+    const token = sessionStorage.getItem("techcampus_token");
+
+    try {
+      const response = await fetch("/api/chamados", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Não foi possível carregar os chamados.");
+      }
+
+      const chamados = await response.json();
+
+      document.getElementById("totalChamados").textContent =
+        chamados.length;
+
+    } catch (erro) {
+      console.error(erro);
+      document.getElementById("totalChamados").textContent = "0";
+    }
+  }
+
+  carregarChamados();
+</script>
+
+</body>
+</html>
