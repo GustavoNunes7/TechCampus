@@ -58,7 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
           '<td><span class="badge bg-secondary">' + typeName(d.mime) + '</span></td>' +
           '<td>' + dateName(d.criado_em) + '</td>' +
           '<td>' + status + '</td>' +
-          '<td><a href="' + url + '" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light"><i class="bi bi-eye"></i></a></td>' +
+          '<td class="d-flex gap-2">' +
+          '<button type="button" class="btn btn-sm btn-outline-light js-ver-documento" data-id="' + d.id + '"><i class="bi bi-eye"></i></button>' +
+          '<button type="button" class="btn btn-sm btn-outline-danger js-excluir-documento" data-id="' + d.id + '"><i class="bi bi-trash"></i></button>' +
+          '</td>' +
           '</tr>';
       }).join("");
     } catch (e) {
@@ -67,6 +70,80 @@ document.addEventListener("DOMContentLoaded", function () {
         escapeHtml(e.message) + '</td></tr>';
     }
   }
+
+  async function abrirDocumento(id) {
+    const t = token();
+    if (!t) {
+      msg.textContent = "Sua sessão expirou. Faça login novamente.";
+      msg.className = "text-danger mt-2";
+      return;
+    }
+
+    try {
+      const r = await fetch("/api/documentos/" + id + "/arquivo", {
+        headers: { Authorization: "Bearer " + t }
+      });
+
+      if (!r.ok) {
+        const erro = await r.json().catch(() => ({}));
+        throw new Error(erro.erro || "Não foi possível abrir o documento.");
+      }
+
+      const blob = await r.blob();
+      const url = URL.createObjectURL(blob);
+      const janela = window.open(url, "_blank");
+
+      if (!janela) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.click();
+      }
+
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch (e) {
+      console.error("Visualização:", e);
+      msg.textContent = e.message || "Não foi possível abrir o documento.";
+      msg.className = "text-danger mt-2";
+    }
+  }
+
+  async function excluirDocumento(id) {
+    const t = token();
+    if (!t) {
+      msg.textContent = "Sua sessão expirou. Faça login novamente.";
+      msg.className = "text-danger mt-2";
+      return;
+    }
+
+    if (!window.confirm("Tem certeza que deseja excluir este documento?")) return;
+
+    try {
+      const r = await fetch("/api/documentos/" + id, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + t }
+      });
+
+      const dados = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(dados.erro || "Não foi possível excluir o documento.");
+
+      msg.textContent = "Documento excluído com sucesso.";
+      msg.className = "text-success mt-2";
+      await carregarDocumentos();
+    } catch (e) {
+      console.error("Exclusão:", e);
+      msg.textContent = e.message || "Erro ao excluir documento.";
+      msg.className = "text-danger mt-2";
+    }
+  }
+
+  table.addEventListener("click", function (e) {
+    const visualizar = e.target.closest(".js-ver-documento");
+    const excluir = e.target.closest(".js-excluir-documento");
+
+    if (visualizar) abrirDocumento(visualizar.dataset.id);
+    if (excluir) excluirDocumento(excluir.dataset.id);
+  });
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
