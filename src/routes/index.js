@@ -40,12 +40,12 @@ r.post(
       nome.length < 2 ||
       !validEmail(email) ||
       typeof senha !== "string" ||
-      senha.length < 10 ||
+      senha.length < 5 ||
       senha.length > 128
     )
       return bad(
         res,
-        "Informe nome, e-mail válido e senha de 10 a 128 caracteres.",
+        "Informe nome, e-mail válido e senha de 5 a 128 caracteres.",
       );
     if (db.prepare("SELECT id FROM usuarios WHERE email=?").get(email))
       return res.status(409).json({ erro: "E-mail já cadastrado." });
@@ -102,7 +102,7 @@ r.post(
       typeof token !== "string" ||
       !/^[a-f0-9]{64}$/.test(token) ||
       typeof senha !== "string" ||
-      senha.length < 10 ||
+      senha.length < 5 ||
       senha.length > 128
     )
       return bad(res);
@@ -632,5 +632,10 @@ r.patch("/chamados/:id", autenticar, admin, (req, res) => {
   );
   res.json(get("chamados", c.id));
 });
+
+// TROCA DE SENHA
+r.use(require("./senha"));
+
+// ROTA 404 
 r.use((_req, res) => res.status(404).json({ erro: "Rota não encontrada." }));
 module.exports = r;
