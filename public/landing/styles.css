@@ -65,7 +65,7 @@ body {
   padding: 20px 15px;
   height: 100vh;
 
-  position: fixed;
+
   top: 60px;
   left: 0;
   width: 250px;
@@ -3889,4 +3889,18 @@ body.sidebar-fechada #sistemaInicio .techcampus-footer {
     z-index: 1030;
 }
 
-
+.layout-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100%;
+    min-height: 100vh;
+}
+.sidebar {
+    flex: 0 0 280px;
+    width: 280px;
+}
+.layout-wrapper > main {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+}

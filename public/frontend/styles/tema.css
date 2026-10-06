@@ -2026,3 +2026,63 @@ html[data-bs-theme="light"] .main-content a:not(.btn) {
 html[data-bs-theme="light"] .main-content a:not(.btn):hover {
     color: #8f1820;
 }
+
+/* =========================================================
+   TECHCAMPUS — CONTROLE DAS LOGOS DO SIDEBAR
+   ========================================================= */
+
+/* Por segurança: começa escondendo as duas */
+.sidebar .logo-dark-wrapper,
+.sidebar .logo-light-wrapper {
+    display: none !important;
+}
+
+
+/* =========================
+   MODO ESCURO
+   ========================= */
+
+html[data-bs-theme="dark"] .sidebar .logo-dark-wrapper {
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+html[data-bs-theme="dark"] .sidebar .logo-light-wrapper {
+    display: none !important;
+}
+
+
+/* =========================
+   MODO CLARO
+   ========================= */
+
+html[data-bs-theme="light"] .sidebar .logo-dark-wrapper {
+    display: none !important;
+}
+
+html[data-bs-theme="light"] .sidebar .logo-light-wrapper {
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+
+/* =========================
+   IMAGENS
+   ========================= */
+
+.sidebar .logo-dark-wrapper img,
+.sidebar .logo-light-wrapper img {
+    display: block !important;
+
+    width: auto;
+    max-width: 220px;
+    height: auto;
+}
