@@ -505,6 +505,24 @@ r.get("/documentos/:id/arquivo", autenticar, (req, res) => {
   );
   res.sendFile(path.join(uploadDir, d.arquivo));
 });
+r.delete("/documentos/:id", autenticar, (req, res) => {
+  const d = get("documentos", positiveId(req.params.id));
+  if (!d) return res.sendStatus(404);
+
+  if (d.usuario_id !== req.usuario.id && req.usuario.papel !== "admin")
+    return res.sendStatus(403);
+
+  try {
+    const arquivo = path.join(uploadDir, d.arquivo);
+    if (fs.existsSync(arquivo)) fs.unlinkSync(arquivo);
+
+    db.prepare("DELETE FROM documentos WHERE id=?").run(d.id);
+    res.json({ sucesso: true });
+  } catch (erro) {
+    console.error("Erro ao excluir documento:", erro);
+    res.status(500).json({ erro: "Não foi possível excluir o documento." });
+  }
+});
 r.patch("/documentos/:id/status", autenticar, admin, (req, res) => {
   const d = get("documentos", positiveId(req.params.id));
   if (!d) return res.sendStatus(404);
