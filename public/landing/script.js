@@ -2093,3 +2093,249 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+function mostrarQuemSomos(event) {
+  event.preventDefault();
+
+  const inicio = document.getElementById("inicio");
+  const quemSomos = document.getElementById("quem-somos");
+
+  inicio.classList.add("d-none");
+  quemSomos.classList.remove("d-none");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+function voltarInicio() {
+
+  const inicio = document.getElementById("inicio");
+  const quemSomos = document.getElementById("quem-somos");
+
+  quemSomos.classList.add("d-none");
+  inicio.classList.remove("d-none");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+/* =========================================================
+   MOSTRAR SEÇÃO
+========================================================= */
+
+function mostrarSecao(secao) {
+
+    const elemento = document.getElementById(secao);
+
+    if (!elemento) {
+        return;
+    }
+
+
+    /*
+       Se estiver abrindo a AAPM,
+       fecha possibilidades.
+    */
+
+    if (secao === "aapm") {
+
+        const possibilidades =
+            document.getElementById("possibilidades");
+
+        if (possibilidades) {
+            possibilidades.classList.remove("mostrar");
+        }
+
+    }
+
+
+    /*
+       Se estiver abrindo possibilidades,
+       fecha AAPM.
+    */
+
+    if (secao === "possibilidades") {
+
+        const aapm =
+            document.getElementById("aapm");
+
+        if (aapm) {
+            aapm.classList.remove("mostrar");
+        }
+
+    }
+
+
+    /*
+       Mostra a seção escolhida.
+    */
+
+    elemento.classList.add("mostrar");
+
+
+    /*
+       Rola automaticamente até ela.
+    */
+
+    setTimeout(function () {
+
+        elemento.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }, 100);
+
+}
+
+
+
+/* =========================================================
+   FECHAR SEÇÃO
+========================================================= */
+
+function fecharSecao(secao) {
+
+    const elemento =
+        document.getElementById(secao);
+
+    if (!elemento) {
+        return;
+    }
+
+
+    elemento.classList.remove("mostrar");
+
+
+    /*
+       Volta para o início.
+    */
+
+    document.getElementById("inicio").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+const faqItems =
+    document.querySelectorAll(".faq-item");
+
+
+faqItems.forEach(function (item) {
+
+    const button =
+        item.querySelector(".faq-question");
+
+    const symbol =
+        item.querySelector(".symbol");
+
+
+    button.addEventListener("click", function () {
+
+        const estavaAberto =
+            item.classList.contains("active");
+
+
+        /*
+           Fecha todos os outros.
+        */
+
+        faqItems.forEach(function (outroItem) {
+
+            outroItem.classList.remove("active");
+
+            const outroSymbol =
+                outroItem.querySelector(".symbol");
+
+            if (outroSymbol) {
+                outroSymbol.textContent = "+";
+            }
+
+        });
+
+
+        /*
+           Abre o clicado.
+        */
+
+        if (!estavaAberto) {
+
+            item.classList.add("active");
+
+            symbol.textContent = "−";
+
+        }
+
+    });
+
+});
+
+
+
+/* =========================================================
+   LINKS DO MENU
+========================================================= */
+
+const linksMenu =
+    document.querySelectorAll('a[href^="#"]');
+
+
+linksMenu.forEach(function (link) {
+
+    link.addEventListener("click", function (event) {
+
+        const destinoID =
+            this.getAttribute("href");
+
+        const destino =
+            document.querySelector(destinoID);
+
+
+        if (!destino) {
+            return;
+        }
+
+
+        event.preventDefault();
+
+
+        /*
+           Se for uma seção que começa escondida,
+           abre ela.
+        */
+
+        if (
+            destino.id === "aapm" ||
+            destino.id === "possibilidades"
+        ) {
+
+            mostrarSecao(destino.id);
+
+            return;
+
+        }
+
+
+        /*
+           Para as outras seções,
+           apenas faz o scroll.
+        */
+
+        destino.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    });
+
+});
