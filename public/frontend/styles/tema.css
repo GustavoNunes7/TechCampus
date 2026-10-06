@@ -1,0 +1,2088 @@
+
+
+
+
+/* =========================================================
+   TECHCAMPUS — TEMA CLARO
+   Carregar DEPOIS de styles.css
+   ========================================================= */
+
+html[data-bs-theme="light"] {
+  color-scheme: light;
+
+  /* Cores principais */
+  --bg-dark: #f4f6fa;
+  --bg-sidebar: #ffffff;
+  --card-dark: #ffffff;
+  --bg-card: #ffffff;
+
+  --border-color: #e0e5ed;
+
+  --vermelho-forte: #b82424;
+  --vermelho-hover: #9d1e24;
+
+  --tc-ink: #202b3d;
+  --tc-muted: #617086;
+  --tc-line: #e0e5ed;
+
+  --tc-panel: #ffffff;
+  --tc-soft: #f4f6fa;
+
+  /* Bootstrap */
+  --bs-body-bg: #f4f6fa;
+  --bs-body-color: #202b3d;
+  --bs-secondary-color: #617086;
+  --bs-border-color: #e0e5ed;
+  --bs-tertiary-bg: #f4f6fa;
+
+  --bs-card-bg: #ffffff;
+  --bs-card-color: #202b3d;
+
+  --bs-heading-color: #202b3d;
+
+  --bs-link-color: #b82424;
+  --bs-link-hover-color: #9d1e24;
+      --tc-bg: #f4f6fa;
+    --tc-surface: #ffffff;
+    --tc-surface-soft: #f8fafc;
+
+    --tc-text: #202b3d;
+    --tc-text-secondary: #617086;
+
+    --tc-border: #e2e8f0;
+
+    --tc-primary: #b82424;
+    --tc-primary-hover: #9d1e24;
+
+    --tc-hover: #f1f5f9;
+    --tc-selected: #fff0f1;
+
+}
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+html[data-bs-theme="light"],
+html[data-bs-theme="light"] body {
+  background: var(--tc-soft) !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] * {
+  scrollbar-color: #cbd5e1 #f4f6fa;
+}
+
+html[data-bs-theme="light"] ::selection {
+  background: #b82424;
+  color: #fff;
+}
+
+
+/* =========================================================
+   TEXTOS BOOTSTRAP
+   ========================================================= */
+
+html[data-bs-theme="light"] .text-white {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .text-light {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .text-white-50 {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] .text-secondary {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] .text-body-secondary {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] .text-body {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .text-muted {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] h1,
+html[data-bs-theme="light"] h2,
+html[data-bs-theme="light"] h3,
+html[data-bs-theme="light"] h4,
+html[data-bs-theme="light"] h5,
+html[data-bs-theme="light"] h6 {
+  color: var(--tc-ink);
+}
+
+html[data-bs-theme="light"] p {
+  color: var(--tc-ink);
+}
+
+html[data-bs-theme="light"] small {
+  color: var(--tc-muted);
+}
+
+html[data-bs-theme="light"] a {
+  color: var(--tc-ink);
+}
+
+
+/* =========================================================
+   ESTRUTURA PRINCIPAL
+   ========================================================= */
+
+html[data-bs-theme="light"] .main-content {
+  background: var(--tc-soft) !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .main-content > section {
+  color: var(--tc-ink);
+}
+
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+html[data-bs-theme="light"] .topbar {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-bottom: 1px solid var(--tc-line) !important;
+  box-shadow: 0 2px 12px #1c30400a;
+}
+
+html[data-bs-theme="light"] .topbar #sidebarToggle,
+html[data-bs-theme="light"] .topbar #userDropdown,
+html[data-bs-theme="light"] .topbar .notification-btn,
+html[data-bs-theme="light"] .topbar button,
+html[data-bs-theme="light"] .topbar i {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .topbar .user-avatar {
+  background: #b82424 !important;
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .topbar .user-avatar i {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .topbar .dropdown-menu {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border: 1px solid var(--tc-line) !important;
+  box-shadow: 0 10px 30px #24354b18;
+}
+
+html[data-bs-theme="light"] .topbar .dropdown-menu .dropdown-item {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .topbar .dropdown-menu .dropdown-item:hover {
+  background: #f4f6fa !important;
+  color: #b82424 !important;
+}
+
+html[data-bs-theme="light"] .topbar .dropdown-menu .dropdown-item.text-danger {
+  color: #b82424 !important;
+}
+
+html[data-bs-theme="light"] .topbar .dropdown-menu .border-secondary {
+  border-color: var(--tc-line) !important;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+html[data-bs-theme="light"] .sidebar {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-right: 1px solid var(--tc-line) !important;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.06);
+}
+
+html[data-bs-theme="light"] .sidebar a {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item span {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item .text-white-50,
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item .text-secondary {
+  color: var(--tc-muted) !important;
+}
+
+/* =========================================================
+   ÍCONES DE IMAGEM — MODO CLARO
+   ========================================================= */
+
+html[data-bs-theme="light"]
+.sidebar .nav-menu
+.menu-item > img {
+    filter: brightness(0) saturate(100%)
+            opacity(.78) !important;
+}
+
+html[data-bs-theme="light"]
+.sidebar .nav-menu
+.menu-item:hover > img,
+
+html[data-bs-theme="light"]
+.sidebar .nav-menu
+.menu-item.ativo > img,
+
+html[data-bs-theme="light"]
+.sidebar .nav-menu
+.menu-item.active > img {
+    filter: brightness(0) saturate(100%)
+            invert(18%)
+            sepia(48%)
+            saturate(3023%)
+            hue-rotate(345deg)
+            brightness(82%)
+            contrast(94%) !important;
+}
+
+/* Item ativo: ícone branco */
+html[data-bs-theme="light"]
+.sidebar .nav-menu
+.menu-item.ativo > img,
+
+html[data-bs-theme="light"]
+.sidebar .nav-menu
+.menu-item.active > img {
+    filter: brightness(0) invert(1) !important;
+}
+
+
+html[data-bs-theme="light"] .sidebar a i {
+  color: inherit !important;
+}
+
+/* Hover */
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item:hover,
+html[data-bs-theme="light"] .sidebar a:hover {
+  background: #f1f3f5 !important;
+  color: #a91f1f !important;
+}
+
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item:hover span {
+  color: #a91f1f !important;
+}
+
+/* Ativo */
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item.ativo,
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item.active,
+html[data-bs-theme="light"] .sidebar a.ativo {
+  background: #b82424 !important;
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item.ativo span,
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item.active span,
+html[data-bs-theme="light"] .sidebar a.ativo span {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item.ativo > img,
+html[data-bs-theme="light"] .sidebar .nav-menu a.menu-item.active > img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Logo */
+html[data-bs-theme="light"] .sidebar .logo-dark {
+  display: none;
+}
+
+html[data-bs-theme="light"] .sidebar .logo-light {
+  display: block;
+}
+
+/* Botões inferiores */
+html[data-bs-theme="light"] .sidebar-bottom .btn {
+  color: var(--tc-ink) !important;
+  background: #ffffff !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] .sidebar-bottom .btn:hover {
+  background: #fff0f1 !important;
+  color: #a51e24 !important;
+}
+
+html[data-bs-theme="light"] .sidebar hr {
+  border-color: var(--tc-line) !important;
+  opacity: 1;
+}
+
+
+/* =========================================================
+   LOGOS
+   ========================================================= */
+
+.logo-dark {
+  display: block;
+}
+
+.logo-light {
+  display: none;
+}
+
+html[data-bs-theme="light"] .logo-dark {
+  display: none;
+}
+
+html[data-bs-theme="light"] .logo-light {
+  display: block;
+}
+
+
+/* =========================================================
+   TÍTULOS / SEÇÕES
+   ========================================================= */
+
+html[data-bs-theme="light"] :is(
+  .section-title,
+  .avisos-title,
+  .page-title,
+  .section-header h2,
+  .section-header h3
+) {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .section-description {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] .section-tag {
+  color: #b82424 !important;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+html[data-bs-theme="light"] .card {
+  --bs-card-bg: #ffffff;
+  --bs-card-color: var(--tc-ink);
+  --bs-card-border-color: var(--tc-line);
+
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] .bg-dark,
+html[data-bs-theme="light"] .bg-dark-card,
+html[data-bs-theme="light"] .bg-black {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .border-secondary {
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] :is(
+  .profile-card,
+  .settings-card,
+  .documents-card,
+  .documents-list,
+  .table-wrap,
+  .product-card,
+  .banner-associado,
+  .avisos-calendar-card,
+  .proximos-avisos-card,
+  .sobre-info-card,
+  .sobre-contribui,
+  .step-card,
+  .destino-card,
+  .help-cat-card,
+  .faq-item,
+  .custom-accordion .accordion-item
+) {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+  box-shadow: 0 4px 18px #24354b0b;
+}
+
+
+/* =========================================================
+   TEXTOS DOS CARDS
+   ========================================================= */
+
+html[data-bs-theme="light"] :is(
+  .settings-card-header h3,
+  .settings-option strong,
+  .settings-field label,
+  .profile-card .form-label,
+  .aviso-title-card,
+  .feature-title,
+  .sobre-info-card h5,
+  .sobre-lista-item strong,
+  .step-card h6,
+  .destino-card h6,
+  .help-cat-card h6,
+  .agenda-content h5,
+  .calendar-day-number,
+  .agenda-day,
+  .aviso-importante .fw-bold
+) {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] :is(
+  .settings-card-header p,
+  .settings-option span,
+  .profile-photo-info,
+  .aviso-description,
+  .feature-desc,
+  .sobre-lista-item p,
+  .agenda-content p,
+  .agenda-content small
+) {
+  color: var(--tc-muted) !important;
+}
+
+
+/* =========================================================
+   SETTINGS / PERFIL
+   ========================================================= */
+
+html[data-bs-theme="light"] :is(
+  .settings-option,
+  .calendar-header,
+  .agenda-item,
+  .accordion-body,
+  .table-wrap
+) {
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] :is(
+  .settings-action,
+  .profile-photo-btn
+) {
+  background: #f7f9fc !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] :is(
+  .settings-action,
+  .profile-photo-btn
+):hover {
+  background: #fff0f1 !important;
+  color: #b82424 !important;
+}
+
+html[data-bs-theme="light"] .settings-icon {
+  color: #b82424 !important;
+  background: #fff0f1 !important;
+}
+
+html[data-bs-theme="light"] .profile-photo {
+  background: #edf1f6 !important;
+  border-color: var(--tc-line) !important;
+}
+
+
+/* =========================================================
+   FORMULÁRIOS
+   ========================================================= */
+
+html[data-bs-theme="light"] :is(
+  .form-control,
+  .form-select,
+  .input-group-text,
+  textarea
+) {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: #d6deea !important;
+}
+
+html[data-bs-theme="light"] :is(
+  .form-control,
+  .form-select,
+  textarea
+)::placeholder {
+  color: #8794a6 !important;
+}
+
+html[data-bs-theme="light"] :is(
+  .form-control,
+  .form-select,
+  textarea
+):focus {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: #b82424 !important;
+  box-shadow: 0 0 0 .2rem #b8242420 !important;
+}
+
+html[data-bs-theme="light"] .form-label {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .drop {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .drop :is(h3, .upload-icon) {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .muted {
+  color: var(--tc-muted) !important;
+}
+
+
+/* =========================================================
+   INPUT GROUP / SEARCH
+   ========================================================= */
+
+html[data-bs-theme="light"] .input-group-text {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] .input-group-text i {
+  color: inherit !important;
+}
+
+
+/* =========================================================
+   TABELAS
+   ========================================================= */
+
+html[data-bs-theme="light"] .table {
+  --bs-table-bg: #ffffff;
+  --bs-table-color: #202b3d;
+  --bs-table-border-color: #e0e5ed;
+
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .table thead {
+  background: #f0f3f8 !important;
+}
+
+html[data-bs-theme="light"] .table thead th {
+  color: var(--tc-ink) !important;
+  background: #f0f3f8 !important;
+}
+
+html[data-bs-theme="light"] .table :is(th, td) {
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] .table tbody tr:hover {
+  background: #f8fafc !important;
+}
+
+
+/* =========================================================
+   MODAIS
+   ========================================================= */
+
+html[data-bs-theme="light"] .modal-content {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, .15);
+}
+
+html[data-bs-theme="light"] .modal-header,
+html[data-bs-theme="light"] .modal-footer {
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] .modal-content .text-white,
+html[data-bs-theme="light"] .modal-content .text-light {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .modal-content .btn-close-white {
+  filter: none;
+}
+
+html[data-bs-theme="light"] .modal-info-item strong {
+  color: var(--tc-ink) !important;
+}
+
+
+/* =========================================================
+   INÍCIO / HERO
+   ========================================================= */
+
+html[data-bs-theme="light"] #inicio .hero-card {
+  background-image:
+    linear-gradient(
+      90deg,
+      #08111edb 0%,
+      #08111e9e 50%,
+      #08111e2e 100%
+    ),
+    url("images/Imagem_tela_de_inicio.png");
+
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #inicio .hero-card :is(
+  h1,
+  h2,
+  h3,
+  p,
+  span,
+  .text-white,
+  .text-light,
+  .text-secondary
+) {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #inicio .hero-card h1 span {
+  color: #ed4651 !important;
+}
+
+html[data-bs-theme="light"] .custom-carousel {
+  background: #ffffff !important;
+  border-color: var(--tc-line) !important;
+  box-shadow: 0 10px 30px #263c5718;
+}
+
+html[data-bs-theme="light"] .aviso-card {
+  background: #ffffff !important;
+  border: 1px solid var(--tc-line) !important;
+  box-shadow: 0 5px 18px #263c570c;
+}
+
+html[data-bs-theme="light"] .aviso-card :is(h4, p) {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .aviso-card .aviso-description {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] .aapm-card {
+  background: #ffffff !important;
+  border: 1px solid var(--tc-line) !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .aapm-card :is(
+  .aapm-title,
+  .feature-title
+) {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .aapm-card :is(
+  .aapm-text,
+  .feature-desc
+) {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] .feature-icon {
+  background: #fff0f1 !important;
+}
+
+html[data-bs-theme="light"] .feature-icon img {
+  filter: brightness(0) opacity(.82);
+}
+
+
+/* =========================================================
+   PEDIDOS
+   ========================================================= */
+
+html[data-bs-theme="light"] #pedidos .product-card :is(
+  h5,
+  .preco-por
+) {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #pedidos .product-card .text-secondary {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] #pedidos .product-card .btn-outline-danger {
+  background: #b82424 !important;
+  border-color: #b82424 !important;
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #pedidos .product-card .btn-outline-danger:hover {
+  background: #991c22 !important;
+  border-color: #991c22 !important;
+}
+
+html[data-bs-theme="light"] #pedidos .products-control {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #pedidos .btn-filter:not(.active) {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border: 1px solid var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #pedidos .btn-filter.active {
+  background: #b82424 !important;
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #pedidos .banner-associado h3 {
+  color: var(--tc-ink) !important;
+}
+
+/* Cards que possuem imagem/gradiente */
+html[data-bs-theme="light"] #pedidos .custom-card :is(
+  h2,
+  h3,
+  p,
+  span,
+  .card-title-custom,
+  .card-subtitle-custom
+) {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #pedidos .custom-card .btn {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   AVISOS / CALENDÁRIO
+   ========================================================= */
+
+html[data-bs-theme="light"] #avisos .avisos-hero {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #avisos .avisos-hero h1 {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-header h3,
+html[data-bs-theme="light"] #avisos .proximos-avisos-card h3 {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #avisos :is(
+  .calendar-control,
+  .calendar-today
+) {
+  background: #f4f6fa !important;
+  color: var(--tc-ink) !important;
+  border-color: #d6deea !important;
+}
+
+html[data-bs-theme="light"] #avisos :is(
+  .calendar-control,
+  .calendar-today
+):hover {
+  background: #fff0f1 !important;
+  color: #b82424 !important;
+  border-color: #b82424 !important;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-weekdays {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-day {
+  background: #f4f6fa !important;
+  color: var(--tc-ink) !important;
+  border: 1px solid #e7ebf1 !important;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-day:hover {
+  background: #e9eef6 !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-day.today {
+  background: #fff0f1 !important;
+  border-color: #b82424 !important;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-day.other-month {
+  opacity: .48;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-legend {
+  border-color: var(--tc-line) !important;
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] #avisos .calendar-event {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #avisos .agenda-date {
+  background: #f4f6fa !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #avisos .agenda-day {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #avisos .agenda-item {
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #avisos .avisos-important {
+  background: #ffffff !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #avisos .avisos-important h5 {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #avisos .avisos-filter:not(.active) {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #avisos .avisos-filter.active {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   SOBRE A AAPM
+   ========================================================= */
+
+html[data-bs-theme="light"] #sobre .sobre-aapm-header :is(h1, p) {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #sobre .sobre-aapm-header .text-secondary {
+  color: var(--tc-muted) !important;
+}
+
+html[data-bs-theme="light"] #sobre .sobre-info-card {
+  background: #ffffff !important;
+  border: 1px solid var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #sobre .sobre-info-card h5,
+html[data-bs-theme="light"] #sobre .sobre-contribui h2 {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #sobre .sobre-icon {
+  color: #b82424 !important;
+  background: #fff0f1 !important;
+}
+
+html[data-bs-theme="light"] #sobre .sobre-lista-item {
+  background: #f7f9fc !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #sobre .sobre-lista-item p {
+  color: var(--tc-muted) !important;
+}
+
+/* CTA */
+html[data-bs-theme="light"] #sobre .sobre-cta,
+html[data-bs-theme="light"] #sobre .sobre-cta :is(
+  h3,
+  p,
+  span,
+  strong
+) {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #sobre .sobre-cta .btn-light {
+  color: #202b3d !important;
+}
+
+
+/* =========================================================
+   FORMATURA
+   ========================================================= */
+
+html[data-bs-theme="light"] #formatura .formatura-hero :is(
+  h1,
+  h2,
+  h3,
+  p,
+  span,
+  .text-white,
+  .text-light,
+  .text-light-50
+) {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #formatura .formatura-badge {
+  background: #ffffffeb !important;
+  color: var(--tc-ink) !important;
+  border: 1px solid #ffffffa8 !important;
+}
+
+html[data-bs-theme="light"] #formatura .step-card,
+html[data-bs-theme="light"] #formatura .destino-card,
+html[data-bs-theme="light"] #formatura .destino-card .bg-dark-card,
+html[data-bs-theme="light"] #formatura .aviso-importante {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border: 1px solid var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #formatura .step-card :is(
+  h5,
+  h6,
+  p,
+  span
+),
+html[data-bs-theme="light"] #formatura .destino-card :is(
+  h5,
+  h6,
+  p,
+  span
+) {
+  color: var(--tc-ink);
+}
+
+html[data-bs-theme="light"] #formatura .aviso-importante .text-white {
+  color: var(--tc-ink) !important;
+}
+
+
+/* =========================================================
+   AJUDA
+   ========================================================= */
+
+html[data-bs-theme="light"] #ajuda .help-hero {
+  background: #ffffff !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #ajuda .help-hero h2 {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #ajuda .help-cat-card {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] #ajuda .help-cat-card:hover {
+  background: #fff4f4 !important;
+  border-color: #d99da1 !important;
+}
+
+html[data-bs-theme="light"] #ajuda .accordion-item {
+  --bs-accordion-bg: #ffffff;
+  --bs-accordion-color: var(--tc-ink);
+  --bs-accordion-border-color: var(--tc-line);
+  --bs-accordion-btn-bg: #ffffff;
+  --bs-accordion-btn-color: var(--tc-ink);
+  --bs-accordion-active-bg: #fff0f1;
+  --bs-accordion-active-color: #9d1e24;
+
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #ajuda .accordion-button {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] #ajuda .accordion-button::after {
+  filter: none;
+}
+
+html[data-bs-theme="light"] #ajuda .accordion-button:not(.collapsed) {
+  background: #fff0f1 !important;
+  color: #9d1e24 !important;
+}
+
+html[data-bs-theme="light"] #ajuda .accordion-body {
+  color: var(--tc-muted) !important;
+  background: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #ajuda .bg-dark-card {
+  background: #f7f9fc !important;
+}
+
+html[data-bs-theme="light"] #ajuda .text-white {
+  color: var(--tc-ink) !important;
+}
+
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+html[data-bs-theme="light"] :is(
+  .btn-danger,
+  .btn-profile-save,
+  .btn-gradient-red,
+  .btn-custom
+) {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .btn-danger :is(i, span),
+html[data-bs-theme="light"] .btn-profile-save :is(i, span) {
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .btn-outline-danger {
+  color: #b82424;
+  border-color: #b82424;
+}
+
+html[data-bs-theme="light"] .btn-outline-danger:hover {
+  color: #ffffff !important;
+  background: #b82424 !important;
+}
+
+
+/* =========================================================
+   BADGES / LABELS
+   ========================================================= */
+
+html[data-bs-theme="light"] .badge {
+  color: inherit;
+}
+
+html[data-bs-theme="light"] .badge.bg-dark {
+  background: #f0f3f8 !important;
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .badge.text-bg-dark {
+  background: #f0f3f8 !important;
+  color: var(--tc-ink) !important;
+}
+
+
+/* =========================================================
+   DROPDOWNS
+   ========================================================= */
+
+html[data-bs-theme="light"] .dropdown-menu {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+html[data-bs-theme="light"] .dropdown-item {
+  color: var(--tc-ink) !important;
+}
+
+html[data-bs-theme="light"] .dropdown-item:hover,
+html[data-bs-theme="light"] .dropdown-item:focus {
+  background: #f4f6fa !important;
+  color: #b82424 !important;
+}
+
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+html[data-bs-theme="light"] .alert {
+  color: var(--tc-ink);
+}
+
+html[data-bs-theme="light"] .alert-dark {
+  background: #f0f3f8 !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+/*
+   O footer continua escuro de propósito.
+   */
+
+html[data-bs-theme="light"] .techcampus-footer {
+  background: #080a0d !important;
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .techcampus-footer :is(
+  a,
+  p,
+  span,
+  strong,
+  small,
+  .footer-description,
+  .footer-year
+) {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   ÍCONES GENÉRICOS
+   ========================================================= */
+
+html[data-bs-theme="light"] .main-content i {
+  color: inherit;
+}
+
+html[data-bs-theme="light"] .main-content .text-white i,
+html[data-bs-theme="light"] .main-content .text-light i {
+  color: inherit !important;
+}
+
+
+/* =========================================================
+   ELEMENTOS QUE PRECISAM CONTINUAR BRANCOS
+   ========================================================= */
+
+/* Botões vermelhos */
+html[data-bs-theme="light"] :is(
+  .btn-danger,
+  .btn-primary,
+  .btn-success,
+  .btn-warning
+) {
+  color: #ffffff !important;
+}
+
+/* Textos sobre imagens */
+html[data-bs-theme="light"] :is(
+  .hero-card,
+  .formatura-hero,
+  .custom-card,
+  .sobre-cta
+) :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  a,
+  i
+) {
+  color: #ffffff !important;
+}
+
+
+/* =========================================================
+   CORREÇÃO FINAL — ELEMENTOS VAZIOS/BRANCOS
+   ========================================================= */
+
+/* Evita que containers claros herdem branco invisível */
+html[data-bs-theme="light"] .main-content :is(
+  .container,
+  .container-fluid
+) {
+  color: var(--tc-ink);
+}
+
+/* Links dentro do conteúdo */
+html[data-bs-theme="light"] .main-content a:not(
+  .btn
+):not(
+  .menu-item
+) {
+  color: #b82424;
+}
+
+html[data-bs-theme="light"] .main-content a:not(
+  .btn
+):not(
+  .menu-item
+):hover {
+  color: #9d1e24;
+}
+
+/* HR */
+html[data-bs-theme="light"] hr {
+  color: var(--tc-line);
+  border-color: var(--tc-line) !important;
+  opacity: 1;
+}
+
+/* Código */
+html[data-bs-theme="light"] code {
+  color: #9d1e24;
+  background: #f4f6fa;
+}
+
+/* Pre */
+html[data-bs-theme="light"] pre {
+  background: #f4f6fa !important;
+  color: var(--tc-ink) !important;
+  border-color: var(--tc-line) !important;
+}
+
+/* =========================================================
+   ÍCONES — MODO CLARO
+   ========================================================= */
+
+/* Ícones normais */
+html[data-bs-theme="light"] .main-content i,
+html[data-bs-theme="light"] .main-content svg {
+    color: #202b3d;
+    fill: currentColor;
+}
+
+/* Ícones secundários */
+html[data-bs-theme="light"] .text-secondary i,
+html[data-bs-theme="light"] .text-muted i,
+html[data-bs-theme="light"] .text-white-50 i {
+    color: #617086 !important;
+}
+
+/* Ícones vermelhos */
+html[data-bs-theme="light"] .text-danger i,
+html[data-bs-theme="light"] .icon-danger,
+html[data-bs-theme="light"] .settings-icon,
+html[data-bs-theme="light"] .sobre-icon {
+    color: #b82424 !important;
+}
+
+/* Botões */
+html[data-bs-theme="light"] .btn i {
+    color: inherit !important;
+}
+
+/* Botões vermelhos continuam com ícone branco */
+html[data-bs-theme="light"] .btn-danger i,
+html[data-bs-theme="light"] .btn-profile-save i,
+html[data-bs-theme="light"] .btn-gradient-red i,
+html[data-bs-theme="light"] .btn-custom i {
+    color: #ffffff !important;
+}
+
+/* Botões outline */
+html[data-bs-theme="light"] .btn-outline-danger i {
+    color: #b82424 !important;
+}
+
+html[data-bs-theme="light"] .btn-outline-danger:hover i {
+    color: #ffffff !important;
+}
+
+/* Sidebar */
+html[data-bs-theme="light"] .sidebar i {
+    color: #202b3d !important;
+}
+
+html[data-bs-theme="light"] .sidebar .text-secondary i {
+    color: #617086 !important;
+}
+
+/* Item ativo da sidebar */
+html[data-bs-theme="light"] .sidebar
+.nav-menu
+.menu-item.ativo i,
+
+html[data-bs-theme="light"] .sidebar
+.nav-menu
+.menu-item.active i,
+
+html[data-bs-theme="light"] .sidebar
+.nav-menu
+.menu-item:hover i {
+    color: inherit !important;
+}
+
+/* Ícone do item ativo */
+html[data-bs-theme="light"] .sidebar
+.nav-menu
+.menu-item.ativo,
+
+html[data-bs-theme="light"] .sidebar
+.nav-menu
+.menu-item.active {
+    color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .sidebar
+.nav-menu
+.menu-item.ativo i,
+
+html[data-bs-theme="light"] .sidebar
+.nav-menu
+.menu-item.active i {
+    color: #ffffff !important;
+}
+
+/* Topbar */
+html[data-bs-theme="light"] .topbar i {
+    color: #202b3d !important;
+}
+
+/* Avatar */
+html[data-bs-theme="light"] .topbar .user-avatar i {
+    color: #ffffff !important;
+}
+
+/* Dropdown */
+html[data-bs-theme="light"] .dropdown-menu i {
+    color: #202b3d !important;
+}
+
+html[data-bs-theme="light"] .dropdown-menu .text-danger i {
+    color: #b82424 !important;
+}
+
+/* Ícones de cards */
+html[data-bs-theme="light"] .feature-icon i {
+    color: #b82424 !important;
+}
+
+html[data-bs-theme="light"] .sobre-icon i {
+    color: #b82424 !important;
+}
+
+/* Ícones dos controles do calendário */
+html[data-bs-theme="light"] #avisos
+.calendar-control i,
+
+html[data-bs-theme="light"] #avisos
+.calendar-today i {
+    color: #202b3d !important;
+}
+
+html[data-bs-theme="light"] #avisos
+.calendar-control:hover i,
+
+html[data-bs-theme="light"] #avisos
+.calendar-today:hover i {
+    color: #b82424 !important;
+}
+
+/* Modal */
+html[data-bs-theme="light"] .modal-content i {
+    color: #202b3d;
+}
+
+/* Botão fechar */
+html[data-bs-theme="light"] .modal-content .btn-close {
+    opacity: .75;
+}
+
+html[data-bs-theme="light"] .modal-content .btn-close:hover {
+    opacity: 1;
+}
+
+/* =========================================================
+   TECHCAMPUS — CORREÇÃO DEFINITIVA DOS ÍCONES NO LIGHT
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. ÍCONES FONT AWESOME / BOOTSTRAP ICONS
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"] .main-content i,
+html[data-bs-theme="light"] .main-content .fa,
+html[data-bs-theme="light"] .main-content .fas,
+html[data-bs-theme="light"] .main-content .far,
+html[data-bs-theme="light"] .main-content .fab,
+html[data-bs-theme="light"] .main-content .bi {
+    color: #202b3d !important;
+}
+
+
+/* ---------------------------------------------------------
+   2. ÍCONES DA SIDEBAR
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"] .sidebar i,
+html[data-bs-theme="light"] .sidebar .bi,
+html[data-bs-theme="light"] .sidebar .fa,
+html[data-bs-theme="light"] .sidebar .fas,
+html[data-bs-theme="light"] .sidebar .far {
+    color: #202b3d !important;
+}
+
+
+/* Sidebar ativo */
+html[data-bs-theme="light"]
+.sidebar .menu-item.active i,
+
+html[data-bs-theme="light"]
+.sidebar .menu-item.ativo i {
+    color: #ffffff !important;
+}
+
+
+/* Sidebar hover */
+html[data-bs-theme="light"]
+.sidebar .menu-item:hover i {
+    color: #b82424 !important;
+}
+
+
+/* ---------------------------------------------------------
+   3. TOPBAR
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"] .topbar i,
+html[data-bs-theme="light"] .topbar .bi,
+html[data-bs-theme="light"] .topbar .fa {
+    color: #202b3d !important;
+}
+
+
+/* Avatar continua branco */
+html[data-bs-theme="light"]
+.topbar .user-avatar i {
+    color: #ffffff !important;
+}
+
+
+/* ---------------------------------------------------------
+   4. SVG
+   --------------------------------------------------------- */
+
+/*
+   Muitos ícones não são <i>.
+   São SVG com fill/stroke branco.
+*/
+
+html[data-bs-theme="light"]
+.main-content svg:not(.keep-white) {
+    color: #202b3d !important;
+}
+
+
+
+
+
+/* ---------------------------------------------------------
+   5. SVG DA SIDEBAR
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.sidebar svg:not(.keep-white) {
+    color: #202b3d !important;
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+
+/* Sidebar ativo */
+html[data-bs-theme="light"]
+.sidebar .menu-item.active svg,
+
+html[data-bs-theme="light"]
+.sidebar .menu-item.ativo svg {
+    color: #ffffff !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+}
+
+
+/* ---------------------------------------------------------
+   6. ÍCONES VERMELHOS
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.settings-icon,
+
+html[data-bs-theme="light"]
+.sobre-icon,
+
+html[data-bs-theme="light"]
+.feature-icon,
+
+html[data-bs-theme="light"]
+.icon-danger {
+    color: #b82424 !important;
+}
+
+
+html[data-bs-theme="light"]
+.settings-icon i,
+
+html[data-bs-theme="light"]
+.sobre-icon i,
+
+html[data-bs-theme="light"]
+.feature-icon i,
+
+html[data-bs-theme="light"]
+.icon-danger i {
+    color: #b82424 !important;
+}
+
+
+/* ---------------------------------------------------------
+   7. BOTÕES
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.btn-danger i,
+
+html[data-bs-theme="light"]
+.btn-profile-save i,
+
+html[data-bs-theme="light"]
+.btn-gradient-red i,
+
+html[data-bs-theme="light"]
+.btn-custom i {
+    color: #ffffff !important;
+}
+
+
+/* Outline vermelho */
+html[data-bs-theme="light"]
+.btn-outline-danger i {
+    color: #b82424 !important;
+}
+
+html[data-bs-theme="light"]
+.btn-outline-danger:hover i {
+    color: #ffffff !important;
+}
+
+
+/* ---------------------------------------------------------
+   8. DROPDOWN
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.dropdown-menu i {
+    color: #202b3d !important;
+}
+
+html[data-bs-theme="light"]
+.dropdown-menu .text-danger i {
+    color: #b82424 !important;
+}
+
+
+/* ---------------------------------------------------------
+   9. MODAIS
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.modal-content i {
+    color: #202b3d !important;
+}
+
+
+/* ---------------------------------------------------------
+   10. CALENDÁRIO
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+#avisos .calendar-control i,
+
+html[data-bs-theme="light"]
+#avisos .calendar-today i {
+    color: #202b3d !important;
+}
+
+html[data-bs-theme="light"]
+#avisos .calendar-control:hover i,
+
+html[data-bs-theme="light"]
+#avisos .calendar-today:hover i {
+    color: #b82424 !important;
+}
+
+
+/* ---------------------------------------------------------
+   11. NÃO DEIXAR O TEXT-WHITE MATAR OS ÍCONES
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.main-content .text-white i,
+html[data-bs-theme="light"]
+.main-content .text-light i {
+    color: #202b3d !important;
+}
+
+
+/* Exceções: componentes que realmente possuem fundo escuro */
+html[data-bs-theme="light"]
+.hero-card i,
+
+html[data-bs-theme="light"]
+.formatura-hero i,
+
+html[data-bs-theme="light"]
+.custom-card i,
+
+html[data-bs-theme="light"]
+.sobre-cta i,
+
+html[data-bs-theme="light"]
+.btn-danger i,
+
+html[data-bs-theme="light"]
+.btn-profile-save i {
+    color: #ffffff !important;
+}
+
+
+/* ---------------------------------------------------------
+   12. IMAGENS QUE SÃO ÍCONES
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.sidebar .menu-item > img {
+    filter:
+        brightness(0)
+        saturate(100%)
+        opacity(.75) !important;
+}
+
+
+/* Ativo = branco */
+html[data-bs-theme="light"]
+.sidebar .menu-item.active > img,
+
+html[data-bs-theme="light"]
+.sidebar .menu-item.ativo > img {
+    filter:
+        brightness(0)
+        invert(1) !important;
+}
+
+
+/* ---------------------------------------------------------
+   13. CORREÇÃO DE CLASSES BOOTSTRAP
+   --------------------------------------------------------- */
+
+html[data-bs-theme="light"]
+.text-white i {
+    color: #202b3d !important;
+}
+
+html[data-bs-theme="light"]
+.text-light i {
+    color: #202b3d !important;
+}
+
+html[data-bs-theme="light"]
+.text-secondary i {
+    color: #617086 !important;
+}
+
+html[data-bs-theme="light"]
+.text-danger i {
+    color: #b82424 !important;
+}
+
+
+/* ---------------------------------------------------------
+   14. EXCEÇÕES FINAIS
+   --------------------------------------------------------- */
+
+/* Tudo que estiver dentro de fundo vermelho */
+html[data-bs-theme="light"]
+.bg-danger i,
+
+html[data-bs-theme="light"]
+.bg-danger svg,
+
+html[data-bs-theme="light"]
+.bg-primary i,
+
+html[data-bs-theme="light"]
+.bg-primary svg {
+    color: #ffffff !important;
+}
+
+
+/* Tudo que estiver dentro de botão vermelho */
+html[data-bs-theme="light"]
+.btn-danger svg,
+
+html[data-bs-theme="light"]
+.btn-profile-save svg {
+    color: #ffffff !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+}
+
+/* =========================================================
+   TECHCAMPUS — CORREÇÕES FINAIS DO TEMA CLARO
+   Span / Calendário / Economize / Documentos / Formatura
+   ========================================================= */
+
+html[data-bs-theme="light"] {
+
+    /* Texto principal */
+    --tc-light-text: #172033;
+    --tc-light-muted: #64748b;
+    --tc-light-card: #ffffff;
+    --tc-light-border: #e2e8f0;
+
+}
+
+
+/* =========================================================
+   1. SPANS — TEXTO NORMAL
+   ========================================================= */
+
+html[data-bs-theme="light"] .main-content span,
+html[data-bs-theme="light"] .main-content small {
+    color: var(--tc-light-text);
+}
+
+
+/* Textos secundários */
+html[data-bs-theme="light"] .main-content .text-muted,
+html[data-bs-theme="light"] .main-content .text-secondary {
+    color: #64748b !important;
+}
+
+
+/* =========================================================
+   2. ECONOMIZE
+   ========================================================= */
+
+html[data-bs-theme="light"] .economize span,
+html[data-bs-theme="light"] .economize small,
+html[data-bs-theme="light"] .economize p {
+    color: #475569 !important;
+}
+
+html[data-bs-theme="light"] .economize strong,
+html[data-bs-theme="light"] .economize b {
+    color: #172033 !important;
+}
+
+
+/* Caso Economize use alguma classe específica */
+html[data-bs-theme="light"] .economize .badge,
+html[data-bs-theme="light"] .economize .tag,
+html[data-bs-theme="light"] .economize .label {
+    color: #172033 !important;
+    background: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+}
+
+
+/* =========================================================
+   3. CALENDÁRIO
+   ========================================================= */
+
+html[data-bs-theme="light"] .calendar,
+html[data-bs-theme="light"] .calendario {
+    background: #ffffff !important;
+    color: #172033 !important;
+}
+
+html[data-bs-theme="light"] .calendar span,
+html[data-bs-theme="light"] .calendar small,
+html[data-bs-theme="light"] .calendario span,
+html[data-bs-theme="light"] .calendario small {
+    color: #475569 !important;
+}
+
+
+/* Dias do calendário */
+html[data-bs-theme="light"] .calendar .day,
+html[data-bs-theme="light"] .calendar .dia,
+html[data-bs-theme="light"] .calendario .day,
+html[data-bs-theme="light"] .calendario .dia {
+    color: #172033 !important;
+}
+
+
+/* Dia selecionado */
+html[data-bs-theme="light"] .calendar .active,
+html[data-bs-theme="light"] .calendar .selected,
+html[data-bs-theme="light"] .calendario .active,
+html[data-bs-theme="light"] .calendario .selected {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   4. DOCUMENTOS
+   ========================================================= */
+
+html[data-bs-theme="light"] .documentos,
+html[data-bs-theme="light"] .documento,
+html[data-bs-theme="light"] .document-card,
+html[data-bs-theme="light"] .document-card * {
+    color: #172033 !important;
+}
+
+
+/* Títulos */
+html[data-bs-theme="light"] .documentos h1,
+html[data-bs-theme="light"] .documentos h2,
+html[data-bs-theme="light"] .documentos h3,
+html[data-bs-theme="light"] .documentos h4,
+html[data-bs-theme="light"] .documento h1,
+html[data-bs-theme="light"] .documento h2,
+html[data-bs-theme="light"] .documento h3,
+html[data-bs-theme="light"] .documento h4 {
+    color: #172033 !important;
+}
+
+
+/* Descrição */
+html[data-bs-theme="light"] .documentos p,
+html[data-bs-theme="light"] .documentos span,
+html[data-bs-theme="light"] .documentos small {
+    color: #64748b !important;
+}
+
+
+/* Ícone do documento */
+html[data-bs-theme="light"] .documentos i,
+html[data-bs-theme="light"] .documentos svg,
+html[data-bs-theme="light"] .documento i,
+html[data-bs-theme="light"] .documento svg {
+    color: #172033 !important;
+}
+
+
+/* =========================================================
+   5. FORMAtURA
+   ========================================================= */
+
+/* Textos gerais */
+html[data-bs-theme="light"] #formatura,
+html[data-bs-theme="light"] #formatura p,
+html[data-bs-theme="light"] #formatura span,
+html[data-bs-theme="light"] #formatura small {
+    color: #172033 !important;
+}
+
+
+/* Títulos */
+html[data-bs-theme="light"] #formatura h1,
+html[data-bs-theme="light"] #formatura h2,
+html[data-bs-theme="light"] #formatura h3,
+html[data-bs-theme="light"] #formatura h4,
+html[data-bs-theme="light"] #formatura h5 {
+    color: #172033 !important;
+}
+
+
+/* Texto secundário da formatura */
+html[data-bs-theme="light"] #formatura .text-muted,
+html[data-bs-theme="light"] #formatura .text-secondary {
+    color: #64748b !important;
+}
+
+
+/* =========================================================
+   6. CORREÇÃO DAS SPANS BRANCAS DA FORMATURA
+   ========================================================= */
+
+/* Remove herança de branco */
+html[data-bs-theme="light"] #formatura .text-white,
+html[data-bs-theme="light"] #formatura span.text-white,
+html[data-bs-theme="light"] #formatura p.text-white,
+html[data-bs-theme="light"] #formatura small.text-white {
+    color: #172033 !important;
+}
+
+
+/* Se houver textos dentro de cards */
+html[data-bs-theme="light"] #formatura .card span,
+html[data-bs-theme="light"] #formatura .card p,
+html[data-bs-theme="light"] #formatura .card small {
+    color: #475569 !important;
+}
+
+
+/* =========================================================
+   7. NÃO DEIXAR TEXTO PRETO EM FUNDO PRETO
+   ========================================================= */
+
+html[data-bs-theme="light"] .card {
+    color: #172033;
+}
+
+html[data-bs-theme="light"] .card span,
+html[data-bs-theme="light"] .card p,
+html[data-bs-theme="light"] .card small {
+    color: #475569;
+}
+
+html[data-bs-theme="light"] .card h1,
+html[data-bs-theme="light"] .card h2,
+html[data-bs-theme="light"] .card h3,
+html[data-bs-theme="light"] .card h4,
+html[data-bs-theme="light"] .card h5,
+html[data-bs-theme="light"] .card h6 {
+    color: #172033;
+}
+
+
+/* =========================================================
+   8. EXCEÇÕES — BOTÕES ESCUROS/VERMELHOS
+   ========================================================= */
+
+/* Não transformar texto de botão em escuro */
+html[data-bs-theme="light"] .btn-primary,
+html[data-bs-theme="light"] .btn-danger,
+html[data-bs-theme="light"] .btn-success,
+html[data-bs-theme="light"] .btn-dark {
+    color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] .btn-primary *,
+html[data-bs-theme="light"] .btn-danger *,
+html[data-bs-theme="light"] .btn-success *,
+html[data-bs-theme="light"] .btn-dark * {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   9. BADGES
+   ========================================================= */
+
+html[data-bs-theme="light"] .badge {
+    color: #172033 !important;
+}
+
+html[data-bs-theme="light"] .badge.bg-danger,
+html[data-bs-theme="light"] .badge.bg-primary,
+html[data-bs-theme="light"] .badge.bg-success,
+html[data-bs-theme="light"] .badge.bg-dark {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   10. CALENDÁRIO — NÚMEROS
+   ========================================================= */
+
+html[data-bs-theme="light"] .calendar .day-number,
+html[data-bs-theme="light"] .calendario .day-number,
+html[data-bs-theme="light"] .calendar .date,
+html[data-bs-theme="light"] .calendario .date {
+    color: #172033 !important;
+}
+
+
+/* Dias de outro mês */
+html[data-bs-theme="light"] .calendar .muted,
+html[data-bs-theme="light"] .calendario .muted {
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   11. LINKS
+   ========================================================= */
+
+html[data-bs-theme="light"] .main-content a:not(.btn) {
+    color: #b4232c;
+}
+
+html[data-bs-theme="light"] .main-content a:not(.btn):hover {
+    color: #8f1820;
+}
+
+/* =========================================================
+   TECHCAMPUS — CONTROLE DAS LOGOS DO SIDEBAR
+   ========================================================= */
+
+/* Por segurança: começa escondendo as duas */
+.sidebar .logo-dark-wrapper,
+.sidebar .logo-light-wrapper {
+    display: none !important;
+}
+
+
+/* =========================
+   MODO ESCURO
+   ========================= */
+
+html[data-bs-theme="dark"] .sidebar .logo-dark-wrapper {
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+html[data-bs-theme="dark"] .sidebar .logo-light-wrapper {
+    display: none !important;
+}
+
+
+/* =========================
+   MODO CLARO
+   ========================= */
+
+html[data-bs-theme="light"] .sidebar .logo-dark-wrapper {
+    display: none !important;
+}
+
+html[data-bs-theme="light"] .sidebar .logo-light-wrapper {
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+
+/* =========================
+   IMAGENS
+   ========================= */
+
+.sidebar .logo-dark-wrapper img,
+.sidebar .logo-light-wrapper img {
+    display: block !important;
+
+    width: auto;
+    max-width: 220px;
+    height: auto;
+}
