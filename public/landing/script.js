@@ -2007,3 +2007,94 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+
+/* =========================================================
+   COMPRAS - PEDIDOS DISPONÍVEIS
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll("#pedidos .product-slide");
+
+  if (!cards.length) return;
+
+  const tokenCompra = () => sessionStorage.getItem("techcampus_token");
+
+  cards.forEach((card) => {
+    const botao = card.querySelector('button:not(.products-control)');
+    const nomeElemento = card.querySelector("h5");
+
+    if (!botao || !nomeElemento) return;
+
+    botao.addEventListener("click", async () => {
+      const token = tokenCompra();
+
+      if (!token) {
+        alert("Sua sessão expirou. Faça login novamente para realizar a compra.");
+        return;
+      }
+
+      const nomeProduto = nomeElemento.textContent.trim();
+
+      botao.disabled = true;
+      const textoOriginal = botao.textContent.trim();
+      botao.textContent = "Processando...";
+
+      try {
+        // Busca o produto real cadastrado no banco pelo nome exibido no card.
+        const respostaProdutos = await fetch("/api/produtos");
+        const produtos = await respostaProdutos.json().catch(() => []);
+
+        if (!respostaProdutos.ok) {
+          throw new Error("Não foi possível carregar os produtos.");
+        }
+
+        const produto = produtos.find(
+          (item) => String(item.nome).trim().toLowerCase() === nomeProduto.toLowerCase()
+        );
+
+        if (!produto) {
+          throw new Error("Este produto não está cadastrado no sistema.");
+        }
+
+        if (produto.estoque < 1) {
+          throw new Error("Este produto está sem estoque.");
+        }
+
+        const respostaPedido = await fetch("/api/pedidos", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          },
+          body: JSON.stringify({
+            itens: [
+              {
+                produto_id: produto.id,
+                quantidade: 1
+              }
+            ]
+          })
+        });
+
+        const pedido = await respostaPedido.json().catch(() => ({}));
+
+        if (!respostaPedido.ok) {
+          throw new Error(
+            pedido.erro || "Não foi possível realizar o pedido."
+          );
+        }
+
+        alert(
+          "Pedido realizado com sucesso! Número do pedido: " +
+          pedido.id
+        );
+      } catch (erro) {
+        console.error("Compra:", erro);
+        alert(erro.message || "Não foi possível realizar a compra.");
+      } finally {
+        botao.disabled = false;
+        botao.textContent = textoOriginal;
+      }
+    });
+  });
+});
