@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
           : '<span class="badge bg-warning text-dark">Em análise</span>';
 
         return '<tr>' +
-          '<td><a href="' + url + '" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none fw-semibold">' +
+          '<td><a href="#" class="text-white text-decoration-none fw-semibold js-ver-documento" data-id="' + d.id + '">' +
           '<i class="bi bi-file-earmark-text me-2 text-danger"></i>' + escapeHtml(d.nome) + '</a></td>' +
           '<td><span class="badge bg-secondary">' + typeName(d.mime) + '</span></td>' +
           '<td>' + dateName(d.criado_em) + '</td>' +
@@ -72,8 +72,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function abrirDocumento(id) {
+    const janela = window.open("about:blank", "_blank");
     const t = token();
     if (!t) {
+      if (janela && !janela.closed) janela.close();
       msg.textContent = "Sua sessão expirou. Faça login novamente.";
       msg.className = "text-danger mt-2";
       return;
@@ -91,13 +93,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const blob = await r.blob();
       const url = URL.createObjectURL(blob);
-      const janela = window.open(url, "_blank");
 
-      if (!janela) {
+      if (janela && !janela.closed) {
+        janela.location.href = url;
+      } else {
         const link = document.createElement("a");
         link.href = url;
         link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        document.body.appendChild(link);
         link.click();
+        link.remove();
       }
 
       setTimeout(() => URL.revokeObjectURL(url), 60000);
