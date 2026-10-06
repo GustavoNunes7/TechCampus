@@ -2007,3 +2007,89 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+/* =========================================================
+   PEDIDOS DISPONÍVEIS
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const botoes = document.querySelectorAll("#pedidos .product-slide button:not(.products-control)");
+
+  botoes.forEach((botao) => {
+    botao.addEventListener("click", async () => {
+      const card = botao.closest(".product-slide");
+      const nomeElemento = card?.querySelector("h5");
+      const token = sessionStorage.getItem("techcampus_token");
+
+      if (!nomeElemento) return;
+
+      if (!token) {
+        alert("Faça login novamente para realizar o pedido.");
+        return;
+      }
+
+      const nomeTela = nomeElemento.textContent
+        .trim()
+        .normalize("NFD")
+        .replace(/[\\u0300-\\u036f]/g, "")
+        .toLowerCase()
+        .replace(/\\s+/g, " ");
+
+      const textoOriginal = botao.textContent.trim();
+      botao.disabled = true;
+      botao.textContent = "Processando...";
+
+      try {
+        const respostaProdutos = await fetch("/api/produtos");
+        const produtos = await respostaProdutos.json();
+
+        if (!respostaProdutos.ok) {
+          throw new Error(produtos.erro || "Não foi possível carregar os produtos.");
+        }
+
+        const produto = produtos.find((item) => {
+          const nomeBanco = String(item.nome || "")
+            .trim()
+            .normalize("NFD")
+            .replace(/[\\u0300-\\u036f]/g, "")
+            .toLowerCase()
+            .replace(/\\s+/g, " ");
+
+          return nomeBanco === nomeTela;
+        });
+
+        if (!produto) {
+          throw new Error("Produto não encontrado no sistema.");
+        }
+
+        if (Number(produto.estoque) < 1) {
+          throw new Error("Este produto está sem estoque.");
+        }
+
+        const respostaPedido = await fetch("/api/pedidos", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            itens: [{ produto_id: produto.id, quantidade: 1 }],
+          }),
+        });
+
+        const pedido = await respostaPedido.json().catch(() => ({}));
+
+        if (!respostaPedido.ok) {
+          throw new Error(pedido.erro || "Não foi possível realizar o pedido.");
+        }
+
+        alert("Pedido realizado com sucesso! Número do pedido: " + pedido.id);
+      } catch (erro) {
+        console.error("Pedido:", erro);
+        alert(erro.message || "Não foi possível realizar o pedido.");
+      } finally {
+        botao.disabled = false;
+        botao.textContent = textoOriginal;
+      }
+    });
+  });
+});
