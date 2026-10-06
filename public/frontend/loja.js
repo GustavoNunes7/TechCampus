@@ -264,7 +264,7 @@
   /* =====================================================
      2) PAINEL DO GERENTE
   ===================================================== */
-  const TELAS = ["inicio", "documento", "pedidos", "avisos", "sobre", "formatura", "ajuda", "perfil", "configuracoes"];
+  const TELAS = ["inicio", "documento", "pedidos", "avisos", "sobre", "formatura", "ajuda", "perfil", "configuracoes", "usuarios"];  
   const CATEGORIAS = ["uniformes", "esportes", "jogos", "epi", "acessorios"];
   let secGerente, modalProd, editandoId = null;
 
@@ -481,12 +481,57 @@
       h("div", { class: "d-flex flex-column" },
         h("span", { class: "fw-bold fs-6" }, "Gerência"),
         h("span", { class: "text-white-50 small" }, "Produtos e pedidos")));
-    const alvo = document.querySelector('a.menu-item[href="#usuario"]');
+    const alvo = document.querySelector('a.menu-item[href="#usuarios"]');
     alvo ? alvo.before(link) : document.querySelector("#sidebar nav")?.append(link);
     window.addEventListener("hashchange", sincronizarGerente);
     sincronizarGerente();
   }
 
+    /* =====================================================
+     3) AGENDAMENTOS (Jogos de Tabuleiro / Quadra)
+  ===================================================== */
+  const DURACAO_MIN = 60; // cada reserva dura 1 hora
+
+  function ligarAgendamento() {
+    const modalEl = $("modalAgendamento");
+    const form = $("formAgendamento");
+    if (!modalEl || !form) return;
+    const msg = $("agendamentoMsg");
+
+    modalEl.addEventListener("show.bs.modal", (e) => {
+      const btn = e.relatedTarget;
+      form.reset();
+      $("agendamentoTipo").value = btn?.dataset.recurso || "";
+      $("agendamentoTitulo").textContent = btn?.dataset.titulo || "Agendar";
+      $("agendamentoData").min = new Date().toLocaleDateString("en-CA");
+      setMsg(msg, "");
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const botao = form.querySelector('[type="submit"]');
+      botao.disabled = true;
+      try {
+        const inicio = new Date(`${$("agendamentoData").value}T${$("agendamentoHorario").value}:00`);
+        const fim = new Date(inicio.getTime() + DURACAO_MIN * 60000);
+        await api("/agendamentos", {
+          method: "POST",
+          body: JSON.stringify({
+            recurso: $("agendamentoTipo").value,
+            inicio: inicio.toISOString(),
+            fim: fim.toISOString(),
+          }),
+        });
+        setMsg(msg, "Solicitação enviada! Aguarde a aprovação da AAPM.", "success");
+        setTimeout(() => bootstrap.Modal.getInstance(modalEl)?.hide(), 1500);
+      } catch (err) {
+        setMsg(msg, err.message);
+      } finally {
+        botao.disabled = false;
+      }
+    });
+  }
+  
   /* =====================================================
      INICIALIZAÇÃO
   =========== */
@@ -494,6 +539,7 @@
     resetAtual();
     let user = null;
     try { user = await api("/perfil"); } catch { return; }
+        ligarAgendamento();
 
     const nome = document.querySelector("#userDropdown .fw-semibold");
     const sub = document.querySelector("#userDropdown small");
@@ -505,7 +551,7 @@
       carregarProdutos();
     }
     if (user.papel === "admin") ativarModoGerente();
-    else document.querySelector('a.menu-item[href="#usuario"]')?.remove(); // item só para gerente
+    else document.querySelector('a.menu-item[href="#usuarios"]')?.remove(); // item só para gerente
   }
   document.addEventListener("DOMContentLoaded", iniciar);
 })();

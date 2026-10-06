@@ -582,7 +582,7 @@
                 <span class="visually-hidden">Anterior</span>
               </button>
               <button class="carousel-control-next" type="button" data-bs-target="#techCampusCarousel"
-                data-bs-slide-to="next">
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Próximo</span>
               </button>
@@ -1159,9 +1159,11 @@
          <p class="card-subtitle-custom">
           Divers&atilde;o garantida! jogos dispon&iacute;veis para momentos de lazer e integra&ccedil;&atilde;o.
          </p>
-         <a class="btn btn-gradient-red" href="#agendar-jogos">
-          Agendar / Reservar
-         </a>
+         <button type="button" class="btn btn-gradient-red" data-bs-toggle="modal"
+        data-bs-target="#modalAgendamento"
+        data-recurso="Jogos de Tabuleiro" data-titulo="Jogos de Tabuleiro">
+         Agendar / Reservar
+        </button>
         </div>
        </div>
       </div>
@@ -1175,9 +1177,11 @@
          <p class="card-subtitle-custom">
           Reserve a quadra para esportes, treinamentos e atividades.
          </p>
-         <a class="btn btn-gradient-red" href="#agendar-quadra">
+         <button type="button" class="btn btn-gradient-red" data-bs-toggle="modal"
+        data-bs-target="#modalAgendamento"
+        data-recurso="Quadra" data-titulo="Agendar Quadra">
           Agendar / Reservar
-         </a>
+         </button>
         </div>
        </div>
       </div>
@@ -2890,6 +2894,42 @@
             <i class="bi bi-check-lg"></i>
             Salvar cadastro
           </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalAgendamento" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white border border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title fw-bold" id="agendamentoTitulo">Agendar</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <form id="formAgendamento">
+        <div class="modal-body">
+          <input type="hidden" id="agendamentoTipo">
+          <div class="mb-3">
+            <label for="agendamentoData" class="form-label">Data</label>
+            <input type="date" id="agendamentoData" class="form-control bg-dark text-white border-secondary" required>
+          </div>
+          <div class="mb-0">
+            <label for="agendamentoHorario" class="form-label">Horário (1 hora de duração)</label>
+            <select id="agendamentoHorario" class="form-select bg-dark text-white border-secondary" required>
+              <option value="" selected disabled>Selecione</option>
+              <option value="07:30">07:30</option>
+              <option value="09:00">09:00</option>
+              <option value="10:30">10:30</option>
+              <option value="13:00">13:00</option>
+              <option value="15:00">15:00</option>
+              <option value="18:30">18:30</option>
+            </select>
+          </div>
+          <p id="agendamentoMsg" class="small mt-3 mb-0"></p>
+        </div>
+        <div class="modal-footer border-secondary">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Solicitar reserva</button>
         </div>
       </form>
     </div>

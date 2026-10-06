@@ -397,9 +397,9 @@ r.post("/pagamentos/:id/confirmar-simulado", autenticar, (req, res) => {
   if (pagamento.status !== "pendente")
     return bad(res, "Este pagamento já foi processado.");
 
-  db.prepare(
-    "UPDATE pagamentos SET status='confirmado' WHERE id=?",
-  ).run(pagamento.id);
+  db.prepare("UPDATE pagamentos SET status='pago' WHERE id=?").run(pagamento.id);
+    if (process.env.PAGAMENTO_SIMULADO !== "true") return res.sendStatus(404);
+
 
   res.json(get("pagamentos", pagamento.id));
 });
@@ -413,6 +413,10 @@ r.patch("/pedidos/:id/status", autenticar, admin, (req, res) => {
     return bad(res, "Pedido já finalizado.");
   if (status === "entregue" && p.status !== "aprovado")
     return bad(res, "Aprove o pedido antes da entrega.");
+    if (status === "aprovado") {
+    const pg = db.prepare("SELECT status FROM pagamentos WHERE pedido_id=?").get(p.id);
+    if (!pg || pg.status !== "pago") return bad(res, "Pagamento não confirmado.");
+  }
   db.transaction(() => {
     if (["rejeitado", "cancelado"].includes(status))
       for (const i of db
@@ -570,54 +574,32 @@ for (const table of ["avisos", "formatura"]) {
     res.status(info.changes ? 204 : 404).end();
   });
 }
+
 // Agendamentos
 r.post("/agendamentos", autenticar, (req, res) => {
   const recurso = clean(req.body.recurso, 120),
     inicio = clean(req.body.inicio, 40),
     fim = clean(req.body.fim, 40);
   if (
-    !recurso ||
+    !allowed(recurso, ["Quadra", "Jogos de Tabuleiro"]) ||
     !Number.isFinite(Date.parse(inicio)) ||
     !Number.isFinite(Date.parse(fim)) ||
     Date.parse(inicio) >= Date.parse(fim) ||
     Date.parse(inicio) < Date.now()
   )
     return bad(res, "Recurso ou período inválido.");
-  const info = db
+
+  const ocupado = db
     .prepare(
-      "INSERT INTO agendamentos(usuario_id,recurso,inicio,fim) VALUES(?,?,?,?)",
+      "SELECT id FROM agendamentos WHERE recurso=? AND status IN ('pendente','aprovado') AND inicio<? AND fim>?",
     )
+    .get(recurso, fim, inicio);
+  if (ocupado) return res.status(409).json({ erro: "Horário já reservado." });
+
+  const info = db
+    .prepare("INSERT INTO agendamentos(usuario_id,recurso,inicio,fim) VALUES(?,?,?,?)")
     .run(req.usuario.id, recurso, inicio, fim);
   res.status(201).json(get("agendamentos", info.lastInsertRowid));
-});
-r.get("/agendamentos", autenticar, (req, res) =>
-  res.json(
-    req.usuario.papel === "admin"
-      ? db.prepare("SELECT * FROM agendamentos ORDER BY id DESC").all()
-      : db
-          .prepare(
-            "SELECT * FROM agendamentos WHERE usuario_id=? ORDER BY id DESC",
-          )
-          .all(req.usuario.id),
-  ),
-);
-r.patch("/agendamentos/:id/status", autenticar, admin, (req, res) => {
-  const a = get("agendamentos", positiveId(req.params.id)),
-    status = req.body.status;
-  if (!a) return res.sendStatus(404);
-  if (!allowed(status, ["aprovado", "rejeitado", "cancelado"])) return bad(res);
-  if (a.status !== "pendente") return bad(res, "Agendamento já processado.");
-  if (
-    status === "aprovado" &&
-    db
-      .prepare(
-        "SELECT id FROM agendamentos WHERE recurso=? AND status='aprovado' AND inicio<? AND fim>? AND id<>?",
-      )
-      .get(a.recurso, a.fim, a.inicio, a.id)
-  )
-    return res.status(409).json({ erro: "Conflito de horário." });
-  db.prepare("UPDATE agendamentos SET status=? WHERE id=?").run(status, a.id);
-  res.json(get("agendamentos", a.id));
 });
 // Ajuda / chamados
 r.post("/chamados", autenticar, (req, res) => {
