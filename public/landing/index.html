@@ -1,756 +1,133 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- BOOTSTRAP -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- BOOTSTRAP ICONS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-    />
-
-    <title>TechCampus</title>
-  </head>
-
-  <body class="bg-dark text-white">
-
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
-
-    <nav
-      class="navbar navbar-expand-lg navbar-dark"
-      style="background-color: #86151b"
-    >
-
-      <div class="container-fluid px-4">
-
-        <!-- LOGO -->
-         <img src="./images/Logo TechCampus Horizontal.png" alt="" width="175px">
-        <a
-          href="#inicio"
-          class="navbar-brand d-flex align-items-center gap-2"
-        >
-          <!-- Coloque sua logo aqui se quiser -->
-        </a>
-
-
-        <!-- BOTÃO MENU MOBILE -->
-
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#menuPrincipal"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-
-        <!-- MENU -->
-
-        <!-- BOTÃO AAPM -->
-
-        <a
-          href="/frontend/login.html"
-          class="btn btn-outline-light rounded-pill px-4 d-none d-lg-flex align-items-center gap-2"
-        >
-          Acessar AAPM
-          <i class="bi bi-arrow-right"></i>
-        </a>
-
-      </div>
-
-    </nav>
-
-
-
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
-
-    <section
-      id="inicio"
-      class="container-fluid p-0 position-relative overflow-hidden"
-      style="min-height: calc(100vh - 56px)"
-    >
-
-      <!-- =================================================
-           IMAGEM DE FUNDO
-      ================================================== -->
-
-      <img
-        src="images/fundoLanding.png"
-        alt="Alunos TechCampus"
-        class="
-          position-absolute
-          top-0
-          start-0
-          w-100
-          h-100
-        "
-        style="
-          object-fit: cover;
-          object-position: center;
-          z-index: 0;
-        "
-      />
-
-
-      <!-- =================================================
-           DEGRADÊ PRETO
-      ================================================== -->
-
-      <div
-        class="
-          position-absolute
-          top-0
-          start-0
-          w-100
-          h-100
-        "
-        style="
-          background: linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 0.98) 22%,
-            rgba(0, 0, 0, 0.85) 35%,
-            rgba(0, 0, 0, 0.50) 50%,
-            rgba(0, 0, 0, 0.10) 70%,
-            rgba(0, 0, 0, 0) 100%
-          );
-          z-index: 1;
-        "
-      ></div>
-
-
-      <!-- =================================================
-           CONTEÚDO
-      ================================================== -->
-
-      <div
-        class="
-          container-fluid
-          position-relative
-          d-flex
-          align-items-center
-          h-100
-          px-4
-          px-md-5
-        "
-        style="
-          min-height: calc(100vh - 56px);
-          z-index: 2;
-        "
-      >
-
-        <div
-          class="
-            col-12
-            col-md-7
-            col-lg-5
-            py-5
-          "
-        >
-
-          <!-- TAG -->
-
-          <div
-            class="
-              d-flex
-              align-items-center
-              gap-2
-              text-danger
-              fw-bold
-              mb-3
-            "
-            style="font-size: 10px"
-          >
-
-            <span
-              class="bg-danger"
-              style="
-                width: 22px;
-                height: 2px;
-              "
-            ></span>
-
-            SEU FUTURO COMEÇA AQUI
-
-          </div>
-
-
-          <!-- TÍTULO -->
-
-          <h1
-            class="
-              display-3
-              fw-bold
-              lh-1
-              mb-3
-            "
-          >
-
-            Mais que ensino,
-
-            <br />
-
-            é preparo para
-
-            <br />
-
-            <span class="text-danger">
-              o seu amanhã.
-            </span>
-
-          </h1>
-
-
-          <!-- DESCRIÇÃO -->
-
-          <p
-            class="text-white-50 mb-4"
-            style="max-width: 330px"
-          >
-
-            No TechCampus, você aprende na prática,
-            desenvolve suas habilidades e constrói um
-            futuro com mais oportunidades.
-
-          </p>
-
-
-          <!-- BOTÃO -->
-
-          <a
-            href="#sobre"
-            class="
-              btn
-              btn-danger
-              rounded-pill
-              px-4
-              py-2
-              align-self-start
-              d-inline-flex
-              align-items-center
-              gap-3
-            "
-          >
-
-            Conheça nosso projeto
-
-            <i class="bi bi-arrow-right"></i>
-
-          </a>
-
-
-          <!-- =================================================
-               DIFERENCIAIS
-          ================================================== -->
-
-          <div class="row mt-5 g-3">
-
-
-            <!-- FORMAÇÃO -->
-
-            <div class="col-4">
-
-              <i
-                class="
-                  bi
-                  bi-mortarboard-fill
-                  text-danger
-                  fs-2
-                "
-              ></i>
-
-              <p
-                class="
-                  text-white-50
-                  mt-2
-                  mb-0
-                "
-                style="font-size: 15px"
-              >
-
-                Formação
-                <br />
-                de qualidade
-
-              </p>
-
-            </div>
-
-
-            <!-- TECNOLOGIA -->
-
-            <div class="col-4">
-
-              <i
-                class="
-                  bi
-                  bi-gear-fill
-                  text-danger
-                  fs-2
-                "
-              ></i>
-
-              <p
-                class="
-                  text-white-50
-                  mt-2
-                  mb-0
-                "
-                style="font-size: 15px"
-              >
-
-                Prática e
-                <br />
-                tecnologia
-
-              </p>
-
-            </div>
-
-
-            <!-- PROFESSORES -->
-
-            <div class="col-4">
-
-              <i
-                class="
-                  bi
-                  bi-person-workspace
-                  text-danger
-                  fs-2
-                "
-              ></i>
-
-              <p
-                class="
-                  text-white-50
-                  mt-2
-                  mb-0
-                "
-                style="font-size: 15px"
-              >
-
-                Professores
-                <br />
-                especializados
-
-              </p>
-
-            </div>
-
-          </div>
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+   <link  accesskey="" rel="stylesheet" href="landing.css">
+  
+</head>
+<body>
+
+
+  <!-- =========================================================
+       NAVBAR
+  ========================================================= -->
+  <header class="navbar-aapm">
+
+    <div class="navbar-inner">
+
+      <a href="#inicio">
+
+        <!-- Se você tiver o logo da AAPM, pode trocar pelo arquivo abaixo -->
+        <div class="logo-text">
+          AAPM<span>.</span>
         </div>
 
-      </div>
-
-    </section>
-<!-- =====================================================
-     TELA SOBRE
-====================================================== -->
-
-<section
-  id="sobre"
-  class="container-fluid p-0 position-relative overflow-hidden bg-black"
-  style="min-height: 100vh;"
->
-
-  <!-- IMAGEM DE FUNDO -->
-
-  
+      </a>
 
 
-  <!-- DEGRADÊ ESCURO -->
+      <nav class="menu">
 
-  <div
-    class="
-      position-absolute
-      top-0
-      start-0
-      w-100
-      h-100
-    "
-    style="
-      background: linear-gradient(
-        90deg,
-        rgba(0,0,0,1) 0%,
-        rgba(0,0,0,0.97) 25%,
-        rgba(0,0,0,0.75) 48%,
-        rgba(0,0,0,0.35) 70%,
-        rgba(0,0,0,0.65) 100%
-      );
-      z-index: 1;
-    "
-  ></div>
+        <a href="#aapm">
+          A AAPM
+        </a>
+
+        <a href="#possibilidades">
+          O que você encontra
+        </a>
+
+        <a href="#como-acessar">
+          Como acessar
+        </a>
+
+        <a href="#duvidas">
+          Dúvidas
+        </a>
+
+      </nav>
 
 
-  <!-- CONTEÚDO -->
+      <a
+        href="#contato"
+        class="btn-header"
+      >
+        Fale com a AAPM ↗
+      </a>
 
-  <div
-    class="
-      container
-      position-relative
-      d-flex
-      align-items-center
-      py-5
-    "
-    style="
-      min-height: 100vh;
-      z-index: 2;
-    "
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================================
+       HERO
+  ========================================================= -->
+
+  <section
+    class="hero"
+    id="inicio"
   >
 
-    <div class="row w-100 align-items-center g-5">
+    <div class="container-site">
 
+      <div class="hero-content">
 
-      <!-- =================================================
-           LADO ESQUERDO
-      ================================================== -->
-
-      <div class="col-lg-6">
-
-
-        <!-- IDENTIFICAÇÃO -->
-
-        <div
-          class="
-            d-flex
-            align-items-center
-            gap-2
-            text-danger
-            fw-bold
-            mb-3
-          "
-          style="font-size: 11px;"
-        >
-
-          <span
-            class="bg-danger"
-            style="
-              width: 45px;
-              height: 2px;
-            "
-          ></span>
-
-          SOBRE O PROJETO
-
+        <div class="hero-label">
+          Sua jornada, mais conectada
         </div>
 
 
-        <!-- TÍTULO -->
+        <h1>
 
-        <h1
-          class="
-            display-3
-            fw-bold
-            lh-1
-            text-white
-            mb-4
-          "
-        >
+          Alunos,<br>
 
-          Mais que ensino,
+          oportunidades<br>
 
-          <br>
+          e benefícios.<br>
 
-          somos
-
-          <br>
-
-          <span class="text-danger">
-            conexão.
-          </span>
+          <strong>No mesmo lugar.</strong>
 
         </h1>
 
 
-        <!-- TEXTO -->
+        <p class="hero-description">
 
-        <p
-          class="
-            text-white
-            fs-5
-            mb-4
-          "
-          style="max-width: 500px;"
-        >
-
-          O TechCampus aproxima alunos,
-          tecnologia, educação e oportunidades.
+          Um espaço de conexão e apoio para viver melhor
+          a sua experiência no SENAI.
 
         </p>
 
 
-        <!-- BOTÃO -->
+        <div class="hero-buttons">
 
-        <a
-          href="#cursos"
-          class="
-            btn
-            btn-danger
-            rounded-pill
-            px-4
-            py-3
-            d-inline-flex
-            align-items-center
-            gap-3
-          "
-        >
-
-          Conheça nossos cursos
-
-          <i class="bi bi-arrow-right"></i>
-
-        </a>
-
-
-        <!-- FRASE INFERIOR -->
-
-        <div class="mt-5">
-
-          <div
-            class="
-              d-flex
-              align-items-center
-              gap-3
-              text-white-50
-            "
-            style="font-size: 10px;"
+          <a
+            href="#aapm"
+            class="btn-red"
           >
-
-            <span
-              class="bg-danger"
-              style="
-                width: 45px;
-                height: 2px;
-              "
-            ></span>
-
-            <span>
-              CONHECIMENTO
-            </span>
-
-            <span class="text-danger">
-              •
-            </span>
-
-            <span>
-              TECNOLOGIA
-            </span>
-
-            <span class="text-danger">
-              •
-            </span>
-
-            <span>
-              PESSOAS
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
+            Conheça a AAPM ↗
+          </a>
 
 
-
-      <!-- =================================================
-           LADO DIREITO
-      ================================================== -->
-
-      <div class="col-lg-6">
-
-
-        <!-- EDUCAÇÃO -->
-
-        <div
-          class="
-            bg-dark
-            bg-opacity-75
-            border
-            border-secondary
-            rounded-4
-            p-4
-            mb-3
-          "
-        >
-
-          <div class="d-flex align-items-center gap-3">
-
-
-            <!-- ÍCONE -->
-
-            <div
-              class="
-                bg-danger
-                rounded-4
-                p-3
-                text-white
-                fs-3
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-              style="
-                width: 65px;
-                height: 65px;
-                min-width: 65px;
-              "
-            >
-
-              <i class="bi bi-mortarboard-fill"></i>
-
-            </div>
-
-
-            <!-- TEXTO -->
-
-            <div>
-
-              <h4 class="text-white fw-bold mb-1">
-                Educação
-              </h4>
-
-              <p class="text-white-50 mb-0">
-                Aprendizado que forma para o futuro.
-              </p>
-
-            </div>
-
-          </div>
+          <a
+            href="#possibilidades"
+            class="btn-dark-outline"
+          >
+            Explore as possibilidades ↗
+          </a>
 
         </div>
 
 
+        <div class="hero-note">
 
-        <!-- TECNOLOGIA -->
-
-        <div
-          class="
-            bg-dark
-            bg-opacity-75
-            border
-            border-secondary
-            rounded-4
-            p-4
-            mb-3
-          "
-        >
-
-          <div class="d-flex align-items-center gap-3">
-
-
-            <!-- ÍCONE -->
-
-            <div
-              class="
-                bg-danger
-                rounded-4
-                p-3
-                text-white
-                fs-3
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-              style="
-                width: 65px;
-                height: 65px;
-                min-width: 65px;
-              "
-            >
-
-              <i class="bi bi-cpu-fill"></i>
-
-            </div>
-
-
-            <!-- TEXTO -->
-
-            <div>
-
-              <h4 class="text-white fw-bold mb-1">
-                Tecnologia
-              </h4>
-
-              <p class="text-white-50 mb-0">
-                Ferramentas que conectam o hoje e o amanhã.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- OPORTUNIDADES -->
-
-        <div
-          class="
-            bg-dark
-            bg-opacity-75
-            border
-            border-secondary
-            rounded-4
-            p-4
-          "
-        >
-
-          <div class="d-flex align-items-center gap-3">
-
-
-            <!-- ÍCONE -->
-
-            <div
-              class="
-                bg-danger
-                rounded-4
-                p-3
-                text-white
-                fs-3
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-              style="
-                width: 65px;
-                height: 65px;
-                min-width: 65px;
-              "
-            >
-
-              <i class="bi bi-rocket-takeoff-fill"></i>
-
-            </div>
-
-
-            <!-- TEXTO -->
-
-            <div>
-
-              <h4 class="text-white fw-bold mb-1">
-                Oportunidades
-              </h4>
-
-              <p class="text-white-50 mb-0">
-                Mais caminhos para o seu futuro.
-              </p>
-
-            </div>
-
-          </div>
+          ↓ Dúvidas? Converse com a AAPM da sua unidade.
 
         </div>
 
@@ -758,16 +135,969 @@
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 
-    <!-- BOOTSTRAP JS -->
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    ></script>
+  <!-- =========================================================
+       A AAPM
+  ========================================================= -->
 
-  </body>
+  <section
+    class="intro"
+    id="aapm"
+  >
+
+    <div class="container-site">
+
+      <div class="intro-top">
+
+
+        <div>
+
+          <div class="section-label">
+            01 / A AAPM
+          </div>
+
+          <h2 class="section-title">
+
+            Uma associação.<br>
+            Muitas conexões.
+
+          </h2>
+
+          <div class="intro-description">
+
+            AAPM — conectando alunos, oportunidades e benefícios.
+
+          </div>
+
+        </div>
+
+
+
+        <div class="intro-items">
+
+
+          <div class="intro-item">
+
+            <div class="intro-icon">
+              <i class="bi bi-people"></i>
+            </div>
+
+            <div>
+
+              <small>
+                APOIO AOS ALUNOS
+              </small>
+
+              <p>
+                Benefícios, serviços e oportunidades em um só lugar.
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="intro-item">
+
+            <div class="intro-icon">
+              <i class="bi bi-link-45deg"></i>
+            </div>
+
+            <div>
+
+              <small>
+                CONEXÃO REAL
+              </small>
+
+              <p>
+                Uma ponte entre o que você precisa e as possibilidades da jornada.
+              </p>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+
+      <div class="intro-bottom">
+
+
+        <div class="intro-card">
+
+          <small>
+            NOSSO PROPÓSITO
+          </small>
+
+          <p>
+            Facilitar o acesso. Apoiar o desenvolvimento.
+          </p>
+
+        </div>
+
+
+        <div class="intro-card">
+
+          <small>
+            NOSSA VISÃO
+          </small>
+
+          <p>
+            Uma experiência mais conectada e acessível.
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       POSSIBILIDADES
+  ========================================================= -->
+
+  <section
+    class="possibilidades"
+    id="possibilidades"
+  >
+
+    <div class="container-site">
+
+
+      <div class="section-label">
+        02 / O QUE VOCÊ ENCONTRA
+      </div>
+
+
+      <h2 class="section-title">
+
+        Possibilidades para<br>
+        cada momento.
+
+      </h2>
+
+
+
+      <div class="cards-grid">
+
+
+        <div class="dark-card">
+
+          <span class="dark-card-number">
+            01
+          </span>
+
+          <div class="dark-card-icon">
+            <i class="bi bi-ticket-perforated"></i>
+          </div>
+
+          <h3>
+            Benefícios
+          </h3>
+
+          <p>
+
+            Conheça os benefícios informados pela AAPM
+            e entenda quais possibilidades fazem sentido
+            para você.
+
+          </p>
+
+          <a
+            href="#"
+            class="dark-card-link"
+          >
+
+            Consultar benefícios
+
+            <span>↗</span>
+
+          </a>
+
+        </div>
+
+
+
+        <div class="dark-card">
+
+          <span class="dark-card-number">
+            02
+          </span>
+
+          <div class="dark-card-icon">
+            <i class="bi bi-handshake"></i>
+          </div>
+
+          <h3>
+            Serviços
+          </h3>
+
+          <p>
+
+            Encontre informações para acessar os serviços
+            da associação e esclarecer dúvidas sobre o
+            atendimento.
+
+          </p>
+
+          <a
+            href="#"
+            class="dark-card-link"
+          >
+
+            Conhecer os serviços
+
+            <span>↗</span>
+
+          </a>
+
+        </div>
+
+
+
+        <div class="dark-card">
+
+          <span class="dark-card-number">
+            03
+          </span>
+
+          <div class="dark-card-icon">
+            <i class="bi bi-arrow-up-right"></i>
+          </div>
+
+          <h3>
+            Oportunidades
+          </h3>
+
+          <p>
+
+            Acompanhe as oportunidades divulgadas pela
+            AAPM e explore novos caminhos durante sua
+            formação.
+
+          </p>
+
+          <a
+            href="#"
+            class="dark-card-link"
+          >
+
+            Consultar oportunidades
+
+            <span>↗</span>
+
+          </a>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       ALÉM DA SALA DE AULA
+  ========================================================= -->
+
+  <section class="conexao">
+
+    <div class="container-site">
+
+      <div class="conexao-grid">
+
+
+        <div>
+
+          <div class="conexao-image">
+
+            <img
+              src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=85"
+              alt="Estudantes trabalhando juntos"
+            >
+
+          </div>
+
+          <div class="conexao-caption">
+
+            Aprender, trocar experiências e descobrir novos caminhos.
+
+          </div>
+
+        </div>
+
+
+
+        <div class="conexao-text">
+
+          <div class="section-label">
+            03 / ALÉM DA SALA DE AULA
+          </div>
+
+
+          <h2 class="section-title">
+
+            Sua formação é feita<br>
+            de encontros.
+
+          </h2>
+
+
+          <p>
+
+            A AAPM conecta alunos a informações e possibilidades
+            que acompanham cada etapa da jornada no SENAI.
+
+          </p>
+
+
+          <div class="conexao-highlight">
+
+            <i class="bi bi-people"></i>
+
+            <span>
+              Mais conexão com a vida de estudante.
+              Mais clareza para o próximo passo.
+            </span>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       COMO ACESSAR
+  ========================================================= -->
+
+  <section
+    class="como-acessar"
+    id="como-acessar"
+  >
+
+    <div class="container-site">
+
+
+      <div class="como-header">
+
+        <div>
+
+          <div class="section-label">
+            04 / COMO ACESSAR
+          </div>
+
+          <h2 class="section-title">
+
+            O próximo passo<br>
+            começa com uma conversa.
+
+          </h2>
+
+        </div>
+
+
+        <button class="btn-preto">
+
+          Buscar orientação ↗
+
+        </button>
+
+      </div>
+
+
+
+      <div class="steps">
+
+
+        <div class="step">
+
+          <div class="step-number">
+            01
+          </div>
+
+          <h3>
+            Conheça as possibilidades
+          </h3>
+
+          <p>
+
+            Explore benefícios, serviços e oportunidades
+            para saber o que faz sentido para você.
+
+          </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+          <div class="step-number">
+            02
+          </div>
+
+          <h3>
+            Converse com a AAPM
+          </h3>
+
+          <p>
+
+            Procure a associação da sua unidade para
+            confirmar informações e tirar dúvidas.
+
+          </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+          <div class="step-number">
+            03
+          </div>
+
+          <h3>
+            Entenda o próximo passo
+          </h3>
+
+          <p>
+
+            Consulte requisitos e orientações antes de
+            solicitar um serviço ou participar.
+
+          </p>
+
+        </div>
+
+
+      </div>
+
+
+
+      <div class="before-box">
+
+
+        <div>
+
+          <small>
+            ANTES DE SEGUIR
+          </small>
+
+          <h3>
+            Informação clara.<br>
+            Escolhas conscientes.
+          </h3>
+
+        </div>
+
+
+        <div class="before-list">
+
+          <div>
+            <i class="bi bi-check-circle"></i>
+            O que está disponível na minha unidade?
+          </div>
+
+          <div>
+            <i class="bi bi-check-circle"></i>
+            Quem pode acessar?
+          </div>
+
+          <div>
+            <i class="bi bi-check-circle"></i>
+            Como faço para participar?
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       FAQ
+  ========================================================= -->
+
+  <section
+    class="faq"
+    id="duvidas"
+  >
+
+    <div class="container-site">
+
+
+      <div class="faq-grid">
+
+
+        <div class="faq-left">
+
+          <div class="section-label">
+            05 / PERGUNTAS FREQUENTES
+          </div>
+
+          <h2 class="section-title">
+
+            Vamos esclarecer<br>
+            suas dúvidas.
+
+          </h2>
+
+
+          <a
+            href="#contato"
+            class="faq-link"
+          >
+
+            Converse com a AAPM ↗
+
+          </a>
+
+        </div>
+
+
+
+        <div class="faq-list">
+
+
+          <div class="faq-item active">
+
+            <button class="faq-question">
+
+              <span>
+                O que é a AAPM?
+              </span>
+
+              <span class="symbol">
+                −
+              </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+              A AAPM é uma associação voltada para apoiar
+              os alunos e proporcionar uma experiência melhor
+              dentro do SENAI, conectando benefícios, serviços
+              e oportunidades.
+
+            </div>
+
+          </div>
+
+
+
+          <div class="faq-item">
+
+            <button class="faq-question">
+
+              <span>
+                Quais benefícios e serviços estão disponíveis?
+              </span>
+
+              <span class="symbol">
+                +
+              </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+              Os benefícios e serviços podem variar de acordo
+              com a unidade. Consulte a AAPM para obter
+              informações atualizadas.
+
+            </div>
+
+          </div>
+
+
+
+          <div class="faq-item">
+
+            <button class="faq-question">
+
+              <span>
+                Quem pode participar da AAPM?
+              </span>
+
+              <span class="symbol">
+                +
+              </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+              Consulte a associação da sua unidade para
+              verificar os critérios de participação.
+
+            </div>
+
+          </div>
+
+
+
+          <div class="faq-item">
+
+            <button class="faq-question">
+
+              <span>
+                Como funciona a adesão? Existem custos?
+              </span>
+
+              <span class="symbol">
+                +
+              </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+              As condições podem variar de acordo com a
+              unidade. Procure a AAPM para obter informações.
+
+            </div>
+
+          </div>
+
+
+
+          <div class="faq-item">
+
+            <button class="faq-question">
+
+              <span>
+                Como acompanhar as oportunidades?
+              </span>
+
+              <span class="symbol">
+                +
+              </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+              Acompanhe os canais de comunicação da sua
+              unidade e consulte diretamente a AAPM.
+
+            </div>
+
+          </div>
+
+
+
+          <div class="faq-item">
+
+            <button class="faq-question">
+
+              <span>
+                Onde posso tirar outras dúvidas?
+              </span>
+
+              <span class="symbol">
+                +
+              </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+              Converse diretamente com a AAPM da sua unidade.
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       CTA
+  ========================================================= -->
+
+  <section
+    class="cta"
+    id="contato"
+  >
+
+    <div class="container-site">
+
+
+      <div class="cta-content">
+
+
+        <div>
+
+          <h2>
+
+            Conecte-se ao que<br>
+            pode fazer a diferença.
+
+          </h2>
+
+          <p class="cta-description">
+
+            Conheça as possibilidades para sua jornada no SENAI.
+
+          </p>
+
+        </div>
+
+
+
+        <div class="cta-side">
+
+          <a
+            href="/frontend/login.html"
+            class="cta-button"
+          >
+
+            Fale com a AAPM ↗
+
+          </a>
+
+          <p>
+
+            Procure a associação da sua unidade
+            e consulte as informações de acesso.
+
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================= -->
+
+  <footer>
+
+    <div class="container-site">
+
+
+      <div class="footer-grid">
+
+
+        <div>
+
+          <div class="footer-logo">
+            AAPM<span>.</span>
+          </div>
+
+          <div class="footer-description">
+
+            Conectando alunos, oportunidades e benefícios.<br>
+            Com você na jornada no SENAI.
+
+          </div>
+
+        </div>
+
+
+
+        <div>
+
+          <div class="footer-title">
+            Explore
+          </div>
+
+          <div class="footer-links">
+
+            <a href="#aapm">
+              Conheça a AAPM
+            </a>
+
+            <a href="#possibilidades">
+              Benefícios e serviços
+            </a>
+
+            <a href="#como-acessar">
+              Como acessar
+            </a>
+
+            <a href="#duvidas">
+              Perguntas frequentes
+            </a>
+
+          </div>
+
+        </div>
+
+
+
+        <div>
+
+          <div class="footer-title">
+            Vamos conversar
+          </div>
+
+          <div class="footer-links">
+
+            <a href="#contato">
+              Consulte os canais de atendimento
+            </a>
+
+            <a href="#contato">
+              da AAPM na sua unidade SENAI.
+            </a>
+
+            <a href="/frontend/login.html">
+              Fale com a AAPM ↗
+            </a>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+
+      <div class="footer-bottom">
+
+        <span>
+          AAPM · Uma experiência mais conectada.
+        </span>
+
+        <a href="#inicio">
+          Voltar ao início ↑
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================= -->
+
+  <script>
+
+    /* =========================================================
+       FAQ
+    ========================================================= */
+
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+
+      const button = item.querySelector(".faq-question");
+      const symbol = item.querySelector(".symbol");
+
+      button.addEventListener("click", () => {
+
+        const aberto = item.classList.contains("active");
+
+        faqItems.forEach(outro => {
+
+          outro.classList.remove("active");
+
+          const outroSymbol =
+            outro.querySelector(".symbol");
+
+          outroSymbol.textContent = "+";
+
+        });
+
+
+        if (!aberto) {
+
+          item.classList.add("active");
+
+          symbol.textContent = "−";
+
+        }
+
+      });
+
+    });
+
+
+    /* =========================================================
+       LINKS COM SCROLL SUAVE
+    ========================================================= */
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+      link.addEventListener("click", function(event) {
+
+        const destino =
+          document.querySelector(this.getAttribute("href"));
+
+        if (destino) {
+
+          event.preventDefault();
+
+          destino.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+        }
+
+      });
+
+    });
+
+  </script>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+</body>
+
 </html>
