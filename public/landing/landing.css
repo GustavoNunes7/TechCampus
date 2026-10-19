@@ -1428,3 +1428,103 @@ body {
   color: #e54d38;
   flex-shrink: 0;
 }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Seção Principal */
+.cta {
+  background-color: #e53935;
+  color: #ffffff;
+  padding: 48px 24px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Container */
+.cta .container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Flexbox / Layout */
+.cta-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .cta-content {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Título Principal */
+.cta-content h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .cta-content h2 {
+    font-size: 2.25rem;
+  }
+}
+
+/* Subtítulo (Reduzido para 0.84rem / ~13.5px) */
+.cta-content p {
+  font-size: 0.84rem; /* ~13.5px */
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Div da Direita */
+.cta-content > div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .cta-content > div:last-child {
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+/* Botão "Fale com a AAPM" (Reduzido para 0.8rem / ~13px) */
+.cta-button {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #e53935;
+  font-size: 0.8rem; /* ~13px */
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  margin-bottom: 6px;
+}
+
+.cta-button:hover {
+  background-color: #f8f9fa;
+  color: #c82333;
+  transform: translateY(-1px);
+}
+
+/* Texto Pequeno de Rodapé (Reduzido para 0.7rem / ~11px) */
+.cta-small {
+  font-size: 0.7rem !important; /* ~11px */
+  color: rgba(255, 255, 255, 0.75) !important;
+  line-height: 1.35;
+  max-width: 250px;
+}
+
