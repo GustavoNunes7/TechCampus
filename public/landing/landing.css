@@ -1528,3 +1528,126 @@ body {
   max-width: 250px;
 }
 
+/* ===== RODAPÉ AAPM ===== */
+
+footer {
+    background-color: #17191a;
+    color: #ffffff;
+    padding: 48px 0 20px;
+    width: 100%;
+}
+
+footer .container {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-sizing: border-box;
+}
+
+/* Alinha as três colunas */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.2fr;
+    gap: 64px;
+    align-items: start;
+    padding-bottom: 44px;
+}
+
+/* Evita margens e larguras inesperadas */
+.footer-grid > div {
+    min-width: 0;
+    margin: 0;
+}
+
+/* Logo */
+.footer-logo {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 16px;
+}
+
+.footer-logo span {
+    color: #e83e4b;
+}
+
+.footer-grid p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #b9b9b9;
+}
+
+/* Títulos das colunas */
+.footer-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 0 0 18px;
+    color: #a9a9a9;
+}
+
+/* Links */
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.footer-links a {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 1.5;
+    text-decoration: underline;
+    margin: 0;
+}
+
+/* Linha inferior */
+.footer-bottom {
+    border-top: 1px solid #343638;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-bottom span,
+.footer-bottom a {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.footer-bottom span {
+    color: #a9a9a9;
+}
+
+.footer-bottom a {
+    color: #a9a9a9;
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    footer {
+        padding-top: 36px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-bottom: 30px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
