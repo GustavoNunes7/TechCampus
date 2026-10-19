@@ -725,56 +725,60 @@
 
 
 
-        <!-- 2. TELA: DOCUMENTAÇÃO (VAZIA) -->
-        <section id="documento" class="d-none">
-          <div class="section-header">
-            <span class="section-tag">DOCUMENTAÇÃO</span>
-            <h2 class="section-title">Envie seus documentos</h2>
-            <p class="section-description"> Anexe documentos para análise da AAPM. Formatos aceitos: PDF, JPG e PNG. Limite de 10 MB por arquivo.
-            </p>
-          </div>
+        <!-- 2. TELA: DOCUMENTAÇÃO  -->
+  <section id="documento" class="d-none">
+  <!-- Alterado apenas este bloco de cabeçalho para alinhar à esquerda com recuo lateral -->
+  <div class="container-fluid px-4 px-md-5 my-4">
+    <div class="section-header lh-sm">
+      <span class="section-tag fs-10 text-danger text-uppercase fw-bold m-0 d-block mb-1">DOCUMENTAÇÃO</span>
+      <h2 class="section-title fw-bold m-0 mb-2">Envie seus documentos</h2>
+      <p class="section-description text-secondary m-0 lh-base"> 
+        Anexe os documentos que comprovam os produtos disponíveis da AAPM.<br> Após o envio, nossa equipe irá analisar e validar as informações.
+      </p>
+    </div>
+  </div>
 
-          <!-- Área de envio -->
-          <form id="docForm" class="card documents-card">
-            <div class="drop">
-              <div class="upload-icon">☁</div>
-              <h3>Selecione seu arquivo</h3>
-              <input id="docFile" type="file" accept=".pdf,.jpg,.jpeg,.png" required />
-              <p class="muted">PDF, JPG ou PNG • até 10 MB</p>
-            </div>
-            <button type="submit" class="btn">Enviar documento</button>
-            <p id="docMsg"></p>
-          </form>
+  <!-- Área de envio (Não alterada) -->
+  <form id="docForm" class="card documents-card">
+    <div class="drop">
+      <div class="upload-icon">☁</div>
+      <h3>Selecione seu arquivo</h3>
+      <input id="docFile" type="file" accept=".pdf,.jpg,.jpeg,.png" required />
+      <p class="muted">PDF, JPG ou PNG • até 10 MB</p>
+    </div>
+    <button type="submit" class="btn">Enviar documento</button>
+    <p id="docMsg"></p>
+  </form>
 
-          <!-- Documentos enviados -->
-          <div class="documents-list">
-            <h2 class="section-title">Documentos enviados</h2>
-            <div class="table-wrap">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Tipo</th>
-                    <th>Data</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-               
-                <tbody id="documentsTable">
-                  <!-- Os documentos serão inseridos pelo JavaScript -->
-                  <tr>
-                    <td colspan="5" class="empty">
-                      Nenhum documento enviado.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+  <!-- Documentos enviados (Não alterada) -->
+  <div class="documents-list">
+    <h2 class="section-title fs-4">Documentos enviados</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+       
+        <tbody id="documentsTable">
+          <!-- Os documentos serão inseridos pelo JavaScript -->
+          <tr>
+            <td colspan="5" class="empty">
+              Nenhum documento enviado.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-          <!-- Insira o conteúdo da tela Documentação aqui -->
-        </section>
+  <!-- Insira o conteúdo da tela Documentação aqui -->
+</section>
 
         <!-- 4. TELA: PEDIDOS DISPONÍVEIS (PRODUTOS DISPONÍVEIS) -->
        <section class="d-none my-4" id="pedidos">
@@ -1998,15 +2002,17 @@
          CTA
     ================================================== -->
 
-    <div class="sobre-cta">
-      <div>
-        <span class="text-uppercase small fw-bold"> Faça parte </span>
-        <h3 class="fw-bold mt-1 mb-1">A AAPM também é feita por você.</h3>
-        <p class="mb-0"> Participe das ações e acompanhe as novidades da associação.</p>
-      </div>
-      <a href="https://forms.gle/Sz4J6s5VqGmnvJQu6" class="btn btn-light fw-semibold px-4"> Seja Voluntário <i class="bi bi-arrow-right ms-2"></i> </a>
-    </div>
+<!-- Adicionado 'rounded-3' para suavizar as bordas e deixá-las menos redondas -->
+<div class="sobre-cta mb-2 rounded-3">
+  <div>
+    <span class="text-uppercase small fw-bold"> Faça parte </span>
+    <!-- Corrigido 'mt-z' para 'mt-1' -->
+    <h3 class="fw-bold mt-1 mb-1">A AAPM também é feita por você.</h3>
+    <p class="mb-0"> Participe das ações e acompanhe as novidades da associação.</p>
   </div>
+  <a href="https://forms.gle/Sz4J6s5VqGmnvJQu6" class="btn btn-light fw-semibold px-4"> Seja Voluntário <i class="bi bi-arrow-right ms-2"></i> </a>
+</div>
+
 </section>
 
         <!-- TELA TEMPORADA DE FORMATURA -->
@@ -2118,7 +2124,8 @@
         data-bs-target="#modalDestino"
         data-local="Thermas Water Park"
         data-endereco="Rodovia SP-304, Km 189 - São Pedro - SP"
-        data-descricao="Um dos principais parques aquáticos da região, com diversas atrações para aproveitar um dia completo de diversão."
+        data-descricao="Um dos principais parques aquáticos da região, com diversas atrações para aproveitar um dia completo de diversão, sendo um dos mais visitados da América Latina, localizado na estância turística de São Pedro, São Paulo, a cerca de 180 km da capital paulista.
+       Com uma impressionante área total de 4 milhões de m², o complexo oferece mais de 15 piscinas de águas quentes e climatizadas, sendo famoso por abrigar a maior piscina de ondas do estado de São Paulo e o maior parque infantil da América Latina. O espaço conta com um complexo radical de toboáguas, áreas temáticas inspiradas no Havaí, além de infraestrutura de alimentação e estacionamento gratuito no local ."
         data-imagem="../landing/images/thermasPark.jpg"
         data-site="https://www.thermas.com.br/"
       >
@@ -2155,7 +2162,7 @@
         data-bs-target="#modalDestino"
         data-local="Sítio Paraíso Verde"
         data-endereco="Mairiporã - SP"
-        data-descricao="Um espaço cercado pela natureza, ideal para momentos de lazer, descanso e integração entre os alunos."
+        data-descricao="O Sítio Paraíso Verde, localizado em Campo Grande, Rio de Janeiro, é um popular espaço de lazer e eventos integrado à natureza. O local conta com uma infraestrutura completa que inclui piscina, campo de futebol, quadra de areia, salão coberto, churrasqueira e área kids. Sendo uma escolha frequente para a realização de casamentos, aniversários e festas corporativas, o sítio oferece acessibilidade por transporte público e estacionamento próprio, unindo a praticidade do ambiente estruturado com a tranquilidade do campo."
         data-imagem="../landing/images/sitioParaisoVerde.jpg"
         data-site="#"
       >
@@ -2191,7 +2198,7 @@
         data-bs-target="#modalDestino"
         data-local="Hopi Hari"
         data-endereco="Rodovia dos Bandeirantes, Km 72 - Vinhedo - SP"
-        data-descricao="Um dos maiores parques temáticos do Brasil, com atrações, brinquedos e espaços para diversão durante todo o dia."
+        data-descricao="O Hopi Hari é um dos maiores parques temáticos da América Latina, localizado em Vinhedo, São Paulo, a apenas 45 minutos da capital paulista.Conhecido como 'O País Mais Divertido do Mundo', o complexo possui 760 mil metros quadrados e conta com hino, bandeira e idioma próprio, o hopês.O parque é dividido em cinco regiões que misturam o encanto infantil de Infantasia, a arquitetura europeia de Kaminda Mundi, as corredeiras de Wild West e a pura adrenalina de Mistieri e Aribabiba, onde ficam a Montezum (maior montanha-russa de madeira do continente) e a rápida Katapul.Com funcionamento regular de quinta a domingo, o local também se destaca por grandes eventos sazonais, como a famosa Hora do Horror e o Hopi Night.O acesso é feito pela Rodovia dos Bandeirantes, e o parque oferece gratuidade para crianças de até 1 metro e idosos acima de 65 anos, sendo recomendada a compra antecipada dos ingressos pelo site oficial."
         data-imagem="../landing/images/hopihari.jpg"
         data-site="https://www.hopihari.com.br/"
       >
@@ -2223,7 +2230,7 @@
         data-bs-target="#modalDestino"
         data-local="Sítio Recanto Feliz"
         data-endereco="Atibaia - SP"
-        data-descricao="Um espaço de lazer e contato com a natureza, pensado para proporcionar um dia agradável de confraternização."
+        data-descricao="Localizado em Mogi das Cruzes, São Paulo, é um espaço de lazer e eventos amplamente reconhecido por sua estrutura que une entretenimento e tranquilidade em meio à natureza, contando com uma infraestrutura completa que inclui piscina com cascata e hidromassagem, área gourmet com churrasqueira e fogão a lenha, campo de futebol, parquinho infantil e salão de festas coberto para celebrações de casamentos, aniversários e eventos corporativos. O grande diferencial do sítio é a sua fazendinha integrada, que abriga mais de vinte espécies de animais, oferecendo uma experiência rural autêntica e interativa para toda a família."
         data-imagem="../landing/images/sitioRecantoFeliz.jpg"
         data-site="#"
       >
