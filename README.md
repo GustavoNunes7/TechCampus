@@ -7,8 +7,7 @@ Sistema web da Associação de Alunos, Ex-alunos, Pais e Mestres (AAPM).
 Na pasta do projeto, execute:
 
 ```bash
-npm install
-npm start
+ INICIAR.bat (Preferência no CMD)
 ```
 
 Depois, acesse **http://localhost:3022/** no navegador.
