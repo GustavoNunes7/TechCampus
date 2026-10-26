@@ -79,13 +79,16 @@
   if (!token) return; // auth.js cuida do redirecionamento
 
   async function api(path, opts = {}) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      ...(opts.headers || {}),
+    };
+    if (opts.body !== undefined && !(opts.body instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
     const res = await fetch("/api" + path, {
       ...opts,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        ...(opts.headers || {}),
-      },
+      headers,
     });
     let data = null;
     try {
@@ -130,8 +133,17 @@
 
   function ligarCards() {
     const mapa = new Map(produtos.map((p) => [norm(p.nome), p]));
+    const usados = new Set();
+    const aliases = {
+      caixadebolinhasdepingpong: ["bolasdepingpong", "bolinhasdepingpong"],
+      bolinhasdepingpong: ["caixadebolinhasdepingpong", "bolasdepingpong"],
+      uniformeescolarbranco: ["camisaescolarbranca"],
+      uniformeescolarpreto: ["camisaescolarpreta"],
+      jalecomecanica: ["jalecoparamecanica"],
+      oculosdeprotecao: ["oculosprotecao"],
+    };
     document
-      .querySelectorAll("#productsTrack .product-slide")
+      .querySelectorAll("#productsTrack .product-slide:not([data-tc-dinamico='1'])")
       .forEach((card) => {
         const btn = card.querySelector("button");
         if (!btn) return;
@@ -139,17 +151,25 @@
         if (!btn.dataset.original)
           btn.dataset.original = btn.textContent.trim();
 
-        const p = mapa.get(norm(card.querySelector("h5")?.textContent));
+        const nomeCard = norm(card.querySelector("h5")?.textContent);
+        let p = mapa.get(nomeCard);
+        if (!p) {
+          const candidatos = new Set(aliases[nomeCard] || []);
+          p = produtos.find((item) => candidatos.has(norm(item.nome)));
+        }
         btn.disabled = false;
         btn.textContent = btn.dataset.original;
 
-        if (!p) {
+        if (!p || Number(p.ativo) !== 1) {
+          card.classList.add("d-none");
           btn.disabled = true;
           btn.textContent = "Indisponível";
           btn.onclick = null;
           return;
         }
+        card.classList.remove("d-none");
 
+        usados.add(p.id);
         const por = card.querySelector(".preco-por");
         if (por && p.preco_centavos > 0)
           por.textContent = "Por " + brl(p.preco_centavos);
@@ -170,6 +190,37 @@
 
         btn.onclick = () => abrirModalProduto(p);
       });
+
+    // Produtos criados no painel administrativo também entram na vitrine.
+    const track = $("productsTrack");
+    if (!track) return;
+    track.querySelectorAll(".product-slide[data-tc-dinamico='1']").forEach((card) => card.remove());
+    produtos.filter((p) => !usados.has(p.id)).forEach((p) => {
+      if (Number(p.ativo) !== 1) return;
+      const slide = h("div", { class: "product-slide", "data-category": norm(p.categoria), "data-tc-dinamico": "1" });
+      const card = h("div", { class: "card bg-dark text-white h-100 border-secondary rounded-3 p-3 product-card" });
+      const imageBox = h("div", { class: "text-center my-3 product-img-box" });
+      const image = h("img", { class: "img-fluid", alt: p.nome, src: p.imagem || "/landing/images/logoTechCampus.png" });
+      image.style.maxHeight = "160px";
+      image.style.objectFit = "contain";
+      image.addEventListener("error", () => { image.src = "/landing/images/logoTechCampus.png"; }, { once: true });
+      imageBox.append(image);
+      const body = h("div", { class: "card-body d-flex flex-column p-0 text-start" });
+      body.append(h("h5", { class: "fw-bold mb-1" }, p.nome));
+      body.append(h("p", { class: "text-secondary small mb-3" }, p.descricao || "Produto disponibilizado pela AAPM."));
+      const footer = h("div", { class: "mt-auto" });
+      footer.append(h("strong", { class: "preco-por d-block" }, "Por " + brl(p.preco_centavos)));
+      const button = h("button", { class: "btn btn-outline-danger text-white w-100 mt-3", type: "button" }, "Comprar agora");
+      button.disabled = Number(p.estoque) < 1 || Number(p.preco_centavos) <= 0;
+      button.textContent = Number(p.estoque) < 1 ? "Esgotado" : Number(p.preco_centavos) <= 0 ? "Em breve" : "Comprar agora";
+      if (!button.disabled) button.addEventListener("click", () => abrirModalProduto(p));
+      footer.append(button);
+      body.append(footer);
+      card.append(imageBox, body);
+      slide.append(card);
+      track.append(slide);
+    });
+    document.dispatchEvent(new CustomEvent("tc-produtos-atualizados"));
   }
 
   // =====================================================
@@ -1285,7 +1336,7 @@
         h(
           "div",
           { class: "small text-white-50 mt-3" },
-          "Digite este código no dispositivo para liberar sua retirada."
+          "Token válido por 15 minutos. Digite este código no dispositivo para liberar sua retirada."
         ),
         h(
           "button",
@@ -1343,6 +1394,7 @@
     "inicio",
     "documento",
     "pedidos",
+    "meus-tokens",
     "avisos",
     "sobre",
     "formatura",
@@ -1362,6 +1414,7 @@
   const PAG = {
     pendente: "Aguardando",
     pago: "Pago",
+    confirmado: "Confirmado",
     falhou: "Falhou",
     estornado: "Estornado",
   };
@@ -1372,11 +1425,12 @@
     entregue: "info",
     cancelado: "secondary",
     pago: "success",
+    confirmado: "success",
     falhou: "danger",
     estornado: "secondary",
   };
 
-  let secGerente, modalProdAdmin, editandoId = null, listaProdAdmin = [];
+  let secGerente, modalProdAdmin, editandoId = null, listaProdAdmin = [], gProdPreviewUrl = null;
 
   function tabela(cabecalho, corpo) {
     return h(
@@ -1404,19 +1458,47 @@
     secGerente.innerHTML = `
       <div class="container-fluid px-0 text-white">
         <div class="mb-4 text-start">
-          <h2 class="fw-bold fs-1 mb-1">Gerência</h2>
-          <p class="text-secondary small">Visualize os produtos e autorize os pedidos dos alunos.</p>
+          <h2 class="fw-bold fs-1 mb-1">Painel Administrativo</h2>
+          <p class="text-secondary small">Gerencie produtos, acompanhe pedidos e consulte tokens de retirada dos alunos.</p>
         </div>
         <ul class="nav nav-pills mb-3 gap-2">
           <li class="nav-item"><button type="button" class="nav-link active" id="tabGProd">Produtos</button></li>
           <li class="nav-item"><button type="button" class="nav-link" id="tabGPed">Pedidos</button></li>
+          <li class="nav-item"><button type="button" class="nav-link" id="tabGTok">Tokens IoT</button></li>
+          <li class="nav-item"><button type="button" class="nav-link" id="tabGAvisos">Avisos</button></li>
         </ul>
         <div id="gProdutos">
           <div class="d-flex flex-wrap gap-2 mb-3">
             <input id="gBusca" class="form-control bg-dark text-white border-secondary" style="max-width:320px" placeholder="Buscar produto ou categoria">
+            <button type="button" class="btn btn-outline-light" id="gAtualizarProdutos"><i class="bi bi-arrow-clockwise me-1"></i>Atualizar produtos</button>
             <button type="button" class="btn btn-danger ms-auto" id="gNovo"><i class="bi bi-plus-lg me-1"></i>Novo produto</button>
           </div>
           <div id="gProdTabela"></div>
+        </div>
+        <div id="gTokens" hidden>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <p class="text-secondary small mb-0 me-auto">Consulte os tokens de retirada e o estado de cada pedido.</p>
+            <button type="button" class="btn btn-outline-light" id="gAtualizarTokens"><i class="bi bi-arrow-clockwise me-1"></i>Atualizar tokens</button>
+          </div>
+          <div id="gTokensTabela"></div>
+        </div>
+        <div id="gAvisos" hidden>
+          <form id="gFormAviso" class="border border-secondary rounded-3 p-3 mb-4">
+            <input type="hidden" id="gAvisoId">
+            <h5 id="gAvisoFormTitulo" class="mb-3">Publicar aviso</h5>
+            <div class="row g-3">
+              <div class="col-12"><label for="gAvisoTitulo" class="form-label">Título</label><input id="gAvisoTitulo" class="form-control bg-dark text-white border-secondary" maxlength="150" required></div>
+              <div class="col-md-4"><label for="gAvisoCategoria" class="form-label">Categoria</label><select id="gAvisoCategoria" class="form-select bg-dark text-white border-secondary" required><option value="evento">Evento</option><option value="academico">Acadêmico</option><option value="reuniao">Reunião</option><option value="importante">Importante</option></select></div>
+              <div class="col-md-4"><label for="gAvisoData" class="form-label">Data</label><input id="gAvisoData" type="date" class="form-control bg-dark text-white border-secondary" required></div>
+              <div class="col-md-4"><label for="gAvisoHorario" class="form-label">Horário</label><input id="gAvisoHorario" type="time" class="form-control bg-dark text-white border-secondary" value="08:00"></div>
+              <div class="col-12"><label for="gAvisoLocal" class="form-label">Local</label><input id="gAvisoLocal" class="form-control bg-dark text-white border-secondary" maxlength="150" placeholder="Ex.: Auditório SENAI"></div>
+              <div class="col-12"><label for="gAvisoConteudo" class="form-label">Descrição</label><textarea id="gAvisoConteudo" class="form-control bg-dark text-white border-secondary" rows="3" maxlength="5000" required></textarea></div>
+              <div class="col-12 d-flex flex-wrap gap-2"><button class="btn btn-danger" id="gAvisoSalvar" type="submit">Publicar aviso</button><button class="btn btn-outline-secondary" id="gAvisoCancelar" type="button" hidden>Cancelar edição</button></div>
+              <div class="col-12"><div id="gAvisoMsg" role="status" class="small"></div></div>
+            </div>
+          </form>
+          <div class="d-flex align-items-center justify-content-between gap-2 mb-3"><h5 class="mb-0">Avisos cadastrados</h5><button type="button" class="btn btn-outline-light btn-sm" id="gAvisoAtualizar">Atualizar</button></div>
+          <div id="gAvisoLista"></div>
         </div>
         <div id="gPedidos" hidden>
           <div class="d-flex flex-wrap gap-2 mb-3">
@@ -1438,31 +1520,34 @@
     m.innerHTML = `
     <div class="modal fade" id="modalProdAdmin" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered"><div class="modal-content bg-dark text-white border-secondary">
-        <div class="modal-header border-secondary"><h5 class="modal-title" id="mpTitulo"></h5>
+        <div class="modal-header border-secondary"><h5 class="modal-title" id="gProdTitulo"></h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
         <div class="modal-body">
-          <label class="form-label small" for="mpNome">Nome</label>
-          <input id="mpNome" class="form-control bg-dark text-white border-secondary mb-2" maxlength="120">
-          <label class="form-label small" for="mpCat">Categoria</label>
-          <select id="mpCat" class="form-select bg-dark text-white border-secondary mb-2">${CATEGORIAS.map((c) => `<option value="${c}">${c}</option>`).join("")}</select>
-          <label class="form-label small" for="mpDesc">Descrição</label>
-          <textarea id="mpDesc" rows="2" class="form-control bg-dark text-white border-secondary mb-2"></textarea>
-          <label class="form-label small" for="mpImg">Imagem (caminho)</label>
-          <input id="mpImg" class="form-control bg-dark text-white border-secondary mb-2" placeholder="/landing/images/produto.png">
+          <label class="form-label small" for="gProdNome">Nome</label>
+          <input id="gProdNome" class="form-control bg-dark text-white border-secondary mb-2" maxlength="120">
+          <label class="form-label small" for="gProdCat">Categoria</label>
+          <select id="gProdCat" class="form-select bg-dark text-white border-secondary mb-2">${CATEGORIAS.map((c) => `<option value="${c}">${c}</option>`).join("")}</select>
+          <label class="form-label small" for="gProdDesc">Descrição</label>
+          <textarea id="gProdDesc" rows="2" class="form-control bg-dark text-white border-secondary mb-2"></textarea>
+          <label class="form-label small" for="gProdFoto">Foto do produto</label>
+          <input id="gProdFoto" type="file" accept="image/png,image/jpeg" class="form-control bg-dark text-white border-secondary mb-2">
+          <input id="gProdImagem" type="hidden">
+          <div class="mb-3"><img id="gProdFotoPreview" alt="Prévia da foto do produto" src="/landing/images/logoTechCampus.png" style="width:100%;max-width:180px;height:130px;object-fit:contain;background:#fff;border-radius:8px;padding:6px"></div>
           <div class="row g-2">
-            <div class="col"><label class="form-label small" for="mpPreco">Preço (R$)</label>
-              <input id="mpPreco" type="number" min="0" step="0.01" class="form-control bg-dark text-white border-secondary"></div>
-            <div class="col"><label class="form-label small" for="mpEstoque">Estoque</label>
-              <input id="mpEstoque" type="number" min="0" step="1" class="form-control bg-dark text-white border-secondary"></div>
+            <div class="col"><label class="form-label small" for="gProdPreco">Preço (R$)</label>
+              <input id="gProdPreco" type="number" min="0" step="0.01" class="form-control bg-dark text-white border-secondary"></div>
+            <div class="col"><label class="form-label small" for="gProdEstoque">Estoque</label>
+              <input id="gProdEstoque" type="number" min="0" step="1" class="form-control bg-dark text-white border-secondary"></div>
           </div>
-          <div class="form-check form-switch mt-3" id="mpAtivoBox">
-            <input class="form-check-input" type="checkbox" id="mpAtivo" checked><label class="form-check-label" for="mpAtivo">Produto ativo na loja</label>
+          <div class="form-check form-switch mt-3" id="gProdAtivoBox">
+            <input class="form-check-input" type="checkbox" id="gProdAtivo" checked><label class="form-check-label" for="gProdAtivo">Produto ativo na loja</label>
           </div>
-          <div id="mpMsg" role="alert" class="small mt-2"></div>
+          <div id="gProdMsg" role="alert" class="small mt-2"></div>
         </div>
         <div class="modal-footer border-secondary">
+          <button type="button" class="btn btn-outline-danger me-auto" id="gProdExcluir" hidden>Excluir produto</button>
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger" id="mpSalvar">Salvar</button>
+          <button type="button" class="btn btn-danger" id="gProdSalvar">Salvar</button>
         </div>
       </div></div>
     </div>`;
@@ -1471,9 +1556,65 @@
 
     $("tabGProd").onclick = () => aba("prod");
     $("tabGPed").onclick = () => aba("ped");
+    $("tabGTok").onclick = () => aba("tokens");
+    $("tabGAvisos").onclick = () => aba("avisos");
+    $("gAtualizarTokens").onclick = carregarTokensAdmin;
+    $("gFormAviso").addEventListener("submit", salvarAvisoAdmin);
+    $("gAvisoCancelar").onclick = resetAvisoAdmin;
+    $("gAvisoAtualizar").onclick = carregarAvisosAdmin;
     $("gBusca").addEventListener("input", renderProdutosAdmin);
     $("gNovo").onclick = () => abrirProduto(null);
-    $("mpSalvar").onclick = salvarProduto;
+    $("gAtualizarProdutos").onclick = async () => {
+      const btn = $("gAtualizarProdutos");
+      btn.disabled = true;
+      try {
+        await Promise.all([carregarProdutosAdmin(), carregarProdutos()]);
+        setMsg($("gMsg"), "Lista de produtos atualizada.", "success");
+      } finally { btn.disabled = false; }
+    };
+    $("gProdSalvar").onclick = salvarProduto;
+    $("gProdExcluir").onclick = async () => {
+      const p = listaProdAdmin.find((item) => String(item.id) === String(editandoId));
+      if (!p) {
+        setMsg($("gProdMsg"), "Não foi possível identificar o produto. Feche e abra a edição novamente.");
+        return;
+      }
+      // O clique em "Excluir produto" já é a ação explícita do administrador.
+      // Evita window.confirm dentro do modal Bootstrap, que pode ser suprimido pelo navegador.
+      const btn = $("gProdExcluir");
+      btn.disabled = true;
+      setMsg($("gProdMsg"), "Excluindo produto...");
+      try {
+        await api("/produtos/" + p.id, { method: "DELETE" });
+        modalProdAdmin.hide();
+        await Promise.all([carregarProdutosAdmin(), carregarProdutos()]);
+        setMsg($("gMsg"), "Produto excluído.", "success");
+      } catch (e) {
+        setMsg($("gProdMsg"), e.message || "Não foi possível excluir o produto.");
+      } finally {
+        btn.disabled = false;
+      }
+    };
+    $("gProdFoto").addEventListener("change", () => {
+      const file = $("gProdFoto").files?.[0];
+      if (gProdPreviewUrl) {
+        URL.revokeObjectURL(gProdPreviewUrl);
+        gProdPreviewUrl = null;
+      }
+      if (!file) {
+        $("gProdFotoPreview").src = "/landing/images/logoTechCampus.png";
+        return;
+      }
+      if (!/^image\/(jpeg|png)$/.test(file.type) || file.size > 20 * 1024 * 1024) {
+        setMsg($("gProdMsg"), "Escolha uma foto JPG ou PNG de até 20 MB.");
+        $("gProdFoto").value = "";
+        $("gProdFotoPreview").src = "/landing/images/logoTechCampus.png";
+        return;
+      }
+      gProdPreviewUrl = URL.createObjectURL(file);
+      $("gProdFotoPreview").src = gProdPreviewUrl;
+      setMsg($("gProdMsg"), "");
+    });
     $("gFiltroPed").onchange = carregarPedidosAdmin;
     $("gAtualizar").onclick = () => {
       carregarProdutosAdmin();
@@ -1484,14 +1625,47 @@
   function aba(qual) {
     $("tabGProd").classList.toggle("active", qual === "prod");
     $("tabGPed").classList.toggle("active", qual === "ped");
+    $("tabGTok").classList.toggle("active", qual === "tokens");
+    $("tabGAvisos").classList.toggle("active", qual === "avisos");
     $("gProdutos").hidden = qual !== "prod";
     $("gPedidos").hidden = qual !== "ped";
+    $("gTokens").hidden = qual !== "tokens";
+    $("gAvisos").hidden = qual !== "avisos";
     if (qual === "ped") carregarPedidosAdmin();
+    if (qual === "tokens") carregarTokensAdmin();
+    if (qual === "avisos") carregarAvisosAdmin();
+  }
+
+  async function carregarTokensAdmin() {
+    const container = $("gTokensTabela");
+    if (!container) return;
+    container.replaceChildren(h("p", { class: "text-secondary" }, "Carregando tokens..."));
+    try {
+      const tokens = await api("/admin/tokens");
+      if (!tokens.length) {
+        container.replaceChildren(h("p", { class: "text-secondary" }, "Ainda não há tokens de retirada."));
+        return;
+      }
+      const corpo = h("tbody", {}, tokens.map((t) => h("tr", {},
+        h("td", {}, "#" + t.pedido_id),
+        h("td", {}, t.cliente || "—", h("div", { class: "small text-secondary" }, t.cliente_email || "")),
+        h("td", {}, h("code", { class: "fs-6" }, t.token)),
+        h("td", {}, STATUS[t.pedido_status] || t.pedido_status || "—"),
+        h("td", {}, PAG[t.pagamento_status] || t.pagamento_status || "Sem pagamento"),
+        h("td", {}, t.usado ? "Utilizado" : (t.expira_em && t.expira_em < Date.now() ? "Expirado" : "Ativo")),
+        h("td", {}, t.expira_em ? new Date(t.expira_em).toLocaleString("pt-BR") : "—")
+      )));
+      container.replaceChildren(tabela(["Pedido", "Aluno", "Token", "Status pedido", "Pagamento", "Estado token", "Expiração"], corpo));
+    } catch (e) {
+      container.replaceChildren(h("div", { class: "alert alert-danger" }, e.message));
+    }
   }
 
   async function carregarProdutosAdmin() {
     try {
-      listaProdAdmin = await api("/admin/produtos");
+      const resposta = await api("/admin/produtos");
+      // A API omite produtos excluídos; ativar/desativar permanece uma ação independente.
+      listaProdAdmin = resposta;
       renderProdutosAdmin();
     } catch (e) {
       setMsg($("gMsg"), e.message);
@@ -1531,14 +1705,12 @@
               h(
                 "td",
                 { class: "text-end" },
-                h(
-                  "button",
-                  {
+                h("div", { class: "d-flex justify-content-end gap-2" },
+                  h("button", {
                     class: "btn btn-sm btn-outline-light",
                     type: "button",
                     onclick: () => abrirProduto(p),
-                  },
-                  "Editar"
+                  }, "Editar")
                 )
               )
             )
@@ -1560,25 +1732,29 @@
 
   function abrirProduto(p) {
     editandoId = p ? p.id : null;
-    $("mpTitulo").textContent = p ? "Editar produto" : "Novo produto";
-    $("mpNome").value = p?.nome || "";
-    $("mpCat").value = p?.categoria || CATEGORIAS[0];
-    $("mpDesc").value = p?.descricao || "";
-    $("mpImg").value = p?.imagem || "";
-    $("mpPreco").value = p ? (p.preco_centavos / 100).toFixed(2) : "";
-    $("mpEstoque").value = p ? p.estoque : 0;
-    $("mpAtivo").checked = p ? !!p.ativo : true;
-    $("mpAtivoBox").hidden = !p;
-    setMsg($("mpMsg"), "");
+    $("gProdTitulo").textContent = p ? "Editar produto" : "Novo produto";
+    $("gProdNome").value = p?.nome || "";
+    $("gProdCat").value = p?.categoria || CATEGORIAS[0];
+    $("gProdDesc").value = p?.descricao || "";
+    $("gProdImagem").value = p?.imagem || "";
+    $("gProdFoto").value = "";
+    $("gProdFotoPreview").src = p?.imagem || "/landing/images/logoTechCampus.png";
+    $("gProdPreco").value = p ? (p.preco_centavos / 100).toFixed(2) : "";
+    $("gProdEstoque").value = p ? p.estoque : 0;
+    $("gProdAtivo").checked = p ? !!p.ativo : true;
+    $("gProdAtivoBox").hidden = !p;
+    $("gProdExcluir").hidden = !p;
+    $("gProdExcluir").disabled = false;
+    setMsg($("gProdMsg"), "");
     modalProdAdmin.show();
   }
 
   async function salvarProduto() {
     const preco = Math.round(
-      parseFloat(String($("mpPreco").value).replace(",", ".")) * 100
+      parseFloat(String($("gProdPreco").value).replace(",", ".")) * 100
     );
-    const estoque = parseInt($("mpEstoque").value, 10);
-    const nome = $("mpNome").value.trim();
+    const estoque = parseInt($("gProdEstoque").value, 10);
+    const nome = $("gProdNome").value.trim();
 
     if (
       !nome ||
@@ -1587,36 +1763,131 @@
       !Number.isSafeInteger(estoque) ||
       estoque < 0
     )
-      return setMsg($("mpMsg"), "Informe nome, preço e estoque válidos.");
+      return setMsg($("gProdMsg"), "Informe nome, preço e estoque válidos.");
 
+    const btn = $("gProdSalvar");
+    btn.disabled = true;
     const body = {
       nome,
-      categoria: $("mpCat").value,
-      descricao: $("mpDesc").value,
-      imagem: $("mpImg").value,
+      categoria: $("gProdCat").value,
+      descricao: $("gProdDesc").value,
+      imagem: $("gProdImagem").value,
       preco_centavos: preco,
       estoque,
     };
 
     try {
+      const arquivo = $("gProdFoto").files?.[0];
+      if (arquivo) {
+        if (!/^image\/(jpeg|png)$/.test(arquivo.type) || arquivo.size > 20 * 1024 * 1024)
+          throw new Error("Escolha uma foto JPG ou PNG de até 20 MB.");
+        const dados = new FormData();
+        dados.append("foto", arquivo);
+        const upload = await api("/produtos/imagem", { method: "POST", body: dados });
+        body.imagem = upload.imagem;
+      }
+      if (!body.imagem) throw new Error("Selecione uma foto para o produto.");
       if (editandoId)
         await api(`/produtos/${editandoId}`, {
           method: "PATCH",
-          body: JSON.stringify({
-            ...body,
-            ativo: $("mpAtivo").checked ? 1 : 0,
-          }),
+          body: JSON.stringify({ ...body, ativo: $("gProdAtivo").checked ? 1 : 0 }),
         });
       else
-        await api("/produtos", {
-          method: "POST",
-          body: JSON.stringify(body),
-        });
+        await api("/produtos", { method: "POST", body: JSON.stringify(body) });
       modalProdAdmin.hide();
+      $("gProdFoto").value = "";
+      if (gProdPreviewUrl) {
+        URL.revokeObjectURL(gProdPreviewUrl);
+        gProdPreviewUrl = null;
+      }
+      $("gProdFotoPreview").src = "/landing/images/logoTechCampus.png";
       await carregarProdutosAdmin();
-      carregarProdutos();
+      // Atualiza também a vitrine e os cards de compra sem exigir recarga da página.
+      await carregarProdutos();
+      setMsg($("gMsg"), "Produto salvo com sucesso.", "success");
     } catch (e) {
-      setMsg($("mpMsg"), e.message);
+      setMsg($("gProdMsg"), e.message);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  const CATEGORIAS_AVISO = { evento: "Evento", academico: "Acadêmico", reuniao: "Reunião", importante: "Importante" };
+
+  async function carregarAvisosAdmin() {
+    const container = $("gAvisoLista");
+    if (!container) return;
+    container.replaceChildren(h("p", { class: "text-secondary" }, "Carregando avisos..."));
+    try {
+      const avisos = await api("/admin/avisos");
+      container.replaceChildren();
+      if (!avisos.length) {
+        container.append(h("p", { class: "text-secondary" }, "Nenhum aviso cadastrado."));
+        return;
+      }
+      avisos.forEach((aviso) => {
+        const item = h("article", { class: "d-flex flex-wrap justify-content-between align-items-start gap-3 p-3 mb-2 rounded-3 border border-secondary bg-dark" });
+        const info = h("div", { class: "flex-grow-1" },
+          h("strong", { class: "d-block mb-1" }, aviso.titulo + (Number(aviso.publicado) === 1 ? "" : " (excluído)")),
+          h("p", { class: "small text-white-50 mb-2" }, aviso.conteudo),
+          h("small", { class: "text-secondary" }, (CATEGORIAS_AVISO[aviso.categoria] || "Aviso") + " · " + (aviso.data_evento || "Sem data") + " · " + (aviso.horario || "Sem horário") + " · " + (aviso.local || "Sem local"))
+        );
+        const actions = h("div", { class: "d-flex flex-wrap gap-2" });
+        const edit = h("button", { type: "button", class: "btn btn-sm btn-outline-light", onclick: () => editarAvisoAdmin(aviso) }, "Editar");
+        const del = h("button", { type: "button", class: "btn btn-sm btn-outline-danger", onclick: async () => {
+          if (!confirm("Excluir o aviso “" + aviso.titulo + "”? Ele deixará de aparecer no calendário.")) return;
+          try { await api("/avisos/" + aviso.id, { method: "DELETE" }); await carregarAvisosAdmin(); setMsg($("gAvisoMsg"), "Aviso excluído.", "success"); }
+          catch (e) { setMsg($("gAvisoMsg"), e.message); }
+        } }, "Excluir");
+        actions.append(edit, del); item.append(info, actions); container.append(item);
+      });
+    } catch (e) {
+      container.replaceChildren(h("p", { class: "text-danger" }, e.message));
+    }
+  }
+
+  function editarAvisoAdmin(aviso) {
+    $("gAvisoId").value = aviso.id;
+    $("gAvisoTitulo").value = aviso.titulo || "";
+    $("gAvisoCategoria").value = aviso.categoria || "importante";
+    $("gAvisoData").value = aviso.data_evento || "";
+    $("gAvisoHorario").value = aviso.horario || "";
+    $("gAvisoLocal").value = aviso.local || "";
+    $("gAvisoConteudo").value = aviso.conteudo || "";
+    $("gAvisoFormTitulo").textContent = "Editar aviso #" + aviso.id;
+    $("gAvisoSalvar").textContent = "Salvar alterações";
+    $("gAvisoCancelar").hidden = false;
+    $("gFormAviso").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function resetAvisoAdmin() {
+    $("gFormAviso").reset();
+    $("gAvisoId").value = "";
+    $("gAvisoHorario").value = "08:00";
+    $("gAvisoFormTitulo").textContent = "Publicar aviso";
+    $("gAvisoSalvar").textContent = "Publicar aviso";
+    $("gAvisoCancelar").hidden = true;
+  }
+
+  async function salvarAvisoAdmin(event) {
+    event.preventDefault();
+    const id = $("gAvisoId").value;
+    const body = {
+      titulo: $("gAvisoTitulo").value.trim(),
+      categoria: $("gAvisoCategoria").value,
+      data_evento: $("gAvisoData").value,
+      horario: $("gAvisoHorario").value,
+      local: $("gAvisoLocal").value.trim(),
+      conteudo: $("gAvisoConteudo").value.trim(),
+    };
+    try {
+      await api(id ? "/avisos/" + id : "/avisos", { method: id ? "PATCH" : "POST", body: JSON.stringify(body) });
+      resetAvisoAdmin();
+      await carregarAvisosAdmin();
+      document.dispatchEvent(new CustomEvent("tc-avisos-atualizados", { detail: { data: body.data_evento } }));
+      setMsg($("gAvisoMsg"), id ? "Aviso atualizado e calendário sincronizado." : "Aviso publicado e calendário sincronizado.", "success");
+    } catch (e) {
+      setMsg($("gAvisoMsg"), e.message);
     }
   }
 
@@ -1732,9 +2003,9 @@
                     {
                       class: "btn btn-sm btn-success me-1",
                       type: "button",
-                      disabled: p.pagamento_status !== "pago",
+                      disabled: p.pagamento_status !== "confirmado",
                       title:
-                        p.pagamento_status !== "pago"
+                        p.pagamento_status !== "confirmado"
                           ? "Aguardando pagamento"
                           : "",
                       onclick: () => mudarStatus(p.id, "aprovado"),
@@ -1814,8 +2085,8 @@
       h(
         "div",
         { class: "d-flex flex-column" },
-        h("span", { class: "fw-bold fs-6" }, "Gerência"),
-        h("span", { class: "text-white-50 small" }, "Produtos e pedidos")
+        h("span", { class: "fw-bold fs-6" }, "Painel Administrativo"),
+        h("span", { class: "text-white-50 small" }, "Produtos, pedidos e tokens")
       )
     );
     const alvo = document.querySelector('a.menu-item[href="#usuarios"]');
@@ -1879,6 +2150,118 @@
   }
 
   // =====================================================
+  // EDITOR DE AVISOS NA PRÓPRIA TELA DE AVISOS (ADMIN)
+  // =====================================================
+  function configurarEditorAvisosPagina() {
+    const tools = $("avisosAdminFerramentas");
+    const form = $("avisosAdminForm");
+    if (!tools || !form) return;
+
+    // Os controles podem não existir em todas as versões da tela de Avisos.
+    const abrir = $("avisosAdminAbrir");
+    const novo = $("avisosAdminNovo");
+    const fechar = $("avisosAdminFechar");
+    const editor = $("avisosAdminEditor");
+
+    // Não inicializa um editor incompleto; evita addEventListener em null.
+    if (!abrir || !novo || !fechar || !editor) return;
+
+    tools.classList.remove("d-none");
+    abrir.addEventListener("click", async () => {
+      editor.hidden = false;
+      await carregarAvisosPaginaAdmin();
+    });
+    novo.addEventListener("click", resetAvisoPaginaAdmin);
+    fechar.addEventListener("click", () => { editor.hidden = true; });
+    form.addEventListener("submit", salvarAvisoPaginaAdmin);
+    document.addEventListener("tc-avisos-atualizados", carregarAvisosPaginaAdmin);
+  }
+
+  async function carregarAvisosPaginaAdmin() {
+    const list = $("avisosAdminLista");
+    if (!list) return;
+    list.replaceChildren(h("p", { class: "text-secondary small" }, "Carregando avisos..."));
+    try {
+      const avisos = await api("/admin/avisos");
+      list.replaceChildren();
+      if (!avisos.length) {
+        list.append(h("p", { class: "text-secondary small" }, "Nenhum aviso cadastrado."));
+        return;
+      }
+      avisos.forEach((aviso) => {
+        const row = h("div", { class: "border border-secondary rounded-3 p-3 mb-2 d-flex flex-wrap align-items-start justify-content-between gap-3" });
+        const details = h("div", { class: "flex-grow-1" },
+          h("strong", { class: "d-block" }, aviso.titulo),
+          h("p", { class: "small text-white-50 my-2" }, aviso.conteudo),
+          h("small", { class: "text-secondary" }, [aviso.data_evento, aviso.horario, aviso.local, aviso.categoria].filter(Boolean).join(" · "))
+        );
+        const actions = h("div", { class: "d-flex gap-2" });
+        actions.append(
+          h("button", { type: "button", class: "btn btn-sm btn-outline-light", onclick: () => editarAvisoPaginaAdmin(aviso) }, "Editar"),
+          h("button", { type: "button", class: "btn btn-sm btn-outline-danger", onclick: async () => {
+            if (!confirm("Excluir o aviso “" + aviso.titulo + "”?")) return;
+            try {
+              await api("/avisos/" + aviso.id, { method: "DELETE" });
+              await carregarAvisosPaginaAdmin();
+              document.dispatchEvent(new CustomEvent("tc-avisos-atualizados"));
+              setMsg($("avisosAdminMsg"), "Aviso excluído do calendário.", "success");
+            } catch (e) { setMsg($("avisosAdminMsg"), e.message); }
+          } }, "Excluir")
+        );
+        row.append(details, actions);
+        list.append(row);
+      });
+    } catch (e) {
+      list.replaceChildren(h("p", { class: "text-danger small" }, e.message));
+    }
+  }
+
+  function editarAvisoPaginaAdmin(aviso) {
+    $("avisosAdminId").value = aviso.id;
+    $("avisosAdminNome").value = aviso.titulo || "";
+    $("avisosAdminCategoria").value = aviso.categoria || "importante";
+    $("avisosAdminData").value = aviso.data_evento || "";
+    $("avisosAdminHorario").value = aviso.horario || "";
+    $("avisosAdminLocal").value = aviso.local || "";
+    $("avisosAdminDescricao").value = aviso.conteudo || "";
+    $("avisosAdminTitulo").textContent = "Editar aviso";
+    $("avisosAdminSalvar").textContent = "Salvar alterações";
+    $("avisosAdminEditor").hidden = false;
+    $("avisosAdminNome").focus();
+  }
+
+  function resetAvisoPaginaAdmin() {
+    $("avisosAdminForm").reset();
+    $("avisosAdminId").value = "";
+    $("avisosAdminTitulo").textContent = "Publicar aviso";
+    $("avisosAdminSalvar").textContent = "Publicar aviso";
+    setMsg($("avisosAdminMsg"), "");
+  }
+
+  async function salvarAvisoPaginaAdmin(event) {
+    event.preventDefault();
+    const id = $("avisosAdminId").value;
+    const body = {
+      titulo: $("avisosAdminNome").value.trim(),
+      categoria: $("avisosAdminCategoria").value,
+      data_evento: $("avisosAdminData").value,
+      horario: $("avisosAdminHorario").value,
+      local: $("avisosAdminLocal").value.trim(),
+      conteudo: $("avisosAdminDescricao").value.trim()
+    };
+    try {
+      await api(id ? "/avisos/" + id : "/avisos", {
+        method: id ? "PATCH" : "POST",
+        body: JSON.stringify(body)
+      });
+      resetAvisoPaginaAdmin();
+      await carregarAvisosPaginaAdmin();
+      document.dispatchEvent(new CustomEvent("tc-avisos-atualizados", { detail: { data: body.data_evento } }));
+      setMsg($("avisosAdminMsg"), id ? "Aviso atualizado e calendário sincronizado." : "Aviso publicado no calendário.", "success");
+    } catch (e) { setMsg($("avisosAdminMsg"), e.message); }
+  }
+
+  // =====================================================
   // 14) INICIALIZAÇÃO
   // =====================================================
   async function iniciar() {
@@ -1889,14 +2272,19 @@
       return;
     }
 
+    // Disponibiliza o papel para a navegação central bloquear telas de aluno no Admin.
+    window.tcPapelUsuario = user.papel;
+
     // Atualizar nome do usuário
     const nome = document.querySelector("#userDropdown .fw-semibold");
     const sub = document.querySelector("#userDropdown small");
     if (nome) nome.textContent = user.nome;
-    if (sub) sub.textContent = user.papel === "admin" ? "Gerente" : "Aluno SENAI";
+    if (sub) sub.textContent = user.papel === "admin" ? "Administrador" : "Aluno SENAI";
+    const saudacao = document.getElementById("tcNomeUsuario");
+    if (saudacao) saudacao.textContent = (user.nome || "Aluno").trim().split(/\s+/)[0];
 
-    // Inicializar loja para alunos
-    if (document.getElementById("productsTrack")) {
+    // Recursos de compra são inicializados somente para alunos.
+    if (document.getElementById("productsTrack") && user.papel !== "admin") {
       carregarCarrinho();
       montarModalProduto();
       montarModalCarrinho();
@@ -1908,11 +2296,18 @@
     // Agendamentos
     ligarAgendamento();
 
-    // Modo gerente
+    // Editor na própria aba Avisos: somente administradores.
     if (user.papel === "admin") {
       ativarModoGerente();
+      configurarEditorAvisosPagina();
+      document.querySelector('a.menu-item[href="#pedidos"]')?.remove();
+      document.querySelector('a.menu-item[href="#meus-tokens"]')?.remove();
+      $("pedidos")?.classList.add("d-none");
+      $("meus-tokens")?.classList.add("d-none");
+      if (["#pedidos", "#meus-tokens"].includes(location.hash)) location.hash = "#gerente";
     } else {
       document.querySelector('a.menu-item[href="#usuarios"]')?.remove();
+      document.getElementById("avisosAdminFerramentas")?.remove();
     }
   }
 

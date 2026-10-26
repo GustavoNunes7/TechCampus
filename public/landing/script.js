@@ -325,29 +325,25 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Filtro da Tela de Produtos Disponíveis
-const filterButtons = document.querySelectorAll(".btn-filter");
-const productCards = document.querySelectorAll(".product-card-item");
-
+// Filtro de categorias: aplica-se a todos os slides, inclusive produtos dinâmicos.
+const filterButtons = document.querySelectorAll(".products-filters .btn-filter");
+let activeProductCategory = "todos";
+function applyProductCategoryFilter() {
+  const track = document.getElementById("productsTrack");
+  if (!track) return;
+  track.querySelectorAll(".product-slide").forEach((slide) => {
+    const category = (slide.getAttribute("data-category") || "").trim().toLocaleLowerCase("pt-BR");
+    slide.classList.toggle("d-none", activeProductCategory !== "todos" && category !== activeProductCategory);
+  });
+  track.style.transform = "translateX(0)";
+  if (typeof updateProductsCarousel === "function") updateProductsCarousel();
+}
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    // Altera visual dos botões
     filterButtons.forEach((btn) => btn.classList.remove("active"));
     button.classList.add("active");
-
-    const category = button.getAttribute("data-category");
-
-    // Exibe/Oculta os cards baseados na categoria
-    productCards.forEach((card) => {
-      if (
-        category === "todos" ||
-        card.getAttribute("data-category") === category
-      ) {
-        card.classList.remove("d-none");
-      } else {
-        card.classList.add("d-none");
-      }
-    });
+    activeProductCategory = (button.getAttribute("data-category") || "todos").trim().toLocaleLowerCase("pt-BR");
+    applyProductCategoryFilter();
   });
 });
 
@@ -375,13 +371,10 @@ function getVisibleProducts() {
    ========================================================= */
 
 function updateProductsCarousel() {
-  const products = document.querySelectorAll(".product-slide");
-
+  const products = Array.from(document.querySelectorAll("#productsTrack .product-slide")).filter((p) => !p.classList.contains("d-none"));
   const visibleProducts = getVisibleProducts();
-
   const totalProducts = products.length;
-
-  const maxPosition = totalProducts - visibleProducts;
+  const maxPosition = Math.max(0, totalProducts - visibleProducts);
 
   /* Não deixa passar do limite */
 
@@ -395,6 +388,12 @@ function updateProductsCarousel() {
 
   /* Calcula o tamanho de cada produto */
 
+  if (!products.length) {
+    productsTrack.style.transform = "translateX(0)";
+    prevButton.disabled = true;
+    nextButton.disabled = true;
+    return;
+  }
   const productWidth = products[0].getBoundingClientRect().width;
 
   const gap = 15;
@@ -517,6 +516,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "inicio",
     "documento",
     "pedidos",
+    "meus-tokens",
     "avisos",
     "sobre",
     "formatura",
@@ -1867,10 +1867,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ) || "inicio";
   document.addEventListener("DOMContentLoaded", () => {
     const main = document.querySelector(".layout-wrapper > .main-content");
-    if (!main) {
-      console.warn("TechCampus: .main-content não encontrado.");
-      return;
-    }
+    // Este script também é carregado em páginas públicas sem o layout interno.
+    // Nelas, não há seções de perfil/configurações para reorganizar.
+    if (!main) return;
     // Corrige a estrutura sem recriar os formulários nem perder IDs/eventos.
     for (const id of ["perfil", "configuracoes"]) {
       const section = document.getElementById(id);
@@ -2233,12 +2232,12 @@ const faqItems =
 
 faqItems.forEach(function (item) {
 
-    const button =
-        item.querySelector(".faq-question");
+    const button = item.querySelector(".faq-question");
+    const symbol = item.querySelector(".symbol");
 
-    const symbol =
-        item.querySelector(".symbol");
-
+    // Algumas páginas reutilizam .faq-item sem o botão de pergunta.
+    // Ignora esses itens em vez de interromper a execução do script inteiro.
+    if (!button) return;
 
     button.addEventListener("click", function () {
 

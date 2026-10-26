@@ -69,4 +69,46 @@ CREATE TABLE IF NOT EXISTS formatura (
  data_evento TEXT, publicado INTEGER NOT NULL DEFAULT 1, criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 `);
+// Migração compatível: metadados usados pelo painel administrativo e pelo calendário de avisos.
+const colunasAvisos = db.prepare("PRAGMA table_info(avisos)").all().map((c) => c.name);
+if (!colunasAvisos.includes("categoria")) db.exec("ALTER TABLE avisos ADD COLUMN categoria TEXT NOT NULL DEFAULT 'importante'");
+if (!colunasAvisos.includes("data_evento")) db.exec("ALTER TABLE avisos ADD COLUMN data_evento TEXT");
+if (!colunasAvisos.includes("horario")) db.exec("ALTER TABLE avisos ADD COLUMN horario TEXT");
+if (!colunasAvisos.includes("local")) db.exec("ALTER TABLE avisos ADD COLUMN local TEXT");
+
+// Avisos antigos foram criados antes de existir data_evento. Para que não
+// desapareçam do calendário, usar a data de criação como data inicial.
+// O administrador ainda pode ajustar a data pelo formulário de edição.
+db.exec("UPDATE avisos SET data_evento = substr(criado_em, 1, 10) WHERE (data_evento IS NULL OR trim(data_evento) = '') AND criado_em IS NOT NULL AND length(criado_em) >= 10");
+
+// Migração compatível: a interface da loja oferece PIX, cartão e dinheiro.
+const pagamentosSql = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name='pagamentos'").get()?.sql || "";
+if (!pagamentosSql.includes("'dinheiro'")) {
+  db.exec(`
+    BEGIN;
+    CREATE TABLE pagamentos_novo (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      pedido_id INTEGER NOT NULL UNIQUE REFERENCES pedidos(id) ON DELETE CASCADE,
+      metodo TEXT NOT NULL CHECK(metodo IN ('pix','cartao','dinheiro')),
+      valor_centavos INTEGER NOT NULL CHECK(valor_centavos >= 0),
+      status TEXT NOT NULL DEFAULT 'pendente' CHECK(status IN ('pendente','confirmado','cancelado')),
+      codigo TEXT,
+      criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+    INSERT INTO pagamentos_novo (id,pedido_id,metodo,valor_centavos,status,codigo,criado_em)
+      SELECT id,pedido_id,metodo,valor_centavos,status,codigo,criado_em FROM pagamentos;
+    DROP TABLE pagamentos;
+    ALTER TABLE pagamentos_novo RENAME TO pagamentos;
+    COMMIT;
+  `);
+}
+
+// Migrações compatíveis com bancos existentes da versão original.
+// Exclusão lógica de produtos: separa remover da loja de ativar/desativar e preserva pedidos antigos.
+const colunasProdutos = db.prepare("PRAGMA table_info(produtos)").all().map((c) => c.name);
+if (!colunasProdutos.includes("excluido")) db.exec("ALTER TABLE produtos ADD COLUMN excluido INTEGER NOT NULL DEFAULT 0 CHECK(excluido IN (0,1))");
+
+const colunasUsuarios = db.prepare("PRAGMA table_info(usuarios)").all().map((c) => c.name);
+if (!colunasUsuarios.includes("ativo")) db.exec("ALTER TABLE usuarios ADD COLUMN ativo INTEGER NOT NULL DEFAULT 1");
+if (!colunasUsuarios.includes("foto_url")) db.exec("ALTER TABLE usuarios ADD COLUMN foto_url TEXT");
 module.exports = { db, ready: Promise.resolve() };

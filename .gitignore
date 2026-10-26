@@ -1,11 +1,12 @@
+
+# Dependências
 node_modules/
-.env
+
+# Banco de dados SQLite
 *.db
 *.db-shm
 *.db-wal
-uploads/
-
-.env
-node_modules/
 techcampus.db*
-.env
+
+# Arquivos enviados pelos usuários
+uploads/

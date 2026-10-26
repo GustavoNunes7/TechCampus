@@ -38,23 +38,9 @@
       if (!response.ok || !data.token)
         throw new Error(data.erro || "Não foi possível entrar.");
       sessionStorage.setItem("techcampus_token", data.token);
-      sessionStorage.setItem(
-        "techcampus_usuario",
-        JSON.stringify(data.usuario),
-      );
-
-      sessionStorage.setItem("techcampus_token", data.token);
-sessionStorage.setItem(
-  "techcampus_usuario",
-  JSON.stringify(data.usuario),
-);
-
-if (data.usuario.papel === "admin") {
-  location.replace("/frontend/admin.html");
-} else {
-  location.replace("/frontend/sistema.html");
-}
-      
+      sessionStorage.setItem("techcampus_usuario", JSON.stringify(data.usuario));
+      // A tela principal inclui a área do aluno e o painel de gerência.
+      location.replace("/frontend/sistema.html");
     } catch (err) {
       message.textContent = err.message || "Falha de conexão com o servidor.";
     } finally {

@@ -34,22 +34,15 @@
     // ÁREA DO ALUNO
     // ==========================================
 
-    if (pagina.endsWith("/sistema.html")) {
-      if (user.papel !== "aluno") {
-        location.replace("/frontend/admin.html");
-        return;
-      }
-    }
-
-    // ==========================================
-    // ÁREA DO ADMINISTRADOR
-    // ==========================================
-
+    // A página sistema.html contém a interface completa de aluno e o painel
+    // de gerência ativado por loja.js para administradores.
     if (pagina.endsWith("/admin.html")) {
       if (user.papel !== "admin") {
         location.replace("/frontend/sistema.html");
-        return;
+      } else {
+        location.replace("/frontend/sistema.html");
       }
+      return;
     }
 
     // ==========================================
