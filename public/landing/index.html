@@ -1,467 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AAPM | Alunos, oportunidades e benefícios</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" >
-    <link rel="stylesheet" href="landing.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#211614">
+  <meta name="description" content="AAPM — benefícios, serviços e oportunidades para sua jornada no SENAI.">
+  <title>AAPM | Alunos, oportunidades e benefícios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="landing.css">
+  <script src="landing-showcase.js" defer></script>
 </head>
 <body>
-    <!-- ================= NAVBAR ================= -->
-    <header class="navbar-aapm">
-        <div class="navbar-inner">
-            <a href="#inicio" class="logo">
-               <img src="../landing/images/Logo TechCampus Horizontal.png" width="200" height="90" alt="Logo SENAI">
-            </a>
-            <nav class="menu">
-                <a href="#aapm" style="font-size: 17px;">A AAPM</a>
-                <a href="#possibilidades" style="font-size: 17px;"> O que você encontra</a>
-                <a href="#como-acessar" style="font-size: 17px;"> Como acessar</a>
-                <a href="#duvidas" style="font-size: 17px;">  Dúvidas</a>
-            </nav>
-            <!-- VAI PARA O LOGIN -->
-            <a href="/frontend/login.html" class="btn-header">Fale com a AAPM ↗ </a>
-        </div>
-    </header>
+  <header class="site-header" id="siteHeader">
+    <nav class="nav-wrap" aria-label="Navegação principal">
+      <a class="brand" href="#topo" aria-label="AAPM início">AAPM<span>.</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><i class="bi bi-list"></i></button>
+      <div class="nav-links" id="navLinks">
+        <a href="#associacao">A AAPM</a><a href="#beneficios">Serviços</a><a href="#etapas">Como participar</a><a href="#duvidas">Dúvidas</a>
+        <a class="nav-contact" href="/frontend/login.html">Acessar área do aluno <i class="bi bi-arrow-up-right"></i></a>
+      </div>
+    </nav>
+  </header>
 
-
-    <!-- ================= HERO ================= -->
-
-    <section class="hero" id="inicio">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-label" style="font-size: 10px;">
-                    Sua jornada, mais conectada
-                </div>
-                <h1>Alunos,<br> oportunidades<br>e benefícios.<br><strong>No mesmo lugar.</strong>
-                </h1>
-                <p class="hero-description" style="font-size: 15px;"> Um espaço de conexão e apoio para viver melhora sua experiência no SENAI.</p>
-                <div class="hero-buttons">
-
-                    <!-- ABRE A SEÇÃO AAPM -->
-                    <button class="btn-red" onclick="mostrarSecao('aapm')"style="font-size: 15px;">
-                       Conheça a AAPM ↗
-                    </button>
-
-                    <!-- ABRE POSSIBILIDADES -->
-                    <button class="btn-outline" onclick="mostrarSecao('possibilidades')"style="font-size: 15px;">
-                        Explore as possibilidades ↗
-                    </button>
-                </div>
-                <div class="hero-note" style="font-size: 12px;">
-                    ↓ Dúvidas? Converse com a AAPM da sua unidade.
-                </div>
-            </div>
-        </div>
+  <main>
+    <section class="hero grain" id="topo">
+      <div class="hero-watermark" aria-hidden="true">AAPM</div>
+      <div class="hero-glow"></div>
+      <img class="hero-student" src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/student3d.png" alt="Estudante segurando um notebook">
+      <div class="hero-inner">
+        <p class="eyebrow"><span></span> Associação de pais e mestres · SENAI</p>
+        <h1>Alunos,<br>oportunidades<br>e benefícios.<em>No mesmo lugar.</em></h1>
+        <p class="hero-copy">Um espaço feito para conectar você a benefícios, serviços e experiências durante sua jornada no SENAI.</p>
+        <div class="hero-actions"><a class="button button-light" href="#associacao">Conheça a AAPM <i class="bi bi-arrow-right"></i></a><a class="text-link" href="#beneficios">Explore as possibilidades <i class="bi bi-arrow-up-right"></i></a></div>
+        <p class="hero-note"><i class="bi bi-chat-dots"></i> Dúvidas? Converse com a AAPM da sua unidade.</p>
+      </div>
+      <a class="scroll-cue" href="#associacao" aria-label="Rolar para conhecer a AAPM"><i class="bi bi-arrow-down"></i></a>
     </section>
 
-
-
-    <!-- ================= AAPM ================= -->
-
-    <!-- FICA OCULTA ATÉ CLICAR EM "CONHEÇA A AAPM" -->
-
-    <section class="intro secao-interativa" id="aapm">
-        <div class="container">
-            <div class="intro-top">
-                <div>
-                    <div class="section-label">
-                        01 / A AAPM
-                    </div>
-                    <h2> Uma associação.<br> Muitas conexões. </h2>
-                    <p class="intro-description"> AAPM — conectando alunos, oportunidades e benefícios.
-                    </p>
-                </div>
-                <div class="intro-items">
-                    <div class="intro-item">
-                        <div class="intro-icon">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <div>
-                            <small> APOIO AOS ALUNOS </small>
-                            <p> Benefícios, serviços e oportunidades em um só lugar.</p>
-                        </div>
-                    </div>
-
-                    <div class="intro-item">
-                        <div class="intro-icon">
-                            <i class="bi bi-link-45deg"></i>
-                        </div>
-                        <div>
-                            <small> CONEXÃO REAL </small>
-                            <p> Uma ponte entre o que você precisa e as possibilidades da jornada. </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="intro-bottom">
-                <div class="intro-card">
-                    <small> NOSSO PROPÓSITO </small>
-                    <p> Facilitar o acesso. Apoiar o desenvolvimento. </p>
-                </div>
-
-                <div class="intro-card">
-                    <small> NOSSA VISÃO </small>
-                    <p> Uma experiência mais conectada e acessível. </p>
-                </div>
-            </div>
-            <button class="btn-fechar" onclick="fecharSecao('aapm')"> Fechar conteúdo ↑</button>
+    <section class="section association" id="associacao">
+      <div class="section-grid">
+        <div class="reveal">
+          <p class="eyebrow dark-eyebrow"><span></span> 01 / A associação</p>
+          <h2>Uma associação.<br><em>Muitas conexões.</em></h2>
+          <p class="section-copy">A AAPM aproxima alunos, famílias e escola para tornar a experiência no SENAI mais conectada, acessível e cheia de possibilidades.</p>
+          <a class="button button-red" href="/frontend/login.html">Conheça os serviços <i class="bi bi-arrow-up-right"></i></a>
         </div>
+        <div class="value-list">
+          <article class="value-card reveal"><span class="value-icon"><i class="bi bi-gift"></i></span><div><h3>Apoio aos alunos</h3><p>Benefícios, serviços e oportunidades em um só lugar.</p></div><span class="value-number">01</span></article>
+          <article class="value-card reveal"><span class="value-icon"><i class="bi bi-people"></i></span><div><h3>Parceria total</h3><p>Escola, alunos e famílias juntos na mesma jornada.</p></div><span class="value-number">02</span></article>
+          <article class="value-card reveal"><span class="value-icon"><i class="bi bi-stars"></i></span><div><h3>Novas experiências</h3><p>Iniciativas que valorizam cada etapa da formação.</p></div><span class="value-number">03</span></article>
+          <article class="value-card reveal"><span class="value-icon"><i class="bi bi-compass"></i></span><div><h3>Mais conexão</h3><p>Informações e caminhos para aproveitar melhor a AAPM.</p></div><span class="value-number">04</span></article>
+        </div>
+      </div>
     </section>
 
-
-
-    <!-- ================= POSSIBILIDADES ================= -->
-
-    <!-- FICA OCULTA ATÉ CLICAR EM "EXPLORE AS POSSIBILIDADES" -->
-
-    <section class="possibilidades secao-interativa" id="possibilidades">
-        <div class="container">
-            <div class="section-label">
-                02 / O QUE VOCÊ ENCONTRA
-            </div>
-            <h2> Possibilidades para<br> cada momento.</h2>
-
-            <div class="cards-grid">
-                <!-- BENEFÍCIOS -->
-                <div class="dark-card">
-                    <span class="card-number"> 01</span>
-                    <div class="card-icon">
-                        <i class="bi bi-ticket-perforated"></i>
-                    </div>
-                    <h3> Benefícios </h3>
-                    <p> Conheça os benefícios informados pela AAPM e entenda quais possibilidades fazem sentido para você.
-                    </p>
-                    <a href="#"> Consultar benefícios <span>↗</span>
-                    </a>
-                </div>
-
-                <!-- SERVIÇOS -->
-                <div class="dark-card">
-                    <span class="card-number"> 02 </span>
-                    <div class="card-icon">
-                        <i class="bi bi-handshake"></i>
-                    </div>
-                    <h3> Serviços </h3>
-                    <p> Encontre informações para acessar os serviços da associação e esclarecer dúvidas sobre o atendimento. </p>
-                    <a href="#"> Conhecer os serviços
-                        <span>↗</span>
-                    </a>
-                </div>
-
-                <!-- OPORTUNIDADES -->
-                <div class="dark-card">
-                    <span class="card-number"> 03 </span>
-                    <div class="card-icon">
-                        <i class="bi bi-arrow-up-right"></i>
-                    </div>
-                    <h3> Oportunidades </h3>
-                    <p> Acompanhe as oportunidades divulgadas pela AAPM e explore novos caminhos durante sua formação.
-                    </p>
-                    <a href="#"> Consultar oportunidades
-                        <span>↗</span>
-                    </a>
-                </div>
-            </div>
-            <button class="btn-fechar btn-fechar-dark" onclick="fecharSecao('possibilidades')">Fechar conteúdo ↑</button>
-        </div>
+    <section class="section possibilities" id="beneficios">
+      <div class="section-heading reveal"><p class="eyebrow"><span></span> 02 / Nossas possibilidades</p><h2>Possibilidades para<br><em>cada momento.</em></h2><p>Veja como a AAPM pode fazer parte da sua jornada.</p></div>
+      <div class="feature-grid">
+        <a class="feature-card reveal" href="/frontend/login.html"><div class="feature-art red-art"><img src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/cap3d.png" alt="" loading="lazy"></div><div class="feature-meta"><span>01 — Vantagens</span><i class="bi bi-arrow-up-right"></i></div><h3>Benefícios</h3><p>Vantagens pensadas para apoiar sua jornada no SENAI.</p></a>
+        <a class="feature-card reveal" href="/frontend/login.html"><div class="feature-art cream-art"><img src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/docs3d.png" alt="" loading="lazy"></div><div class="feature-meta"><span>02 — Dia a dia</span><i class="bi bi-arrow-up-right"></i></div><h3>Serviços</h3><p>Loja, envio de documentos e apoio ao aluno.</p></a>
+        <a class="feature-card reveal" href="/frontend/login.html"><div class="feature-art dark-art"><img src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/travel3d.png" alt="" loading="lazy"></div><div class="feature-meta"><span>03 — Experiências</span><i class="bi bi-arrow-up-right"></i></div><h3>Oportunidades</h3><p>Viagens, excursões e momentos para celebrar conquistas.</p></a>
+      </div>
     </section>
 
-
-    <!-- ================= ALÉM DA SALA ================= -->
-   <section class="conexao">
-  <div class="container">
-    <div class="conexao-grid">
-      <!-- Coluna da Esquerda: Imagem e Legenda -->
-      <div class="conexao-media">
-        <div class="conexao-image">
-          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=85" alt="Estudantes reunidos no cabo de guerra" />
-        </div>
-        <p class="caption">Aprender, trocar experiências e descobrir novos caminhos.</p>
-      </div>
-
-      <!-- Coluna da Direita: Conteúdo -->
-      <div class="conexao-content">
-        <span class="section-label">03 / ALÉM DA SALA DE AULA</span>
-        <h2>Sua formação é feita<br>de encontros.</h2>
-        <p class="description">A AAPM conecta alunos a informações e possibilidades que acompanham cada etapa da jornada no SENAI.</p>
-
-        <div class="highlight">
-          <svg class="highlight-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          <span>Mais conexão com a vida de estudante. Mais clareza para o próximo passo.</span>
-        </div>
-
-        <a href="#" class="btn-primary">EXPLORE SUA JORNADA</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-    <!-- ================= COMO ACESSAR ================= -->
-    <section class="como-acessar">
-  <div class="container">
-    
-    <!-- Topo: Título e Botão -->
-    <div class="acessar-header">
-      <div class="acessar-title-group">
-        <span class="section-label">04 / COMO ACESSAR</span>
-        <h2>O próximo passo<br>começa com uma conversa.</h2>
-      </div>
-      <a href="#" class="btn-black">
-        Buscar orientação
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="7" y1="17" x2="17" y2="7"></line>
-          <polyline points="7 7 17 7 17 17"></polyline>
-        </svg>
-      </a>
-    </div>
-
-    <!-- Passos (Grid 3 Colunas com linhas superiores) -->
-    <div class="steps-grid">
-      <div class="step-card">
-        <span class="step-number">01</span>
-        <h3>Conheça as possibilidades</h3>
-        <p>Explore benefícios, serviços e oportunidades para saber o que faz sentido para você.</p>
-      </div>
-
-      <div class="step-card">
-        <span class="step-number">02</span>
-        <h3>Converse com a AAPM</h3>
-        <p>Procure a associação da sua unidade para confirmar informações e tirar dúvidas.</p>
-      </div>
-
-      <div class="step-card">
-        <span class="step-number">03</span>
-        <h3>Entenda o próximo passo</h3>
-        <p>Consulte requisitos e orientações antes de solicitar um serviço ou participar.</p>
-      </div>
-    </div>
-
-    <!-- Card Branco Inferior (Antes de Seguir) -->
-    <div class="info-card">
-      <div class="info-header">
-        <span class="info-label">ANTES DE SEGUIR</span>
-        <h4>Informação clara.<br>Escolhas conscientes.</h4>
-      </div>
-      <ul class="info-list">
-        <li>
-          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M8 12l3 3 5-5"></path>
-          </svg>
-          O que está disponível na minha unidade?
-        </li>
-        <li>
-          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M8 12l3 3 5-5"></path>
-          </svg>
-          Quem pode acessar?
-        </li>
-        <li>
-          <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M8 12l3 3 5-5"></path>
-          </svg>
-          Como faço para participar?
-        </li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-    <!-- ================= FAQ ================= -->
-
-   <!-- Incluir o CSS do Bootstrap no <head> se ainda não tiveres -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<section class="faq-section py-5 bg-white">
-  <div class="container py-md-4">
-    <div class="row g-4 g-lg-5">
-      
-      <!-- Coluna da Esquerda: Título e Link -->
-      <div class="col-lg-5 col-xl-4">
-        <span class="d-block text-uppercase fw-bold mb-3 section-label">
-          05 / PERGUNTAS FREQUENTES
-        </span>
-        <h2 class="fw-semibold text-dark mb-4 lh-sm section-title">
-          Vamos esclarecer<br class="d-none d-br-block">suas dúvidas.
-        </h2>
-        <a href="#" class="d-inline-flex align-items-center gap-1 text-decoration-none fw-semibold link-red">
-          Converse com a AAPM
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
-          </svg>
-        </a>
-      </div>
-
-      <!-- Coluna da Direita: Accordion Bootstrap -->
-      <div class="col-lg-7 col-xl-8">
-        <div class="accordion accordion-flush custom-faq-accordion" id="faqAccordion">
-          
-          <!-- Item 1 (Aberto por padrão) -->
-          <div class="accordion-item border-top border-bottom border-0 py-1">
-            <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button shadow-none px-0 bg-transparent text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                O que é a AAPM?
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
-              <div class="accordion-body px-0 pt-0 pb-3 text-secondary">
-                A AAPM é uma associação voltada para apoiar os alunos e proporcionar uma experiência melhor dentro do SENAI.
-              </div>
-            </div>
+    <section class="section store-section">
+      <div class="store-visual reveal">
+        <div class="store-window">
+          <div class="window-bar"><span></span><span></span><span></span><b>AAPM / LOJA</b></div>
+          <div class="store-products">
+            <div class="store-product"><div class="product-art"><img src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/shirt.png" alt="Camiseta AAPM" loading="lazy"></div><span>Camiseta</span><b>Produtos AAPM</b></div>
+            <div class="store-product"><div class="product-art"><img src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/mug.png" alt="Caneca AAPM" loading="lazy"></div><span>Caneca</span><b>Produtos AAPM</b></div>
+            <div class="store-product"><div class="product-art"><img src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/kit.png" alt="Kit do aluno" loading="lazy"></div><span>Kit do aluno</span><b>Produtos AAPM</b></div>
           </div>
-
-          <!-- Item 2 -->
-          <div class="accordion-item border-bottom border-0 py-1">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed shadow-none px-0 bg-transparent text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Quais benefícios e serviços estão disponíveis?
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
-              <div class="accordion-body px-0 pt-0 pb-3 text-secondary">
-                Os benefícios incluem descontos em convênios, apoio a eventos acadêmicos, integração com empresas parceiras e projetos de desenvolvimento estudantil.
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 3 -->
-          <div class="accordion-item border-bottom border-0 py-1">
-            <h2 class="accordion-header" id="headingThree">
-              <button class="accordion-button collapsed shadow-none px-0 bg-transparent text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Quem pode participar da AAPM?
-              </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
-              <div class="accordion-body px-0 pt-0 pb-3 text-secondary">
-                Todos os alunos regularmente matriculados nos cursos do SENAI podem associar-se à AAPM da sua unidade.
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 4 -->
-          <div class="accordion-item border-bottom border-0 py-1">
-            <h2 class="accordion-header" id="headingFour">
-              <button class="accordion-button collapsed shadow-none px-0 bg-transparent text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                Como funciona a adesão? Existem custos?
-              </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
-              <div class="accordion-body px-0 pt-0 pb-3 text-secondary">
-                A adesão é feita diretamente na secretaria da associação da sua unidade. Consulte as condições e eventuais taxas locais diretamente com a equipa.
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 5 -->
-          <div class="accordion-item border-bottom border-0 py-1">
-            <h2 class="accordion-header" id="headingFive">
-              <button class="accordion-button collapsed shadow-none px-0 bg-transparent text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                Como acompanhar as oportunidades?
-              </button>
-            </h2>
-            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
-              <div class="accordion-body px-0 pt-0 pb-3 text-secondary">
-                Acompanhe os canais oficiais de comunicação da unidade SENAI, os murais informativos e as redes sociais da AAPM.
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 6 -->
-          <div class="accordion-item border-bottom border-0 py-1">
-            <h2 class="accordion-header" id="headingSix">
-              <button class="accordion-button collapsed shadow-none px-0 bg-transparent text-dark fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                Onde posso tirar outras dúvidas?
-              </button>
-            </h2>
-            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
-              <div class="accordion-body px-0 pt-0 pb-3 text-secondary">
-                Pode dirigir-se à sala da AAPM no seu campus ou enviar uma mensagem através do formulário de contacto/atendimento ao estudante.
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
+      <div class="store-copy reveal"><p class="eyebrow"><span></span> Tudo mais perto</p><h2>O que você precisa,<br><em>em um só lugar.</em></h2><p>Consulte os produtos disponíveis e acesse os serviços da AAPM pela área do aluno.</p><a class="button button-red" href="/frontend/login.html">Acessar área do aluno <i class="bi bi-arrow-right"></i></a></div>
+    </section>
 
-    </div>
-  </div>
-</section>
+    <section class="section journey-section">
+      <div class="journey-image reveal"><img src="https://raw.githubusercontent.com/carinasouza779/image-to-orbit-showcase/main/src/assets/student3d.png" alt="Estudante representando a comunidade SENAI" loading="lazy"></div>
+      <div class="journey-copy reveal"><p class="eyebrow dark-eyebrow"><span></span> Formação e comunidade</p><h2>Sua formação é feita<br><em>de encontros.</em></h2><p>Mais do que serviços, a AAPM quer fortalecer a comunidade escolar, aproximar pessoas e criar experiências que marcam sua trajetória.</p><a class="text-link dark-link" href="#etapas">Veja como participar <i class="bi bi-arrow-up-right"></i></a></div>
+    </section>
 
+    <section class="section steps-section" id="etapas">
+      <div class="section-heading reveal"><p class="eyebrow"><span></span> 03 / Como participar</p><h2>O próximo passo começa<br><em>com uma conversa.</em></h2><p>Descubra os serviços disponíveis para sua unidade e saiba como aproveitar as oportunidades.</p></div>
+      <div class="steps-grid"><article class="step-card reveal"><span>01</span><i class="bi bi-person-check"></i><h3>Acesse</h3><p>Entre na área do aluno para consultar as informações disponíveis.</p></article><article class="step-card reveal"><span>02</span><i class="bi bi-search"></i><h3>Explore</h3><p>Confira benefícios, produtos, documentos e oportunidades.</p></article><article class="step-card reveal"><span>03</span><i class="bi bi-chat-heart"></i><h3>Converse</h3><p>Fale com a AAPM da sua unidade para tirar dúvidas.</p></article></div>
+    </section>
 
-    <!-- ================= CTA ================= -->
-<section class="cta bg-danger text-white py-5">
-  <div class="container py-md-3">
-    <div class="cta-content d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4">
-      <div>
-        <h2 class="display-6 fw-semibold text-white mb-2 lh-sm"> Conecte-se ao que<br> pode fazer a diferença.</h2>
-        <p class="mb-0 text-white-50"> Conheça as possibilidades para sua jornada no SENAI.</p>
+    <section class="faq-section" id="duvidas"><div class="faq-layout"><div class="reveal"><p class="eyebrow"><span></span> 04 / Dúvidas frequentes</p><h2>Quer saber<br><em>mais?</em></h2><p>Reunimos algumas respostas para ajudar você a começar.</p><a class="text-link" href="/frontend/login.html">Fale com a AAPM <i class="bi bi-arrow-up-right"></i></a></div>
+      <div class="faq-list">
+        <article class="faq-item"><button class="faq-question" aria-expanded="false">O que é a AAPM?<i class="bi bi-plus-lg"></i></button><div class="faq-answer"><p>A AAPM é uma associação que aproxima alunos, famílias e escola, promovendo benefícios, serviços e oportunidades durante a formação no SENAI.</p></div></article>
+        <article class="faq-item"><button class="faq-question" aria-expanded="false">Quais benefícios e serviços estão disponíveis?<i class="bi bi-plus-lg"></i></button><div class="faq-answer"><p>As opções podem incluir produtos da AAPM, envio de documentos, viagens, excursões e apoio em eventos. Consulte os canais da sua unidade.</p></div></article>
+        <article class="faq-item"><button class="faq-question" aria-expanded="false">Quem pode participar da AAPM?<i class="bi bi-plus-lg"></i></button><div class="faq-answer"><p>Alunos do SENAI e suas famílias podem consultar as orientações e condições de participação com a AAPM da unidade.</p></div></article>
+        <article class="faq-item"><button class="faq-question" aria-expanded="false">Como faço para solicitar um serviço?<i class="bi bi-plus-lg"></i></button><div class="faq-answer"><p>Acesse a área do aluno ou entre em contato com a AAPM da sua unidade para receber as orientações adequadas.</p></div></article>
       </div>
-      <div class="text-md-end">
-        <!-- VAI PARA LOGIN -->
-        <a href="/frontend/login.html" class="btn btn-light text-danger fw-semibold px-4 py-2 mb-2 cta-button shadow-sm"> Fale com a AAPM ↗</a>
-        <p class="cta-small small text-white-50 mb-0"> Procure a associação da sua unidade e consulte as informações de acesso.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    </div></section>
 
-
-    <!-- ================= FOOTER ================= -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-logo"> AAPM <span>.</span></div>
-                    <p> Conectando alunos, oportunidades e benefícios.<br> Com você na jornada no SENAI.</p>
-                </div>
-
-                <div>
-                    <div class="footer-title">
-                        Explore
-                    </div>
-
-                    <div class="footer-links">
-                        <a href="#aapm">Conheça a AAPM</a>
-                        <a href="#possibilidades">Benefícios e serviços</a>
-                        <a href="#como-acessar">Como acessar</a>
-                        <a href="#duvidas">Perguntas frequentes</a>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="footer-title">
-                        Vamos conversar
-                    </div>
-
-                    <div class="footer-links">
-                        <a href="#contato">Consulte os canais de atendimento</a>
-                        <a href="/frontend/login.html"> Fale com a AAPM ↗</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <span>AAPM · Uma experiência mais conectada.</span>
-                <a href="#inicio"> Voltar ao início ↑
-                </a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <section class="contact-banner" id="contato"><div><p class="eyebrow"><span></span> Sua jornada continua</p><h2>Vamos conectar<br><em>novas possibilidades?</em></h2></div><a class="button button-light" href="/frontend/login.html">Acessar área do aluno <i class="bi bi-arrow-up-right"></i></a></section>
+  </main>
+  <footer class="site-footer"><a class="brand" href="#topo">AAPM<span>.</span></a><p>Conectando alunos, oportunidades e benefícios.<br>Com você na jornada no SENAI.</p><div class="footer-links"><a href="#associacao">Conheça a AAPM</a><a href="#beneficios">Benefícios e serviços</a><a href="#etapas">Como acessar</a><a href="#duvidas">Perguntas frequentes</a><a href="/frontend/login.html">Canais de atendimento</a></div><span class="copyright">AAPM · SENAI</span></footer>
 </body>
-
 </html>
