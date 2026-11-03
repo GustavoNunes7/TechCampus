@@ -1,12 +1,1 @@
-
-# Dependências
-node_modules/
-
-# Banco de dados SQLite
-*.db
-*.db-shm
-*.db-wal
-techcampus.db*
-
-# Arquivos enviados pelos usuários
-uploads/
+**/node_modules/
