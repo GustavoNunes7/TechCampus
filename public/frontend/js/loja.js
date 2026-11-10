@@ -13,7 +13,6 @@
 
    Gerente: painel com produtos e pedidos
 
-   Carregar DEPOIS de ../landing/script.js
 ===================================================== */
 (() => {
   "use strict";

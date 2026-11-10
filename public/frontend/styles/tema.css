@@ -1,10 +1,5 @@
-
-
-
-
 /* =========================================================
-   TECHCAMPUS — TEMA CLARO
-   Carregar DEPOIS de styles.css
+   TECHCAMPUS — Tema Claro
    ========================================================= */
 
 html[data-bs-theme="light"] {
@@ -639,16 +634,27 @@ html[data-bs-theme="light"] .modal-info-item strong {
    ========================================================= */
 
 html[data-bs-theme="light"] #inicio .hero-card {
+  /* Intensidade do escurecimento sobre a foto: 0 = sem escurecer, 1 = preto total.
+     Para clarear/escurecer mais, mude só estes três números. */
+  --tc-hero-esq: 0.50;
+  --tc-hero-meio: 0.26;
+  --tc-hero-dir: 0.04;
+
   background-image:
     linear-gradient(
       90deg,
-      #08111edb 0%,
-      #08111e9e 50%,
-      #08111e2e 100%
+      rgba(8, 17, 30, var(--tc-hero-esq)) 0%,
+      rgba(8, 17, 30, var(--tc-hero-meio)) 50%,
+      rgba(8, 17, 30, var(--tc-hero-dir)) 100%
     ),
-    url("images/Imagem_tela_de_inicio.png");
+    url("/landing/images/Imagem_tela_de_inicio.png");
 
   color: #ffffff !important;
+}
+
+/* Com a foto mais clara, a sombra mantém o texto branco legível */
+html[data-bs-theme="light"] #inicio .hero-card :is(h1, h2, p) {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
 }
 
 html[data-bs-theme="light"] #inicio .hero-card :is(
@@ -2525,3 +2531,48 @@ html[data-bs-theme="light"] #modalPagamento label{color:#172033}
 html[data-bs-theme="light"] #modalPagamento .text-white-50{color:#526174!important}
 html[data-bs-theme="light"] #modalPagamento .form-control,
 html[data-bs-theme="light"] #modalPagamento .form-select{background:#fff!important;color:#172033!important;border-color:#cbd5e1!important}
+
+/* =========================================================
+   TECHCAMPUS — CORREÇÕES DO MODO CLARO
+   Carregar DEPOIS de tema.css.
+   Cada bloco corrige um componente que tinha fundo escuro
+   fixo no styles.css e nenhuma regra equivalente no claro.
+   ========================================================= */
+
+/* 1) Modal de destino (formatura): corpo ficava preto (#121212) */
+html[data-bs-theme="light"] #modalDestino .modal-body {
+  background: #ffffff !important;
+  color: var(--tc-ink) !important;
+}
+
+/* 2) Tabela de documentos vazia: caixa preta com texto cinza */
+html[data-bs-theme="light"] .documents-list .table .empty {
+  background-color: #f7f9fc !important;
+  color: var(--tc-muted) !important;
+}
+
+/* 3) Calendário: eventos já ocorridos ficavam como blocos escuros */
+html[data-bs-theme="light"] .calendar-event.ocorrido,
+html[data-bs-theme="light"] #calendarDays .calendar-event.ocorrido,
+html[data-bs-theme="light"] #calendarDays button.calendar-event.ocorrido,
+html[data-bs-theme="light"] #calendarDays .calendar-event.ocorrido * {
+  background: #eef1f6 !important;
+  background-color: #eef1f6 !important;
+  color: #7b8798 !important;
+  border-color: #d5dce6 !important;
+}
+html[data-bs-theme="light"] .calendar-event.ocorrido:hover,
+html[data-bs-theme="light"] .calendar-event.ocorrido:focus-visible {
+  background-color: #e4e9f1 !important;
+  color: #5f6b7c !important;
+}
+
+/* 4) Interruptores de Configurações: "desligado" era cinza-escuro (#333) */
+html[data-bs-theme="light"] .settings-option .form-check-input:not(:checked) {
+  background-color: #d5dce6;
+  border-color: #b8c2d1;
+}
+html[data-bs-theme="light"] .settings-option .form-check-input:checked {
+  background-color: #b82424;
+  border-color: #b82424;
+}

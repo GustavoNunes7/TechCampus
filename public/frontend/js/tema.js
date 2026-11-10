@@ -123,8 +123,6 @@
                 });
             }
 
-            const originalApply = apply;
-            // Atualiza o ícone sempre que o tema for alterado pelas configurações.
             const select =
                 document.getElementById('tema');
 
@@ -143,6 +141,17 @@
             document.addEventListener('techcampus:themechange', updateQuickToggle);
         }
     );
+
+    /* Mudou o tema em outra aba: acompanha */
+    window.addEventListener('storage', (e) => {
+        if (e.key !== STORAGE_KEY) return;
+        const v = VALID.has(e.newValue) ? e.newValue : 'escuro';
+        if (v !== preference) {
+            preference = v;
+            apply();
+            document.dispatchEvent(new Event('techcampus:themechange'));
+        }
+    });
 
     /* Preferência do sistema */
     if (media.addEventListener) {
