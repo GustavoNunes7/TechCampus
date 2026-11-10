@@ -4,15 +4,17 @@ Sistema web da Associação de Alunos, Ex-alunos, Pais e Mestres (AAPM).
 
 ## Como executar
 
-Na pasta do projeto, execute:
+No Windows, a inicialização do TechCampus deve ser feita pelo arquivo **`INICIAR.bat`**.
 
-```bash
-npm install
-npm start
-```
+1. Verifique se o **Node.js** está instalado no computador.
+2. Certifique-se de que o arquivo **`.env`** esteja configurado na pasta principal do projeto.
+3. Abra a pasta do TechCampus.
+4. Dê dois cliques em **`INICIAR.bat`**.
+5. Aguarde a verificação do ambiente e a inicialização do servidor. Quando estiver pronto, a Landing Page será aberta no navegador.
 
-Depois, acesse **http://localhost:3022/** no navegador.
+O arquivo `INICIAR.bat` é o inicializador oficial do projeto no Windows. **Não é necessário iniciar o projeto manualmente pelos comandos `npm install` e `npm start` quando estiver utilizando esse arquivo.**
 
+> **Importante:** mantenha a janela do servidor aberta enquanto estiver utilizando o TechCampus. Se ocorrer algum erro na inicialização, consulte a mensagem exibida no terminal. O arquivo `.env` contém configurações locais e não deve ser publicado com chaves ou senhas reais.
 
 ## Recuperação de senha por e-mail
 
