@@ -207,26 +207,47 @@
       // Sem foto ou API indisponível: manter a imagem padrão desta conta.
     }
   }
-  function ligarGerenciamentoUsuarios() {
+  function ligarGerenciamentoUsuarios(perfilAtual) {
+    const ehLider = perfilAtual?.admin_lider === true;
     const tabela = document.getElementById("tabelaUsuarios");
     const form = document.getElementById("formUsuario");
     const botaoNovo = document.getElementById("btnNovoUsuario");
     if (!tabela || !form || !botaoNovo || form.dataset.apiWired) return;
     form.dataset.apiWired = "1";
+    const campo = (id) => document.getElementById(id);
+    const opcaoAdmin = campo("usuarioTipo")?.querySelector('option[value="admin"]');
+    if (opcaoAdmin) opcaoAdmin.hidden = !ehLider;
     let usuarios = [];
     const fotoObjectUrls = new Set();
     const modalEl = document.getElementById("modalUsuario");
     const modal = window.bootstrap?.Modal && modalEl ? bootstrap.Modal.getOrCreateInstance(modalEl) : null;
-    const campo = (id) => document.getElementById(id);
     const filtros = ["buscarUsuario", "filtroTipoUsuario", "filtroStatusUsuario"];
     const mostrarErro = (msg) => {
       let el = document.getElementById("tc-usuarios-feedback");
       if (!el) { el = document.createElement("div"); el.id = "tc-usuarios-feedback"; el.className = "alert alert-danger mt-3"; document.getElementById("usuarios")?.prepend(el); }
       el.textContent = msg;
     };
+    const mostrarSucesso = (msg) => {
+      let el = document.getElementById("tc-usuarios-feedback");
+      if (!el) { el = document.createElement("div"); el.id = "tc-usuarios-feedback"; el.className = "alert mt-3"; document.getElementById("usuarios")?.prepend(el); }
+      el.className = "alert alert-success mt-3";
+      el.textContent = msg;
+    };
     async function carregar() {
       try {
         usuarios = await api("/usuarios");
+        const existeLider = usuarios.some(u => Number(u.admin_lider) === 1);
+        let assumir = document.getElementById("btnAssumirLideranca");
+        if (!existeLider && !assumir) {
+          assumir = document.createElement("button");
+          assumir.id = "btnAssumirLideranca"; assumir.type = "button"; assumir.className = "btn btn-outline-warning me-2"; assumir.textContent = "Assumir liderança";
+          botaoNovo.parentElement?.insertBefore(assumir, botaoNovo);
+          assumir.addEventListener("click", async () => {
+            if (!confirm("Assumir a liderança? Esta opção só aparece quando ainda não existe nenhum Líder.")) return;
+            try { await api("/admin/assumir-lideranca", { method: "POST" }); location.reload(); }
+            catch (e) { mostrarErro(e.message); }
+          });
+        } else if (existeLider && assumir) assumir.remove();
         campo("totalAlunos") && (campo("totalAlunos").textContent = String(usuarios.filter(u => u.papel === "aluno").length));
         campo("totalAtivos") && (campo("totalAtivos").textContent = String(usuarios.filter(u => u.ativo !== 0).length));
         renderizar();
@@ -237,7 +258,7 @@
       const papel = campo("filtroTipoUsuario")?.value || "aluno";
       const status = campo("filtroStatusUsuario")?.value || "todos";
       const filtrados = usuarios.filter(u => {
-        const texto = `${u.nome || ""} ${u.email || ""} ${u.turma || ""}`.toLowerCase();
+        const texto = `${u.nome || ""} ${u.email || ""} ${u.matricula || ""} ${u.turma || ""}`.toLowerCase();
         return (!q || texto.includes(q)) && (papel === "todos" || u.papel === papel) &&
           (status === "todos" || (status === "ativo" ? u.ativo !== 0 : u.ativo === 0));
       });
@@ -266,18 +287,97 @@
             })
             .catch(() => {});
         }
-        for (const valor of [u.nome, u.turma || "—", u.email, u.papel === "admin" ? "Administrador" : "Aluno", u.ativo === 0 ? "Inativo" : "Ativo"]) {
+        for (const valor of [u.nome, u.matricula || "—", u.email, String(u.email || "").toLowerCase() === "admin@techcampus.com" ? "Líder Principal" : u.admin_lider ? "Sub-líder" : u.papel === "admin" ? "Administrador" : "Aluno", u.ativo === 0 ? "Inativo" : "Ativo"]) {
           const td = document.createElement("td"); td.textContent = valor || "—"; tr.append(td);
         }
-        const acoes = document.createElement("td"); acoes.className = "text-end text-nowrap";
-        const editar = document.createElement("button"); editar.type = "button"; editar.className = "btn btn-sm btn-outline-primary me-1"; editar.textContent = "Editar"; editar.addEventListener("click", () => abrir(u));
-        const statusBtn = document.createElement("button"); statusBtn.type = "button"; statusBtn.className = `btn btn-sm ${u.ativo === 0 ? "btn-outline-success" : "btn-outline-danger"}`; statusBtn.textContent = u.ativo === 0 ? "Ativar" : "Desativar";
-        statusBtn.addEventListener("click", async () => {
-          if (!confirm(`${u.ativo === 0 ? "Ativar" : "Desativar"} a conta de ${u.nome}?`)) return;
-          try { await api(`/usuarios/${u.id}`, { method: "PATCH", body: JSON.stringify({ ativo: u.ativo === 0 ? 1 : 0 }) }); await carregar(); }
-          catch (e) { mostrarErro(e.message); }
-        });
-        acoes.append(editar, statusBtn); tr.append(acoes); tabela.append(tr);
+        const acoes = document.createElement("td");
+        acoes.className = "text-end";
+        const ehPrincipal = String(u.email || "").toLowerCase() === "admin@techcampus.com";
+        if (ehPrincipal) {
+          const liderTag = document.createElement("span");
+          liderTag.className = "badge text-bg-warning";
+          liderTag.textContent = "Líder Principal";
+          acoes.append(liderTag);
+        } else if (u.papel === "admin" && !ehLider) {
+          acoes.textContent = "Protegido";
+        } else {
+          // Um único menu concentra as operações para evitar vários botões na tabela.
+          const grupo = document.createElement("div");
+          grupo.className = "dropdown d-inline-block";
+          const menuBtn = document.createElement("button");
+          menuBtn.type = "button";
+          menuBtn.className = "btn btn-sm btn-outline-secondary dropdown-toggle";
+          menuBtn.dataset.bsToggle = "dropdown";
+          menuBtn.setAttribute("aria-expanded", "false");
+          menuBtn.textContent = "Ações";
+          const menu = document.createElement("div");
+          menu.className = "dropdown-menu dropdown-menu-end shadow";
+          const acaoMenu = (rotulo, classe, executar) => {
+            const item = document.createElement("button");
+            item.type = "button";
+            item.className = "dropdown-item " + (classe || "");
+            item.textContent = rotulo;
+            item.addEventListener("click", executar);
+            menu.append(item);
+          };
+
+          // Administradores mantêm seus próprios dados em Meu Perfil.
+          // A liderança não recebe ação de edição sobre contas administrativas.
+          if (u.papel !== "admin") {
+            acaoMenu("Editar cadastro", "", () => abrir(u));
+          }
+          acaoMenu(u.ativo === 0 ? "Ativar conta" : "Desativar conta", u.ativo === 0 ? "text-success" : "text-warning", async () => {
+            if (!confirm(`${u.ativo === 0 ? "Ativar" : "Desativar"} a conta de ${u.nome}?`)) return;
+            try {
+              await api(`/usuarios/${u.id}`, { method: "PATCH", body: JSON.stringify({ ativo: u.ativo === 0 ? 1 : 0 }) });
+              await carregar();
+            } catch (e) { mostrarErro(e.message); }
+          });
+
+          if (ehLider && u.papel === "admin" && u.ativo !== 0) {
+            menu.append(Object.assign(document.createElement("div"), { className: "dropdown-divider" }));
+            if (!u.admin_lider)             acaoMenu("Promover a Administrador Líder", "text-warning", async () => {
+              if (!confirm(`Promover ${u.nome} a Sub-líder? A conta admin@techcampus.com continuará como Líder Principal.`)) return;
+              try {
+                await api("/admin/promover-lider", { method: "POST", body: JSON.stringify({ usuario_id: u.id }) });
+                mostrarSucesso(`${u.nome} agora é Sub-líder.`);
+                await carregar();
+              } catch (e) { mostrarErro(e.message); }
+            });
+            if (u.admin_lider) {
+              acaoMenu("Remover sub-liderança", "text-warning", async () => {
+                if (!confirm(`Remover ${u.nome} da função de Sub-líder? A conta continuará como administradora.`)) return;
+                try {
+                  await api("/admin/remover-sublider", { method: "POST", body: JSON.stringify({ usuario_id: u.id }) });
+                  mostrarSucesso(`${u.nome} agora é administrador normal.`);
+                  await carregar();
+                } catch (e) { mostrarErro(e.message); }
+              });
+            }
+            acaoMenu("Remover acesso administrativo", "text-danger", async () => {
+              if (!confirm(`Remover o acesso administrativo de ${u.nome}? O histórico será preservado.`)) return;
+              try { await api(`/usuarios/${u.id}`, { method: "DELETE" }); await carregar(); }
+              catch (e) { mostrarErro(e.message); }
+            });
+          }
+
+          if (ehLider && u.papel === "aluno") {
+            menu.append(Object.assign(document.createElement("div"), { className: "dropdown-divider" }));
+            acaoMenu("Excluir aluno", "text-danger", async () => {
+              const confirmar = confirm(`Excluir a conta de ${u.nome}? O acesso será bloqueado, os dados pessoais serão anonimizados e o histórico de pedidos e pagamentos será preservado.`);
+              if (!confirmar) return;
+              try {
+                await api(`/usuarios/${u.id}`, { method: "DELETE" });
+                await carregar();
+                mostrarSucesso(`Conta de ${u.nome} removida. O histórico foi preservado.`);
+              } catch (e) { mostrarErro(e.message); }
+            });
+          }
+
+          grupo.append(menuBtn, menu);
+          acoes.append(grupo);
+        }
+        tr.append(acoes); tabela.append(tr);
       }
       const vazio = document.getElementById("usuariosVazio"); if (vazio) vazio.style.display = filtrados.length ? "none" : "block";
     }
@@ -287,8 +387,17 @@
       campo("tituloModalUsuario").textContent = u ? "Editar cadastro" : "Novo cadastro";
       campo("usuarioNome").value = u?.nome || "";
       campo("usuarioTipo").value = u?.papel || "aluno";
-      campo("usuarioMatricula").value = u?.turma || "";
+      campo("usuarioMatricula").value = u?.matricula || "";
       campo("usuarioEmail").value = u?.email || "";
+      campo("usuarioTelefone").value = u?.telefone || "";
+      campo("usuarioCpf").value = u?.cpf || "";
+      campo("usuarioNascimento").value = u?.data_nascimento || "";
+      campo("usuarioGenero").value = u?.genero || "";
+      campo("usuarioObservacao").value = u?.observacao || "";
+      const fotoAdmin = campo("usuarioFotoPreview");
+      if (fotoAdmin) {
+        fotoAdmin.src = u?.foto_url ? `/api/usuarios/${u.id}/foto?ts=${Date.now()}` : "/landing/images/logoTechCampus.png";
+      }
       campo("usuarioSenha").value = "";
       campo("usuarioSenha").required = !u;
       campo("usuarioStatus").value = u?.ativo === 0 ? "inativo" : "ativo";
@@ -307,7 +416,12 @@
         nome: campo("usuarioNome").value.trim(),
         email: campo("usuarioEmail").value.trim(),
         papel: campo("usuarioTipo").value,
-        turma: campo("usuarioMatricula").value.trim(),
+        matricula: campo("usuarioMatricula").value.trim(),
+        telefone: campo("usuarioTelefone").value.trim(),
+        cpf: campo("usuarioCpf").value.trim(),
+        data_nascimento: campo("usuarioNascimento").value,
+        genero: campo("usuarioGenero").value,
+        observacao: campo("usuarioObservacao").value.trim(),
         ativo: campo("usuarioStatus").value === "ativo" ? 1 : 0
       };
       if (senha) body.senha = senha;
@@ -323,13 +437,29 @@
 
   async function iniciar() {
     if (!token()) return;
+    let perfilAtual = null;
     try {
-      const perfil = await api("/perfil");
-      for (const [id, value] of [["nome", perfil.nome], ["email", perfil.email], ["telefone", perfil.telefone || ""]]) {
-        const campo = document.getElementById(id); if (campo) campo.value = value || "";
+      perfilAtual = await api("/perfil");
+      const valores = [
+        ["nome", perfilAtual.nome], ["email", perfilAtual.email], ["matricula", perfilAtual.matricula],
+        ["dataNascimento", perfilAtual.data_nascimento], ["cpf", perfilAtual.cpf],
+        ["telefone", perfilAtual.telefone], ["genero", perfilAtual.genero],
+        ["observacao", perfilAtual.observacao]
+      ];
+      for (const [id, value] of valores) {
+        const el = document.getElementById(id);
+        if (el) el.value = value || "";
+      }
+      if (perfilAtual.papel === "aluno") {
+        ["nome", "email", "matricula", "dataNascimento", "cpf"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) { el.readOnly = true; el.setAttribute("aria-readonly", "true"); }
+        });
+        const aviso = document.getElementById("perfilDadosProtegidos");
+        if (aviso) aviso.hidden = false;
       }
       await carregarFoto();
-      if (perfil.papel === "admin") ligarGerenciamentoUsuarios();
+      if (perfilAtual.papel === "admin") ligarGerenciamentoUsuarios(perfilAtual);
     } catch (e) { console.warn("Perfil não carregado:", e.message); }
 
     const form = document.getElementById("perfilForm");
@@ -339,11 +469,22 @@
         event.preventDefault();
         const btn = form.querySelector('[type="submit"]'); if (btn) btn.disabled = true;
         try {
-          await api("/perfil", { method: "PATCH", body: JSON.stringify({
-            nome: document.getElementById("nome")?.value || "",
-            email: document.getElementById("email")?.value || "",
-            telefone: document.getElementById("telefone")?.value || ""
-          }) });
+          const dados = perfilAtual?.papel === "aluno"
+            ? {
+                telefone: document.getElementById("telefone")?.value || "",
+                genero: document.getElementById("genero")?.value || "",
+                observacao: document.getElementById("observacao")?.value || ""
+              }
+            : {
+                nome: document.getElementById("nome")?.value || "",
+                email: document.getElementById("email")?.value || "",
+                data_nascimento: document.getElementById("dataNascimento")?.value || "",
+                cpf: document.getElementById("cpf")?.value || "",
+                telefone: document.getElementById("telefone")?.value || "",
+                genero: document.getElementById("genero")?.value || "",
+                observacao: document.getElementById("observacao")?.value || ""
+              };
+          await api("/perfil", { method: "PATCH", body: JSON.stringify(dados) });
           avisar("Perfil salvo na conta TechCampus.");
         } catch (e) { avisar(e.message, true); }
         finally { if (btn) btn.disabled = false; }
@@ -405,21 +546,23 @@
       sair.dataset.apiWired = "1";
       sair.addEventListener("click", () => { sessionStorage.removeItem("techcampus_token"); sessionStorage.removeItem("techcampus_usuario"); location.replace("/landing/index.html"); });
     }
-    const encerrar = document.createElement("button");
-    encerrar.type = "button"; encerrar.className = "btn btn-outline-danger mt-3"; encerrar.textContent = "Encerrar minha conta";
-    encerrar.addEventListener("click", async () => {
-      const senha = prompt("Para encerrar a conta, confirme sua senha:");
-      if (senha === null) return;
-      if (!senha) return avisar("Informe sua senha para continuar.", true);
-      if (!confirm("Essa ação desativará seu acesso ao TechCampus. Deseja continuar?")) return;
-      try {
-        await api("/perfil", { method: "DELETE", body: JSON.stringify({ senha }) });
-        sessionStorage.removeItem("techcampus_token"); sessionStorage.removeItem("techcampus_usuario");
-        alert("Conta encerrada."); location.replace("/landing/index.html");
-      } catch (e) { avisar(e.message, true); }
-    });
     const seguranca = [...document.querySelectorAll(".settings-card")].find((card) => /segurança/i.test(card.textContent));
-    if (seguranca && !seguranca.querySelector("#tc-encerrar-conta")) { encerrar.id = "tc-encerrar-conta"; seguranca.append(encerrar); }
+    if (perfilAtual?.papel === "aluno" && seguranca && !seguranca.querySelector("#tc-encerrar-conta")) {
+      const encerrar = document.createElement("button"); encerrar.id = "tc-encerrar-conta"; encerrar.type = "button"; encerrar.className = "btn btn-outline-danger mt-3"; encerrar.textContent = "Encerrar minha conta";
+      encerrar.addEventListener("click", async () => {
+        const senha = prompt("Para encerrar a conta, confirme sua senha:");
+        if (senha === null) return;
+        if (!senha) return avisar("Informe sua senha para continuar.", true);
+        if (!confirm("Sua conta será desativada e seus dados de perfil serão removidos. Pedidos e pagamentos serão preservados. Deseja continuar?")) return;
+        encerrar.disabled = true;
+        try {
+          await api("/perfil", { method: "DELETE", body: JSON.stringify({ senha }) });
+          sessionStorage.removeItem("techcampus_token"); sessionStorage.removeItem("techcampus_usuario"); localStorage.removeItem("techcampusConfiguracoes");
+          alert("Sua conta foi encerrada. O histórico de pedidos e pagamentos foi preservado."); location.replace("/frontend/login.html");
+        } catch (e) { avisar(e.message, true); encerrar.disabled = false; }
+      });
+      seguranca.append(encerrar);
+    }
   }
   document.addEventListener("DOMContentLoaded", iniciar);
 })();

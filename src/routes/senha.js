@@ -57,7 +57,7 @@ r.patch(
     if (senha_atual === senha_nova)
       return bad(res, "A nova senha precisa ser diferente da atual.");
     const hash = await bcrypt.hash(senha_nova, 12);
-    db.prepare("UPDATE usuarios SET senha_hash=?, trocar_senha=0 WHERE id=?").run(hash, u.id);
+    db.prepare("UPDATE usuarios SET senha_hash=?, trocar_senha=0, token_versao=token_versao+1 WHERE id=?").run(hash, u.id);
     res.json({ mensagem: "Senha alterada com sucesso." });
   }),
 );

@@ -6,14 +6,20 @@ function autenticar(req, res, next) {
   if (!match) return res.status(401).json({ erro: "Token não fornecido." });
   try {
     req.usuario = jwt.verify(match[1], process.env.JWT_SECRET, { algorithms: ["HS256"] });
-    const usuario = db.prepare("SELECT id, papel, ativo FROM usuarios WHERE id=?").get(req.usuario.id);
-    if (!usuario || usuario.ativo === 0 || usuario.papel !== req.usuario.papel) {
+    const usuario = db.prepare("SELECT id, papel, ativo, admin_lider, token_versao FROM usuarios WHERE id=?").get(req.usuario.id);
+    if (!usuario || usuario.ativo === 0 || usuario.papel !== req.usuario.papel || Number(req.usuario.versao ?? -1) !== usuario.token_versao) {
       return res.status(401).json({ erro: "Conta indisponível. Entre novamente ou contate a administração." });
     }
+    req.usuario.admin_lider = usuario.admin_lider === 1;
     next();
   } catch {
     return res.status(401).json({ erro: "Token inválido ou expirado." });
   }
+}
+function lider(req, res, next) {
+  if (req.usuario?.papel !== "admin" || req.usuario?.admin_lider !== true)
+    return res.status(403).json({ erro: "Ação exclusiva do Administrador Líder." });
+  next();
 }
 function admin(req, res, next) {
   if (req.usuario?.papel !== "admin")
@@ -22,3 +28,4 @@ function admin(req, res, next) {
 }
 module.exports = autenticar;
 module.exports.admin = admin;
+module.exports.lider = lider;

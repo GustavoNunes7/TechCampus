@@ -103,6 +103,13 @@ if (!pagamentosSql.includes("'dinheiro'")) {
   `);
 }
 
+// Detalhes necessários para registrar dinheiro, tipo de cartão e parcelamento.
+const colunasPagamentos = db.prepare("PRAGMA table_info(pagamentos)").all().map((c) => c.name);
+if (!colunasPagamentos.includes("tipo_cartao")) db.exec("ALTER TABLE pagamentos ADD COLUMN tipo_cartao TEXT");
+if (!colunasPagamentos.includes("parcelas")) db.exec("ALTER TABLE pagamentos ADD COLUMN parcelas INTEGER NOT NULL DEFAULT 1");
+if (!colunasPagamentos.includes("valor_entregue_centavos")) db.exec("ALTER TABLE pagamentos ADD COLUMN valor_entregue_centavos INTEGER");
+if (!colunasPagamentos.includes("troco_centavos")) db.exec("ALTER TABLE pagamentos ADD COLUMN troco_centavos INTEGER");
+
 // Migrações compatíveis com bancos existentes da versão original.
 // Exclusão lógica de produtos: separa remover da loja de ativar/desativar e preserva pedidos antigos.
 const colunasProdutos = db.prepare("PRAGMA table_info(produtos)").all().map((c) => c.name);
@@ -111,4 +118,46 @@ if (!colunasProdutos.includes("excluido")) db.exec("ALTER TABLE produtos ADD COL
 const colunasUsuarios = db.prepare("PRAGMA table_info(usuarios)").all().map((c) => c.name);
 if (!colunasUsuarios.includes("ativo")) db.exec("ALTER TABLE usuarios ADD COLUMN ativo INTEGER NOT NULL DEFAULT 1");
 if (!colunasUsuarios.includes("foto_url")) db.exec("ALTER TABLE usuarios ADD COLUMN foto_url TEXT");
+if (!colunasUsuarios.includes("matricula")) db.exec("ALTER TABLE usuarios ADD COLUMN matricula TEXT");
+if (!colunasUsuarios.includes("cpf")) db.exec("ALTER TABLE usuarios ADD COLUMN cpf TEXT");
+if (!colunasUsuarios.includes("data_nascimento")) db.exec("ALTER TABLE usuarios ADD COLUMN data_nascimento TEXT");
+if (!colunasUsuarios.includes("genero")) db.exec("ALTER TABLE usuarios ADD COLUMN genero TEXT");
+if (!colunasUsuarios.includes("observacao")) db.exec("ALTER TABLE usuarios ADD COLUMN observacao TEXT");
+if (!colunasUsuarios.includes("admin_lider")) db.exec("ALTER TABLE usuarios ADD COLUMN admin_lider INTEGER NOT NULL DEFAULT 0 CHECK(admin_lider IN (0,1))");
+if (!colunasUsuarios.includes("token_versao")) db.exec("ALTER TABLE usuarios ADD COLUMN token_versao INTEGER NOT NULL DEFAULT 0");
+db.exec("DROP INDEX IF EXISTS idx_usuarios_admin_lider_unico");
+db.exec("CREATE INDEX IF NOT EXISTS idx_usuarios_admin_lider ON usuarios(admin_lider) WHERE admin_lider=1");
+// A conta institucional é a única liderança principal.
+db.prepare("UPDATE usuarios SET papel='admin', admin_lider=1 WHERE lower(email)='admin@techcampus.com'").run();
+db.exec(`
+CREATE TABLE IF NOT EXISTS movimentacoes_estoque (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ produto_id INTEGER NOT NULL REFERENCES produtos(id),
+ tipo TEXT NOT NULL CHECK(tipo IN ('entrada_compra','entrada_ajuste','saida_ajuste')),
+ quantidade INTEGER NOT NULL CHECK(quantidade > 0),
+ custo_unitario_centavos INTEGER NOT NULL DEFAULT 0 CHECK(custo_unitario_centavos >= 0),
+ total_centavos INTEGER NOT NULL DEFAULT 0 CHECK(total_centavos >= 0),
+ observacao TEXT DEFAULT '',
+ usuario_id INTEGER REFERENCES usuarios(id),
+ criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS despesas_financeiras (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ categoria TEXT NOT NULL,
+ descricao TEXT NOT NULL,
+ valor_centavos INTEGER NOT NULL CHECK(valor_centavos > 0),
+ data_despesa TEXT NOT NULL,
+ origem TEXT NOT NULL DEFAULT 'manual' CHECK(origem IN ('manual','compra_estoque')),
+ produto_id INTEGER REFERENCES produtos(id),
+ quantidade INTEGER CHECK(quantidade IS NULL OR quantidade > 0),
+ usuario_id INTEGER REFERENCES usuarios(id),
+ criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_despesas_data ON despesas_financeiras(data_despesa);
+CREATE INDEX IF NOT EXISTS idx_mov_estoque_produto_data ON movimentacoes_estoque(produto_id,criado_em);
+`);
+
+const colunasPedidos = db.prepare("PRAGMA table_info(pedidos)").all().map((c) => c.name);
+if (!colunasPedidos.includes("chave_idempotencia")) db.exec("ALTER TABLE pedidos ADD COLUMN chave_idempotencia TEXT");
+db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_pedidos_idempotencia_usuario ON pedidos(usuario_id,chave_idempotencia) WHERE chave_idempotencia IS NOT NULL");
 module.exports = { db, ready: Promise.resolve() };

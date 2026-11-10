@@ -2121,3 +2121,407 @@ html[data-bs-theme="light"] .tc-notification-menu .tc-notification-item strong {
 html[data-bs-theme="light"] .tc-notification-menu .tc-notification-item p { color:#344256 !important; }
 html[data-bs-theme="light"] .tc-notification-menu .tc-notification-item small { color:#64748b !important; }
 html[data-bs-theme="light"] .tc-notification-menu .tc-notification-read { color:#344256 !important; border-color:#cbd5e1 !important; }
+
+
+/* =========================================================
+   AJUSTES DE CONTRASTE — TEMA CLARO (NOV/2026)
+   Corrige estados hover, botões e tabelas herdados do tema escuro.
+   ========================================================= */
+html[data-bs-theme="light"] #sistemaInicio .main-content table tbody tr:hover,
+html[data-bs-theme="light"] #sistemaInicio .main-content .table tbody tr:hover {
+  --bs-table-bg: #f1f5f9 !important;
+  --bs-table-color: #202b3d !important;
+  background: #f1f5f9 !important;
+  color: #202b3d !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content table tbody tr:hover > *,
+html[data-bs-theme="light"] #sistemaInicio .main-content .table tbody tr:hover > * {
+  background: #f1f5f9 !important;
+  color: #202b3d !important;
+  box-shadow: none !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content table tbody tr > *,
+html[data-bs-theme="light"] #sistemaInicio .main-content .table tbody tr > * {
+  border-color: #e2e8f0 !important;
+}
+
+/* Botões preenchidos mantêm texto branco; botões claros/outline usam texto escuro. */
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn:is(
+  .btn-primary, .btn-danger, .btn-success, .btn-dark,
+  .btn-profile-save, .btn-gradient-red, .btn-custom
+),
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn:is(
+  .btn-primary, .btn-danger, .btn-success, .btn-dark,
+  .btn-profile-save, .btn-gradient-red, .btn-custom
+) :is(i, span, svg) {
+  color: #ffffff !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-light,
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-outline-light,
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-outline-secondary {
+  color: #263449 !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-light *,
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-outline-light *,
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-outline-secondary * {
+  color: inherit !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-outline-danger {
+  color: #a91f2b !important;
+  border-color: #c43a45 !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn-outline-danger:hover {
+  color: #ffffff !important;
+  background: #a91f2b !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn:disabled,
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn.disabled {
+  color: #526176 !important;
+  opacity: .72 !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn:disabled *,
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn.disabled * {
+  color: inherit !important;
+}
+
+/* Formatura: CTAs claros sobre imagem precisam de texto escuro legível. */
+html[data-bs-theme="light"] #formatura .btn-light,
+html[data-bs-theme="light"] #formatura .btn-outline-light {
+  color: #202b3d !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+}
+html[data-bs-theme="light"] #formatura .btn-light *,
+html[data-bs-theme="light"] #formatura .btn-outline-light * {
+  color: #202b3d !important;
+}
+
+/* Evita texto apagado em links/cartões durante hover e foco. */
+html[data-bs-theme="light"] #sistemaInicio .main-content a:not(.btn):hover,
+html[data-bs-theme="light"] #sistemaInicio .main-content button:not(.btn):hover {
+  text-decoration-color: currentColor;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .card, .dropdown-menu, .list-group-item, .accordion-item
+) {
+  border-color: #e0e5ed !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .dropdown-menu {
+  background: #ffffff !important;
+  color: #202b3d !important;
+  box-shadow: 0 12px 30px rgba(32, 43, 61, .14) !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .dropdown-menu .dropdown-item {
+  color: #263449 !important;
+}
+html[data-bs-theme="light"] #sistemaInicio .main-content .dropdown-menu .dropdown-item:hover,
+html[data-bs-theme="light"] #sistemaInicio .main-content .dropdown-menu .dropdown-item:focus {
+  background: #f1f5f9 !important;
+  color: #a91f2b !important;
+}
+
+
+/* =========================================================
+   REFINO VISUAL DO TEMA CLARO — PAINEL E ÁREAS ADMINISTRATIVAS
+   Ajustes de contraste, hierarquia, tabelas, filtros e estados.
+   ========================================================= */
+html[data-bs-theme="light"] {
+  --tc-bg: #f3f6fb;
+  --tc-surface: #ffffff;
+  --tc-surface-soft: #f8fafd;
+  --tc-text: #202b3d;
+  --tc-text-secondary: #64748b;
+  --tc-border: #e2e8f0;
+  --tc-primary: #b8242c;
+  --tc-primary-hover: #991f27;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content {
+  background: var(--tc-bg) !important;
+  color: var(--tc-text) !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .page-section {
+  color: var(--tc-text);
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .usuarios-card, .usuario-resumo-card, .card
+) {
+  border: 1px solid var(--tc-border) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 5px 18px rgba(25, 42, 68, .055) !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .usuarios-card, .usuario-resumo-card
+) {
+  background: var(--tc-surface) !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .card-header {
+  background: #f8fafd !important;
+  color: var(--tc-text) !important;
+  border-bottom: 1px solid var(--tc-border) !important;
+  border-radius: 14px 14px 0 0 !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-toolbar {
+  gap: 16px;
+  padding: 18px 20px !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-filtros {
+  gap: 10px;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .usuarios-filtros .form-control,
+  .usuarios-filtros .form-select,
+  .usuarios-filtros .input-group-text
+) {
+  min-height: 42px;
+  background: #ffffff !important;
+  color: #263449 !important;
+  border-color: #d8e1ec !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-filtros .input-group-text {
+  background: #f8fafd !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .table-responsive {
+  border-radius: 0 0 14px 14px;
+  scrollbar-color: #c4cedb #f3f6fb;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .table, .usuarios-table
+) {
+  --bs-table-bg: #ffffff;
+  --bs-table-color: #263449;
+  --bs-table-border-color: #e7ecf2;
+  --bs-table-striped-bg: #f8fafd;
+  --bs-table-striped-color: #263449;
+  --bs-table-hover-bg: #f1f5fa;
+  --bs-table-hover-color: #202b3d;
+  margin-bottom: 0;
+  color: #263449 !important;
+  background: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .table, .usuarios-table
+) thead th {
+  padding: 14px 16px;
+  background: #f3f6fa !important;
+  color: #526176 !important;
+  border-bottom: 1px solid #e1e7ef !important;
+  font-size: .73rem;
+  font-weight: 750;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .table, .usuarios-table
+) tbody td {
+  padding: 13px 16px;
+  color: #334155 !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #edf1f5 !important;
+  vertical-align: middle;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .table, .usuarios-table
+) tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .table, .usuarios-table
+) tbody tr:hover td {
+  background: #f6f8fc !important;
+  color: #202b3d !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuario-nome {
+  color: #202b3d !important;
+  font-weight: 700;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuario-email {
+  color: #64748b !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuario-status.ativo {
+  color: #15803d !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuario-status.inativo {
+  color: #b4232c !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-vazio {
+  padding: 48px 20px !important;
+  color: #64748b !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-vazio i {
+  color: #94a3b8 !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .form-control, .form-select, textarea
+) {
+  min-height: 40px;
+  border-radius: 8px;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .form-label {
+  color: #344256 !important;
+  font-weight: 650;
+  font-size: .86rem;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn {
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color .18s ease, border-color .18s ease,
+              box-shadow .18s ease, transform .18s ease;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .btn:focus-visible,
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .form-control, .form-select
+):focus-visible {
+  outline: 3px solid rgba(184, 36, 44, .18);
+  outline-offset: 2px;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .badge {
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .list-group-item {
+  background: #ffffff !important;
+  color: #334155 !important;
+  border-color: #e5eaf1 !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .alert {
+  border-radius: 10px;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .dropdown-menu {
+  border: 1px solid #e1e7ef !important;
+  border-radius: 10px !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .dropdown-item {
+  padding: 9px 12px;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .dropdown-item:active {
+  background: #b8242c !important;
+  color: #ffffff !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+  .nav-tabs, .nav-pills
+) {
+  border-color: #e1e7ef !important;
+  gap: 5px;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .nav-tabs .nav-link {
+  color: #64748b !important;
+  border-color: transparent;
+  border-radius: 8px 8px 0 0;
+  font-weight: 650;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .nav-tabs .nav-link.active {
+  color: #a91f2b !important;
+  background: #ffffff !important;
+  border-color: #e1e7ef #e1e7ef #ffffff !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .nav-pills .nav-link.active {
+  color: #ffffff !important;
+  background: #b8242c !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .modal-content {
+  border-radius: 14px !important;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .modal-header {
+  background: #f8fafd !important;
+  border-radius: 14px 14px 0 0;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .modal-footer {
+  background: #fbfcfe !important;
+  border-radius: 0 0 14px 14px;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content .progress {
+  background: #e9eef5 !important;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+html[data-bs-theme="light"] #sistemaInicio .main-content hr {
+  border-color: #e2e8f0 !important;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-toolbar {
+    padding: 15px !important;
+  }
+
+  html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-filtros {
+    width: 100%;
+  }
+
+  html[data-bs-theme="light"] #sistemaInicio .main-content .usuarios-filtros > * {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+
+  html[data-bs-theme="light"] #sistemaInicio .main-content :is(
+    .table, .usuarios-table
+  ) {
+    min-width: 680px;
+  }
+}
+
+/* Pedidos e pagamentos: hierarquia visual consistente nos dois temas */
+.tc-admin-payment{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;min-width:185px;padding:.65rem .75rem;border:1px solid var(--bs-border-color);border-radius:12px;background:rgba(120,130,145,.08);color:var(--bs-body-color)}
+.tc-admin-payment strong{font-size:.9rem;color:var(--bs-body-color)}
+.tc-admin-payment small{font-size:.78rem;line-height:1.4;color:var(--bs-secondary-color)}
+#modalPagamento .modal-content{border-radius:18px;border:1px solid var(--bs-border-color);box-shadow:0 18px 55px rgba(0,0,0,.24)}
+#modalPagamento .modal-body{line-height:1.55}
+#modalPagamento .form-control,#modalPagamento .form-select{min-height:42px}
+#modalPagamento .bg-secondary-subtle{background:var(--bs-tertiary-bg)!important;color:var(--bs-body-color)!important;border:1px solid var(--bs-border-color)}
+html[data-bs-theme="light"] .tc-admin-payment{background:#f8fafc;border-color:#dbe2ec}
+html[data-bs-theme="light"] .tc-admin-payment strong{color:#172033}
+html[data-bs-theme="light"] .tc-admin-payment small{color:#526174}
+html[data-bs-theme="light"] #modalPagamento .modal-content{background:#fff;color:#172033}
+html[data-bs-theme="light"] #modalPagamento .modal-title,
+html[data-bs-theme="light"] #modalPagamento h5,
+html[data-bs-theme="light"] #modalPagamento h6,
+html[data-bs-theme="light"] #modalPagamento strong,
+html[data-bs-theme="light"] #modalPagamento label{color:#172033}
+html[data-bs-theme="light"] #modalPagamento .text-white-50{color:#526174!important}
+html[data-bs-theme="light"] #modalPagamento .form-control,
+html[data-bs-theme="light"] #modalPagamento .form-select{background:#fff!important;color:#172033!important;border-color:#cbd5e1!important}

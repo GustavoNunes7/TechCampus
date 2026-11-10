@@ -6,7 +6,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="../landing/styles.css?v=20261020-6" />
-  <link rel="stylesheet" href="../frontend/styles/tema.css">
+  <link rel="stylesheet" href="../frontend/styles/tema.css?v=20261109-pagamentos2">
+  <link rel="icon" href="../landing/images/logoTechCampus.png">
   <title>TechCampus</title>
 <style>body { visibility: hidden; }</style>
   <script src="./js/auth.js" defer></script>
@@ -21,6 +22,9 @@
       </button>
 
       <div class="d-flex align-items-center gap-3 ms-auto">
+        <button type="button" id="themeQuickToggle" class="notification-btn border-0" title="Mudar para tema claro" aria-label="Mudar para tema claro" aria-pressed="false">
+          <i class="bi bi-sun-fill fs-5" aria-hidden="true"></i>
+        </button>
         <div class="dropdown">
           <button class="notification-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Notificações">    
             <i class="bi bi-bell fs-5"></i>
@@ -237,6 +241,9 @@
         
                 <div class="card profile-card">
                   <form id="perfilForm">
+                    <div id="perfilDadosProtegidos" class="alert alert-secondary mb-3" hidden>
+                      Nome, e-mail, matrícula, CPF e data de nascimento são dados cadastrais protegidos. Para solicitar correções, procure a administração.
+                    </div>
                     <div class="row g-4">
                      
                       <!-- FOTO -->
@@ -283,6 +290,15 @@
                           </div>
         
         
+                          <!-- MATRÍCULA -->
+                          <div class="col-md-6">
+                            <label for="matricula" class="form-label">Matrícula</label>
+                            <div class="input-group">
+                              <span class="input-group-text"><i class="bi bi-card-list"></i></span>
+                              <input type="text" id="matricula" name="matricula" class="form-control" readonly aria-readonly="true">
+                            </div>
+                          </div>
+
                           <!-- DATA DE NASCIMENTO -->
                           <div class="col-md-6">
                             <label for="dataNascimento" class="form-label"> Data de nascimento </label>
@@ -2717,7 +2733,7 @@
             ================================================== -->
 
             <div class="col-12 col-md-6">
-              <label for="usuarioMatricula" class="form-label"> Turma / matrícula
+              <label for="usuarioMatricula" class="form-label"> Matrícula
               </label>
               <input type="text" id="usuarioMatricula" class="form-control" placeholder="Ex.: 202600123" autocomplete="off" >
             </div>
@@ -2732,6 +2748,40 @@
               <input type="email" id="usuarioEmail" class="form-control" placeholder="usuario@escola.com" autocomplete="email" required >
              </div>
 
+
+            <div class="col-12">
+              <label class="form-label" for="usuarioFotoPreview">Foto de perfil</label>
+              <div class="d-flex align-items-center gap-3">
+                <img id="usuarioFotoPreview" src="/landing/images/logoTechCampus.png" alt="Foto do aluno" class="rounded-circle border border-secondary" width="76" height="76" style="object-fit:cover">
+                <small class="text-muted">Foto cadastrada pelo próprio aluno.</small>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="usuarioTelefone" class="form-label">Telefone</label>
+              <input type="tel" id="usuarioTelefone" class="form-control" maxlength="25" placeholder="(00) 00000-0000">
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="usuarioCpf" class="form-label">CPF</label>
+              <input type="text" id="usuarioCpf" class="form-control" maxlength="14" placeholder="000.000.000-00">
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="usuarioNascimento" class="form-label">Data de nascimento</label>
+              <input type="date" id="usuarioNascimento" class="form-control">
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="usuarioGenero" class="form-label">Gênero</label>
+              <select id="usuarioGenero" class="form-select">
+                <option value="">Não informado</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="nao_informar">Prefiro não informar</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label for="usuarioObservacao" class="form-label">Observação</label>
+              <textarea id="usuarioObservacao" class="form-control" rows="3" maxlength="1000" placeholder="Observação sobre o aluno"></textarea>
+            </div>
 
             <!-- =================================================
                  SENHA
@@ -2866,7 +2916,7 @@
   <script src="../landing/script.js"></script>
   <script src="/frontend/js/calendario.js?v=20261020-9" defer></script>
   <script src="../frontend/js/tema.js" defer></script>
-  <script src="../frontend/js/loja.js"></script>
+  <script src="../frontend/js/loja.js?v=confirmar-pedido-20261109-4"></script>
 
   <script src="/frontend/js/notificacoes.js" defer></script>
   <script src="/frontend/js/perfil-integracao.js" defer></script>

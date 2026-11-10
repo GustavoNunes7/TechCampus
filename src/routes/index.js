@@ -9,7 +9,9 @@ const rateLimit = require("express-rate-limit"),
   path = require("path");
 const { db, publicUser, validEmail, clean, positiveId } = require("../models");
 const autenticar = require("../middlewares/auth"),
-  { admin } = require("../middlewares/auth");
+  { admin, lider } = require("../middlewares/auth");
+const EMAIL_LIDER_PRINCIPAL = "admin@techcampus.com";
+const ehLiderPrincipal = (usuario) => String(usuario?.email || "").toLowerCase() === EMAIL_LIDER_PRINCIPAL;
 const r = express.Router(),
   wrap = (fn) => (req, res, next) =>
     Promise.resolve()
@@ -57,6 +59,11 @@ db.exec(`
 const colunasUsuario = db.prepare("PRAGMA table_info(usuarios)").all().map((c) => c.name);
 if (!colunasUsuario.includes("ativo")) db.exec("ALTER TABLE usuarios ADD COLUMN ativo INTEGER NOT NULL DEFAULT 1");
 if (!colunasUsuario.includes("foto_url")) db.exec("ALTER TABLE usuarios ADD COLUMN foto_url TEXT");
+if (!colunasUsuario.includes("matricula")) db.exec("ALTER TABLE usuarios ADD COLUMN matricula TEXT");
+if (!colunasUsuario.includes("cpf")) db.exec("ALTER TABLE usuarios ADD COLUMN cpf TEXT");
+if (!colunasUsuario.includes("data_nascimento")) db.exec("ALTER TABLE usuarios ADD COLUMN data_nascimento TEXT");
+if (!colunasUsuario.includes("genero")) db.exec("ALTER TABLE usuarios ADD COLUMN genero TEXT");
+if (!colunasUsuario.includes("observacao")) db.exec("ALTER TABLE usuarios ADD COLUMN observacao TEXT");
 function notificarAdmins(titulo, mensagem) {
   const admins = db.prepare("SELECT id FROM usuarios WHERE papel='admin' AND ativo=1").all();
   const inserir = db.prepare("INSERT INTO notificacoes(usuario_id,titulo,mensagem) VALUES(?,?,?)");
@@ -113,29 +120,48 @@ r.post(
     if (!u || u.ativo === 0 || !(await bcrypt.compare(senha, u.senha_hash)))
       return res.status(401).json({ erro: "Credenciais inválidas." });
     const token = jwt.sign(
-      { id: u.id, papel: u.papel },
+      { id: u.id, papel: u.papel, versao: u.token_versao || 0 },
       process.env.JWT_SECRET,
       { expiresIn: "8h", algorithm: "HS256" },
     );
     res.json({ token, usuario: publicUser(u) });
   }),
 );
-r.post("/auth/recuperar", loginLimit, (req, res) => {
-  const email = clean(req.body.email, 254).toLowerCase(),
-    u = db.prepare("SELECT id FROM usuarios WHERE email=?").get(email);
-  if (u) {
-    const token = crypto.randomBytes(32).toString("hex"),
-      hash = crypto.createHash("sha256").update(token).digest("hex");
-    db.prepare(
-      "INSERT INTO recuperacoes(usuario_id,token_hash,expira_em) VALUES(?,?,?)",
-    ).run(u.id, hash, Date.now() + 15 * 60 * 1000);
-    // Integre um provedor de e-mail para enviar o token; nunca exponha o token na API ou nos logs.
+r.post("/auth/recuperar", loginLimit, wrap(async (req, res) => {
+  const email = clean(req.body.email, 254).toLowerCase();
+  if (!validEmail(email)) return bad(res, "Informe um e-mail válido.");
+  const apiKey = process.env.RESEND_API_KEY;
+  const remetente = process.env.EMAIL_FROM;
+  const appUrl = process.env.APP_URL;
+  if (!apiKey || !remetente || !appUrl) return res.status(503).json({ erro: "A recuperação por e-mail ainda não está configurada. Procure a administração da AAPM." });
+  const usuario = db.prepare("SELECT id,nome,email FROM usuarios WHERE email=? AND ativo=1").get(email);
+  if (usuario) {
+    const token = crypto.randomBytes(32).toString("hex");
+    const hash = crypto.createHash("sha256").update(token).digest("hex");
+    const baseUrl = new URL(appUrl);
+    if (!["http:", "https:"].includes(baseUrl.protocol)) return res.status(500).json({ erro: "Endereço do sistema inválido na configuração." });
+    const link = new URL("/frontend/login.html", baseUrl);
+    link.searchParams.set("token", token);
+    db.prepare("UPDATE recuperacoes SET usado=1 WHERE usuario_id=? AND usado=0").run(usuario.id);
+    db.prepare("INSERT INTO recuperacoes(usuario_id,token_hash,expira_em) VALUES(?,?,?)").run(usuario.id, hash, Date.now() + 15 * 60 * 1000);
+    const nomeSeguro = String(usuario.nome).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    const envio = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: remetente, to: [usuario.email], subject: "Recuperação de senha - TechCampus",
+        text: `Olá, ${usuario.nome}. Recebemos uma solicitação para redefinir sua senha do TechCampus. Acesse este link em até 15 minutos: ${link.href}. Se não foi você, ignore esta mensagem.`,
+        html: `<p>Olá, ${nomeSeguro}.</p><p>Recebemos uma solicitação para redefinir sua senha do TechCampus.</p><p><a href="${link.href}">Criar uma nova senha</a></p><p>Este link expira em 15 minutos. Se não foi você, ignore esta mensagem.</p>`
+      })
+    });
+    if (!envio.ok) {
+      db.prepare("UPDATE recuperacoes SET usado=1 WHERE token_hash=?").run(hash);
+      console.error("Falha ao enviar e-mail de recuperação. Verifique a configuração do provedor.");
+      return res.status(502).json({ erro: "Não foi possível enviar o e-mail de recuperação. Verifique a configuração do serviço." });
+    }
   }
-  res.json({
-    mensagem:
-      "Se o e-mail estiver cadastrado, você receberá instruções de recuperação quando o serviço de e-mail estiver configurado.",
-  });
-});
+  res.json({ mensagem: "Se o e-mail estiver cadastrado, você receberá um link de recuperação válido por 15 minutos." });
+}));
 r.post(
   "/auth/redefinir",
   loginLimit,
@@ -160,7 +186,7 @@ r.post(
       return res.status(400).json({ erro: "Token inválido ou expirado." });
     const senhaHash = await bcrypt.hash(senha, 12);
     db.transaction(() => {
-      db.prepare("UPDATE usuarios SET senha_hash=? WHERE id=?").run(
+      db.prepare("UPDATE usuarios SET senha_hash=?, token_versao=token_versao+1 WHERE id=?").run(
         senhaHash,
         rec.usuario_id,
       );
@@ -174,35 +200,64 @@ r.post(
 r.get("/perfil", autenticar, (req, res) => {
   const u = get("usuarios", req.usuario.id);
   if (!u) return res.sendStatus(401);
-  res.json({ ...publicUser(u), foto_url: u.foto_url || null });
+  res.json(publicUser(u));
 });
 r.patch("/perfil", autenticar, (req, res) => {
   const u = get("usuarios", req.usuario.id);
   if (!u) return res.sendStatus(401);
-  const nome = req.body.nome === undefined ? u.nome : clean(req.body.nome, 100),
-    email = req.body.email === undefined ? u.email : clean(req.body.email, 254).toLowerCase(),
-    turma = req.body.turma === undefined ? u.turma : clean(req.body.turma, 60),
-    telefone = req.body.telefone === undefined ? u.telefone : clean(req.body.telefone, 25),
-    fotoUrl = req.body.foto_url === undefined ? (u.foto_url || null) : clean(req.body.foto_url, 500);
-  if (nome.length < 2) return bad(res, "Nome inválido.");
-  if (!validEmail(email)) return bad(res, "E-mail inválido.");
+
+  // O aluno pode editar somente telefone, gênero e observação.
+  // A foto é atualizada exclusivamente pela rota /perfil/foto.
+  if (u.papel === "aluno") {
+    const bloqueados = ["nome", "email", "turma", "matricula", "cpf", "data_nascimento", "ativo", "papel", "foto_url"];
+    if (bloqueados.some((campo) => Object.prototype.hasOwnProperty.call(req.body, campo))) {
+      return res.status(403).json({ erro: "Seu perfil não permite alterar esses dados cadastrais." });
+    }
+    const telefone = req.body.telefone === undefined ? u.telefone : clean(req.body.telefone, 25);
+    const genero = req.body.genero === undefined ? (u.genero || "") : req.body.genero;
+    const observacao = req.body.observacao === undefined ? (u.observacao || "") : clean(req.body.observacao, 1000);
+    if (!allowed(genero, ["", "masculino", "feminino", "nao_informar", "outro"])) return bad(res, "Gênero inválido.");
+    db.prepare("UPDATE usuarios SET telefone=?,genero=?,observacao=? WHERE id=?").run(telefone, genero || null, observacao || null, u.id);
+    return res.json(publicUser(get("usuarios", u.id)));
+  }
+
+  const nome = req.body.nome === undefined ? u.nome : clean(req.body.nome, 100);
+  const email = req.body.email === undefined ? u.email : clean(req.body.email, 254).toLowerCase();
+  const turma = req.body.turma === undefined ? u.turma : clean(req.body.turma, 60);
+  const telefone = req.body.telefone === undefined ? u.telefone : clean(req.body.telefone, 25);
+  const cpf = req.body.cpf === undefined ? (u.cpf || "") : clean(req.body.cpf, 14);
+  const dataNascimento = req.body.data_nascimento === undefined ? (u.data_nascimento || "") : clean(req.body.data_nascimento, 10);
+  const genero = req.body.genero === undefined ? (u.genero || "") : req.body.genero;
+  const observacao = req.body.observacao === undefined ? (u.observacao || "") : clean(req.body.observacao, 1000);
+  if (nome.length < 2 || !validEmail(email)) return bad(res, "Nome ou e-mail inválido.");
+  if (cpf && !/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf) && !/^\d{11}$/.test(cpf)) return bad(res, "CPF inválido.");
+  if (dataNascimento && (!/^\d{4}-\d{2}-\d{2}$/.test(dataNascimento) || !Number.isFinite(Date.parse(dataNascimento + "T12:00:00")))) return bad(res, "Data de nascimento inválida.");
+  if (!allowed(genero, ["", "masculino", "feminino", "nao_informar", "outro"])) return bad(res, "Gênero inválido.");
   const outro = db.prepare("SELECT id FROM usuarios WHERE email=? AND id<>?").get(email, u.id);
   if (outro) return res.status(409).json({ erro: "Este e-mail já está em uso." });
-  db.prepare("UPDATE usuarios SET nome=?,email=?,turma=?,telefone=?,foto_url=? WHERE id=?").run(
-    nome, email, turma, telefone, fotoUrl, u.id,
-  );
-  res.json({ ...publicUser(get("usuarios", u.id)), foto_url: fotoUrl });
+  db.prepare("UPDATE usuarios SET nome=?,email=?,turma=?,telefone=?,cpf=?,data_nascimento=?,genero=?,observacao=? WHERE id=?")
+    .run(nome, email, turma, telefone, cpf || null, dataNascimento || null, genero || null, observacao || null, u.id);
+  res.json(publicUser(get("usuarios", u.id)));
 });
 // Encerramento de conta: desativa o acesso sem apagar o histórico acadêmico/financeiro.
 r.delete("/perfil", autenticar, wrap(async (req, res) => {
   const senha = req.body?.senha;
   const u = get("usuarios", req.usuario.id);
   if (!u || u.ativo === 0) return res.sendStatus(404);
+  if (u.papel !== "aluno") return res.status(403).json({ erro: "Somente alunos podem encerrar a própria conta por esta opção." });
+  if (u.admin_lider === 1) return res.status(403).json({ erro: "Transfira a liderança para outro administrador antes de encerrar esta conta." });
   if (typeof senha !== "string" || !(await bcrypt.compare(senha, u.senha_hash)))
     return res.status(401).json({ erro: "Confirme sua senha para encerrar a conta." });
-  db.prepare("UPDATE usuarios SET ativo=0,email=?,nome=?,telefone=NULL,foto_url=NULL WHERE id=?")
-    .run(`encerrada+${u.id}+${Date.now()}@conta.invalid`, `Conta encerrada #${u.id}`, u.id);
-  notificarAdmins("Encerramento de conta", `A conta de usuário #${u.id} solicitou encerramento.`);
+  db.transaction(() => {
+    db.prepare("UPDATE recuperacoes SET usado=1 WHERE usuario_id=?").run(u.id);
+    db.prepare("UPDATE usuarios SET ativo=0,token_versao=token_versao+1,email=?,nome=?,telefone=NULL,foto_url=NULL,cpf=NULL,data_nascimento=NULL,genero=NULL,observacao=NULL,matricula=NULL,turma=NULL WHERE id=?")
+      .run(`encerrada+${u.id}+${Date.now()}@conta.invalid`, `Conta encerrada #${u.id}`, u.id);
+  })();
+  if (u.foto_url && /^[a-f0-9-]+\.(jpg|jpeg|png)$/i.test(u.foto_url)) {
+    const foto = path.join(uploadDir, u.foto_url);
+    if (fs.existsSync(foto)) fs.unlinkSync(foto);
+  }
+  notificarAdmins("Encerramento de conta", `A conta de usuário #${u.id} solicitou encerramento. O histórico de pedidos e pagamentos foi preservado.`);
   res.json({ ok: true, mensagem: "Conta encerrada. Sua sessão será finalizada." });
 }));
 
@@ -210,7 +265,7 @@ r.get("/usuarios", autenticar, admin, (_req, res) =>
   res.json(
     db
       .prepare(
-        "SELECT id,nome,email,papel,turma,telefone,ativo,foto_url,criado_em FROM usuarios ORDER BY id DESC",
+        "SELECT id,nome,email,papel,admin_lider,turma,matricula,telefone,cpf,data_nascimento,genero,observacao,ativo,foto_url,criado_em FROM usuarios ORDER BY id DESC",
       )
       .all(),
   ),
@@ -230,35 +285,122 @@ r.post("/usuarios", autenticar, admin, wrap(async (req, res) => {
   const nome = clean(req.body.nome, 100), email = clean(req.body.email, 254).toLowerCase();
   const senha = req.body.senha, papel = req.body.papel || "aluno";
   if (nome.length < 2 || !validEmail(email) || typeof senha !== "string" || senha.length < 5 || senha.length > 128 || !allowed(papel, ["aluno", "admin"])) return bad(res, "Informe nome, e-mail válido, senha de 5 a 128 caracteres e perfil válido.");
+  if (papel === "admin" && req.usuario.admin_lider !== true) return res.status(403).json({ erro: "Somente o Administrador Líder pode criar administradores." });
   if (db.prepare("SELECT id FROM usuarios WHERE email=?").get(email)) return res.status(409).json({ erro: "E-mail já cadastrado." });
   const hash = await bcrypt.hash(senha, 12);
-  const info = db.prepare("INSERT INTO usuarios(nome,email,senha_hash,papel,turma,telefone) VALUES(?,?,?,?,?,?)").run(nome,email,hash,papel,clean(req.body.turma,60),clean(req.body.telefone,25));
+  const cpf = clean(req.body.cpf, 14);
+  const dataNascimento = clean(req.body.data_nascimento, 10);
+  const genero = req.body.genero || "";
+  const observacao = clean(req.body.observacao, 1000);
+  if (cpf && !/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf) && !/^\d{11}$/.test(cpf)) return bad(res, "CPF inválido.");
+  if (dataNascimento && (!/^\d{4}-\d{2}-\d{2}$/.test(dataNascimento) || !Number.isFinite(Date.parse(dataNascimento + "T12:00:00")))) return bad(res, "Data de nascimento inválida.");
+  if (!allowed(genero, ["", "masculino", "feminino", "nao_informar", "outro"])) return bad(res, "Gênero inválido.");
+  const matricula = clean(req.body.matricula, 60);
+  const info = db.prepare("INSERT INTO usuarios(nome,email,senha_hash,papel,turma,matricula,telefone,cpf,data_nascimento,genero,observacao) VALUES(?,?,?,?,?,?,?,?,?,?,?)")
+    .run(nome,email,hash,papel,clean(req.body.turma,60),matricula,clean(req.body.telefone,25),cpf || null,dataNascimento || null,genero || null,observacao || null);
   res.status(201).json(publicUser(get("usuarios", info.lastInsertRowid)));
 }));
 r.patch("/usuarios/:id", autenticar, admin, wrap(async (req, res) => {
   const id = positiveId(req.params.id), u = get("usuarios", id);
   if (!u) return res.sendStatus(404);
+  if (ehLiderPrincipal(u)) return res.status(403).json({ erro: "A conta do Líder Principal é protegida." });
+  if (u.papel === "admin" && u.id !== req.usuario.id && req.usuario.admin_lider === true) {
+    const campos = Object.keys(req.body || {});
+    if (campos.length !== 1 || campos[0] !== "ativo")
+      return res.status(403).json({ erro: "A liderança pode apenas ativar ou desativar outro administrador. Cada administrador edita o próprio perfil." });
+  }
+  if (u.papel === "admin" && req.usuario.admin_lider !== true) return res.status(403).json({ erro: "Somente o Administrador Líder pode editar outro administrador." });
   const nome = req.body.nome === undefined ? u.nome : clean(req.body.nome, 100);
   const email = req.body.email === undefined ? u.email : clean(req.body.email, 254).toLowerCase();
   const turma = req.body.turma === undefined ? u.turma : clean(req.body.turma, 60);
   const telefone = req.body.telefone === undefined ? u.telefone : clean(req.body.telefone, 25);
+  const matricula = req.body.matricula === undefined ? (u.matricula || "") : clean(req.body.matricula, 60);
+  const cpf = req.body.cpf === undefined ? (u.cpf || "") : clean(req.body.cpf, 14);
+  const dataNascimento = req.body.data_nascimento === undefined ? (u.data_nascimento || "") : clean(req.body.data_nascimento, 10);
+  const genero = req.body.genero === undefined ? (u.genero || "") : req.body.genero;
+  const observacao = req.body.observacao === undefined ? (u.observacao || "") : clean(req.body.observacao, 1000);
   const papel = req.body.papel === undefined ? u.papel : req.body.papel;
   const ativo = req.body.ativo === undefined ? u.ativo : (req.body.ativo === false || req.body.ativo === 0 ? 0 : 1);
   if (nome.length < 2 || !validEmail(email) || !allowed(papel, ["aluno", "admin"])) return bad(res, "Dados de usuário inválidos.");
+  if (papel === "admin" && u.papel !== "admin" && req.usuario.admin_lider !== true) return res.status(403).json({ erro: "Somente o Administrador Líder pode promover usuários a administrador." });
+  if (u.papel === "admin" && papel === "aluno" && req.usuario.admin_lider !== true) return res.status(403).json({ erro: "Somente o Administrador Líder pode rebaixar administradores." });
+  if (cpf && !/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf) && !/^\d{11}$/.test(cpf)) return bad(res, "CPF inválido.");
+  if (dataNascimento && (!/^\d{4}-\d{2}-\d{2}$/.test(dataNascimento) || !Number.isFinite(Date.parse(dataNascimento + "T12:00:00")))) return bad(res, "Data de nascimento inválida.");
+  if (!allowed(genero, ["", "masculino", "feminino", "nao_informar", "outro"])) return bad(res, "Gênero inválido.");
   if (db.prepare("SELECT id FROM usuarios WHERE email=? AND id<>?").get(email, id)) return res.status(409).json({ erro: "E-mail já cadastrado." });
   if (u.id === req.usuario.id && (papel !== "admin" || !ativo)) return bad(res, "Você não pode desativar ou rebaixar sua própria conta administrativa.");
-  let sql = "UPDATE usuarios SET nome=?,email=?,turma=?,telefone=?,papel=?,ativo=? WHERE id=?";
-  const args = [nome,email,turma,telefone,papel,ativo,id];
+  let sql = "UPDATE usuarios SET nome=?,email=?,turma=?,matricula=?,telefone=?,cpf=?,data_nascimento=?,genero=?,observacao=?,papel=?,ativo=? WHERE id=?";
+  const args = [nome,email,turma,matricula,telefone,cpf || null,dataNascimento || null,genero || null,observacao || null,papel,ativo,id];
   if (req.body.senha) {
     if (typeof req.body.senha !== "string" || req.body.senha.length < 5 || req.body.senha.length > 128) return bad(res, "A senha deve ter de 5 a 128 caracteres.");
     const hash = await bcrypt.hash(req.body.senha, 12);
-    sql = "UPDATE usuarios SET nome=?,email=?,turma=?,telefone=?,papel=?,ativo=?,senha_hash=? WHERE id=?";
-    args.splice(6, 0, hash);
+    sql = "UPDATE usuarios SET nome=?,email=?,turma=?,matricula=?,telefone=?,cpf=?,data_nascimento=?,genero=?,observacao=?,papel=?,ativo=?,senha_hash=? WHERE id=?";
+    args.splice(11, 0, hash);
   }
   db.prepare(sql).run(...args);
   const atualizado = get("usuarios", id);
   res.json({ ...publicUser(atualizado), ativo: atualizado.ativo });
 }));
+// Gestão exclusiva da liderança administrativa.
+// O primeiro administrador ativo pode assumir a liderança somente enquanto não existir líder.
+r.post("/admin/assumir-lideranca", autenticar, admin, (req, res) => {
+  const assumiu = db.transaction(() => {
+    const existe = db.prepare("SELECT id FROM usuarios WHERE admin_lider=1 LIMIT 1").get();
+    if (existe) return false;
+    const resultado = db.prepare("UPDATE usuarios SET admin_lider=1 WHERE id=? AND papel='admin' AND ativo=1").run(req.usuario.id);
+    return resultado.changes === 1;
+  })();
+  if (!assumiu) return res.status(409).json({ erro: "A liderança já foi definida ou sua conta não pode assumir esse cargo." });
+  res.json(publicUser(get("usuarios", req.usuario.id)));
+});
+
+// Sub-líderes compartilham as permissões administrativas elevadas.
+r.post("/admin/promover-lider", autenticar, admin, lider, (req, res) => {
+  const alvo = get("usuarios", positiveId(req.body.usuario_id));
+  if (!alvo || alvo.papel !== "admin" || alvo.ativo !== 1) return bad(res, "Selecione um administrador ativo.");
+  if (ehLiderPrincipal(alvo)) return res.status(409).json({ erro: "Esta conta é o Líder Principal." });
+  if (alvo.admin_lider === 1) return res.status(409).json({ erro: "Este administrador já é Sub-líder." });
+  const atualizado = db.prepare("UPDATE usuarios SET admin_lider=1 WHERE id=? AND papel='admin' AND ativo=1 AND admin_lider=0").run(alvo.id);
+  if (atualizado.changes !== 1) return res.status(409).json({ erro: "Não foi possível promover este administrador." });
+  res.json({ ok: true, mensagem: "Administrador promovido a Sub-líder." });
+});
+r.post("/admin/remover-sublider", autenticar, admin, lider, (req, res) => {
+  const alvo = get("usuarios", positiveId(req.body.usuario_id));
+  if (!alvo || alvo.papel !== "admin") return res.status(404).json({ erro: "Administrador não encontrado." });
+  if (ehLiderPrincipal(alvo)) return res.status(403).json({ erro: "A liderança principal não pode ser removida." });
+  if (alvo.admin_lider !== 1) return res.status(409).json({ erro: "Este administrador não é Sub-líder." });
+  db.prepare("UPDATE usuarios SET admin_lider=0 WHERE id=? AND papel='admin'").run(alvo.id);
+  res.json({ ok: true, mensagem: "Sub-liderança removida. A conta continua como administradora." });
+});
+
+// Exclusão lógica de alunos e remoção de acesso administrativo: preserva o histórico relacionado.
+r.delete("/usuarios/:id", autenticar, admin, lider, (req, res) => {
+  const id = positiveId(req.params.id);
+  const usuario = get("usuarios", id);
+  if (!usuario || usuario.ativo === 0) return res.sendStatus(404);
+  if (ehLiderPrincipal(usuario) || usuario.id === req.usuario.id)
+    return res.status(403).json({ erro: "A conta do Líder Principal e a própria conta não podem ser removidas por esta ação." });
+
+  if (usuario.papel === "aluno") {
+    db.transaction(() => {
+      db.prepare("UPDATE recuperacoes SET usado=1 WHERE usuario_id=?").run(id);
+      db.prepare("UPDATE usuarios SET ativo=0,token_versao=token_versao+1,email=?,nome=?,telefone=NULL,foto_url=NULL,cpf=NULL,data_nascimento=NULL,genero=NULL,observacao=NULL,matricula=NULL,turma=NULL WHERE id=?")
+        .run(`removida+${id}+${Date.now()}@conta.invalid`, `Conta removida #${id}`, id);
+    })();
+    if (usuario.foto_url && /^[a-f0-9-]+\.(jpg|jpeg|png)$/i.test(usuario.foto_url)) {
+      const foto = path.join(uploadDir, usuario.foto_url);
+      if (fs.existsSync(foto)) fs.unlinkSync(foto);
+    }
+    notificarAdmins("Aluno removido", `A conta do aluno #${id} foi desativada pela Administração Líder. Pedidos, pagamentos e registros relacionados foram preservados.`);
+    return res.json({ ok: true, mensagem: "Aluno removido. O acesso foi bloqueado e o histórico foi preservado." });
+  }
+
+  if (usuario.papel !== "admin")
+    return bad(res, "Tipo de usuário inválido.");
+  db.prepare("UPDATE usuarios SET ativo=0,token_versao=token_versao+1 WHERE id=?").run(id);
+  res.json({ ok: true, mensagem: "Acesso administrativo removido. O histórico foi preservado." });
+});
+
 // Endpoints específicos do painel de gerência (mantêm compatibilidade com a interface original).
 r.get("/admin/produtos", autenticar, admin, (_req, res) => {
   res.json(db.prepare("SELECT * FROM produtos WHERE excluido=0 ORDER BY id DESC").all());
@@ -270,7 +412,8 @@ r.get("/admin/pedidos", autenticar, admin, (req, res) => {
     SELECT p.id, p.usuario_id, p.status, p.observacao, p.criado_em,
       u.nome AS cliente, u.email AS cliente_email,
       COALESCE(SUM(i.quantidade * i.preco_unitario_centavos),0) AS total_centavos,
-      pg.status AS pagamento_status
+      pg.id AS pagamento_id, pg.status AS pagamento_status, pg.metodo AS pagamento_metodo,
+      pg.tipo_cartao, pg.parcelas, pg.valor_entregue_centavos, pg.troco_centavos
     FROM pedidos p JOIN usuarios u ON u.id=p.usuario_id
     LEFT JOIN itens_pedido i ON i.pedido_id=p.id
     LEFT JOIN pagamentos pg ON pg.pedido_id=p.id
@@ -297,6 +440,55 @@ r.get("/admin/tokens", autenticar, admin, (_req, res) => {
 });
 
 // Produtos
+
+// Controle financeiro e estoque integrado: disponível para todos os administradores.
+r.get("/admin/financeiro/resumo", autenticar, admin, (req, res) => {
+  const mes = /^\d{4}-\d{2}$/.test(String(req.query.mes || "")) ? String(req.query.mes) : new Date().toISOString().slice(0,7);
+  const [ano, numeroMes] = mes.split("-").map(Number);
+  const base = new Date(Date.UTC(ano, numeroMes-1, 1));
+  const meses = [];
+  for (let i=11;i>=0;i--) meses.push(new Date(Date.UTC(base.getUTCFullYear(),base.getUTCMonth()-i,1)).toISOString().slice(0,7));
+  const inicio=meses[0];
+  const receitas=db.prepare("SELECT substr(criado_em,1,7) mes,SUM(valor_centavos) total FROM pagamentos WHERE status='confirmado' AND substr(criado_em,1,7)>=? AND substr(criado_em,1,7)<=? GROUP BY substr(criado_em,1,7)").all(inicio,mes);
+  const despesas=db.prepare("SELECT substr(data_despesa,1,7) mes,SUM(valor_centavos) total FROM despesas_financeiras WHERE data_despesa>=? AND data_despesa<=? GROUP BY substr(data_despesa,1,7)").all(inicio+"-01",mes+"-31");
+  const rmap=new Map(receitas.map(x=>[x.mes,Number(x.total||0)])), dmap=new Map(despesas.map(x=>[x.mes,Number(x.total||0)]));
+  const grafico=meses.map(m=>({mes:m,receita:rmap.get(m)||0,despesas:dmap.get(m)||0,resultado:(rmap.get(m)||0)-(dmap.get(m)||0)}));
+  const receitaMes=Number(db.prepare("SELECT COALESCE(SUM(valor_centavos),0) total FROM pagamentos WHERE status='confirmado' AND substr(criado_em,1,7)=?").get(mes).total);
+  const despesaMes=Number(db.prepare("SELECT COALESCE(SUM(valor_centavos),0) total FROM despesas_financeiras WHERE substr(data_despesa,1,7)=?").get(mes).total);
+  const maisVendidos=db.prepare(`
+    SELECT pr.id,pr.nome,pr.categoria,SUM(i.quantidade) quantidade,
+      SUM(i.quantidade*i.preco_unitario_centavos) faturamento_centavos
+    FROM itens_pedido i JOIN pedidos p ON p.id=i.pedido_id
+    JOIN pagamentos pg ON pg.pedido_id=p.id AND pg.status='confirmado'
+    JOIN produtos pr ON pr.id=i.produto_id
+    GROUP BY pr.id,pr.nome,pr.categoria
+    ORDER BY quantidade DESC,faturamento_centavos DESC LIMIT 8
+  `).all();
+  const ultimasDespesas=db.prepare(`SELECT d.*,pr.nome produto_nome,u.nome responsavel
+    FROM despesas_financeiras d LEFT JOIN produtos pr ON pr.id=d.produto_id
+    LEFT JOIN usuarios u ON u.id=d.usuario_id ORDER BY d.data_despesa DESC,d.id DESC LIMIT 30`).all();
+  const estoque=db.prepare("SELECT COUNT(*) produtos,COALESCE(SUM(estoque),0) unidades,SUM(CASE WHEN estoque<=3 THEN 1 ELSE 0 END) baixo FROM produtos WHERE ativo=1 AND excluido=0").get();
+  res.json({mes,receita_centavos:receitaMes,despesas_centavos:despesaMes,resultado_centavos:receitaMes-despesaMes,grafico,mais_vendidos:maisVendidos,despesas:ultimasDespesas,estoque});
+});
+r.post("/admin/financeiro/despesas", autenticar, admin, (req,res)=>{
+  const categoria=clean(req.body.categoria,40),descricao=clean(req.body.descricao,180),valor=Number(req.body.valor_centavos),data=clean(req.body.data_despesa,10);
+  if(!categoria||!descricao||!Number.isSafeInteger(valor)||valor<=0||!/^\d{4}-\d{2}-\d{2}$/.test(data)||!Number.isFinite(Date.parse(data+"T12:00:00"))) return bad(res,"Informe categoria, descrição, valor e data válidos.");
+  const info=db.prepare("INSERT INTO despesas_financeiras(categoria,descricao,valor_centavos,data_despesa,usuario_id) VALUES(?,?,?,?,?)").run(categoria,descricao,valor,data,req.usuario.id);
+  res.status(201).json(db.prepare("SELECT * FROM despesas_financeiras WHERE id=?").get(info.lastInsertRowid));
+});
+r.post("/admin/estoque/compras", autenticar, admin, (req,res)=>{
+  const produtoId=positiveId(req.body.produto_id),quantidade=Number(req.body.quantidade),custo=Number(req.body.custo_unitario_centavos),data=clean(req.body.data_compra,10),observacao=clean(req.body.observacao,180),produto=get("produtos",produtoId);
+  if(!produto||produto.excluido===1) return res.status(404).json({erro:"Produto não encontrado."});
+  if(!Number.isSafeInteger(quantidade)||quantidade<1||quantidade>100000||!Number.isSafeInteger(custo)||custo<1||custo>100000000||!/^\d{4}-\d{2}-\d{2}$/.test(data)||!Number.isFinite(Date.parse(data+"T12:00:00"))) return bad(res,"Informe quantidade, custo unitário e data válidos.");
+  const total=quantidade*custo;if(!Number.isSafeInteger(total)||total<=0)return bad(res,"Valor total da compra inválido.");
+  db.transaction(()=>{
+    db.prepare("UPDATE produtos SET estoque=estoque+? WHERE id=?").run(quantidade,produtoId);
+    db.prepare("INSERT INTO movimentacoes_estoque(produto_id,tipo,quantidade,custo_unitario_centavos,total_centavos,observacao,usuario_id) VALUES(?,'entrada_compra',?,?,?,?,?)").run(produtoId,quantidade,custo,total,observacao,req.usuario.id);
+    db.prepare("INSERT INTO despesas_financeiras(categoria,descricao,valor_centavos,data_despesa,origem,produto_id,quantidade,usuario_id) VALUES('Estoque',?,?,?,'compra_estoque',?,?,?)").run("Reposição: "+produto.nome,total,data,produtoId,quantidade,req.usuario.id);
+  })();
+  res.status(201).json({ok:true,produto:get("produtos",produtoId),quantidade,valor_total_centavos:total});
+});
+
 r.get("/produtos", (req, res) => {
   const categoria = clean(req.query.categoria, 50);
   res.json(
@@ -391,10 +583,13 @@ r.delete("/produtos/:id", autenticar, admin, (req, res) => {
   res.status(204).end();
 });
 
-// Pedidos: reserva atômica do estoque
+// Pedidos: reserva atômica do estoque com idempotência por usuário.
 r.post("/pedidos", autenticar, (req, res) => {
   if (req.usuario.papel === "admin")
     return res.status(403).json({ erro: "Contas administrativas não podem realizar compras." });
+  const chave = req.get("Idempotency-Key");
+  if (typeof chave !== "string" || !/^[A-Za-z0-9._:-]{16,100}$/.test(chave))
+    return bad(res, "Chave de compra ausente ou inválida. Atualize a página e tente novamente.");
   const itens = req.body.itens;
   if (!Array.isArray(itens) || !itens.length || itens.length > 30)
     return bad(res, "Informe de 1 a 30 itens.");
@@ -411,10 +606,15 @@ r.post("/pedidos", autenticar, (req, res) => {
     ids.add(item.produto_id);
   }
   try {
-    const pedido = db.transaction(() => {
+    const resultado = db.transaction(() => {
+      const existente = db.prepare(
+        "SELECT id FROM pedidos WHERE usuario_id=? AND chave_idempotencia=?"
+      ).get(req.usuario.id, chave);
+      if (existente) return { id: existente.id, repetido: true };
+
       const info = db
-        .prepare("INSERT INTO pedidos(usuario_id,observacao) VALUES(?,?)")
-        .run(req.usuario.id, clean(req.body.observacao, 1000));
+        .prepare("INSERT INTO pedidos(usuario_id,observacao,chave_idempotencia) VALUES(?,?,?)")
+        .run(req.usuario.id, clean(req.body.observacao, 1000), chave);
       for (const item of itens) {
         const p = get("produtos", item.produto_id);
         if (!p || !p.ativo || p.estoque < item.quantidade)
@@ -429,9 +629,9 @@ r.post("/pedidos", autenticar, (req, res) => {
           "INSERT INTO itens_pedido(pedido_id,produto_id,quantidade,preco_unitario_centavos) VALUES(?,?,?,?)",
         ).run(info.lastInsertRowid, p.id, item.quantidade, p.preco_centavos);
       }
-      return info.lastInsertRowid;
+      return { id: info.lastInsertRowid, repetido: false };
     })();
-    res.status(201).json(detalharPedido(pedido));
+    res.status(resultado.repetido ? 200 : 201).json(detalharPedido(resultado.id));
   } catch (e) {
     return bad(res, e.message);
   }
@@ -489,6 +689,8 @@ r.get("/pedidos/:id/token", autenticar, (req, res) => {
 
   res.json({ token: registro.token, expiraEm: registro.expira_em, status: "ativo" });
 });
+// A rota administrativa principal acima já inclui os detalhes completos do pagamento.
+
 // Pagamentos
 r.post("/pedidos/:id/pagamento", autenticar, (req, res) => {
   const pedidoId = positiveId(req.params.id);
@@ -513,20 +715,37 @@ r.post("/pedidos/:id/pagamento", autenticar, (req, res) => {
 
   if (existente) return res.json(existente);
 
-  const total = db
-    .prepare(
-      "SELECT COALESCE(SUM(quantidade * preco_unitario_centavos), 0) AS total FROM itens_pedido WHERE pedido_id=?",
-    )
-    .get(pedidoId).total;
+  const total = db.prepare(
+    "SELECT COALESCE(SUM(quantidade * preco_unitario_centavos),0) AS total FROM itens_pedido WHERE pedido_id=?"
+  ).get(pedidoId).total;
 
-  const codigo =
-    metodo === "pix" ? crypto.randomBytes(16).toString("hex") : null;
+  let tipoCartao = null;
+  let parcelas = 1;
+  let valorEntregue = null;
+  let troco = null;
+  if (metodo === "dinheiro") {
+    valorEntregue = Number(req.body.valor_entregue_centavos);
+    if (!Number.isSafeInteger(valorEntregue) || valorEntregue < total)
+      return bad(res, "Informe um valor entregue igual ou superior ao total.");
+    troco = valorEntregue - total;
+  }
+  if (metodo === "cartao") {
+    tipoCartao = req.body.tipo_cartao;
+    if (!allowed(tipoCartao, ["debito", "credito"]))
+      return bad(res, "Selecione débito ou crédito.");
+    const maxParcelas = tipoCartao === "credito"
+      ? (total > 100000 ? 8 : total > 50000 ? 5 : total > 10000 ? 4 : total > 7500 ? 3 : 1)
+      : 1;
+    parcelas = Number(req.body.parcelas || 1);
+    if (!Number.isSafeInteger(parcelas) || parcelas < 1 || parcelas > maxParcelas)
+      return bad(res, "Quantidade de parcelas inválida para o valor do pedido.");
+  }
 
-  const info = db
-    .prepare(
-      "INSERT INTO pagamentos(pedido_id,metodo,valor_centavos,codigo) VALUES(?,?,?,?)",
-    )
-    .run(pedidoId, metodo, total, codigo);
+  const codigo = metodo === "pix" ? crypto.randomBytes(16).toString("hex") : null;
+  const info = db.prepare(`
+    INSERT INTO pagamentos(pedido_id,metodo,valor_centavos,codigo,tipo_cartao,parcelas,valor_entregue_centavos,troco_centavos)
+    VALUES(?,?,?,?,?,?,?,?)
+  `).run(pedidoId, metodo, total, codigo, tipoCartao, parcelas, valorEntregue, troco);
 
   notificarAdmins("Novo pagamento de aluno", `Foi iniciado um pagamento para o pedido #${pedido.id} (aluno #${pedido.usuario_id}).`);
   res.status(201).json(get("pagamentos", info.lastInsertRowid));
@@ -584,10 +803,12 @@ r.post("/pagamentos/:id/confirmar-simulado", autenticar, (req, res) => {
   if (pedido.usuario_id !== req.usuario.id && req.usuario.papel !== "admin")
     return res.sendStatus(403);
 
+  if (pagamento.metodo !== "pix")
+    return bad(res, "A simulação está disponível somente para pagamentos PIX.");
   if (pagamento.status !== "pendente")
     return bad(res, "Este pagamento já foi processado.");
 
-  // Confirma o pagamento e cria um único código de retirada por pedido.
+  // Confirma o PIX simulado e cria um único código de retirada por pedido.
   db.transaction(() => {
     db.prepare("UPDATE pagamentos SET status='confirmado' WHERE id=?").run(
       pagamento.id,
@@ -603,13 +824,63 @@ r.post("/pagamentos/:id/confirmar-simulado", autenticar, (req, res) => {
         "INSERT INTO tokens_retirada(pedido_id, token, expira_em) VALUES(?, ?, ?)",
       ).run(pedido.id, token, Date.now() + 15 * 60 * 1000);
     }
+    // PIX confirmado: aprovação automática, sem exigir ação manual no painel.
+    if (pagamento.metodo === "pix") {
+      db.prepare("UPDATE pedidos SET status='aprovado' WHERE id=? AND status='pendente'").run(pedido.id);
+    }
   })();
+  const pixAprovado = pagamento.metodo === "pix";
   db.prepare("INSERT INTO notificacoes(usuario_id,titulo,mensagem) VALUES(?,?,?)")
-    .run(pedido.usuario_id, "Pagamento confirmado", `O pagamento do pedido #${pedido.id} foi confirmado. Seu token de retirada está disponível por 15 minutos.`);
-  notificarAdmins("Pagamento de aluno confirmado", `Pagamento #${pagamento.id} do pedido #${pedido.id} (aluno #${pedido.usuario_id}) confirmado.`);
+    .run(pedido.usuario_id, pixAprovado ? "Pagamento e pedido confirmados" : "Pagamento confirmado",
+      pixAprovado
+        ? `O PIX do pedido #${pedido.id} foi confirmado e o pedido foi aprovado automaticamente. Seu token de retirada está disponível por 15 minutos.`
+        : `O pagamento do pedido #${pedido.id} foi confirmado. Seu token de retirada está disponível por 15 minutos.`);
+  notificarAdmins(pixAprovado ? "Pedido PIX aprovado automaticamente" : "Pagamento de aluno confirmado",
+    `Pagamento #${pagamento.id} do pedido #${pedido.id} (aluno #${pedido.usuario_id}) confirmado.`);
 
   res.json(get("pagamentos", pagamento.id));
 });
+// Confirmação administrativa baseada no ID do PEDIDO (não no ID do pagamento).
+r.post("/admin/pedidos/:id/confirmar", autenticar, admin, (req, res) => {
+  const pedidoId = positiveId(req.params.id);
+  const pedido = get("pedidos", pedidoId);
+  if (!pedido) return res.status(404).json({ erro: "Pedido não encontrado." });
+  if (pedido.status !== "pendente") return bad(res, "Este pedido não está pendente.");
+
+  const pagamento = db.prepare("SELECT * FROM pagamentos WHERE pedido_id=?").get(pedidoId);
+  if (!pagamento) return res.status(404).json({ erro: "Este pedido ainda não possui pagamento registrado." });
+  if (!["dinheiro", "cartao"].includes(pagamento.metodo))
+    return bad(res, "Somente pagamentos presenciais precisam de confirmação.");
+  if (pagamento.status !== "pendente") return bad(res, "Este pagamento já foi processado.");
+
+  db.transaction(() => {
+    const confirmado = db.prepare(
+      "UPDATE pagamentos SET status='confirmado' WHERE pedido_id=? AND status='pendente'"
+    ).run(pedidoId);
+    if (confirmado.changes !== 1) throw new Error("O pagamento já foi processado ou não está mais pendente.");
+
+    const aprovado = db.prepare(
+      "UPDATE pedidos SET status='aprovado' WHERE id=? AND status='pendente'"
+    ).run(pedidoId);
+    if (aprovado.changes !== 1) throw new Error("O pedido já foi processado.");
+
+    const tokenExistente = db.prepare("SELECT id FROM tokens_retirada WHERE pedido_id=?").get(pedidoId);
+    if (!tokenExistente) {
+      let codigo;
+      do {
+        codigo = String(crypto.randomInt(100000, 1000000));
+      } while (db.prepare("SELECT id FROM tokens_retirada WHERE token=?").get(codigo));
+      db.prepare("INSERT INTO tokens_retirada(pedido_id,token,expira_em) VALUES(?,?,?)")
+        .run(pedidoId, codigo, Date.now() + 15 * 60 * 1000);
+    }
+  })();
+
+  db.prepare("INSERT INTO notificacoes(usuario_id,titulo,mensagem) VALUES(?,?,?)")
+    .run(pedido.usuario_id, "Pagamento confirmado", `O pagamento do pedido #${pedidoId} foi confirmado. Seu token de retirada está disponível por 15 minutos.`);
+  res.json({ ok: true, pedido: get("pedidos", pedidoId), pagamento: get("pagamentos", pagamento.id) });
+});
+
+
 r.patch("/pedidos/:id/status", autenticar, admin, (req, res) => {
   const p = get("pedidos", positiveId(req.params.id)),
     status = req.body.status;
@@ -637,6 +908,9 @@ r.patch("/pedidos/:id/status", autenticar, admin, (req, res) => {
           i.produto_id,
         );
     db.prepare("UPDATE pedidos SET status=? WHERE id=?").run(status, p.id);
+    if (status === "rejeitado" || status === "cancelado") {
+      db.prepare("UPDATE pagamentos SET status='cancelado' WHERE pedido_id=? AND status='pendente'").run(p.id);
+    }
   })();
   res.json(detalharPedido(p.id));
 });
