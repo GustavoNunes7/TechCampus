@@ -23,6 +23,9 @@ const get = (table, id) =>
   db.prepare(`SELECT * FROM ${table} WHERE id=?`).get(id);
 const allowed = (value, values) => values.includes(value);
 
+// PAGAMENTOS E CONTROLE FINANCEIRO
+r.use(require("./pagamentos"));
+
 // Código de retirada separado do código PIX, persistido por pedido.
 db.exec(`
   CREATE TABLE IF NOT EXISTS tokens_retirada (

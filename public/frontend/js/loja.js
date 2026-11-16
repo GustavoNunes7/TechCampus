@@ -2645,7 +2645,7 @@
       montarModalCarrinho();
       montarModalPagamento();
       criarBotaoCarrinho();
-      carregarProdutos();
+      carregarProdutos(); //  após ser carregado, o numero de pedidos é alterado conforme o que o cliente alterou.
     }
 
     // Agendamentos
