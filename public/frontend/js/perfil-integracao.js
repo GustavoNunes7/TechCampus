@@ -258,7 +258,7 @@
       const papel = campo("filtroTipoUsuario")?.value || "aluno";
       const status = campo("filtroStatusUsuario")?.value || "todos";
       const filtrados = usuarios.filter(u => {
-        const texto = `${u.nome || ""} ${u.email || ""} ${u.matricula || ""} ${u.turma || ""}`.toLowerCase();
+        const texto = `${u.nome || ""} ${u.nome_preferencia || ""} ${u.email || ""} ${u.matricula || ""} ${u.turma || ""}`.toLowerCase();
         return (!q || texto.includes(q)) && (papel === "todos" || u.papel === papel) &&
           (status === "todos" || (status === "ativo" ? u.ativo !== 0 : u.ativo === 0));
       });
@@ -287,7 +287,19 @@
             })
             .catch(() => {});
         }
-        for (const valor of [u.nome, u.matricula || "—", u.email, String(u.email || "").toLowerCase() === "admin@techcampus.com" ? "Líder Principal" : u.admin_lider ? "Sub-líder" : u.papel === "admin" ? "Administrador" : "Aluno", u.ativo === 0 ? "Inativo" : "Ativo"]) {
+        const nomeTd = document.createElement("td");
+        const nomeCompleto = document.createElement("div");
+        nomeCompleto.textContent = u.nome || "—";
+        nomeCompleto.className = "fw-semibold";
+        nomeTd.append(nomeCompleto);
+        if (u.nome_preferencia) {
+          const preferencia = document.createElement("small");
+          preferencia.className = "text-muted d-block";
+          preferencia.textContent = "Preferência: " + u.nome_preferencia;
+          nomeTd.append(preferencia);
+        }
+        tr.append(nomeTd);
+        for (const valor of [u.matricula || "—", u.email, String(u.email || "").toLowerCase() === "admin@techcampus.com" ? "Líder Principal" : u.admin_lider ? "Sub-líder" : u.papel === "admin" ? "Administrador" : "Aluno", u.ativo === 0 ? "Inativo" : "Ativo"]) {
           const td = document.createElement("td"); td.textContent = valor || "—"; tr.append(td);
         }
         const acoes = document.createElement("td");
@@ -386,6 +398,7 @@
       campo("usuarioId").value = u?.id || "";
       campo("tituloModalUsuario").textContent = u ? "Editar cadastro" : "Novo cadastro";
       campo("usuarioNome").value = u?.nome || "";
+      campo("usuarioNomePreferencia").value = u?.nome_preferencia || "";
       campo("usuarioTipo").value = u?.papel || "aluno";
       campo("usuarioMatricula").value = u?.matricula || "";
       campo("usuarioEmail").value = u?.email || "";
@@ -441,7 +454,7 @@
     try {
       perfilAtual = await api("/perfil");
       const valores = [
-        ["nome", perfilAtual.nome], ["email", perfilAtual.email], ["matricula", perfilAtual.matricula],
+        ["nome", perfilAtual.nome], ["nomePreferencia", perfilAtual.nome_preferencia], ["email", perfilAtual.email], ["matricula", perfilAtual.matricula],
         ["dataNascimento", perfilAtual.data_nascimento], ["cpf", perfilAtual.cpf],
         ["telefone", perfilAtual.telefone], ["genero", perfilAtual.genero],
         ["observacao", perfilAtual.observacao]
@@ -471,12 +484,14 @@
         try {
           const dados = perfilAtual?.papel === "aluno"
             ? {
+                nome_preferencia: document.getElementById("nomePreferencia")?.value || "",
                 telefone: document.getElementById("telefone")?.value || "",
                 genero: document.getElementById("genero")?.value || "",
                 observacao: document.getElementById("observacao")?.value || ""
               }
             : {
                 nome: document.getElementById("nome")?.value || "",
+                nome_preferencia: document.getElementById("nomePreferencia")?.value || "",
                 email: document.getElementById("email")?.value || "",
                 data_nascimento: document.getElementById("dataNascimento")?.value || "",
                 cpf: document.getElementById("cpf")?.value || "",
