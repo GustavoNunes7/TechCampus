@@ -696,6 +696,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const perfil = {
         nome: nomeInput ? nomeInput.value.trim() : "",
 
+        nomePreferencia: document.getElementById("nomePreferencia")?.value.trim() || "",
+
         email: emailInput ? emailInput.value.trim() : "",
 
         dataNascimento: dataNascimentoInput ? dataNascimentoInput.value : "",
@@ -714,7 +716,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("techcampusPerfil", JSON.stringify(perfil));
 
       // Atualiza nome no topo
-      atualizarNomeUsuario(perfil.nome);
+      atualizarNomeUsuario(perfil.nomePreferencia || (perfil.nome || "").trim().split(/\s+/)[0]);
 
       mostrarMensagem("Perfil atualizado com sucesso!", "success");
     });
@@ -1055,7 +1057,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const perfil = JSON.parse(perfilSalvo);
 
-      atualizarNomeUsuario(perfil.nome);
+      atualizarNomeUsuario(perfil.nomePreferencia || (perfil.nome || "").trim().split(/\s+/)[0]);
     } catch (erro) {
       console.error(erro);
     }
