@@ -62,6 +62,7 @@ db.exec(`
 const colunasUsuario = db.prepare("PRAGMA table_info(usuarios)").all().map((c) => c.name);
 if (!colunasUsuario.includes("ativo")) db.exec("ALTER TABLE usuarios ADD COLUMN ativo INTEGER NOT NULL DEFAULT 1");
 if (!colunasUsuario.includes("foto_url")) db.exec("ALTER TABLE usuarios ADD COLUMN foto_url TEXT");
+if (!colunasUsuario.includes("nome_preferencia")) db.exec("ALTER TABLE usuarios ADD COLUMN nome_preferencia TEXT");
 if (!colunasUsuario.includes("matricula")) db.exec("ALTER TABLE usuarios ADD COLUMN matricula TEXT");
 if (!colunasUsuario.includes("cpf")) db.exec("ALTER TABLE usuarios ADD COLUMN cpf TEXT");
 if (!colunasUsuario.includes("data_nascimento")) db.exec("ALTER TABLE usuarios ADD COLUMN data_nascimento TEXT");
@@ -216,14 +217,16 @@ r.patch("/perfil", autenticar, (req, res) => {
     if (bloqueados.some((campo) => Object.prototype.hasOwnProperty.call(req.body, campo))) {
       return res.status(403).json({ erro: "Seu perfil não permite alterar esses dados cadastrais." });
     }
+    const nomePreferencia = req.body.nome_preferencia === undefined ? (u.nome_preferencia || "") : clean(req.body.nome_preferencia, 40);
     const telefone = req.body.telefone === undefined ? u.telefone : clean(req.body.telefone, 25);
     const genero = req.body.genero === undefined ? (u.genero || "") : req.body.genero;
     const observacao = req.body.observacao === undefined ? (u.observacao || "") : clean(req.body.observacao, 1000);
     if (!allowed(genero, ["", "masculino", "feminino", "nao_informar", "outro"])) return bad(res, "Gênero inválido.");
-    db.prepare("UPDATE usuarios SET telefone=?,genero=?,observacao=? WHERE id=?").run(telefone, genero || null, observacao || null, u.id);
+    db.prepare("UPDATE usuarios SET nome_preferencia=?,telefone=?,genero=?,observacao=? WHERE id=?").run(nomePreferencia || null, telefone, genero || null, observacao || null, u.id);
     return res.json(publicUser(get("usuarios", u.id)));
   }
 
+  const nomePreferencia = req.body.nome_preferencia === undefined ? (u.nome_preferencia || "") : clean(req.body.nome_preferencia, 40);
   const nome = req.body.nome === undefined ? u.nome : clean(req.body.nome, 100);
   const email = req.body.email === undefined ? u.email : clean(req.body.email, 254).toLowerCase();
   const turma = req.body.turma === undefined ? u.turma : clean(req.body.turma, 60);
@@ -238,8 +241,8 @@ r.patch("/perfil", autenticar, (req, res) => {
   if (!allowed(genero, ["", "masculino", "feminino", "nao_informar", "outro"])) return bad(res, "Gênero inválido.");
   const outro = db.prepare("SELECT id FROM usuarios WHERE email=? AND id<>?").get(email, u.id);
   if (outro) return res.status(409).json({ erro: "Este e-mail já está em uso." });
-  db.prepare("UPDATE usuarios SET nome=?,email=?,turma=?,telefone=?,cpf=?,data_nascimento=?,genero=?,observacao=? WHERE id=?")
-    .run(nome, email, turma, telefone, cpf || null, dataNascimento || null, genero || null, observacao || null, u.id);
+  db.prepare("UPDATE usuarios SET nome=?,nome_preferencia=?,email=?,turma=?,telefone=?,cpf=?,data_nascimento=?,genero=?,observacao=? WHERE id=?")
+    .run(nome, nomePreferencia || null, email, turma, telefone, cpf || null, dataNascimento || null, genero || null, observacao || null, u.id);
   res.json(publicUser(get("usuarios", u.id)));
 });
 // Encerramento de conta: desativa o acesso sem apagar o histórico acadêmico/financeiro.
@@ -268,7 +271,7 @@ r.get("/usuarios", autenticar, admin, (_req, res) =>
   res.json(
     db
       .prepare(
-        "SELECT id,nome,email,papel,admin_lider,turma,matricula,telefone,cpf,data_nascimento,genero,observacao,ativo,foto_url,criado_em FROM usuarios ORDER BY id DESC",
+        "SELECT id,nome,nome_preferencia,email,papel,admin_lider,turma,matricula,telefone,cpf,data_nascimento,genero,observacao,ativo,foto_url,criado_em FROM usuarios ORDER BY id DESC",
       )
       .all(),
   ),
