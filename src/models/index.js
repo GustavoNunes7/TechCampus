@@ -3,6 +3,7 @@ const publicUser = (u) =>
   u && {
     id: u.id,
     nome: u.nome,
+    nome_preferencia: u.nome_preferencia || "",
     email: u.email,
     papel: u.papel,
     admin_lider: u.admin_lider === 1,
