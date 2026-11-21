@@ -118,6 +118,7 @@ if (!colunasProdutos.includes("excluido")) db.exec("ALTER TABLE produtos ADD COL
 const colunasUsuarios = db.prepare("PRAGMA table_info(usuarios)").all().map((c) => c.name);
 if (!colunasUsuarios.includes("ativo")) db.exec("ALTER TABLE usuarios ADD COLUMN ativo INTEGER NOT NULL DEFAULT 1");
 if (!colunasUsuarios.includes("foto_url")) db.exec("ALTER TABLE usuarios ADD COLUMN foto_url TEXT");
+if (!colunasUsuarios.includes("nome_preferencia")) db.exec("ALTER TABLE usuarios ADD COLUMN nome_preferencia TEXT");
 if (!colunasUsuarios.includes("matricula")) db.exec("ALTER TABLE usuarios ADD COLUMN matricula TEXT");
 if (!colunasUsuarios.includes("cpf")) db.exec("ALTER TABLE usuarios ADD COLUMN cpf TEXT");
 if (!colunasUsuarios.includes("data_nascimento")) db.exec("ALTER TABLE usuarios ADD COLUMN data_nascimento TEXT");
