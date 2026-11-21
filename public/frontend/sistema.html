@@ -276,8 +276,17 @@
                                 placeholder="Digite seu nome completo">
                             </div>
                           </div>
-        
-        
+
+                          <!-- NOME DE PREFERÊNCIA -->
+                          <div class="col-md-6">
+                            <label for="nomePreferencia" class="form-label">Como prefere ser chamado na TechCampus?</label>
+                            <div class="input-group">
+                              <span class="input-group-text"><i class="bi bi-chat-heart"></i></span>
+                              <input type="text" id="nomePreferencia" name="nome_preferencia" class="form-control" maxlength="40" placeholder="Ex.: Dudu" autocomplete="nickname">
+                            </div>
+                            <small class="form-text">Esse nome será usado nas saudações e comunicações do sistema.</small>
+                          </div>
+
                           <!-- EMAIL -->
                           <div class="col-md-6">
                             <label for="email" class="form-label"> E-mail </label>
@@ -2709,6 +2718,11 @@
             <div class="col-12 col-md-8">
               <label for="usuarioNome" class="form-label">Nome completo</label>
               <input type="text" id="usuarioNome" class="form-control" placeholder="Digite o nome completo" autocomplete="name" required >
+            </div>
+            <div class="col-12 col-md-4">
+              <label for="usuarioNomePreferencia" class="form-label">Nome de preferência</label>
+              <input type="text" id="usuarioNomePreferencia" class="form-control" readonly aria-readonly="true" placeholder="Não informado">
+              <small class="form-text">Definido pelo próprio aluno.</small>
             </div>
 
 
