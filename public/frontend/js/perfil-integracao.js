@@ -499,7 +499,12 @@
                 genero: document.getElementById("genero")?.value || "",
                 observacao: document.getElementById("observacao")?.value || ""
               };
-          await api("/perfil", { method: "PATCH", body: JSON.stringify(dados) });
+          const atualizado = await api("/perfil", { method: "PATCH", body: JSON.stringify(dados) });
+          const nomeExibicao = (atualizado.nome_preferencia || "").trim() || (atualizado.nome || "Aluno").trim().split(/\\s+/)[0];
+          const nomeTopo = document.querySelector("#userDropdown .fw-semibold");
+          if (nomeTopo) nomeTopo.textContent = nomeExibicao;
+          const saudacao = document.getElementById("tcNomeUsuario");
+          if (saudacao) saudacao.textContent = nomeExibicao;
           avisar("Perfil salvo na conta TechCampus.");
         } catch (e) { avisar(e.message, true); }
         finally { if (btn) btn.disabled = false; }
