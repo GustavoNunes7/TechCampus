@@ -500,7 +500,7 @@
                 observacao: document.getElementById("observacao")?.value || ""
               };
           const atualizado = await api("/perfil", { method: "PATCH", body: JSON.stringify(dados) });
-          const nomeExibicao = (atualizado.nome_preferencia || "").trim() || (atualizado.nome || "Aluno").trim().split(/\\s+/)[0];
+          const nomeExibicao = (atualizado.nome_preferencia || "").trim() || (atualizado.nome || "Aluno").trim().split(/\s+/)[0];
           const nomeTopo = document.querySelector("#userDropdown .fw-semibold");
           if (nomeTopo) nomeTopo.textContent = nomeExibicao;
           const saudacao = document.getElementById("tcNomeUsuario");
